@@ -9,6 +9,7 @@ import Gallery from '@/components/Gallery'
 import About from '@/components/About'
 import Careers from '@/components/Careers'
 import Contact from '@/components/Contact'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
