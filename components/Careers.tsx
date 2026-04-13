@@ -1,4 +1,3 @@
-// components/Careers.tsx
 'use client'
 
 export default function Careers() {
