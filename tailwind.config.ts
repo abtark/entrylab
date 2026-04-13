@@ -1,4 +1,3 @@
-// tailwind.config.ts
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -21,7 +20,16 @@ const config: Config = {
       },
       backgroundImage: {
         'shine': 'linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent)',
-      }
+      },
+      keyframes: {
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
+      animation: {
+        'gradient': 'gradient 4s ease infinite',
+      },
     },
   },
   plugins: [],
