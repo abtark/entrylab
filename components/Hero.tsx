@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 
 const rotatingTexts = [
   "Every Search Has a Value",
@@ -15,6 +15,15 @@ const rotatingTexts = [
 
 export default function Hero() {
   const [index, setIndex] = useState(0)
+  
+  // PARALLAX HOOKS
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  })
+  // Moves the background down at half the speed of the scroll
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,16 +33,22 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0">
+    <section ref={heroRef} id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+      
+      {/* PARALLAX BACKGROUND */}
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 z-0 origin-top"
+      >
         <div className="absolute inset-0 bg-background/70 z-10" />
         <img 
           src="https://iili.io/BWmHJob.png" 
           alt="Hero Background" 
-          className="w-full h-full object-cover scale-105 transform transition-transform duration-[20s] hover:scale-100"
+          className="w-full h-[120%] object-cover object-top -mt-[10%] scale-105 transform transition-transform duration-[20s] hover:scale-100"
         />
-      </div>
+      </motion.div>
 
+      {/* TEXT CONTENT (Unchanged) */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
