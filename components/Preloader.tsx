@@ -1,4 +1,3 @@
-// components/Preloader.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
