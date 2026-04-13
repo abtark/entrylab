@@ -1,0 +1,33 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 17, 17, 17;
+  --background-end-rgb: 17, 17, 17;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+}
+
+.btn-primary {
+  @apply relative overflow-hidden bg-primary text-white font-bold py-3 px-8 rounded transition-colors duration-300 hover:bg-primary-hover;
+}
+
+.btn-primary::before {
+  content: '';
+  @apply absolute top-0 -left-[100%] w-full h-full bg-shine transition-transform duration-500 skew-x-[30deg];
+}
+
+.btn-primary:hover::before {
+  @apply left-[100%];
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-primary font-ubuntu;
+}
