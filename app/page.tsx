@@ -24,6 +24,7 @@ export default function Home() {
       <About />
       <Careers />
       <Contact />
+      <Footer />
       
       <footer className="bg-[#0a0a0a] py-8 text-center border-t border-gray-900">
         <p className="text-gray-500 text-sm">© {new Date().getFullYear()} EntryLab. Where Every Search Has a Value.</p>
