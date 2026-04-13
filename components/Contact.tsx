@@ -1,4 +1,3 @@
-// components/Contact.tsx
 'use client'
 
 export default function Contact() {
