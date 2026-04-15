@@ -14,16 +14,26 @@ const companies = [
   { name: 'Airbnb', icon: 'fa-brands fa-airbnb' },
   { name: 'Shopify', icon: 'fa-brands fa-shopify' },
   { name: 'Visa', icon: 'fa-brands fa-cc-visa' },
+  { name: 'DHL', icon: 'fa-brands fa-dhl' },
   { name: 'PayPal', icon: 'fa-brands fa-paypal' },
   { name: 'Dropbox', icon: 'fa-brands fa-dropbox' },
+  { name: 'Atlassian', icon: 'fa-brands fa-atlassian' },
   { name: 'eBay', icon: 'fa-brands fa-ebay' },
   { name: 'FedEx', icon: 'fa-brands fa-fedex' },
-  { name: 'Houzz', icon: 'fa-brands fa-houzz' },
+  { name: 'Stripe', icon: 'fa-brands fa-stripe' },
+  { name: 'Etsy', icon: 'fa-brands fa-etsy' },
+  { name: 'Claude', icon: 'fa-brands fa-claude' },
   { name: 'Slack', icon: 'fa-brands fa-slack' },
   { name: 'Lyft', icon: 'fa-brands fa-lyft' },
-  { name: 'Notion', icon: 'fa-solid fa-n' },
-  { name: 'OpenAI', icon: 'fa-solid fa-robot' },
-  { name: 'Salesforce', icon: 'fa-brands fa-salesforce' }
+  { name: 'Notion', icon: 'fa-brands fa-notion' },
+  { name: 'OpenAI', icon: 'fa-brands fa-openai' },
+  { name: 'Salesforce', icon: 'fa-brands fa-salesforce' },
+  { name: 'Twitch', icon: 'fa-brands fa-twitch' },
+  { name: 'Wix', icon: 'fa-brands fa-wix' },
+  { name: 'Intercom', icon: 'fa-brands fa-intercom' },
+  { name: 'Mailchimp', icon: 'fa-brands fa-mailchimp' },
+  { name: 'RedRiver', icon: 'fa-brands fa-red-river' },
+  { name: 'Angellist', icon: 'fa-brands fa-angellist' }
 ]
 
 const stats = [
@@ -37,7 +47,7 @@ const stats = [
 const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) => {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
-  const spring = useSpring(0, { bounce: 0, duration: 2500 })
+  const spring = useSpring(0, { bounce: 0, duration: 3500 })
 
   useEffect(() => {
     if (inView) {
@@ -139,7 +149,7 @@ export default function Insights() {
           <motion.div
             className="flex w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 40, repeat: Infinity }}
+            transition={{ ease: "linear", duration: 20, repeat: Infinity }}
           >
             {/* Render array twice for seamless infinite loop */}
             {[...companies, ...companies].map((company, index) => (
