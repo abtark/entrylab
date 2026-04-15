@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 const servicesData = [
   { 
@@ -25,7 +24,7 @@ const servicesData = [
   { 
     title: "Prospect Identification", 
     description: "Identify and engage high-potential opportunities to drive sales success.", 
-    icon: "fa-users-target", 
+    icon: "fa-bullseye", 
     color: "#FF9900" 
   },
   { 
@@ -39,6 +38,24 @@ const servicesData = [
     description: "Enhance customer engagement and streamline the sales process for maximum conversion.", 
     icon: "fa-handshake", 
     color: "#00E676" 
+  },
+  { 
+    title: "Revenue Acceleration Strategies", 
+    description: "Data-driven methods to boost sales performance, optimize funnels, and increase conversion efficiency.", 
+    icon: "fa-arrow-trend-up", 
+    color: "#FFD700" 
+  },
+  { 
+    title: "Competitive Landscape Analysis", 
+    description: "In-depth evaluation of industry trends, competitor positioning, and emerging opportunities for strategic advantage.", 
+    icon: "fa-chess-knight", 
+    color: "#FF5733" 
+  },
+  { 
+    title: "Lead Nurturing Systems", 
+    description: "Structured engagement processes to convert prospects into long-term clients through targeted communication and automation.", 
+    icon: "fa-seedling", 
+    color: "#00CED1" 
   }
 ]
 
@@ -80,9 +97,12 @@ const TiltCard = ({ service, index }: { service: typeof servicesData[0], index: 
         rotateX, 
         rotateY, 
         transformStyle: "preserve-3d",
-        '--theme-color': service.color 
+        '--theme-color': service.color,
+        borderColor: service.color,
+        borderWidth: '1px',
+        borderStyle: 'solid'
       } as React.CSSProperties}
-      className="group relative h-full p-8 rounded-2xl border border-gray-800 cursor-pointer overflow-hidden transition-colors duration-500 bg-[#141414]/90 backdrop-blur-md flex flex-col justify-center items-center text-center"
+      className="group relative h-full p-8 rounded-2xl cursor-pointer overflow-hidden transition-colors duration-500 bg-[#1c1c1c] flex flex-col justify-center items-center text-center shadow-lg"
     >
       {/* Dynamic Background that reveals on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)]" />
@@ -116,31 +136,8 @@ const TiltCard = ({ service, index }: { service: typeof servicesData[0], index: 
 }
 
 export default function Services() {
-  const sectionRef = useRef(null)
-  
-  // Parallax Hook for Background
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  })
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-
   return (
-    <section ref={sectionRef} id="services" className="relative py-32 overflow-hidden bg-background">
-      
-      {/* Parallax Background */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0 z-0 origin-top"
-      >
-        <div className="absolute inset-0 bg-[#0a0a0a]/85 z-10" />
-        <img 
-          src="https://iili.io/Bj5m4LJ.png" 
-          alt="Services Background" 
-          className="w-full h-[150%] object-cover object-top -mt-[20%]"
-        />
-      </motion.div>
-
+    <section id="services" className="relative py-32 bg-[#111111]">
       <div className="relative z-20 container mx-auto px-6">
         {/* Animated Gradient Title */}
         <motion.div
@@ -151,11 +148,11 @@ export default function Services() {
           className="text-center mb-20"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-primary via-white to-primary bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
               Our Services
             </span>
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
         </motion.div>
         
         {/* Services Grid */}
