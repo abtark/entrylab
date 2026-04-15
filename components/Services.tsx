@@ -34,7 +34,7 @@ const servicesData = [
     color: "#B829FF" 
   },
   { 
-    title: "Customer Relationship Optimization", 
+    title: "Customer Retention Strategy", 
     description: "Enhance customer engagement and streamline the sales process for maximum conversion.", 
     icon: "fa-handshake", 
     color: "#00E676" 
