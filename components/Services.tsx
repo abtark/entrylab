@@ -102,7 +102,7 @@ const TiltCard = ({ service, index }: { service: typeof servicesData[0], index: 
         borderWidth: '1px',
         borderStyle: 'solid'
       } as React.CSSProperties}
-      className="group relative min-h-[360px] p-8 rounded-2xl cursor-pointer overflow-hidden transition-colors duration-500 bg-[#1c1c1c] flex flex-col justify-center items-center text-center shadow-lg"
+      className="group relative min-h-[160px] p-8 rounded-2xl cursor-pointer overflow-hidden transition-colors duration-500 bg-[#1c1c1c] flex flex-col justify-center items-center text-center shadow-lg"
     >
       {/* Dynamic Background that reveals on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)]" />
