@@ -26,7 +26,7 @@ const companies = [
   { name: 'Slack', icon: 'fa-brands fa-slack' },
   { name: 'Lyft', icon: 'fa-brands fa-lyft' },
   { name: 'Playstation', icon: 'fa-brands fa-playstation' },
-  { name: 'houzz', icon: 'fa-brands fa-houzz' },
+  { name: 'Houzz', icon: 'fa-brands fa-houzz' },
   { name: 'Salesforce', icon: 'fa-brands fa-salesforce' },
   { name: 'Twitch', icon: 'fa-brands fa-twitch' },
   { name: 'Wix', icon: 'fa-brands fa-wix' },
@@ -37,7 +37,7 @@ const companies = [
 ]
 
 const stats = [
-  { value: 7, suffix: '+', label: 'XP Years' },
+  { value: 7, suffix: '+', label: 'Years of Experience' },
   { value: 15, suffix: 'k+', label: 'Projects Done' },
   { value: 500, suffix: 'M+', label: 'Qualified Leads' },
   { value: 98, suffix: '%', label: 'Client Satisfaction' }
