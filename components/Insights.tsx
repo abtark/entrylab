@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 
 const companies = [
@@ -118,12 +118,13 @@ const MagneticStatCard = ({ stat, index }: { stat: typeof stats[0]; index: numbe
       ref={cardRef}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.03 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}
-      className="group flex flex-row items-center gap-6 p-6 bg-white rounded-2xl border border-gray-200 cursor-pointer will-change-transform transform-gpu transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(0,170,255,0.35)] hover:border-transparent"
+      className="group flex flex-row items-center gap-6 p-6 bg-white rounded-2xl border border-gray-200 cursor-pointer will-change-transform transform-gpu transition-shadow transition-colors duration-300 hover:shadow-[0_0_30px_rgba(0,170,255,0.35)] hover:border-transparent"
     >
       <div className="w-16 h-16 md:w-20 md:h-20 shrink-0">
         <img 
