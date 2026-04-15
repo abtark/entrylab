@@ -102,7 +102,7 @@ const TiltCard = ({ service, index }: { service: typeof servicesData[0], index: 
         borderWidth: '1px',
         borderStyle: 'solid'
       } as React.CSSProperties}
-      className="group relative h-full p-8 rounded-2xl cursor-pointer overflow-hidden transition-colors duration-500 bg-[#1c1c1c] flex flex-col justify-center items-center text-center shadow-lg"
+      className="group relative min-h-[360px] p-8 rounded-2xl cursor-pointer overflow-hidden transition-colors duration-500 bg-[#1c1c1c] flex flex-col justify-center items-center text-center shadow-lg"
     >
       {/* Dynamic Background that reveals on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)]" />
@@ -121,13 +121,11 @@ const TiltCard = ({ service, index }: { service: typeof servicesData[0], index: 
           {service.title}
         </h3>
 
-        {/* Description (Height Animation) */}
-        <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-full">
-          <div className="overflow-hidden">
-            <p className="text-[#f8f8f8] mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150 leading-relaxed font-medium">
-              {service.description}
-            </p>
-          </div>
+        {/* Description (Reserved Space & Smooth Reveal) */}
+        <div className="w-full relative">
+          <p className="text-[#f8f8f8] mt-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 leading-relaxed font-medium">
+          {service.description}
+          </p>
         </div>
 
       </div>
