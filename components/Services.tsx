@@ -5,55 +5,55 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 const servicesData = [
   { 
     title: "Business Growth Solutions", 
-    description: "Fuel business growth with targeted customer outreach and strategic growth initiatives.", 
+    description: "Fuel growth with targeted outreach and smart initiatives.", 
     icon: "fa-chart-line", 
     color: "#00AAFF" 
   },
   { 
     title: "Information Management", 
-    description: "Seamlessly organize and input critical business data with precision and efficiency.", 
+    description: "Organize and manage business data with precision.", 
     icon: "fa-database", 
     color: "#FF3366" 
   },
   { 
     title: "Market Intelligence", 
-    description: "Gather and analyze key market trends to inform strategic business decisions.", 
+    description: "Analyze market trends for smarter decisions.", 
     icon: "fa-lightbulb", 
     color: "#00FFCC" 
   },
   { 
     title: "Prospect Identification", 
-    description: "Identify and engage high-potential opportunities to drive sales success.", 
+    description: "Identify high-potential opportunities to boost sales.", 
     icon: "fa-bullseye", 
     color: "#FF9900" 
   },
   { 
     title: "Digital Insights Collection", 
-    description: "Extract valuable data from online platforms to stay ahead in the industry.", 
+    description: "Extract online data to stay ahead in the market.", 
     icon: "fa-cloud-arrow-down", 
     color: "#B829FF" 
   },
   { 
-    title: "Customer Retention Strategy", 
-    description: "Enhance customer engagement and streamline the sales process for maximum conversion.", 
+    title: "Customer Retention", 
+    description: "Improve engagement and streamline sales conversion.", 
     icon: "fa-handshake", 
     color: "#00E676" 
   },
   { 
-    title: "Revenue Acceleration Strategies", 
-    description: "Data-driven methods to boost sales performance, optimize funnels, and increase conversion efficiency.", 
+    title: "Revenue Acceleration", 
+    description: "Boost sales with data-driven funnel optimization.", 
     icon: "fa-arrow-trend-up", 
     color: "#FFD700" 
   },
   { 
-    title: "Competitive Landscape Analysis", 
-    description: "Evaluation of market trends, competitor positioning, and strategic opportunities.", 
+    title: "Competitive Analysis", 
+    description: "Evaluate trends, competitors, and growth opportunities.", 
     icon: "fa-chess-knight", 
     color: "#FF5733" 
   },
   { 
     title: "Lead Nurturing Systems", 
-    description: "Structured processes to convert prospects into long-term clients through targeted communication.", 
+    description: "Convert prospects into clients with targeted processes.", 
     icon: "fa-seedling", 
     color: "#00CED1" 
   }
