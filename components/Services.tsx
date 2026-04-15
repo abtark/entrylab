@@ -89,7 +89,7 @@ const TypingEffect = ({ text }: { text: string }) => {
       setDisplayedText(text.slice(0, i + 1))
       i++
       if (i >= text.length) clearInterval(intervalId)
-    }, 35) // Typing speed
+    }, 35)
 
     return () => clearInterval(intervalId)
   }, [text])
@@ -141,29 +141,18 @@ const TiltCard = ({ service, index, onClick }: { service: typeof servicesData[0]
       } as React.CSSProperties}
       className="group relative isolate transform-gpu h-[260px] w-full p-8 rounded-2xl cursor-pointer overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#181818] border flex flex-col justify-center items-center text-center will-change-transform hover:scale-[1.03] hover:border-transparent"
     >
-      {/* 1. Base Theme Color Background */}
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)]" />
-      
-      {/* 2. Glassmorphism Overlay */}
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-black/20 backdrop-blur-md" />
-
-      {/* 3. Soft Glow Effect */}
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 shadow-[0_0_30px_var(--theme-color)] pointer-events-none rounded-2xl" />
-
-      {/* 4. Shine Sweep Effect */}
       <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-[100%] transition-transform duration-[1.5s] ease-in-out z-10 skew-x-[-30deg]" />
 
-      {/* Content Wrapper */}
       <div className="relative z-20 w-full h-full flex flex-col justify-center items-center transform translate-z-[40px]">
-        {/* Icon & Title Wrapper */}
         <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-10">
           <i className={`fa-solid ${service.icon} text-6xl mb-6 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
           <h3 className="text-2xl font-bold transition-colors duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
             {service.title}
           </h3>
         </div>
-
-        {/* Description */}
         <div className="absolute bottom-2 left-0 w-full px-2 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] delay-75">
           <p className="text-white/95 leading-relaxed font-medium text-base">
             {service.description}
@@ -177,7 +166,6 @@ const TiltCard = ({ service, index, onClick }: { service: typeof servicesData[0]
 export default function Services() {
   const [selectedService, setSelectedService] = useState<typeof servicesData[0] | null>(null)
 
-  // Handle ESC key close & prevent background scrolling
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedService(null)
@@ -199,7 +187,6 @@ export default function Services() {
   return (
     <section id="services" className="relative py-32 bg-[#111111]">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
-        {/* Animated Gradient Title */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -215,7 +202,6 @@ export default function Services() {
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
         </motion.div>
         
-        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, i) => (
             <TiltCard 
@@ -228,49 +214,50 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Modal Overlay & Content */}
       <AnimatePresence>
         {selectedService && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             onClick={() => setSelectedService(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md will-change-transform transform-gpu"
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
               style={{
                 backgroundColor: selectedService.color,
                 boxShadow: `0 0 40px ${selectedService.color}80`
               }}
-              className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-10 flex flex-col md:flex-row gap-8 md:gap-12 text-white"
+              className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-10 flex flex-col md:flex-row gap-8 md:gap-12 text-white will-change-transform transform-gpu"
             >
-              {/* Close Button */}
+              {/* Optimized Small Close Button */}
               <button
                 onClick={() => setSelectedService(null)}
-                className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 transition-colors z-20"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 transition-colors z-[60] text-white"
               >
-                <i className="fa-solid fa-xmark text-xl"></i>
+                <i className="fa-solid fa-xmark text-sm"></i>
               </button>
 
-              {/* LEFT SIDE: Content (1/3 Width) */}
-              <div className="w-full md:w-1/3 flex flex-col justify-center mt-4 md:mt-0">
-                <i className={`fa-solid ${selectedService.icon} text-5xl md:text-6xl mb-6 drop-shadow-md`}></i>
-                <h3 className="text-3xl md:text-4xl font-bold mb-6 drop-shadow-md">
+              {/* LEFT SIDE: Stable Layout with Fixed Text Container */}
+              <div className="w-full md:w-1/3 flex flex-col justify-start mt-4 md:mt-0 md:pt-6">
+                <i className={`fa-solid ${selectedService.icon} text-5xl md:text-6xl mb-6 drop-shadow-md text-white`}></i>
+                <h3 className="text-3xl md:text-4xl font-bold mb-6 drop-shadow-md text-white">
                   {selectedService.title}
                 </h3>
-                <div className="text-white/95 text-lg leading-relaxed font-medium min-h-[100px]">
+                {/* Fixed height prevents upward layout shift as text types */}
+                <div className="text-white/95 text-lg leading-relaxed font-medium h-[120px] md:h-[180px]">
                   <TypingEffect text={selectedService.fullDescription} />
                 </div>
               </div>
 
-              {/* RIGHT SIDE: Image (2/3 Width) */}
-              <div className="w-full md:w-2/3 h-[250px] sm:h-[350px] md:h-[500px] relative rounded-2xl overflow-hidden shadow-2xl">
+              {/* RIGHT SIDE: Image */}
+              <div className="w-full md:w-2/3 h-[250px] sm:h-[350px] md:h-[500px] relative rounded-2xl overflow-hidden shadow-2xl shrink-0">
                 <div className="absolute inset-0 bg-black/10 z-10 rounded-2xl"></div>
                 <img
                   src={selectedService.image}
