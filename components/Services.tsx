@@ -100,7 +100,7 @@ const TiltCard = ({ service, index }: { service: typeof servicesData[0], index: 
         '--theme-color': service.color,
         borderColor: `${service.color}60` // 60 adds slight transparency to the hex
       } as React.CSSProperties}
-      className="group relative isolate transform-gpu h-[400px] w-full p-8 rounded-2xl cursor-pointer overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#181818] border flex flex-col justify-center items-center text-center will-change-transform hover:scale-[1.03] hover:border-transparent"
+      className="group relative isolate transform-gpu h-[150px] w-full p-8 rounded-2xl cursor-pointer overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#181818] border flex flex-col justify-center items-center text-center will-change-transform hover:scale-[1.03] hover:border-transparent"
     >
       {/* 1. Base Theme Color Background (Reveals on Hover) */}
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)]" />
