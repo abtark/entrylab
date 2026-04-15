@@ -22,11 +22,11 @@ const companies = [
   { name: 'FedEx', icon: 'fa-brands fa-fedex' },
   { name: 'Stripe', icon: 'fa-brands fa-stripe' },
   { name: 'Etsy', icon: 'fa-brands fa-etsy' },
-  { name: 'Claude', icon: 'fa-brands fa-claude' },
+  { name: 'CloudFlare', icon: 'fa-brands fa-cloudflare' },
   { name: 'Slack', icon: 'fa-brands fa-slack' },
   { name: 'Lyft', icon: 'fa-brands fa-lyft' },
-  { name: 'Notion', icon: 'fa-brands fa-notion' },
-  { name: 'OpenAI', icon: 'fa-brands fa-openai' },
+  { name: 'Playstation', icon: 'fa-brands fa-playstation' },
+  { name: 'houzz', icon: 'fa-brands fa-houzz' },
   { name: 'Salesforce', icon: 'fa-brands fa-salesforce' },
   { name: 'Twitch', icon: 'fa-brands fa-twitch' },
   { name: 'Wix', icon: 'fa-brands fa-wix' },
@@ -149,7 +149,7 @@ export default function Insights() {
           <motion.div
             className="flex w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 20, repeat: Infinity }}
+            transition={{ ease: "linear", duration: 80, repeat: Infinity }}
           >
             {/* Render array twice for seamless infinite loop */}
             {[...companies, ...companies].map((company, index) => (
