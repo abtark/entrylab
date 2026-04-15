@@ -47,7 +47,7 @@ const servicesData = [
   },
   { 
     title: "Competitive Landscape Analysis", 
-    description: "In-depth review of market trends, competitor positioning, and key opportunities for strategic growth.", 
+    description: "Evaluation of market trends, competitor positioning, and strategic opportunities.", 
     icon: "fa-chess-knight", 
     color: "#FF5733" 
   },
