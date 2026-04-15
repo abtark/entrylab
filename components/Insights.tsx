@@ -145,11 +145,11 @@ export default function Insights() {
         </div>
 
         {/* ROW 3: Logo Marquee */}
-        <div className="relative w-full overflow-hidden py-10" style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>
+        <div className="relative transform-gpu w-full overflow-hidden py-10" style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>
           <motion.div
             className="flex w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 80, repeat: Infinity }}
+            transition={{ ease: "linear", duration: 180, repeat: Infinity }}
           >
             {/* Render array twice for seamless infinite loop */}
             {[...companies, ...companies].map((company, index) => (
