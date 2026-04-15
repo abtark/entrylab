@@ -47,13 +47,13 @@ const servicesData = [
   },
   { 
     title: "Competitive Landscape Analysis", 
-    description: "In-depth evaluation of industry trends, competitor positioning, and emerging opportunities for strategic advantage.", 
+    description: "In-depth review of market trends, competitor positioning, and key opportunities for strategic growth.", 
     icon: "fa-chess-knight", 
     color: "#FF5733" 
   },
   { 
     title: "Lead Nurturing Systems", 
-    description: "Structured engagement processes to convert prospects into long-term clients through targeted communication and automation.", 
+    description: "Structured processes to convert prospects into long-term clients through targeted communication.", 
     icon: "fa-seedling", 
     color: "#00CED1" 
   }
