@@ -3,9 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// ==========================================
-// DATA
-// ==========================================
 const teamData = [
   { id: 1, name: "SM Masum", title: "**********", time: "Full-Time", type: "Onsite", img: "https://iili.io/BSl1ol4.jpg" },
   { id: 2, name: "Nazmul Alam", title: "**********", time: "Full-Time", type: "Onsite", img: "https://iili.io/BSlE84j.jpg" },
@@ -37,10 +34,8 @@ const teamData = [
   { id: 28, name: "Sunjia Priya", title: "**********", time: "Full-Time", type: "Remote", img: "Use User Icon" }
 ]
 
-// ==========================================
-// HELPERS
-// ==========================================
 const TypingText = ({ text }: { text: string }) => {
+  if (!text) return null
   return (
     <span className="inline-block">
       {text.split('').map((char, index) => (
@@ -57,34 +52,30 @@ const TypingText = ({ text }: { text: string }) => {
   )
 }
 
+type TeamMember = typeof teamData[0]
+
 export default function Teams() {
   const [filter, setFilter] = useState('All')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [selectedMember, setSelectedMember] = useState<typeof teamData[0] | null>(null)
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
-  // Filter Data
   const filteredData = teamData.filter(m => filter === 'All' || m.type === filter)
 
-  // Handle Resize
   useEffect(() => {
+    setIsMounted(true)
     const handleResize = () => setIsMobile(window.innerWidth < 768)
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Reset index when filter changes
   useEffect(() => {
     setCurrentIndex(0)
   }, [filter])
 
-  // Handle Nav
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % filteredData.length)
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + filteredData.length) % filteredData.length)
-
-  // Handle ESC close
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedMember(null)
@@ -93,7 +84,16 @@ export default function Teams() {
     return () => window.removeEventListener('keydown', handleEsc)
   }, [])
 
-  // Calculate dynamic styles for the deck stack
+  const nextSlide = () => {
+    if (filteredData.length === 0) return
+    setCurrentIndex((prev) => (prev + 1) % filteredData.length)
+  }
+
+  const prevSlide = () => {
+    if (filteredData.length === 0) return
+    setCurrentIndex((prev) => (prev - 1 + filteredData.length) % filteredData.length)
+  }
+
   const getCardStyle = (offset: number) => {
     const absOffset = Math.abs(offset)
     
@@ -103,7 +103,7 @@ export default function Teams() {
         scale: offset === 0 ? 1 : 0.85,
         opacity: offset === 0 ? 1 : 0,
         zIndex: 10 - absOffset,
-        pointerEvents: offset === 0 ? 'auto' : 'none'
+        pointerEvents: offset === 0 ? "auto" : "none"
       }
     }
 
@@ -113,28 +113,28 @@ export default function Teams() {
         scale: 1 - (absOffset * 0.05),
         opacity: absOffset <= 3 ? 1 : 0,
         zIndex: 10 - absOffset,
-        pointerEvents: absOffset <= 3 ? 'auto' : 'none'
+        pointerEvents: absOffset <= 3 ? "auto" : "none"
       }
     }
 
-    // Default Collapsed View (3 Cards)
-    if (offset === 0) return { x: "0%", scale: 1, opacity: 1, zIndex: 10, pointerEvents: 'auto' }
-    if (offset === -1) return { x: "-65%", scale: 0.85, opacity: 1, zIndex: 9, pointerEvents: 'auto' }
-    if (offset === 1) return { x: "65%", scale: 0.85, opacity: 1, zIndex: 9, pointerEvents: 'auto' }
+    if (offset === 0) return { x: "0%", scale: 1, opacity: 1, zIndex: 10, pointerEvents: "auto" }
+    if (offset === -1) return { x: "-65%", scale: 0.85, opacity: 1, zIndex: 9, pointerEvents: "auto" }
+    if (offset === 1) return { x: "65%", scale: 0.85, opacity: 1, zIndex: 9, pointerEvents: "auto" }
     
     return {
       x: offset > 0 ? "80%" : "-80%",
       scale: 0.75,
       opacity: 0,
       zIndex: 5,
-      pointerEvents: 'none'
+      pointerEvents: "none"
     }
   }
+
+  if (!isMounted) return null
 
   return (
     <section id="teams" className="relative py-32 bg-[#111111] overflow-hidden min-h-screen flex flex-col items-center">
       
-      {/* BACKGROUND GRADIENT FIX */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes gradient-r2l {
           0% { background-position: 200% 50%; }
@@ -147,7 +147,6 @@ export default function Teams() {
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10 flex flex-col items-center">
         
-        {/* SECTION TITLE */}
         <div className="flex flex-col items-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight pb-2">
             <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
@@ -157,7 +156,6 @@ export default function Teams() {
           <div className="w-16 h-1 bg-[#00AAFF] rounded-full mt-2" />
         </div>
 
-        {/* FILTERS */}
         <div className="flex gap-4 mb-16 p-1.5 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
           {['All', 'Onsite', 'Remote'].map((f) => (
             <button
@@ -179,33 +177,31 @@ export default function Teams() {
           ))}
         </div>
 
-        {/* CARD DECK AREA */}
         <div 
           className="relative w-full h-[360px] md:h-[420px] flex justify-center items-center mb-12"
           onMouseEnter={() => setIsExpanded(true)}
           onMouseLeave={() => setIsExpanded(false)}
         >
           {filteredData.map((member, index) => {
-            // Calculate relative offset with circular wrapping
             let offset = (index - currentIndex) % filteredData.length
             if (offset > Math.floor(filteredData.length / 2)) offset -= filteredData.length
             if (offset < -Math.floor(filteredData.length / 2)) offset += filteredData.length
 
-            // Only render cards that are reasonably close to view for performance
             if (Math.abs(offset) > 4) return null
 
             return (
               <motion.div
                 key={member.id}
-                onClick={() => Math.abs(offset) === 0 && setSelectedMember(member)}
+                onClick={() => {
+                  if (Math.abs(offset) === 0) setSelectedMember(member)
+                }}
                 layoutId={`card-container-${member.id}`}
-                animate={getCardStyle(offset as any)}
+                animate={getCardStyle(offset) as any}
                 transition={{ type: "spring", stiffness: 200, damping: 25 }}
                 className={`absolute w-[260px] h-[340px] md:w-[300px] md:h-[400px] bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden shadow-2xl will-change-transform transform-gpu ${
                   Math.abs(offset) === 0 ? 'cursor-pointer hover:border-white/40' : ''
                 }`}
               >
-                {/* Image / Icon Wrapper */}
                 <div className="w-full h-full relative group">
                   {member.img !== "Use User Icon" ? (
                     <motion.img 
@@ -223,10 +219,8 @@ export default function Teams() {
                     </motion.div>
                   )}
                   
-                  {/* Subtle Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
                   
-                  {/* Name Tag (Only visible heavily on center card or hover) */}
                   <div className="absolute bottom-6 left-0 w-full text-center px-4">
                     <h3 className="text-xl font-bold text-white tracking-wide drop-shadow-md">
                       {member.name}
@@ -241,7 +235,6 @@ export default function Teams() {
           })}
         </div>
 
-        {/* NAVIGATION CONTROLS */}
         <div className="flex items-center gap-6">
           <button 
             onClick={prevSlide}
@@ -269,9 +262,6 @@ export default function Teams() {
 
       </div>
 
-      {/* ========================================== */}
-      {/* MODAL                                      */}
-      {/* ========================================== */}
       <AnimatePresence>
         {selectedMember && (
           <motion.div
@@ -286,7 +276,6 @@ export default function Teams() {
               onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-md bg-[#181818]/90 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 flex flex-col items-center shadow-[0_0_50px_rgba(0,170,255,0.15)] will-change-transform transform-gpu"
             >
-              {/* Close Button */}
               <button
                 onClick={() => setSelectedMember(null)}
                 className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all duration-300"
@@ -294,7 +283,6 @@ export default function Teams() {
                 <i className="fa-solid fa-xmark"></i>
               </button>
 
-              {/* Circular Image */}
               <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-[#00AAFF]/30 shadow-[0_0_20px_rgba(0,170,255,0.2)] mb-8">
                 {selectedMember.img !== "Use User Icon" ? (
                   <motion.img 
@@ -313,7 +301,6 @@ export default function Teams() {
                 )}
               </div>
 
-              {/* Text Info (Typing Effect Stagger) */}
               <motion.div 
                 initial="hidden"
                 animate="visible"
@@ -323,25 +310,21 @@ export default function Teams() {
                 }}
                 className="w-full flex flex-col gap-4 mb-10 px-4"
               >
-                {/* Name */}
                 <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white">
                   <div className="w-8 flex justify-center"><i className="fa-solid fa-user text-[#00AAFF] text-xl"></i></div>
                   <h3 className="text-2xl font-bold tracking-wide"><TypingText text={selectedMember.name} /></h3>
                 </motion.div>
 
-                {/* Title */}
                 <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white/70">
                   <div className="w-8 flex justify-center"><i className="fa-solid fa-briefcase text-[#00AAFF]"></i></div>
                   <p className="font-medium tracking-widest"><TypingText text={selectedMember.title} /></p>
                 </motion.div>
 
-                {/* Time */}
                 <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white/70">
                   <div className="w-8 flex justify-center"><i className="fa-solid fa-clock text-[#00AAFF]"></i></div>
                   <p className="font-medium"><TypingText text={selectedMember.time} /></p>
                 </motion.div>
 
-                {/* Type */}
                 <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white/70">
                   <div className="w-8 flex justify-center">
                     <i className={`fa-solid ${selectedMember.type === 'Remote' ? 'fa-laptop' : 'fa-building'} text-[#00AAFF]`}></i>
@@ -350,7 +333,6 @@ export default function Teams() {
                 </motion.div>
               </motion.div>
 
-              {/* Bottom Social Icons */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
