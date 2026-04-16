@@ -6,8 +6,7 @@ import {
   AnimatePresence,
   useMotionValue,
   useSpring,
-  useTransform,
-  animate
+  useTransform
 } from 'framer-motion'
 
 const teamData = [
@@ -52,49 +51,29 @@ export default function Teams() {
     return teamData.filter(m => m.type === filter)
   }, [filter])
 
-  useEffect(() => {
-    setActiveIndex(0)
-  }, [filter])
+  useEffect(() => setActiveIndex(0), [filter])
 
   const total = filtered.length
   const positions = [-2, -1, 0, 1, 2]
 
-  const getItem = (offset: number) => {
-    const index = (activeIndex + offset + total) % total
-    return filtered[index]
+  const getItem = (offset:number) => {
+    return filtered[(activeIndex + offset + total) % total]
   }
 
-  const next = () => {
-    animate(dragX, -280, {
-      duration: 0.25,
-      ease: "easeOut",
-      onComplete: () => {
-        dragX.set(0)
-        setActiveIndex((p) => (p + 1) % total)
-      }
-    })
-  }
-
-  const prev = () => {
-    animate(dragX, 280, {
-      duration: 0.25,
-      ease: "easeOut",
-      onComplete: () => {
-        dragX.set(0)
-        setActiveIndex((p) => (p - 1 + total) % total)
-      }
-    })
-  }
+  const next = () => setActiveIndex(p => (p+1)%total)
+  const prev = () => setActiveIndex(p => (p-1+total)%total)
 
   return (
-    <section className="py-32 bg-[#111] text-white flex flex-col items-center overflow-hidden">
+    <section className="py-32 bg-[#111] text-white flex flex-col items-center">
 
-      {/* FILTER */}
-      <div className="flex gap-4 mb-16">
+      {/* GLASS FILTER BUTTON */}
+      <div className="flex gap-4 mb-16 p-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl">
         {['All','Onsite','Remote'].map(f => (
           <button key={f} onClick={()=>setFilter(f)}
-            className={`px-5 py-2 rounded-xl border transition ${
-              filter===f ? 'bg-[#00AAFF]' : 'border-white/20'
+            className={`px-6 py-2 rounded-xl transition ${
+              filter===f
+              ? 'bg-[#00AAFF]/20 border border-[#00AAFF]/50'
+              : 'text-white/50 hover:text-white'
             }`}>
             {f}
           </button>
@@ -103,34 +82,27 @@ export default function Teams() {
 
       {/* CAROUSEL */}
       <motion.div
-        style={{ x: dragX }}
         drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.12}
-        onDragEnd={(e, info) => {
-          if (info.offset.x < -80 || info.velocity.x < -500) next()
-          else if (info.offset.x > 80 || info.velocity.x > 500) prev()
+        dragElastic={0.2}
+        dragConstraints={{ left:0, right:0 }}
+        onDragEnd={(e,info)=>{
+          if(info.offset.x < -80) next()
+          else if(info.offset.x > 80) prev()
         }}
         className="relative w-full h-[420px] flex justify-center items-center cursor-grab active:cursor-grabbing"
       >
         {positions.map(offset => {
           const m = getItem(offset)
 
-          const x = offset * 260
-          const scale = offset === 0 ? 1 : offset === 1 || offset === -1 ? 0.9 : 0.8
-          const opacity = offset === 0 ? 1 : offset === 1 || offset === -1 ? 0.3 : 0.08
-          const blur = offset === 0 ? 0 : offset === 1 || offset === -1 ? 2 : 6
+          const isCenter = offset === 0
 
           return (
             <Card
               key={offset}
               data={m}
               offset={offset}
-              x={x}
-              scale={scale}
-              opacity={opacity}
-              blur={blur}
-              onClick={()=> offset===0 && setSelected(m)}
+              isCenter={isCenter}
+              onClick={()=> isCenter && setSelected(m)}
             />
           )
         })}
@@ -138,12 +110,8 @@ export default function Teams() {
 
       {/* ARROWS */}
       <div className="flex gap-6 mt-10 text-xl">
-        <button onClick={prev}>
-          <i className="fa-solid fa-chevron-left"></i>
-        </button>
-        <button onClick={next}>
-          <i className="fa-solid fa-chevron-right"></i>
-        </button>
+        <button onClick={prev}><i className="fa-solid fa-chevron-left"/></button>
+        <button onClick={next}><i className="fa-solid fa-chevron-right"/></button>
       </div>
 
       {/* MODAL */}
@@ -158,17 +126,24 @@ export default function Teams() {
           >
             <motion.div
               layoutId={`card-${selected.id}`}
-              className="bg-[#181818] p-10 rounded-3xl text-center"
               onClick={(e)=>e.stopPropagation()}
+              className="bg-[#181818] p-10 rounded-3xl text-center w-[320px]"
             >
               <motion.img
                 layoutId={`img-${selected.id}`}
                 src={selected.img}
                 className="w-32 h-32 rounded-full mx-auto mb-6"
               />
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-[#00AAFF] to-white bg-clip-text text-transparent">
-                {selected.name}
-              </h2>
+
+              <h2 className="text-2xl font-bold mb-2">{selected.name}</h2>
+              <p className="text-white/70">{selected.title}</p>
+              <p className="text-white/50">{selected.time} • {selected.type}</p>
+
+              <div className="flex justify-center gap-6 mt-6">
+                <i className="fa-brands fa-linkedin"/>
+                <i className="fa-solid fa-envelope"/>
+                <i className="fa-solid fa-phone"/>
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -178,59 +153,54 @@ export default function Teams() {
   )
 }
 
-/* ================= CARD COMPONENT ================= */
-
-function Card({ data, offset, x, scale, opacity, blur, onClick }: any) {
+/* CARD */
+function Card({ data, offset, isCenter, onClick }:any){
 
   const ref = useRef<HTMLDivElement>(null)
+  const [hovered,setHovered] = useState(false)
 
-  // PARALLAX TILT
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  const rotateX = useSpring(useTransform(mouseY, [-100, 100], [10, -10]), { stiffness: 120, damping: 15 })
-  const rotateY = useSpring(useTransform(mouseX, [-100, 100], [-10, 10]), { stiffness: 120, damping: 15 })
+  const rotateX = useSpring(useTransform(mouseY, [-100,100],[10,-10]),{damping:15})
+  const rotateY = useSpring(useTransform(mouseX, [-100,100],[-10,10]),{damping:15})
 
-  // MAGNETIC NAME
-  const nameX = useSpring(mouseX, { stiffness: 200, damping: 20 })
-  const nameY = useSpring(mouseY, { stiffness: 200, damping: 20 })
-
-  const handleMove = (e: any) => {
-    const rect = ref.current?.getBoundingClientRect()
-    if (!rect) return
-    mouseX.set(e.clientX - rect.left - rect.width / 2)
-    mouseY.set(e.clientY - rect.top - rect.height / 2)
+  const handleMove = (e:any)=>{
+    if(!ref.current) return
+    const rect = ref.current.getBoundingClientRect()
+    mouseX.set(e.clientX - rect.left - rect.width/2)
+    mouseY.set(e.clientY - rect.top - rect.height/2)
   }
+
+  const x = offset * 260
+  const scale = offset===0 ? 1 : 0.85
+  const opacity = offset===0 ? 1 : 0.15
 
   return (
     <motion.div
       ref={ref}
       layoutId={`card-${data.id}`}
       animate={{ x, scale, opacity }}
-      transition={{ type: "spring", stiffness: 120, damping: 18 }}
-      style={{
-        filter: `blur(${blur}px)`
-      }}
-      onMouseMove={handleMove}
+      transition={{ type:"spring", stiffness:120, damping:20 }}
+      onMouseMove={isCenter ? handleMove : undefined}
+      onMouseEnter={()=> isCenter && setHovered(true)}
+      onMouseLeave={()=> setHovered(false)}
       onClick={onClick}
-      className="absolute w-[260px] h-[340px] p-4 bg-white/5 border border-white/20 rounded-2xl cursor-pointer"
+      className="absolute w-[260px] h-[340px] p-4 bg-white/5 border border-white/20 rounded-2xl"
     >
-      <motion.div
-        style={{ rotateX, rotateY }}
-        className="w-full h-full rounded-xl overflow-hidden"
-      >
+      <motion.div style={isCenter ? {rotateX,rotateY} : {}} className="w-full h-full rounded-xl overflow-hidden">
         <motion.img
           layoutId={`img-${data.id}`}
           src={data.img}
-          className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300"
+          className={`w-full h-full object-cover ${isCenter?'grayscale hover:grayscale-0':'grayscale'}`}
         />
       </motion.div>
 
-      {/* MAGNETIC NAME */}
-      {offset === 0 && (
+      {/* NAME HOVER */}
+      {hovered && isCenter && (
         <motion.div
-          style={{ x: nameX, y: nameY }}
-          className="absolute top-4 left-4 px-3 py-1 bg-black/70 rounded-full text-sm"
+          style={{ x: mouseX, y: mouseY }}
+          className="absolute top-0 left-0 pointer-events-none px-3 py-1 bg-black/80 rounded-full text-sm"
         >
           {data.name}
         </motion.div>
