@@ -131,7 +131,7 @@ export default function About() {
           <div className="w-full mb-6 flex justify-center">
             <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl">
               <img 
-                src="https://iili.io/B8CD5jj.png" 
+                src="https://iili.io/B8oQEyg.png" 
                 alt="About EntryLab" 
                 className="w-full h-auto object-contain drop-shadow-2xl rounded-2xl relative z-0"
               />
