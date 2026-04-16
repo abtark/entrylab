@@ -136,7 +136,7 @@ export default function About() {
                 className="w-full h-auto object-contain drop-shadow-2xl rounded-2xl relative z-0"
               />
               {/* Shine Effect Overlay */}
-              <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-image-shine [animation-duration:5s] pointer-events-none z-10" />
+              <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-image-shine [animation-duration:1s] pointer-events-none z-10" />
             </MagneticItem>
           </div>
 
