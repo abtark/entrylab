@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
 const teamData = [
   { id: 1, name: "SM Masum", title: "**********", time: "Full-Time", type: "Onsite", img: "https://iili.io/BSl1ol4.jpg" },
   { id: 2, name: "Nazmul Alam", title: "**********", time: "Full-Time", type: "Onsite", img: "https://iili.io/BSlE84j.jpg" },
@@ -57,7 +56,6 @@ type TeamMember = typeof teamData[0]
 export default function Teams() {
   const [filter, setFilter] = useState('All')
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isExpanded, setIsExpanded] = useState(false)
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
@@ -94,6 +92,7 @@ export default function Teams() {
     setCurrentIndex((prev) => (prev - 1 + filteredData.length) % filteredData.length)
   }
 
+  // 5 Card Carousel Logic
   const getCardStyle = (offset: number) => {
     const absOffset = Math.abs(offset)
     
@@ -107,25 +106,17 @@ export default function Teams() {
       }
     }
 
-    if (isExpanded) {
-      return {
-        x: `${offset * 110}%`,
-        scale: 1 - (absOffset * 0.05),
-        opacity: absOffset <= 3 ? 1 : 0,
-        zIndex: 10 - absOffset,
-        pointerEvents: absOffset <= 3 ? "auto" : "none"
-      }
-    }
-
     if (offset === 0) return { x: "0%", scale: 1, opacity: 1, zIndex: 10, pointerEvents: "auto" }
-    if (offset === -1) return { x: "-65%", scale: 0.85, opacity: 1, zIndex: 9, pointerEvents: "auto" }
-    if (offset === 1) return { x: "65%", scale: 0.85, opacity: 1, zIndex: 9, pointerEvents: "auto" }
+    if (offset === -1) return { x: "-60%", scale: 0.9, opacity: 1, zIndex: 9, pointerEvents: "auto" }
+    if (offset === 1) return { x: "60%", scale: 0.9, opacity: 1, zIndex: 9, pointerEvents: "auto" }
+    if (offset === -2) return { x: "-115%", scale: 0.8, opacity: 1, zIndex: 8, pointerEvents: "none" }
+    if (offset === 2) return { x: "115%", scale: 0.8, opacity: 1, zIndex: 8, pointerEvents: "none" }
     
     return {
-      x: offset > 0 ? "80%" : "-80%",
-      scale: 0.75,
+      x: offset > 0 ? "150%" : "-150%",
+      scale: 0.7,
       opacity: 0,
-      zIndex: 5,
+      zIndex: -1,
       pointerEvents: "none"
     }
   }
@@ -169,7 +160,7 @@ export default function Teams() {
                 <motion.div
                   layoutId="activeFilter"
                   className="absolute inset-0 bg-[#00AAFF]/20 border border-[#00AAFF]/50 rounded-xl"
-                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                 />
               )}
               <span className="relative z-10">{f}</span>
@@ -177,17 +168,11 @@ export default function Teams() {
           ))}
         </div>
 
-        <div 
-          className="relative w-full h-[360px] md:h-[420px] flex justify-center items-center mb-12"
-          onMouseEnter={() => setIsExpanded(true)}
-          onMouseLeave={() => setIsExpanded(false)}
-        >
+        <div className="relative w-full h-[380px] md:h-[460px] flex justify-center items-center mb-12">
           {filteredData.map((member, index) => {
             let offset = (index - currentIndex) % filteredData.length
             if (offset > Math.floor(filteredData.length / 2)) offset -= filteredData.length
             if (offset < -Math.floor(filteredData.length / 2)) offset += filteredData.length
-
-            if (Math.abs(offset) > 4) return null
 
             return (
               <motion.div
@@ -197,23 +182,27 @@ export default function Teams() {
                 }}
                 layoutId={`card-container-${member.id}`}
                 animate={getCardStyle(offset) as any}
-                transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                className={`absolute w-[260px] h-[340px] md:w-[300px] md:h-[400px] bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden shadow-2xl will-change-transform transform-gpu ${
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className={`absolute w-[260px] h-[340px] md:w-[320px] md:h-[420px] p-6 md:p-8 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl will-change-transform transform-gpu ${
                   Math.abs(offset) === 0 ? 'cursor-pointer hover:border-white/40' : ''
                 }`}
               >
-                <div className="w-full h-full relative group">
+                <div className="w-full h-full relative group rounded-xl overflow-hidden bg-black/20">
                   {member.img !== "Use User Icon" ? (
                     <motion.img 
                       layoutId={`card-img-${member.id}`}
                       src={member.img} 
                       alt={member.name}
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out will-change-transform"
+                      animate={{ scale: offset === 0 ? 1 : 0.9 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 will-change-transform transform-gpu"
                     />
                   ) : (
                     <motion.div 
                       layoutId={`card-img-${member.id}`}
-                      className="w-full h-full flex items-center justify-center bg-[#181818] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      animate={{ scale: offset === 0 ? 1 : 0.9 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="w-full h-full flex items-center justify-center bg-[#181818] grayscale group-hover:grayscale-0 will-change-transform transform-gpu"
                     >
                       <i className="fa-solid fa-user text-6xl text-white/20"></i>
                     </motion.div>
@@ -238,7 +227,7 @@ export default function Teams() {
         <div className="flex items-center gap-6">
           <button 
             onClick={prevSlide}
-            className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all duration-300 will-change-transform"
+            className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all duration-300 will-change-transform transform-gpu"
           >
             <i className="fa-solid fa-chevron-left"></i>
           </button>
@@ -254,7 +243,7 @@ export default function Teams() {
           </div>
           <button 
             onClick={nextSlide}
-            className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all duration-300 will-change-transform"
+            className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all duration-300 will-change-transform transform-gpu"
           >
             <i className="fa-solid fa-chevron-right"></i>
           </button>
@@ -268,12 +257,14 @@ export default function Teams() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             onClick={() => setSelectedMember(null)}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md will-change-transform transform-gpu"
           >
             <motion.div
               layoutId={`card-container-${selectedMember.id}`}
               onClick={(e) => e.stopPropagation()}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               className="relative w-full max-w-md bg-[#181818]/90 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 flex flex-col items-center shadow-[0_0_50px_rgba(0,170,255,0.15)] will-change-transform transform-gpu"
             >
               <button
@@ -289,11 +280,13 @@ export default function Teams() {
                     layoutId={`card-img-${selectedMember.id}`}
                     src={selectedMember.img} 
                     alt={selectedMember.name}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <motion.div 
                     layoutId={`card-img-${selectedMember.id}`}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="w-full h-full flex items-center justify-center bg-[#222]"
                   >
                     <i className="fa-solid fa-user text-5xl text-white/20"></i>
@@ -306,46 +299,44 @@ export default function Teams() {
                 animate="visible"
                 variants={{
                   hidden: { opacity: 0 },
-                  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } }
+                  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
                 }}
-                className="w-full flex flex-col gap-4 mb-10 px-4"
+                className="w-full flex flex-col items-center text-center gap-4 mb-10 px-4"
               >
-                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white">
-                  <div className="w-8 flex justify-center"><i className="fa-solid fa-user text-[#00AAFF] text-xl"></i></div>
+                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center justify-center gap-3 text-white w-full">
+                  <i className="fa-solid fa-user text-[#00AAFF] text-xl"></i>
                   <h3 className="text-2xl font-bold tracking-wide"><TypingText text={selectedMember.name} /></h3>
                 </motion.div>
 
-                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white/70">
-                  <div className="w-8 flex justify-center"><i className="fa-solid fa-briefcase text-[#00AAFF]"></i></div>
+                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center justify-center gap-3 text-white/70 w-full">
+                  <i className="fa-solid fa-briefcase text-[#00AAFF]"></i>
                   <p className="font-medium tracking-widest"><TypingText text={selectedMember.title} /></p>
                 </motion.div>
 
-                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white/70">
-                  <div className="w-8 flex justify-center"><i className="fa-solid fa-clock text-[#00AAFF]"></i></div>
+                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center justify-center gap-3 text-white/70 w-full">
+                  <i className="fa-solid fa-clock text-[#00AAFF]"></i>
                   <p className="font-medium"><TypingText text={selectedMember.time} /></p>
                 </motion.div>
 
-                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center gap-4 text-white/70">
-                  <div className="w-8 flex justify-center">
-                    <i className={`fa-solid ${selectedMember.type === 'Remote' ? 'fa-laptop' : 'fa-building'} text-[#00AAFF]`}></i>
-                  </div>
+                <motion.div variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }} className="flex items-center justify-center gap-3 text-white/70 w-full">
+                  <i className={`fa-solid ${selectedMember.type === 'Remote' ? 'fa-laptop' : 'fa-building'} text-[#00AAFF]`}></i>
                   <p className="font-medium"><TypingText text={selectedMember.type} /></p>
                 </motion.div>
               </motion.div>
 
               <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8, duration: 0.4, type: "spring" }}
+                transition={{ delay: 0.5, duration: 0.4, ease: "easeOut" }}
                 className="w-full flex items-center justify-center gap-6 pt-6 border-t border-white/10"
               >
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00AAFF] hover:border-[#00AAFF]/50 hover:bg-[#00AAFF]/10 transition-all duration-300">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00AAFF] hover:border-[#00AAFF]/50 hover:bg-[#00AAFF]/10 transition-all duration-300 transform-gpu will-change-transform">
                   <i className="fa-brands fa-linkedin-in"></i>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00AAFF] hover:border-[#00AAFF]/50 hover:bg-[#00AAFF]/10 transition-all duration-300">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00AAFF] hover:border-[#00AAFF]/50 hover:bg-[#00AAFF]/10 transition-all duration-300 transform-gpu will-change-transform">
                   <i className="fa-solid fa-envelope"></i>
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00AAFF] hover:border-[#00AAFF]/50 hover:bg-[#00AAFF]/10 transition-all duration-300">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00AAFF] hover:border-[#00AAFF]/50 hover:bg-[#00AAFF]/10 transition-all duration-300 transform-gpu will-change-transform">
                   <i className="fa-solid fa-phone"></i>
                 </a>
               </motion.div>
