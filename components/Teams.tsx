@@ -36,47 +36,102 @@ const teamData = [
 
 type TeamMember = typeof teamData[0]
 
+const TypingText = ({ text, delay = 0 }: { text: string, delay?: number }) => {
+  if (!text) return null
+  return (
+    <span className="inline-block">
+      {text.split('').map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.1, delay: delay + index * 0.03 }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
 const TeamCard = ({ member, offset, isMobile, onClick }: { member: TeamMember, offset: number, isMobile: boolean, onClick: () => void }) => {
   const [isHovered, setIsHovered] = useState(false)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const springX = useSpring(mouseX, { stiffness: 150, damping: 20 })
   const springY = useSpring(mouseY, { stiffness: 150, damping: 20 })
+  const cardRef = useRef<HTMLDivElement>(null)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
     mouseX.set(e.clientX - rect.left)
     mouseY.set(e.clientY - rect.top)
   }
 
-  const xOffset = isMobile
-    ? (offset === 0 ? "0%" : offset > 0 ? "105%" : "-105%")
-    : (offset === 0 ? "0%" : offset === 1 ? "60%" : offset === -1 ? "-60%" : offset === 2 ? "110%" : offset === -2 ? "-110%" : offset > 0 ? "150%" : "-150%")
+  let x = "0%"
+  let scale = 1
+  let opacity = 1
+  let zIndex = 10
+  let pointerEvents: "auto" | "none" = "none"
 
-  const scale = isMobile
-    ? (offset === 0 ? 1 : 0.85)
-    : (offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.9 : Math.abs(offset) === 2 ? 0.8 : 0.7)
-
-  const opacity = isMobile
-    ? (offset === 0 ? 1 : 0)
-    : (offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.5 : Math.abs(offset) === 2 ? 0.15 : 0)
-
-  const zIndex = 10 - Math.abs(offset)
-  const pointerEvents = offset === 0 ? "auto" : "none"
+  if (isMobile) {
+    x = offset === 0 ? "0%" : offset > 0 ? "105%" : "-105%"
+    scale = offset === 0 ? 1 : 0.85
+    opacity = offset === 0 ? 1 : 0
+    zIndex = 10 - Math.abs(offset)
+    pointerEvents = offset === 0 ? "auto" : "none"
+  } else {
+    if (offset === 0) {
+      x = "0%"
+      scale = 1
+      opacity = 1
+      zIndex = 10
+      pointerEvents = "auto"
+    } else if (offset === -1) {
+      x = "-60%"
+      scale = 0.9
+      opacity = 0.35
+      zIndex = 9
+      pointerEvents = "auto"
+    } else if (offset === 1) {
+      x = "60%"
+      scale = 0.9
+      opacity = 0.35
+      zIndex = 9
+      pointerEvents = "auto"
+    } else if (offset === -2) {
+      x = "-110%"
+      scale = 0.8
+      opacity = 0.1
+      zIndex = 8
+    } else if (offset === 2) {
+      x = "110%"
+      scale = 0.8
+      opacity = 0.1
+      zIndex = 8
+    } else {
+      x = offset > 0 ? "150%" : "-150%"
+      scale = 0.7
+      opacity = 0
+      zIndex = -1
+    }
+  }
 
   return (
     <motion.div
+      ref={cardRef}
       layoutId={`card-container-${member.id}`}
-      animate={{ x: xOffset, scale, opacity, zIndex }}
-      transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+      animate={{ x, scale, opacity, zIndex }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
       style={{ pointerEvents }}
-      onClick={() => { if (offset === 0) onClick() }}
+      onClick={() => { if (Math.abs(offset) <= 1) onClick() }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onMouseMove={handleMouseMove}
-      className={`absolute w-[260px] h-[340px] md:w-[320px] md:h-[420px] p-6 md:p-7 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl will-change-transform transform-gpu ${offset === 0 ? 'cursor-pointer hover:border-white/40' : ''}`}
+      className={`absolute w-[260px] h-[340px] md:w-[320px] md:h-[420px] p-5 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl will-change-transform transform-gpu ${offset === 0 ? 'cursor-pointer hover:border-white/40' : ''}`}
     >
-      <div className="w-full h-full relative rounded-xl overflow-hidden bg-black/20">
+      <div className="w-full h-full relative rounded-xl overflow-hidden bg-black/20 group">
         <motion.div
           animate={{ scale: offset === 0 ? 1 : 0.92 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
@@ -87,19 +142,19 @@ const TeamCard = ({ member, offset, isMobile, onClick }: { member: TeamMember, o
               layoutId={`card-img-${member.id}`}
               src={member.img} 
               alt={member.name}
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 will-change-transform transform-gpu"
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300 ease-out will-change-transform transform-gpu"
             />
           ) : (
             <motion.div 
               layoutId={`card-img-${member.id}`}
-              className="w-full h-full flex items-center justify-center bg-[#181818] grayscale group-hover:grayscale-0 transition-all duration-500 will-change-transform transform-gpu"
+              className="w-full h-full flex items-center justify-center bg-[#181818] grayscale group-hover:grayscale-0 transition-all duration-300 ease-out will-change-transform transform-gpu"
             >
               <i className="fa-solid fa-user text-6xl text-white/20"></i>
             </motion.div>
           )}
         </motion.div>
         
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-60 transition-opacity duration-300 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-50 group-hover:opacity-70 transition-opacity duration-300 pointer-events-none" />
       </div>
 
       <AnimatePresence>
@@ -129,7 +184,10 @@ export default function Teams() {
   const [isMobile, setIsMobile] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
 
-  const filteredMembers = useMemo(() => teamData.filter(m => filter === 'All' || m.type === filter), [filter])
+  const filteredMembers = useMemo(() => {
+    if (filter === 'All') return teamData
+    return teamData.filter(m => m.type === filter)
+  }, [filter])
 
   useEffect(() => {
     setIsMounted(true)
@@ -219,11 +277,12 @@ export default function Teams() {
           className="relative w-full h-[380px] md:h-[460px] flex justify-center items-center mb-12 cursor-grab active:cursor-grabbing z-10"
         >
           {filteredMembers.map((member, index) => {
-            const length = filteredMembers.length
-            let offset = ((index - currentIndex % length) + length) % length
-            if (offset > Math.floor(length / 2)) {
-              offset -= length
-            }
+            const total = filteredMembers.length
+            let offset = (index - currentIndex) % total
+            
+            // Adjust offset for circular shortest path
+            if (offset > Math.floor(total / 2)) offset -= total
+            if (offset < -Math.floor(total / 2)) offset += total
 
             return (
               <TeamCard 
@@ -277,8 +336,8 @@ export default function Teams() {
             <motion.div
               layoutId={`card-container-${selectedMember.id}`}
               onClick={(e) => e.stopPropagation()}
-              transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
-              className="relative w-full max-w-md bg-[#181818]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 flex flex-col items-center shadow-[0_0_50px_rgba(0,170,255,0.15)] will-change-transform transform-gpu"
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="relative w-full max-w-md bg-[#181818]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 flex flex-col items-center text-center shadow-[0_0_50px_rgba(0,170,255,0.15)] will-change-transform transform-gpu"
             >
               <button
                 onClick={() => setSelectedMember(null)}
@@ -293,13 +352,13 @@ export default function Teams() {
                     layoutId={`card-img-${selectedMember.id}`}
                     src={selectedMember.img} 
                     alt={selectedMember.name}
-                    transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <motion.div 
                     layoutId={`card-img-${selectedMember.id}`}
-                    transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
                     className="w-full h-full flex items-center justify-center bg-[#222]"
                   >
                     <i className="fa-solid fa-user text-5xl text-white/20"></i>
@@ -318,7 +377,9 @@ export default function Teams() {
               >
                 <motion.div variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", duration: 0.5 } } }} className="flex items-center justify-center gap-3 w-full">
                   <i className="fa-solid fa-user text-[#00AAFF] text-xl"></i>
-                  <h3 className="text-2xl font-bold tracking-wide bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">{selectedMember.name}</h3>
+                  <h3 className="text-2xl font-bold tracking-wide bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">
+                    {selectedMember.name}
+                  </h3>
                 </motion.div>
 
                 <motion.div variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1, transition: { type: "spring", duration: 0.5 } } }} className="flex items-center justify-center gap-3 text-white/70 w-full">
