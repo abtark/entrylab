@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -124,23 +125,25 @@ const TypewriterText = ({ text, delay }: { text: string; delay: number }) => {
 };
 
 export default function Teams() {
+  const [isMounted, setIsMounted] = useState(false);
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
-  const filteredData = TEAM_DATA.filter(
-    (member) => filter === "All" || member.type === filter
-  );
-
-  // Responsive Check
+  // Avoid Hydration errors by waiting for mount
   useEffect(() => {
+    setIsMounted(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
+    checkMobile(); // Check on mount
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  const filteredData = TEAM_DATA.filter(
+    (member) => filter === "All" || member.type === filter
+  );
 
   // Reset index on filter change
   useEffect(() => {
@@ -167,6 +170,13 @@ export default function Teams() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleNext, handlePrev, selectedMember]);
+
+  // Safe return prior to mounting to stop server-side rendering mismatches
+  if (!isMounted) {
+    return (
+      <section className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center py-24 overflow-hidden" />
+    );
+  }
 
   return (
     <section className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center py-24 overflow-hidden font-sans">
