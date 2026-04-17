@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
@@ -125,16 +125,14 @@ const TypewriterText = ({ text, delay }: { text: string; delay: number }) => {
 };
 
 export default function Teams() {
-  const [isMounted, setIsMounted] = useState(false);
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
-  // Avoid Hydration errors by waiting for mount
+  // Safe client-side window checking
   useEffect(() => {
-    setIsMounted(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile(); // Check on mount
     window.addEventListener("resize", checkMobile);
@@ -170,13 +168,6 @@ export default function Teams() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleNext, handlePrev, selectedMember]);
-
-  // Safe return prior to mounting to stop server-side rendering mismatches
-  if (!isMounted) {
-    return (
-      <section className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center py-24 overflow-hidden" />
-    );
-  }
 
   return (
     <section className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center py-24 overflow-hidden font-sans">
@@ -250,12 +241,15 @@ export default function Teams() {
               }`}
               onClick={() => isCenter && setSelectedMember(member)}
             >
-              <motion.div layoutId={`card-image-${member.id}`} className="w-full h-full">
+              <motion.div layoutId={`card-image-${member.id}`} className="relative w-full h-full">
                 {member.image ? (
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 320px"
+                    unoptimized // Bypasses domain checks for Vercel builds!
+                    className="object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-white/5 grayscale transition-all duration-700 ease-out group-hover:grayscale-0">
@@ -264,10 +258,10 @@ export default function Teams() {
                 )}
                 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
 
                 {/* Card Info */}
-                <div className="absolute bottom-0 left-0 w-full p-6 text-left transform transition-transform duration-500 group-hover:translate-y-0">
+                <div className="absolute bottom-0 left-0 w-full p-6 text-left transform transition-transform duration-500 group-hover:translate-y-0 z-20">
                   <h3 className="text-2xl font-bold text-white mb-1">{member.name}</h3>
                   <p className="text-[#00AAFF] font-medium text-sm">{member.title}</p>
                 </div>
@@ -320,13 +314,15 @@ export default function Teams() {
                 {/* Modal Image */}
                 <motion.div
                   layoutId={`card-image-${selectedMember.id}`}
-                  className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#00AAFF]/30 shadow-[0_0_30px_rgba(0,170,255,0.2)] mb-8 shrink-0"
+                  className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#00AAFF]/30 shadow-[0_0_30px_rgba(0,170,255,0.2)] mb-8 shrink-0"
                 >
                   {selectedMember.image ? (
-                    <img
+                    <Image
                       src={selectedMember.image}
                       alt={selectedMember.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      unoptimized // Bypasses domain checks
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-white/10">
