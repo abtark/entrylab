@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   User,
@@ -91,6 +91,7 @@ export default function Teams() {
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
+    // Initial check
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -230,6 +231,7 @@ export default function Teams() {
                   {/* Card Content */}
                   <motion.div layoutId={`card-image-container-${member.id}`} className="w-full h-full relative">
                     {member.img ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <motion.img
                         layoutId={`card-image-${member.id}`}
                         src={member.img}
@@ -263,12 +265,14 @@ export default function Teams() {
         <button
           onClick={handlePrev}
           className="p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all backdrop-blur-md group"
+          aria-label="Previous Team Member"
         >
           <ChevronLeft className="w-6 h-6 text-neutral-400 group-hover:text-white transition-colors" />
         </button>
         <button
           onClick={handleNext}
           className="p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all backdrop-blur-md group"
+          aria-label="Next Team Member"
         >
           <ChevronRight className="w-6 h-6 text-neutral-400 group-hover:text-white transition-colors" />
         </button>
@@ -296,6 +300,7 @@ export default function Teams() {
               <button
                 onClick={() => setSelectedMember(null)}
                 className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors border border-white/10"
+                aria-label="Close Modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -308,6 +313,7 @@ export default function Teams() {
                   style={{ borderRadius: '9999px' }}
                 >
                   {selectedMember.img ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
                     <img
                       src={selectedMember.img}
                       alt={selectedMember.name}
@@ -356,13 +362,13 @@ export default function Teams() {
                     variants={typingItem}
                     className="flex items-center justify-center space-x-6 mt-8 pt-6 border-t border-white/10 w-full"
                   >
-                    <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-[#00AAFF] hover:text-white text-neutral-400 transition-all border border-white/10 group">
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-3 rounded-full bg-white/5 hover:bg-[#00AAFF] hover:text-white text-neutral-400 transition-all border border-white/10 group">
                       <Linkedin className="w-5 h-5" />
                     </a>
-                    <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-[#00AAFF] hover:text-white text-neutral-400 transition-all border border-white/10 group">
+                    <a href="mailto:contact@example.com" aria-label="Email" className="p-3 rounded-full bg-white/5 hover:bg-[#00AAFF] hover:text-white text-neutral-400 transition-all border border-white/10 group">
                       <Mail className="w-5 h-5" />
                     </a>
-                    <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-[#00AAFF] hover:text-white text-neutral-400 transition-all border border-white/10 group">
+                    <a href="tel:+1234567890" aria-label="Phone" className="p-3 rounded-full bg-white/5 hover:bg-[#00AAFF] hover:text-white text-neutral-400 transition-all border border-white/10 group">
                       <Phone className="w-5 h-5" />
                     </a>
                   </motion.div>
