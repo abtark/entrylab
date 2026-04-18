@@ -234,8 +234,11 @@ export default function Teams() {
     else if (swipe > 50 || velocity.x > 400) prev();
   };
 
-  const positions = [-2, -1, 0, 1, 2];
+  // Increased Side Cards Mapping (Total 9 cards rendered)
+  const positions = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
+  
   const fastEase = [0.22, 1, 0.36, 1];
+  const iosSpring = { type: "spring", stiffness: 150, damping: 22, mass: 0.8 };
 
   // Modal Text Stagger Animation
   const staggerContainer = {
@@ -247,8 +250,8 @@ export default function Teams() {
   };
 
   const itemReveal = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: fastEase } },
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: iosSpring },
   };
 
   return (
@@ -260,9 +263,13 @@ export default function Teams() {
 
       {/* Header */}
       <div className="z-10 text-center mb-16 flex flex-col items-center px-4">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
+        <motion.h2 
+          animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
+          transition={{ duration: 5, ease: "linear", repeat: Infinity }}
+          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text transform-gpu"
+        >
           Meet The Experts
-        </h2>
+        </motion.h2>
         <div className="h-1 w-16 bg-[#00AAFF] mt-4 rounded-full" />
         <p className="mt-6 max-w-2xl text-white/70 text-center text-md md:text-lg leading-relaxed font-medium">
           Meet a team of highly skilled professionals, each bringing expertise and dedication to deliver strategic insights, innovative solutions, and reliable support for achieving long-term success.
@@ -301,13 +308,17 @@ export default function Teams() {
             let xPos = "0%";
             let scale = 1;
             let opacity = 1;
-            let zIndex = 30;
+            let zIndex = 50;
 
-            // Updated overlap offsets for 15% visibility (tight card deck feel)
-            if (offset === -1) { xPos = "-25%"; scale = 0.9; opacity = 0.6; zIndex = 20; }
-            else if (offset === 1) { xPos = "25%"; scale = 0.9; opacity = 0.6; zIndex = 20; }
-            else if (offset === -2) { xPos = "-45%"; scale = 0.8; opacity = 0.3; zIndex = 10; }
-            else if (offset === 2) { xPos = "45%"; scale = 0.8; opacity = 0.3; zIndex = 10; }
+            // 4 Cards on each side for depth
+            if (offset === -1) { xPos = "-30%"; scale = 0.9; opacity = 0.4; zIndex = 40; }
+            else if (offset === 1) { xPos = "30%"; scale = 0.9; opacity = 0.4; zIndex = 40; }
+            else if (offset === -2) { xPos = "-55%"; scale = 0.8; opacity = 0.25; zIndex = 30; }
+            else if (offset === 2) { xPos = "55%"; scale = 0.8; opacity = 0.25; zIndex = 30; }
+            else if (offset === -3) { xPos = "-75%"; scale = 0.7; opacity = 0.15; zIndex = 20; }
+            else if (offset === 3) { xPos = "75%"; scale = 0.7; opacity = 0.15; zIndex = 20; }
+            else if (offset === -4) { xPos = "-90%"; scale = 0.6; opacity = 0.08; zIndex = 10; }
+            else if (offset === 4) { xPos = "90%"; scale = 0.6; opacity = 0.08; zIndex = 10; }
 
             // Mobile adjustments (Hide side cards completely)
             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
@@ -381,14 +392,14 @@ export default function Teams() {
 
             <motion.div
               className="relative w-full max-w-md bg-white/5 border border-[#00AAFF] backdrop-blur-2xl rounded-[2rem] p-8 shadow-[0_0_30px_rgba(0,170,255,0.4)] flex flex-col items-center z-10 overflow-hidden transform-gpu will-change-transform"
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.35, ease: fastEase }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={iosSpring}
             >
               <button
                 onClick={() => setSelectedMember(null)}
-                className="absolute top-6 right-6 text-[#00AAFF]/70 hover:text-[#00AAFF] bg-[#00AAFF]/10 p-2 rounded-full hover:bg-[#00AAFF]/20 transition-all duration-200 ease-out transform-gpu"
+                className="absolute top-6 right-6 text-[#00AAFF]/70 hover:text-[#00AAFF] bg-[#00AAFF]/10 p-2 rounded-full hover:bg-[#00AAFF]/20 transition-all duration-150 ease-out transform-gpu hover:scale-110"
               >
                 <CloseIcon className="w-5 h-5" />
               </button>
@@ -396,7 +407,7 @@ export default function Teams() {
               {/* Shared Layout Image Lift */}
               <motion.div 
                 layoutId={`shared-img-container-${selectedMember.id}`}
-                transition={{ duration: 0.4, ease: fastEase }}
+                transition={iosSpring}
                 className="w-36 h-36 rounded-full overflow-hidden border-2 border-[#00AAFF]/50 mb-6 shadow-[0_0_20px_rgba(0,170,255,0.2)] bg-black/50 shrink-0 transform-gpu will-change-transform flex items-center justify-center"
               >
                 {selectedMember.imgLink === "Use User Icon" ? (
@@ -422,9 +433,13 @@ export default function Teams() {
                 <motion.div variants={itemReveal} className="flex flex-col items-center justify-center gap-1">
                   <div className="flex items-center gap-3">
                       <UserIcon className="w-5 h-5 text-[#00AAFF]" />
-                      <h3 className="text-2xl font-bold text-white tracking-wide">
+                      <motion.h3 
+                        animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
+                        transition={{ duration: 5, ease: "linear", repeat: Infinity }}
+                        className="text-2xl font-bold bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text tracking-wide transform-gpu"
+                      >
                         {selectedMember.name}
-                      </h3>
+                      </motion.h3>
                   </div>
                 </motion.div>
 
@@ -452,13 +467,13 @@ export default function Teams() {
 
                 {/* 5. Icons */}
                 <motion.div variants={itemReveal} className="flex items-center gap-6 pt-4 border-t border-white/10 w-full justify-center">
-                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-200 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
+                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-150 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
                     <LinkedInIcon className="w-5 h-5" />
                   </button>
-                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-200 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
+                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-150 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
                     <MailIcon className="w-5 h-5" />
                   </button>
-                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-200 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
+                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-150 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
                     <PhoneIcon className="w-5 h-5" />
                   </button>
                 </motion.div>
