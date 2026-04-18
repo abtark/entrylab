@@ -82,11 +82,15 @@ const CloseIcon = ({ className }: { className?: string }) => (
 
 const MagneticCard = ({ 
   member, 
-  isActive, 
+  isActive,
+  isModalOpen,
+  onHoverChange,
   onClick 
 }: { 
   member: Member; 
-  isActive: boolean; 
+  isActive: boolean;
+  isModalOpen: boolean;
+  onHoverChange: (hovered: boolean) => void;
   onClick: () => void 
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -101,8 +105,22 @@ const MagneticCard = ({
   const imgPx = useSpring(useMotionValue(0), { stiffness: 90, damping: 25 });
   const imgPy = useSpring(useMotionValue(0), { stiffness: 90, damping: 25 });
 
+  useEffect(() => {
+    if (isModalOpen) {
+      setIsHovered(false);
+      onHoverChange(false);
+      x.set(0); y.set(0); imgPx.set(0); imgPy.set(0);
+    }
+  }, [isModalOpen, onHoverChange, x, y, imgPx, imgPy]);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isModalOpen) return;
+    
+    if (!isHovered) {
+      setIsHovered(true);
+      onHoverChange(true);
+    }
+
     const rect = cardRef.current.getBoundingClientRect();
     const rawX = e.clientX - rect.left;
     const rawY = e.clientY - rect.top;
@@ -118,6 +136,7 @@ const MagneticCard = ({
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+    onHoverChange(false);
     x.set(0);
     y.set(0);
     imgPx.set(0);
@@ -130,12 +149,11 @@ const MagneticCard = ({
     <div
       ref={cardRef}
       className={`w-full h-full p-4 rounded-2xl border border-white/20 bg-white/5 flex flex-col items-center justify-center relative ${
-        isActive ? "cursor-pointer backdrop-blur-xl" : "cursor-default"
+        isActive && !isModalOpen ? "cursor-pointer backdrop-blur-xl" : "cursor-default"
       }`}
-      onMouseMove={isActive ? handleMouseMove : undefined}
-      onMouseEnter={() => isActive && setIsHovered(true)}
+      onMouseMove={isActive && !isModalOpen ? handleMouseMove : undefined}
       onMouseLeave={isActive ? handleMouseLeave : undefined}
-      onClick={() => isActive && onClick()}
+      onClick={() => isActive && !isModalOpen && onClick()}
     >
       <motion.div 
         layoutId={`shared-img-container-${member.id}`}
@@ -147,11 +165,9 @@ const MagneticCard = ({
         {member.imgLink === "Use User Icon" ? (
           <motion.div 
             initial={false}
-            animate={{ 
-                scale: isActive ? (isHovered ? 1.03 : 1) : 0.95,
-            }}
+            animate={{ scale: isActive ? (isHovered ? 1.03 : 1) : 0.95 }}
             transition={{ duration: 0.3, ease: fastEase }}
-            className={`w-full h-full flex items-center justify-center bg-white/10 transition-colors duration-300 ${isHovered && isActive ? 'text-[#00AAFF]' : 'text-gray-400 grayscale'}`}
+            className={`w-full h-full flex items-center justify-center bg-white/10 transition-all duration-300 ${isHovered && isActive ? 'text-[#00AAFF] grayscale-0' : 'text-gray-400 grayscale'}`}
           >
             <UserIcon className="w-20 h-20" />
           </motion.div>
@@ -161,12 +177,9 @@ const MagneticCard = ({
             alt={member.name}
             style={{ x: imgPx, y: imgPy }}
             initial={false}
-            animate={{
-              scale: isActive ? (isHovered ? 1.05 : 1) : 0.95,
-              filter: isActive && isHovered ? "grayscale(0%)" : "grayscale(100%)"
-            }}
+            animate={{ scale: isActive ? (isHovered ? 1.05 : 1) : 0.95 }}
             transition={{ duration: 0.3, ease: fastEase }}
-            className="w-full h-full max-w-none object-cover"
+            className={`w-full h-full max-w-none object-cover transition-all duration-300 ${isActive && isHovered ? "grayscale-0" : "grayscale"}`}
           />
         )}
       </motion.div>
@@ -195,6 +208,7 @@ export default function Teams() {
   const [filter, setFilter] = useState<FilterType>("All");
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+  const [activeCardHovered, setActiveCardHovered] = useState(false);
 
   const filteredMembers = useMemo(() => {
     if (filter === "All") return membersData;
@@ -209,12 +223,6 @@ export default function Teams() {
 
   const next = () => setActiveIndex((prev) => (prev + 1) % total);
   const prev = () => setActiveIndex((prev) => (prev - 1 + total) % total);
-
-  const handleDragEnd = (e: any, { offset, velocity }: any) => {
-    const swipe = offset.x;
-    if (swipe < -50 || velocity.x < -400) next();
-    else if (swipe > 50 || velocity.x > 400) prev();
-  };
 
   const positions = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
   
@@ -284,16 +292,19 @@ export default function Teams() {
             let xPos = "0%";
             let scale = 1;
             let opacity = 1;
+            let filter = "brightness(1)";
             let zIndex = 50;
 
-            if (offset === -1) { xPos = "-30%"; scale = 0.9; opacity = 0.4; zIndex = 40; }
-            else if (offset === 1) { xPos = "30%"; scale = 0.9; opacity = 0.4; zIndex = 40; }
-            else if (offset === -2) { xPos = "-55%"; scale = 0.8; opacity = 0.25; zIndex = 30; }
-            else if (offset === 2) { xPos = "55%"; scale = 0.8; opacity = 0.25; zIndex = 30; }
-            else if (offset === -3) { xPos = "-75%"; scale = 0.7; opacity = 0.15; zIndex = 20; }
-            else if (offset === 3) { xPos = "75%"; scale = 0.7; opacity = 0.15; zIndex = 20; }
-            else if (offset === -4) { xPos = "-90%"; scale = 0.6; opacity = 0.08; zIndex = 10; }
-            else if (offset === 4) { xPos = "90%"; scale = 0.6; opacity = 0.08; zIndex = 10; }
+            const peek = activeCardHovered ? 16 : 14;
+
+            if (offset === -1) { xPos = `-${peek * 2}%`; scale = 0.9; filter = "brightness(0.4)"; zIndex = 40; }
+            else if (offset === 1) { xPos = `${peek * 2}%`; scale = 0.9; filter = "brightness(0.4)"; zIndex = 40; }
+            else if (offset === -2) { xPos = `-${peek * 3.8}%`; scale = 0.8; filter = "brightness(0.2)"; zIndex = 30; }
+            else if (offset === 2) { xPos = `${peek * 3.8}%`; scale = 0.8; filter = "brightness(0.2)"; zIndex = 30; }
+            else if (offset === -3) { xPos = `-${peek * 5}%`; scale = 0.7; filter = "brightness(0.1)"; zIndex = 20; }
+            else if (offset === 3) { xPos = `${peek * 5}%`; scale = 0.7; filter = "brightness(0.1)"; zIndex = 20; }
+            else if (offset === -4) { xPos = `-${peek * 6}%`; scale = 0.6; filter = "brightness(0.05)"; zIndex = 10; }
+            else if (offset === 4) { xPos = `${peek * 6}%`; scale = 0.6; filter = "brightness(0.05)"; zIndex = 10; }
 
             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
             if (isMobile) {
@@ -303,14 +314,11 @@ export default function Teams() {
             return (
               <motion.div
                 key={`${member.id}-${offset}`}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
-                onDragEnd={handleDragEnd}
                 animate={{
                   x: xPos,
                   scale,
                   opacity,
+                  filter,
                   zIndex,
                 }}
                 transition={{
@@ -319,14 +327,18 @@ export default function Teams() {
                   damping: 20,
                   mass: 1,
                 }}
-                className={`absolute w-[240px] h-[340px] md:w-[320px] md:h-[440px] transform-gpu ${
-                  opacity === 0 ? "pointer-events-none" : "cursor-grab active:cursor-grabbing"
+                className={`absolute w-[240px] h-[340px] md:w-[320px] md:h-[440px] transform-gpu transition-colors ${
+                  opacity === 0 ? "pointer-events-none" : ""
                 }`}
               >
                 <div className={`w-full h-full ${offset === 0 ? "pointer-events-auto" : "pointer-events-none"}`}>
                   <MagneticCard 
                     member={member} 
-                    isActive={offset === 0} 
+                    isActive={offset === 0}
+                    isModalOpen={!!selectedMember}
+                    onHoverChange={(hovered) => {
+                      if (offset === 0) setActiveCardHovered(hovered);
+                    }}
                     onClick={() => setSelectedMember(member)} 
                   />
                 </div>
@@ -406,9 +418,13 @@ export default function Teams() {
                 <motion.div variants={itemReveal} className="flex flex-col items-center justify-center gap-1">
                   <div className="flex items-center gap-3">
                       <UserIcon className="w-5 h-5 text-[#00AAFF]" />
-                      <h3 className="text-2xl font-bold bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text tracking-wide">
+                      <motion.h3 
+                        animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
+                        transition={{ duration: 5, ease: "linear", repeat: Infinity }}
+                        className="text-2xl font-bold bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text tracking-wide"
+                      >
                         {selectedMember.name}
-                      </h3>
+                      </motion.h3>
                   </div>
                 </motion.div>
 
