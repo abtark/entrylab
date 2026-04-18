@@ -386,16 +386,18 @@ export default function Teams() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: fastEase }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-xl transform-gpu will-change-opacity"
+              className="absolute inset-0 bg-black/60 backdrop-blur-xl transform-gpu will-change-opacity cursor-pointer"
               onClick={() => setSelectedMember(null)}
             />
 
             <motion.div
-              className="relative w-full max-w-md bg-white/5 border border-[#00AAFF] backdrop-blur-2xl rounded-[2rem] p-8 shadow-[0_0_30px_rgba(0,170,255,0.4)] flex flex-col items-center z-10 overflow-hidden transform-gpu will-change-transform"
+              layoutId={`modal-${selectedMember.id}`}
+              className="relative w-full max-w-md bg-[#0a1122] border border-[#00AAFF] backdrop-blur-2xl rounded-[2rem] p-8 shadow-[0_0_30px_rgba(0,170,255,0.4)] flex flex-col items-center z-10 overflow-hidden transform-gpu will-change-transform"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={iosSpring}
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedMember(null)}
@@ -427,6 +429,7 @@ export default function Teams() {
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
+                exit="hidden"
                 className="w-full flex flex-col items-center justify-center space-y-3 text-center transform-gpu"
               >
                 {/* 1. Name */}
