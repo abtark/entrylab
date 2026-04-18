@@ -99,9 +99,13 @@ const MagneticCard = ({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  // Softer spring for smoother, less jumpy magnetic effect
-  const springX = useSpring(x, { stiffness: 90, damping: 25 });
-  const springY = useSpring(y, { stiffness: 90, damping: 25 });
+  // Magnetic Text Spring - Very subtle and smooth follow
+  const springX = useSpring(x, { stiffness: 80, damping: 30 });
+  const springY = useSpring(y, { stiffness: 80, damping: 30 });
+
+  // Depth Parallax Spring - For the image inside the card
+  const imgPx = useSpring(useMotionValue(0), { stiffness: 90, damping: 25 });
+  const imgPy = useSpring(useMotionValue(0), { stiffness: 90, damping: 25 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isActive || !cardRef.current) return;
@@ -113,22 +117,28 @@ const MagneticCard = ({
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Limit movement to a small smooth offset relative to the center
-    const offsetX = (rawX - centerX) * 0.15;
-    const offsetY = (rawY - centerY) * 0.15;
+    // Very subtle offset for magnetic text
+    const offsetX = (rawX - centerX) * 0.08;
+    const offsetY = (rawY - centerY) * 0.08;
 
-    x.set(centerX + offsetX);
-    y.set(centerY + offsetY);
+    x.set(offsetX);
+    y.set(offsetY);
+
+    // Subtle parallax for image depth
+    imgPx.set((rawX - centerX) * -0.02);
+    imgPy.set((rawY - centerY) * -0.02);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     // Softly re-center when leaving
-    if (cardRef.current) {
-        x.set(cardRef.current.offsetWidth / 2);
-        y.set(cardRef.current.offsetHeight / 2);
-    }
+    x.set(0);
+    y.set(0);
+    imgPx.set(0);
+    imgPy.set(0);
   };
+
+  const fastEase = [0.22, 1, 0.36, 1];
 
   return (
     <div
@@ -143,16 +153,20 @@ const MagneticCard = ({
     >
       <motion.div 
         layoutId={`shared-img-container-${member.id}`}
-        className="w-full h-full rounded-xl overflow-hidden relative shadow-lg bg-black/30 transform-gpu will-change-transform"
+        transition={{ duration: 0.35, ease: fastEase }}
+        className="w-full h-full rounded-xl overflow-hidden relative shadow-lg bg-black/40 transform-gpu will-change-transform flex items-center justify-center"
       >
+        {/* iOS-like subtle glass reflection overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 pointer-events-none z-10" />
+
         {member.imgLink === "Use User Icon" ? (
           <motion.div 
             initial={false}
             animate={{ 
-                scale: isActive ? (isHovered ? 1.05 : 1) : 0.92,
+                scale: isActive ? (isHovered ? 1.03 : 1) : 0.95,
             }}
-            transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className={`w-full h-full flex items-center justify-center bg-white/10 transition-colors duration-500 ${isHovered && isActive ? 'text-[#00AAFF]' : 'text-gray-400 grayscale'}`}
+            transition={{ duration: 0.3, ease: fastEase }}
+            className={`w-full h-full flex items-center justify-center bg-white/10 transition-colors duration-300 transform-gpu will-change-transform ${isHovered && isActive ? 'text-[#00AAFF]' : 'text-gray-400 grayscale'}`}
           >
             <UserIcon className="w-20 h-20" />
           </motion.div>
@@ -160,37 +174,33 @@ const MagneticCard = ({
           <motion.img
             src={member.imgLink}
             alt={member.name}
+            style={{ x: imgPx, y: imgPy }}
             initial={false}
             animate={{
-              scale: isActive ? (isHovered ? 1.05 : 1) : 0.92,
+              scale: isActive ? (isHovered ? 1.05 : 1) : 0.95,
               filter: isActive && isHovered ? "grayscale(0%)" : "grayscale(100%)"
             }}
-            transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className="w-full h-full object-cover transform-gpu will-change-transform"
+            transition={{ duration: 0.3, ease: fastEase }}
+            className="w-[105%] h-[105%] max-w-none object-cover transform-gpu will-change-transform"
           />
         )}
       </motion.div>
 
-      {/* Magnetic Cursor Text (Only for active focus card) */}
+      {/* Magnetic Cursor Text (Bottom Centered, only for active focus card) */}
       <AnimatePresence>
         {isActive && isHovered && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            style={{ 
-                x: springX, 
-                y: springY,
-                position: "absolute",
-                top: 0,
-                left: 0,
-                translateX: "-50%",
-                translateY: "-50%"
-            }}
-            className="z-50 pointer-events-none bg-black/80 backdrop-blur-md px-5 py-2 rounded-full border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] transform-gpu will-change-transform"
-          >
-            <p className="text-white font-medium whitespace-nowrap text-sm tracking-wide">{member.name}</p>
-          </motion.div>
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none z-50">
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.9 }}
+              transition={{ duration: 0.25, ease: fastEase }}
+              style={{ x: springX, y: springY }}
+              className="bg-black/80 backdrop-blur-md px-5 py-2 rounded-full border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] transform-gpu will-change-transform"
+            >
+              <p className="text-white font-medium whitespace-nowrap text-sm tracking-wide">{member.name}</p>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
@@ -220,24 +230,25 @@ export default function Teams() {
 
   const handleDragEnd = (e: any, { offset, velocity }: any) => {
     const swipe = offset.x;
-    if (swipe < -50 || velocity.x < -500) next();
-    else if (swipe > 50 || velocity.x > 500) prev();
+    if (swipe < -50 || velocity.x < -400) next();
+    else if (swipe > 50 || velocity.x > 400) prev();
   };
 
   const positions = [-2, -1, 0, 1, 2];
+  const fastEase = [0.22, 1, 0.36, 1];
 
   // Modal Text Stagger Animation
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.05, delayChildren: 0.1 },
     },
   };
 
   const itemReveal = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 20 } },
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: fastEase } },
   };
 
   return (
@@ -248,32 +259,31 @@ export default function Teams() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none transform-gpu" />
 
       {/* Header */}
-      <div className="z-10 text-center mb-16 flex flex-col items-center">
-        <motion.h2 
-          animate={{ backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"] }}
-          transition={{ duration: 6, ease: "linear", repeat: Infinity }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-l from-white via-[#00AAFF] to-white bg-[length:200%_auto] text-transparent bg-clip-text"
-        >
+      <div className="z-10 text-center mb-16 flex flex-col items-center px-4">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
           Meet The Experts
-        </motion.h2>
+        </h2>
         <div className="h-1 w-16 bg-[#00AAFF] mt-4 rounded-full" />
+        <p className="mt-6 max-w-2xl text-white/70 text-center text-md md:text-lg leading-relaxed font-medium">
+          Meet a team of highly skilled professionals, each bringing expertise and dedication to deliver strategic insights, innovative solutions, and reliable support for achieving long-term success.
+        </p>
       </div>
 
       {/* Filters (Glassmorphism + Animated Glow) */}
-      <div className="z-10 flex gap-4 mb-16 relative">
+      <div className="z-10 flex gap-4 mb-12 relative">
         {["All", "Onsite", "Remote"].map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f as FilterType)}
-            className={`relative px-6 py-2.5 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${
+            className={`relative px-6 py-2.5 rounded-full text-sm font-medium transition-colors duration-200 z-10 ${
               filter === f ? "text-white" : "text-white/60 hover:text-white"
             }`}
           >
             {filter === f && (
               <motion.div
                 layoutId="activeFilter"
-                className="absolute inset-0 bg-white/10 border border-white/40 rounded-full shadow-[0_0_20px_rgba(0,170,255,0.3)] -z-10 transform-gpu"
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                className="absolute inset-0 bg-white/10 border border-white/40 rounded-full shadow-[0_0_20px_rgba(0,170,255,0.3)] -z-10 transform-gpu will-change-transform"
+                transition={{ duration: 0.3, ease: fastEase }}
               />
             )}
             {f}
@@ -293,11 +303,11 @@ export default function Teams() {
             let opacity = 1;
             let zIndex = 30;
 
-            // Correct visual layering and positioning
-            if (offset === -1) { xPos = "-65%"; scale = 0.85; opacity = 0.35; zIndex = 20; }
-            else if (offset === 1) { xPos = "65%"; scale = 0.85; opacity = 0.35; zIndex = 20; }
-            else if (offset === -2) { xPos = "-110%"; scale = 0.7; opacity = 0.1; zIndex = 10; }
-            else if (offset === 2) { xPos = "110%"; scale = 0.7; opacity = 0.1; zIndex = 10; }
+            // Updated overlap offsets for 15% visibility (tight card deck feel)
+            if (offset === -1) { xPos = "-25%"; scale = 0.9; opacity = 0.6; zIndex = 20; }
+            else if (offset === 1) { xPos = "25%"; scale = 0.9; opacity = 0.6; zIndex = 20; }
+            else if (offset === -2) { xPos = "-45%"; scale = 0.8; opacity = 0.3; zIndex = 10; }
+            else if (offset === 2) { xPos = "45%"; scale = 0.8; opacity = 0.3; zIndex = 10; }
 
             // Mobile adjustments (Hide side cards completely)
             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
@@ -319,8 +329,10 @@ export default function Teams() {
                   zIndex,
                 }}
                 transition={{
-                  duration: 0.35,
-                  ease: [0.22, 1, 0.36, 1], // Smooth, fast cubic-bezier
+                  type: "spring",
+                  stiffness: 120, // Apple-like snappy spring
+                  damping: 20,
+                  mass: 1,
                 }}
                 className={`absolute w-[240px] h-[340px] md:w-[320px] md:h-[440px] transform-gpu will-change-transform ${
                     opacity === 0 ? "pointer-events-none" : "cursor-grab active:cursor-grabbing"
@@ -342,13 +354,13 @@ export default function Teams() {
       <div className="z-20 flex gap-6 mt-12 relative">
         <button
           onClick={prev}
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-300 transform-gpu backdrop-blur-md relative z-50"
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-200 ease-out transform-gpu backdrop-blur-md relative z-50"
         >
           <ArrowLeftIcon className="w-5 h-5" />
         </button>
         <button
           onClick={next}
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-300 transform-gpu backdrop-blur-md relative z-50"
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-200 ease-out transform-gpu backdrop-blur-md relative z-50"
         >
           <ArrowRightIcon className="w-5 h-5" />
         </button>
@@ -362,21 +374,21 @@ export default function Teams() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.3, ease: fastEase }}
               className="absolute inset-0 bg-black/60 backdrop-blur-xl transform-gpu will-change-opacity"
               onClick={() => setSelectedMember(null)}
             />
 
             <motion.div
-              className="relative w-full max-w-md bg-white/5 border border-white/20 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl flex flex-col items-center z-10 overflow-hidden transform-gpu will-change-transform"
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-md bg-white/5 border border-[#00AAFF] backdrop-blur-2xl rounded-[2rem] p-8 shadow-[0_0_30px_rgba(0,170,255,0.4)] flex flex-col items-center z-10 overflow-hidden transform-gpu will-change-transform"
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.35, ease: fastEase }}
             >
               <button
                 onClick={() => setSelectedMember(null)}
-                className="absolute top-6 right-6 text-white/50 hover:text-white bg-white/5 p-2 rounded-full hover:bg-white/10 transition-all duration-200 ease-out transform-gpu"
+                className="absolute top-6 right-6 text-[#00AAFF]/70 hover:text-[#00AAFF] bg-[#00AAFF]/10 p-2 rounded-full hover:bg-[#00AAFF]/20 transition-all duration-200 ease-out transform-gpu"
               >
                 <CloseIcon className="w-5 h-5" />
               </button>
@@ -384,18 +396,18 @@ export default function Teams() {
               {/* Shared Layout Image Lift */}
               <motion.div 
                 layoutId={`shared-img-container-${selectedMember.id}`}
-                transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                className="w-36 h-36 rounded-full overflow-hidden border-2 border-white/20 mb-6 shadow-[0_0_30px_rgba(0,170,255,0.2)] bg-black/50 shrink-0 transform-gpu will-change-transform"
+                transition={{ duration: 0.4, ease: fastEase }}
+                className="w-36 h-36 rounded-full overflow-hidden border-2 border-[#00AAFF]/50 mb-6 shadow-[0_0_20px_rgba(0,170,255,0.2)] bg-black/50 shrink-0 transform-gpu will-change-transform flex items-center justify-center"
               >
                 {selectedMember.imgLink === "Use User Icon" ? (
-                  <div className="w-full h-full flex items-center justify-center text-white">
+                  <div className="w-full h-full flex items-center justify-center text-[#00AAFF]">
                     <UserIcon className="w-16 h-16" />
                   </div>
                 ) : (
                   <img
                     src={selectedMember.imgLink}
                     alt={selectedMember.name}
-                    className="w-full h-full object-cover"
+                    className="w-[105%] h-[105%] max-w-none object-cover"
                   />
                 )}
               </motion.div>
@@ -404,53 +416,49 @@ export default function Teams() {
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
-                className="w-full flex flex-col items-center justify-center space-y-3 text-white/90 text-center transform-gpu"
+                className="w-full flex flex-col items-center justify-center space-y-3 text-center transform-gpu"
               >
                 {/* 1. Name */}
                 <motion.div variants={itemReveal} className="flex flex-col items-center justify-center gap-1">
                   <div className="flex items-center gap-3">
                       <UserIcon className="w-5 h-5 text-[#00AAFF]" />
-                      <motion.h3 
-                        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                        transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-                        className="text-2xl font-bold bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text tracking-wide"
-                      >
+                      <h3 className="text-2xl font-bold text-white tracking-wide">
                         {selectedMember.name}
-                      </motion.h3>
+                      </h3>
                   </div>
                 </motion.div>
 
                 {/* 2. Title */}
                 <motion.div variants={itemReveal} className="flex items-center justify-center gap-3">
                   <BriefcaseIcon className="w-5 h-5 text-[#00AAFF]" />
-                  <p className="text-lg font-medium">{selectedMember.title}</p>
+                  <p className="text-lg font-semibold text-[#00AAFF]">{selectedMember.title}</p>
                 </motion.div>
 
                 {/* 3. Time */}
-                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 text-white/70">
-                  <ClockIcon className="w-4 h-4" />
-                  <p className="text-md">{selectedMember.time}</p>
+                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3">
+                  <ClockIcon className="w-4 h-4 text-[#00AAFF]" />
+                  <p className="text-md font-medium text-[#00AAFF]">{selectedMember.time}</p>
                 </motion.div>
 
                 {/* 4. Type */}
-                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 text-white/70 pb-6">
+                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 pb-6">
                   {selectedMember.type === "Onsite" ? (
-                    <BuildingIcon className="w-4 h-4" />
+                    <BuildingIcon className="w-4 h-4 text-[#00AAFF]" />
                   ) : (
-                    <LaptopIcon className="w-4 h-4" />
+                    <LaptopIcon className="w-4 h-4 text-[#00AAFF]" />
                   )}
-                  <p className="text-md">{selectedMember.type}</p>
+                  <p className="text-md font-medium text-[#00AAFF]">{selectedMember.type}</p>
                 </motion.div>
 
                 {/* 5. Icons */}
                 <motion.div variants={itemReveal} className="flex items-center gap-6 pt-4 border-t border-white/10 w-full justify-center">
-                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-200 ease-out hover:scale-110 transform-gpu">
+                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-200 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
                     <LinkedInIcon className="w-5 h-5" />
                   </button>
-                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-200 ease-out hover:scale-110 transform-gpu">
+                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-200 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
                     <MailIcon className="w-5 h-5" />
                   </button>
-                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-200 ease-out hover:scale-110 transform-gpu">
+                  <button className="p-3 rounded-full bg-[#00AAFF]/10 border border-[#00AAFF]/20 hover:bg-[#00AAFF] text-[#00AAFF] hover:text-white transition-all duration-200 ease-out hover:scale-110 transform-gpu shadow-[0_0_15px_rgba(0,170,255,0.1)]">
                     <PhoneIcon className="w-5 h-5" />
                   </button>
                 </motion.div>
