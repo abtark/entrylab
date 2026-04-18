@@ -94,65 +94,79 @@ const MagneticCard = ({
   onClick: () => void 
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
-  const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+  const springX = useSpring(x, { stiffness: 300, damping: 20 });
+  const springY = useSpring(y, { stiffness: 300, damping: 20 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isActive) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    x.set((e.clientX - centerX) * 0.2);
-    y.set((e.clientY - centerY) * 0.2);
+    if (!isActive || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    // Calculate cursor position relative to the card's top-left
+    x.set(e.clientX - rect.left);
+    y.set(e.clientY - rect.top);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    x.set(0);
-    y.set(0);
+    // Center it softly when leaving
+    if (cardRef.current) {
+        x.set(cardRef.current.offsetWidth / 2);
+        y.set(cardRef.current.offsetHeight / 2);
+    }
   };
 
   return (
     <div
-      className={`w-full h-full p-4 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-xl flex flex-col items-center justify-center cursor-pointer transform-gpu transition-all duration-400 ease-out ${
-        isActive ? "pointer-events-auto" : "pointer-events-none"
+      ref={cardRef}
+      className={`w-full h-full p-4 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-xl flex flex-col items-center justify-center transform-gpu relative ${
+        isActive ? "cursor-pointer" : "cursor-default"
       }`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={() => isActive && onClick()}
     >
       <motion.div 
-        layoutId={`img-container-${member.id}`}
-        className="w-full h-full rounded-xl overflow-hidden relative"
+        layoutId={`shared-img-container-${member.id}`}
+        className="w-full h-full rounded-xl overflow-hidden relative shadow-lg"
       >
         {member.imgLink === "Use User Icon" ? (
-          <div className={`w-full h-full flex items-center justify-center bg-white/10 transition duration-300 ${isHovered && isActive ? 'text-blue-400 scale-105' : 'text-gray-400 grayscale'}`}>
+          <div className={`w-full h-full flex items-center justify-center bg-white/10 transition duration-500 ${isHovered && isActive ? 'text-[#00AAFF] scale-105' : 'text-gray-400 grayscale'}`}>
             <UserIcon className="w-20 h-20" />
           </div>
         ) : (
           <img
             src={member.imgLink}
             alt={member.name}
-            className={`w-full h-full object-cover transition-all duration-300 transform-gpu ${
+            className={`w-full h-full object-cover transition-all duration-500 ease-out transform-gpu ${
               isHovered && isActive ? "grayscale-0 scale-105" : "grayscale"
             }`}
           />
         )}
       </motion.div>
 
+      {/* Magnetic Cursor Text (Only for active focus card) */}
       <AnimatePresence>
         {isActive && isHovered && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            style={{ x: springX, y: springY }}
-            className="absolute z-50 pointer-events-none bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-2xl"
+            style={{ 
+                x: springX, 
+                y: springY,
+                position: "absolute",
+                top: 0,
+                left: 0,
+                translateX: "-50%",
+                translateY: "-50%"
+            }}
+            className="z-50 pointer-events-none bg-black/70 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-2xl"
           >
-            <p className="text-white font-medium whitespace-nowrap">{member.name}</p>
+            <p className="text-white font-medium whitespace-nowrap text-sm tracking-wide">{member.name}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -189,34 +203,37 @@ export default function Teams() {
 
   const positions = [-2, -1, 0, 1, 2];
 
-  const staggerVariants = {
+  // Modal Text Stagger Animation
+  const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  const itemReveal = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 20 } },
   };
 
   return (
     <section className="relative w-full min-h-screen bg-[#050A15] overflow-hidden py-24 flex flex-col items-center justify-center font-sans antialiased text-white selection:bg-blue-500/30">
       
       {/* Background Glow Elements */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] pointer-events-none transform-gpu" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] pointer-events-none transform-gpu" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00AAFF]/20 rounded-full blur-[120px] pointer-events-none transform-gpu" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none transform-gpu" />
 
       {/* Header */}
       <div className="z-10 text-center mb-16 flex flex-col items-center">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00AAFF] via-blue-200 to-white animate-pulse">
-            Meet The Experts
-          </span>
-        </h2>
-        <div className="h-1 w-24 bg-gradient-to-r from-[#00AAFF] to-transparent mt-4 rounded-full" />
+        <motion.h2 
+          animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+          transition={{ duration: 6, ease: "linear", repeat: Infinity }}
+          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-[#00AAFF] to-white bg-[length:200%_auto] text-transparent bg-clip-text"
+        >
+          Meet The Experts
+        </motion.h2>
+        <div className="h-1 w-16 bg-[#00AAFF] mt-5 rounded-full" />
       </div>
 
       {/* Filters */}
@@ -237,7 +254,7 @@ export default function Teams() {
       </div>
 
       {/* Carousel */}
-      <div className="relative w-full max-w-7xl h-[400px] md:h-[480px] flex items-center justify-center z-10 perspective-[1200px]">
+      <div className="relative w-full max-w-[1400px] h-[400px] md:h-[480px] flex items-center justify-center z-10 perspective-[1200px]">
         <motion.div
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
@@ -251,20 +268,21 @@ export default function Teams() {
             const index = (activeIndex + offset + total) % total;
             const member = filteredMembers[index];
 
-            let xPos = 0;
+            let xPos = "0%";
             let scale = 1;
             let opacity = 1;
             let zIndex = 30;
 
-            if (offset === -1) { xPos = -60; scale = 0.85; opacity = 0.35; zIndex = 20; }
-            else if (offset === 1) { xPos = 60; scale = 0.85; opacity = 0.35; zIndex = 20; }
-            else if (offset === -2) { xPos = -100; scale = 0.7; opacity = 0.1; zIndex = 10; }
-            else if (offset === 2) { xPos = 100; scale = 0.7; opacity = 0.1; zIndex = 10; }
+            // Adjusted side cards visibility and position to show beautifully
+            if (offset === -1) { xPos = "-65%"; scale = 0.85; opacity = 0.7; zIndex = 20; }
+            else if (offset === 1) { xPos = "65%"; scale = 0.85; opacity = 0.7; zIndex = 20; }
+            else if (offset === -2) { xPos = "-110%"; scale = 0.7; opacity = 0.3; zIndex = 10; }
+            else if (offset === 2) { xPos = "110%"; scale = 0.7; opacity = 0.3; zIndex = 10; }
 
-            // Adjust values for mobile gracefully
+            // Mobile adjustments
             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
             if (isMobile) {
-              if (Math.abs(offset) === 1) { xPos = offset * 80; opacity = 0.2; scale = 0.8; }
+              if (Math.abs(offset) === 1) { xPos = offset > 0 ? "80%" : "-80%"; opacity = 0.5; scale = 0.8; }
               if (Math.abs(offset) === 2) { opacity = 0; }
             }
 
@@ -272,23 +290,23 @@ export default function Teams() {
               <motion.div
                 key={`${member.id}-${offset}`}
                 animate={{
-                  x: `${xPos}%`,
+                  x: xPos,
                   scale,
                   opacity,
                   zIndex,
                 }}
                 transition={{
-                  duration: 0.6,
-                  ease: [0.16, 1, 0.3, 1], // Apple-like spring/inertia curve
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 25,
+                  mass: 1,
                 }}
                 className="absolute w-[240px] h-[340px] md:w-[320px] md:h-[440px] transform-gpu"
               >
                 <MagneticCard 
                   member={member} 
                   isActive={offset === 0} 
-                  onClick={() => {
-                    if (offset === 0) setSelectedMember(member);
-                  }} 
+                  onClick={() => setSelectedMember(member)} 
                 />
               </motion.div>
             );
@@ -296,22 +314,22 @@ export default function Teams() {
       </div>
 
       {/* Navigation Controls */}
-      <div className="z-20 flex gap-6 mt-12">
+      <div className="z-20 flex gap-6 mt-12 relative">
         <button
           onClick={prev}
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-300 transform-gpu backdrop-blur-md"
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-300 transform-gpu backdrop-blur-md relative z-50"
         >
           <ArrowLeftIcon className="w-5 h-5" />
         </button>
         <button
           onClick={next}
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-300 transform-gpu backdrop-blur-md"
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:scale-110 transition-all duration-300 transform-gpu backdrop-blur-md relative z-50"
         >
           <ArrowRightIcon className="w-5 h-5" />
         </button>
       </div>
 
-      {/* Modal */}
+      {/* Fluid Modal */}
       <AnimatePresence>
         {selectedMember && (
           <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
@@ -319,25 +337,33 @@ export default function Teams() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
               className="absolute inset-0 bg-black/60 backdrop-blur-xl"
               onClick={() => setSelectedMember(null)}
             />
 
             <motion.div
-              layoutId={`img-container-${selectedMember.id}`}
-              className="relative w-full max-w-md bg-white/5 border border-white/20 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl flex flex-col items-center z-10"
+              className="relative w-full max-w-md bg-white/5 border border-white/20 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl flex flex-col items-center z-10 overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
               <button
                 onClick={() => setSelectedMember(null)}
-                className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors"
+                className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors bg-white/5 p-2 rounded-full hover:bg-white/10"
               >
-                <CloseIcon className="w-6 h-6" />
+                <CloseIcon className="w-5 h-5" />
               </button>
 
-              <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-white/20 mb-6 shadow-[0_0_30px_rgba(0,170,255,0.2)]">
+              {/* Shared Layout Image Lift */}
+              <motion.div 
+                layoutId={`shared-img-container-${selectedMember.id}`}
+                className="w-36 h-36 rounded-full overflow-hidden border-2 border-white/20 mb-6 shadow-[0_0_30px_rgba(0,170,255,0.2)] bg-black/50"
+              >
                 {selectedMember.imgLink === "Use User Icon" ? (
-                  <div className="w-full h-full flex items-center justify-center bg-white/10 text-white">
-                    <UserIcon className="w-12 h-12" />
+                  <div className="w-full h-full flex items-center justify-center text-white">
+                    <UserIcon className="w-16 h-16" />
                   </div>
                 ) : (
                   <img
@@ -346,30 +372,32 @@ export default function Teams() {
                     className="w-full h-full object-cover"
                   />
                 )}
-              </div>
+              </motion.div>
 
               <motion.div
-                variants={staggerVariants}
+                variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
-                className="w-full flex flex-col items-center space-y-3 text-white/90"
+                className="w-full flex flex-col items-center justify-center space-y-3 text-white/90 text-center"
               >
-                <motion.div variants={itemVariants} className="flex items-center gap-3">
-                  <UserIcon className="w-5 h-5 text-[#00AAFF]" />
-                  <h3 className="text-2xl font-bold text-white">{selectedMember.name}</h3>
+                <motion.div variants={itemReveal} className="flex flex-col items-center justify-center gap-1">
+                  <div className="flex items-center gap-3">
+                      <UserIcon className="w-5 h-5 text-[#00AAFF]" />
+                      <h3 className="text-2xl font-bold text-white tracking-wide">{selectedMember.name}</h3>
+                  </div>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex items-center gap-3">
+                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3">
                   <BriefcaseIcon className="w-5 h-5 text-[#00AAFF]" />
-                  <p className="text-lg">{selectedMember.title}</p>
+                  <p className="text-lg font-medium">{selectedMember.title}</p>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex items-center gap-3 text-white/70">
+                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 text-white/70">
                   <ClockIcon className="w-4 h-4" />
                   <p className="text-md">{selectedMember.time}</p>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex items-center gap-3 text-white/70 pb-6">
+                <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 text-white/70 pb-6">
                   {selectedMember.type === "Onsite" ? (
                     <BuildingIcon className="w-4 h-4" />
                   ) : (
@@ -378,14 +406,14 @@ export default function Teams() {
                   <p className="text-md">{selectedMember.type}</p>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex items-center gap-6 pt-4 border-t border-white/10 w-full justify-center">
-                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300">
+                <motion.div variants={itemReveal} className="flex items-center gap-6 pt-4 border-t border-white/10 w-full justify-center">
+                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300 hover:scale-110">
                     <LinkedInIcon className="w-5 h-5" />
                   </button>
-                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300">
+                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300 hover:scale-110">
                     <MailIcon className="w-5 h-5" />
                   </button>
-                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300">
+                  <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300 hover:scale-110">
                     <PhoneIcon className="w-5 h-5" />
                   </button>
                 </motion.div>
