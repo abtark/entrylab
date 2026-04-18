@@ -98,20 +98,31 @@ const MagneticCard = ({
   
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 300, damping: 20 });
-  const springY = useSpring(y, { stiffness: 300, damping: 20 });
+  
+  // Smooth spring for cursor tracking
+  const springX = useSpring(x, { stiffness: 200, damping: 20 });
+  const springY = useSpring(y, { stiffness: 200, damping: 20 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isActive || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    // Calculate cursor position relative to the card's top-left
-    x.set(e.clientX - rect.left);
-    y.set(e.clientY - rect.top);
+    
+    // Calculate raw mouse position relative to top-left of the card
+    const rawX = e.clientX - rect.left;
+    const rawY = e.clientY - rect.top;
+
+    // Clamp values so the magnetic name stays strictly INSIDE the card bounds
+    // Assuming tooltip is ~140px wide and ~40px tall (padding bounds)
+    const clampX = Math.max(70, Math.min(rect.width - 70, rawX));
+    const clampY = Math.max(30, Math.min(rect.height - 30, rawY));
+
+    x.set(clampX);
+    y.set(clampY);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    // Center it softly when leaving
+    // Softly re-center when leaving
     if (cardRef.current) {
         x.set(cardRef.current.offsetWidth / 2);
         y.set(cardRef.current.offsetHeight / 2);
@@ -131,19 +142,30 @@ const MagneticCard = ({
     >
       <motion.div 
         layoutId={`shared-img-container-${member.id}`}
-        className="w-full h-full rounded-xl overflow-hidden relative shadow-lg"
+        className="w-full h-full rounded-xl overflow-hidden relative shadow-lg bg-black/30"
       >
         {member.imgLink === "Use User Icon" ? (
-          <div className={`w-full h-full flex items-center justify-center bg-white/10 transition duration-500 ${isHovered && isActive ? 'text-[#00AAFF] scale-105' : 'text-gray-400 grayscale'}`}>
+          <motion.div 
+            initial={false}
+            animate={{ 
+                scale: isActive ? (isHovered ? 1.05 : 1) : 0.92,
+            }}
+            transition={{ type: "spring", stiffness: 120, damping: 20 }}
+            className={`w-full h-full flex items-center justify-center bg-white/10 transition-colors duration-500 ${isHovered && isActive ? 'text-[#00AAFF]' : 'text-gray-400 grayscale'}`}
+          >
             <UserIcon className="w-20 h-20" />
-          </div>
+          </motion.div>
         ) : (
-          <img
+          <motion.img
             src={member.imgLink}
             alt={member.name}
-            className={`w-full h-full object-cover transition-all duration-500 ease-out transform-gpu ${
-              isHovered && isActive ? "grayscale-0 scale-105" : "grayscale"
-            }`}
+            initial={false}
+            animate={{
+              scale: isActive ? (isHovered ? 1.05 : 1) : 0.92,
+              filter: isActive && isHovered ? "grayscale(0%)" : "grayscale(100%)"
+            }}
+            transition={{ type: "spring", stiffness: 120, damping: 20 }}
+            className="w-full h-full object-cover transform-gpu"
           />
         )}
       </motion.div>
@@ -164,7 +186,7 @@ const MagneticCard = ({
                 translateX: "-50%",
                 translateY: "-50%"
             }}
-            className="z-50 pointer-events-none bg-black/70 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-2xl"
+            className="z-50 pointer-events-none bg-black/80 backdrop-blur-md px-5 py-2 rounded-full border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
           >
             <p className="text-white font-medium whitespace-nowrap text-sm tracking-wide">{member.name}</p>
           </motion.div>
@@ -208,7 +230,7 @@ export default function Teams() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   };
 
@@ -227,27 +249,32 @@ export default function Teams() {
       {/* Header */}
       <div className="z-10 text-center mb-16 flex flex-col items-center">
         <motion.h2 
-          animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+          animate={{ backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"] }}
           transition={{ duration: 6, ease: "linear", repeat: Infinity }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-[#00AAFF] to-white bg-[length:200%_auto] text-transparent bg-clip-text"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-l from-white via-[#00AAFF] to-white bg-[length:200%_auto] text-transparent bg-clip-text"
         >
           Meet The Experts
         </motion.h2>
-        <div className="h-1 w-16 bg-[#00AAFF] mt-5 rounded-full" />
+        <div className="h-1 w-16 bg-[#00AAFF] mt-4 rounded-full" />
       </div>
 
-      {/* Filters */}
-      <div className="z-10 flex gap-4 mb-16">
+      {/* Filters (Glassmorphism + Animated Glow) */}
+      <div className="z-10 flex gap-4 mb-16 relative">
         {["All", "Onsite", "Remote"].map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f as FilterType)}
-            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform-gpu backdrop-blur-md border ${
-              filter === f
-                ? "bg-white/10 border-white/40 text-white shadow-[0_0_20px_rgba(0,170,255,0.3)]"
-                : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10"
+            className={`relative px-6 py-2.5 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${
+              filter === f ? "text-white" : "text-white/60 hover:text-white"
             }`}
           >
+            {filter === f && (
+              <motion.div
+                layoutId="activeFilter"
+                className="absolute inset-0 bg-white/10 border border-white/40 rounded-full shadow-[0_0_20px_rgba(0,170,255,0.3)] -z-10"
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              />
+            )}
             {f}
           </button>
         ))}
@@ -255,14 +282,6 @@ export default function Teams() {
 
       {/* Carousel */}
       <div className="relative w-full max-w-[1400px] h-[400px] md:h-[480px] flex items-center justify-center z-10 perspective-[1200px]">
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
-          className="absolute inset-0 z-40 cursor-grab active:cursor-grabbing"
-        />
-
         {total > 0 &&
           positions.map((offset) => {
             const index = (activeIndex + offset + total) % total;
@@ -273,22 +292,25 @@ export default function Teams() {
             let opacity = 1;
             let zIndex = 30;
 
-            // Adjusted side cards visibility and position to show beautifully
-            if (offset === -1) { xPos = "-65%"; scale = 0.85; opacity = 0.7; zIndex = 20; }
-            else if (offset === 1) { xPos = "65%"; scale = 0.85; opacity = 0.7; zIndex = 20; }
-            else if (offset === -2) { xPos = "-110%"; scale = 0.7; opacity = 0.3; zIndex = 10; }
-            else if (offset === 2) { xPos = "110%"; scale = 0.7; opacity = 0.3; zIndex = 10; }
+            // Correct visual layering and positioning
+            if (offset === -1) { xPos = "-65%"; scale = 0.85; opacity = 0.35; zIndex = 20; }
+            else if (offset === 1) { xPos = "65%"; scale = 0.85; opacity = 0.35; zIndex = 20; }
+            else if (offset === -2) { xPos = "-110%"; scale = 0.7; opacity = 0.1; zIndex = 10; }
+            else if (offset === 2) { xPos = "110%"; scale = 0.7; opacity = 0.1; zIndex = 10; }
 
-            // Mobile adjustments
+            // Mobile adjustments (Hide side cards completely)
             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
             if (isMobile) {
-              if (Math.abs(offset) === 1) { xPos = offset > 0 ? "80%" : "-80%"; opacity = 0.5; scale = 0.8; }
-              if (Math.abs(offset) === 2) { opacity = 0; }
+              if (Math.abs(offset) >= 1) { opacity = 0; }
             }
 
             return (
               <motion.div
                 key={`${member.id}-${offset}`}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={handleDragEnd}
                 animate={{
                   x: xPos,
                   scale,
@@ -297,17 +319,22 @@ export default function Teams() {
                 }}
                 transition={{
                   type: "spring",
-                  stiffness: 200,
-                  damping: 25,
+                  stiffness: 120,
+                  damping: 20,
                   mass: 1,
                 }}
-                className="absolute w-[240px] h-[340px] md:w-[320px] md:h-[440px] transform-gpu"
+                // Important: Side cards need pointer events none visually, but drag is still captured on the wrapper
+                className={`absolute w-[240px] h-[340px] md:w-[320px] md:h-[440px] transform-gpu ${
+                    opacity === 0 ? "pointer-events-none" : "cursor-grab active:cursor-grabbing"
+                }`}
               >
-                <MagneticCard 
-                  member={member} 
-                  isActive={offset === 0} 
-                  onClick={() => setSelectedMember(member)} 
-                />
+                <div className={`w-full h-full ${offset === 0 ? "pointer-events-auto" : "pointer-events-none"}`}>
+                  <MagneticCard 
+                    member={member} 
+                    isActive={offset === 0} 
+                    onClick={() => setSelectedMember(member)} 
+                  />
+                </div>
               </motion.div>
             );
           })}
@@ -347,7 +374,7 @@ export default function Teams() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }} // Smoother reverse animation
             >
               <button
                 onClick={() => setSelectedMember(null)}
@@ -359,7 +386,7 @@ export default function Teams() {
               {/* Shared Layout Image Lift */}
               <motion.div 
                 layoutId={`shared-img-container-${selectedMember.id}`}
-                className="w-36 h-36 rounded-full overflow-hidden border-2 border-white/20 mb-6 shadow-[0_0_30px_rgba(0,170,255,0.2)] bg-black/50"
+                className="w-36 h-36 rounded-full overflow-hidden border-2 border-white/20 mb-6 shadow-[0_0_30px_rgba(0,170,255,0.2)] bg-black/50 shrink-0"
               >
                 {selectedMember.imgLink === "Use User Icon" ? (
                   <div className="w-full h-full flex items-center justify-center text-white">
@@ -380,23 +407,33 @@ export default function Teams() {
                 animate="visible"
                 className="w-full flex flex-col items-center justify-center space-y-3 text-white/90 text-center"
               >
+                {/* 1. Name */}
                 <motion.div variants={itemReveal} className="flex flex-col items-center justify-center gap-1">
                   <div className="flex items-center gap-3">
                       <UserIcon className="w-5 h-5 text-[#00AAFF]" />
-                      <h3 className="text-2xl font-bold text-white tracking-wide">{selectedMember.name}</h3>
+                      <motion.h3 
+                        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                        transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+                        className="text-2xl font-bold bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text tracking-wide"
+                      >
+                        {selectedMember.name}
+                      </motion.h3>
                   </div>
                 </motion.div>
 
+                {/* 2. Title */}
                 <motion.div variants={itemReveal} className="flex items-center justify-center gap-3">
                   <BriefcaseIcon className="w-5 h-5 text-[#00AAFF]" />
                   <p className="text-lg font-medium">{selectedMember.title}</p>
                 </motion.div>
 
+                {/* 3. Time */}
                 <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 text-white/70">
                   <ClockIcon className="w-4 h-4" />
                   <p className="text-md">{selectedMember.time}</p>
                 </motion.div>
 
+                {/* 4. Type */}
                 <motion.div variants={itemReveal} className="flex items-center justify-center gap-3 text-white/70 pb-6">
                   {selectedMember.type === "Onsite" ? (
                     <BuildingIcon className="w-4 h-4" />
@@ -406,6 +443,7 @@ export default function Teams() {
                   <p className="text-md">{selectedMember.type}</p>
                 </motion.div>
 
+                {/* 5. Icons */}
                 <motion.div variants={itemReveal} className="flex items-center gap-6 pt-4 border-t border-white/10 w-full justify-center">
                   <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-[#00AAFF]/20 hover:text-[#00AAFF] transition-all duration-300 hover:scale-110">
                     <LinkedInIcon className="w-5 h-5" />
