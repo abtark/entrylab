@@ -243,7 +243,7 @@ export default function Teams() {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-[#050A15] overflow-hidden py-24 flex flex-col items-center justify-center font-sans antialiased text-white selection:bg-blue-500/30">
+    <section id="teams" className="relative w-full min-h-screen bg-[#050A15] overflow-hidden py-24 flex flex-col items-center justify-center font-sans antialiased text-white selection:bg-blue-500/30">
       
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00AAFF]/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
