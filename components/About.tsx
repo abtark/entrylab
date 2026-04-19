@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useInView, animate } from 'framer-motion'
 
 // Ultra-smooth Magnetic Item using requestAnimationFrame & linear interpolation
 const MagneticItem = ({ children, className }: { children: React.ReactNode, className?: string }) => {
@@ -50,6 +50,28 @@ const MagneticItem = ({ children, className }: { children: React.ReactNode, clas
       {children}
     </div>
   )
+}
+
+// Animated Number Counter Component
+const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, suffix?: string, decimals?: number }) => {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: "-50px" })
+
+  useEffect(() => {
+    if (inView && ref.current) {
+      animate(0, value, {
+        duration: 2.5,
+        ease: "easeOut",
+        onUpdate: (latest) => {
+          if (ref.current) {
+            ref.current.textContent = Number(latest).toFixed(decimals) + suffix
+          }
+        }
+      })
+    }
+  }, [inView, value, suffix, decimals])
+
+  return <span ref={ref} className="text-3xl font-bold text-white mb-1 tracking-tight">0{suffix}</span>
 }
 
 const paragraphs = [
@@ -295,6 +317,110 @@ export default function About() {
 
         </div>
       </div>
+
+      {/* NEW BOTTOM SECTION: Our Story */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          
+          {/* LEFT SIDE: TEXT CONTENT */}
+          <div className="flex flex-col items-start text-left">
+            <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
+              Our Story
+            </span>
+            
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent pb-1">
+              From a Small Team to a Trusted Agency
+            </h3>
+            
+            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-lg">
+              EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals.
+            </p>
+            
+            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-lg">
+              Over the years, we've had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
+            </p>
+            
+            <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-lg">
+              But EntryLab is more than just work — it's a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That's why we built this space to celebrate those moments.
+            </p>
+
+            {/* STATS / COUNTERS */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full">
+              
+              {/* Stat 1 */}
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={25} suffix="+" />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  {"Team\nMembers"}
+                </span>
+              </div>
+
+              {/* Stat 2 */}
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={99.9} suffix="%" decimals={1} />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  {"Accuracy"}
+                </span>
+              </div>
+
+              {/* Stat 3 */}
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={15} suffix="k+" />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  {"Projects"}
+                </span>
+              </div>
+
+              {/* Stat 4 */}
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={7} suffix="+" />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  {"Years"}
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          {/* RIGHT SIDE: IMAGE & BADGE */}
+          <div className="relative group w-full h-full min-h-[400px] lg:min-h-[500px] rounded-2xl overflow-hidden mt-8 lg:mt-0">
+            <img 
+              src="https://iili.io/BgW7HSn.jpg" 
+              alt="EntryLab Team" 
+              className="absolute inset-0 w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none z-10" />
+            
+            {/* Overlay Badge */}
+            <div className="absolute bottom-6 right-6 bg-gradient-to-br from-[#00AAFF] to-purple-600 text-white p-5 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105 flex flex-col items-center justify-center z-20 border border-white/20">
+              <span className="text-sm font-medium tracking-wide uppercase mb-1">Since</span>
+              <span className="text-2xl font-bold leading-none">2019</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </section>
   )
 }
