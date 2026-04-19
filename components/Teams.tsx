@@ -17,10 +17,10 @@ interface Member {
 
 const membersData: Member[] = [
   { id: 1, name: "SM Masum", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BgaviIn.jpg" },
-  { id: 2, name: "Nazmul Alam", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BSlE84j.jpg" },
+  { id: 2, name: "Nazmul Alam", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BgMrLwG.jpg" },
   { id: 3, name: "Samir Sakib", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BS0ct9I.jpg" },
   { id: 4, name: "Naimul Hasnat", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BS0Y6Dg.jpg" },
-  { id: 5, name: "Shafayet Ullah", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BS01MuI.jpg" },
+  { id: 5, name: "Shafayet Ullah", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BgM6NLv.jpg" },
   { id: 6, name: "Hriday Sabbir", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BS02hBf.jpg" },
   { id: 7, name: "Aminul Islam", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/BgKx7Q1.jpg" },
   { id: 8, name: "Newaz Shihab", title: "**********", time: "Full-Time", type: "Onsite", imgLink: "https://iili.io/Bgav4et.jpg" },
