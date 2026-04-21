@@ -74,13 +74,52 @@ const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, s
   return <span ref={ref} className="text-3xl font-bold text-white mb-1 tracking-tight">0{suffix}</span>
 }
 
+// Sliding Staggered Letters Component
+const AnimatedText = ({ text, className = "", onComplete }: { text: string, className?: string, onComplete?: () => void }) => {
+  return (
+    <motion.span
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-20px" }}
+      onAnimationComplete={onComplete}
+      variants={{
+        visible: { transition: { staggerChildren: 0.02, delayChildren: 0.05 } },
+        hidden: {}
+      }}
+      className={`inline-block ${className}`}
+    >
+      {text.split("\n").map((line, lineIndex) => (
+        <React.Fragment key={lineIndex}>
+          {line.split(" ").map((word, i) => (
+            <span key={i} className="inline-block mr-[0.25em] whitespace-nowrap">
+              {word.split("").map((char, j) => (
+                <motion.span
+                  key={j}
+                  variants={{
+                    hidden: { opacity: 0, y: 15 },
+                    visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 20, stiffness: 100, duration: 0.5, ease: "easeOut" } }
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          ))}
+          {lineIndex < text.split("\n").length - 1 && <br />}
+        </React.Fragment>
+      ))}
+    </motion.span>
+  );
+};
+
 const paragraphs = [
   {
     text: 'Founded on the principle that "Where Every Search Has a Value", EntryLab is a modern technology agency dedicated to extracting meaningful insights from complex data architectures.',
     highlight: false
   },
   {
-    text: 'EntryLab is a Chattogram-based R&D firm specializing in precision-driven data intelligence. We architect clarity from complexity—transforming fragmented information into strategic, decision-ready insights.',
+    text: 'It is a Chattogram-based R & D firm specializing in precision-driven data intelligence. We architect clarity from complexity—transforming fragmented information into strategic, decision-ready insights.',
     highlight: false
   },
   {
@@ -88,7 +127,7 @@ const paragraphs = [
     highlight: false
   },
   {
-    text: 'EntryLab — Where Every Search Has Value.',
+    text: 'EntryLab—Where Every Search Has a Value',
     highlight: true
   }
 ]
@@ -196,21 +235,6 @@ const cultureData = [
 export default function About() {
   const [isTypingDone, setIsTypingDone] = useState(false)
 
-  const wordContainerVariants = {
-    hidden: { opacity: 1 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.04,
-      },
-    },
-  }
-
-  const wordVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.1 } },
-  }
-
   const iconContainerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -272,11 +296,11 @@ export default function About() {
       {/* NEW TOP SECTION: Heading, Description & Feature Cards */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
         
-        {/* NEW SECTION HEADING */}
+        {/* NEW SECTION HEADING (NO ANIMATION) */}
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight pb-2">
             <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              About EntryLab.
+              About EntryLab
             </span>
           </h2>
           <div className="w-16 h-[2px] bg-gradient-to-r from-[#00AAFF] to-blue-500 rounded-full mt-3" />
@@ -284,14 +308,14 @@ export default function About() {
 
         {/* DESCRIPTION TEXT */}
         <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-2">
-          We're a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
+          <AnimatedText text="We're a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle." />
         </p>
 
         {/* THREE FEATURE CARDS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
           
           {/* CARD 1: Our Mission */}
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 transition-colors duration-300 ease-out hover:border-[#00AAFF] hover:shadow-[0_0_25px_rgba(0,170,255,0.15)] flex flex-col items-start">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#00AAFF] rounded-2xl p-8 transition-colors duration-300 ease-out flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-[#00AAFF]/20 to-blue-600/20 mb-6 transition-transform duration-300 group-hover:scale-110">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
@@ -299,36 +323,42 @@ export default function About() {
                 <circle cx="12" cy="12" r="2" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Our Mission</h3>
+            <h3 className="text-xl font-bold text-white mb-3">
+              <AnimatedText text="Our Mission" />
+            </h3>
             <p className="text-white/70 leading-relaxed text-base">
-              To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.
+              <AnimatedText text="To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making." />
             </p>
           </div>
 
           {/* CARD 2: Our Vision */}
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 transition-colors duration-300 ease-out hover:border-pink-500 hover:shadow-[0_0_25px_rgba(236,72,153,0.15)] flex flex-col items-start">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#EC4899] rounded-2xl p-8 transition-colors duration-300 ease-out flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 mb-6 transition-transform duration-300 group-hover:scale-110">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Our Vision</h3>
+            <h3 className="text-xl font-bold text-white mb-3">
+              <AnimatedText text="Our Vision" />
+            </h3>
             <p className="text-white/70 leading-relaxed text-base">
-              To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.
+              <AnimatedText text="To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction." />
             </p>
           </div>
 
           {/* CARD 3: Our Values */}
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-8 transition-colors duration-300 ease-out hover:border-orange-500 hover:shadow-[0_0_25px_rgba(249,115,22,0.15)] flex flex-col items-start">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#F97316] rounded-2xl p-8 transition-colors duration-300 ease-out flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 mb-6 transition-transform duration-300 group-hover:scale-110">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Our Values</h3>
+            <h3 className="text-xl font-bold text-white mb-3">
+              <AnimatedText text="Our Values" />
+            </h3>
             <p className="text-white/70 leading-relaxed text-base">
-              Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.
+              <AnimatedText text="Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail." />
             </p>
           </div>
 
@@ -337,6 +367,9 @@ export default function About() {
 
       {/* MAIN CONTAINER */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
+        {/* Soft blur background behind container */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
+        
         <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-12 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
           
           {/* ROW 1: IMAGE */}
@@ -354,25 +387,17 @@ export default function About() {
           {/* DIVIDER */}
           <div className="w-full h-px bg-white/10 mb-8" />
 
-          {/* ROW 2: DESCRIPTION (Typing Animation) */}
-          <motion.div 
-            variants={wordContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            onAnimationComplete={() => setIsTypingDone(true)}
-            className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]"
-          >
+          {/* ROW 2: DESCRIPTION (Staggered Animation) */}
+          <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
             {paragraphs.map((p, pIndex) => (
               <p key={pIndex} className={p.highlight ? "pt-2 text-[#00AAFF] font-semibold text-xl md:text-2xl tracking-wide" : ""}>
-                {p.text.split(" ").map((word, wIndex) => (
-                  <motion.span key={wIndex} variants={wordVariants} className="inline-block mr-[0.25em] whitespace-nowrap">
-                    {word}
-                  </motion.span>
-                ))}
+                <AnimatedText 
+                  text={p.text} 
+                  onComplete={pIndex === paragraphs.length - 1 ? () => setIsTypingDone(true) : undefined}
+                />
               </p>
             ))}
-          </motion.div>
+          </div>
 
           {/* DIVIDER */}
           <div className="w-full h-px bg-white/10 my-8" />
@@ -424,28 +449,31 @@ export default function About() {
 
       {/* NEW BOTTOM SECTION: Our Story */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32">
+        {/* Soft blur background behind Our Story */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-purple-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
           {/* LEFT SIDE: TEXT CONTENT */}
           <div className="flex flex-col items-start text-left">
             <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-              Our Story
+              <AnimatedText text="Our Story" />
             </span>
             
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent pb-1">
-              From a Small Team to a Trusted Agency
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 pb-1">
+              <AnimatedText text="From a Small Team to a Trusted Agency" className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent" />
             </h3>
             
             <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
-              EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals.
+              <AnimatedText text="EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals." />
             </p>
             
             <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
-              Over the years, we've had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
+              <AnimatedText text="Over the years, we've had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects." />
             </p>
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
-              But EntryLab is more than just work — it's a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That's why we built this space to celebrate those moments.
+              <AnimatedText text="But EntryLab is more than just work — it's a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That's why we built this space to celebrate those moments." />
             </p>
 
             {/* STATS / COUNTERS */}
@@ -459,7 +487,7 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={25} suffix="+" />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  {"Team\nMembers"}
+                  <AnimatedText text={"Team\n-mates"} />
                 </span>
               </div>
 
@@ -472,7 +500,7 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={99.9} suffix="%" decimals={1} />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  {"Accuracy"}
+                  <AnimatedText text={"Accuracy"} />
                 </span>
               </div>
 
@@ -485,7 +513,7 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={15} suffix="k+" />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  {"Projects"}
+                  <AnimatedText text={"Projects"} />
                 </span>
               </div>
 
@@ -498,7 +526,7 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={7} suffix="+" />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  {"Years"}
+                  <AnimatedText text={"Years"} />
                 </span>
               </div>
             </div>
@@ -511,7 +539,7 @@ export default function About() {
               <img 
                 src="https://iili.io/Br9rhHN.jpg" 
                 alt="EntryLab Team Top" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 ease-out"
               />
             </div>
             
@@ -522,12 +550,12 @@ export default function About() {
                 <img 
                   src="https://iili.io/BgW7HSn.jpg" 
                   alt="EntryLab Team Bottom" 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
               </div>
               
               {/* Overlay Badge */}
-              <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-purple-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
+              <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-purple-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
                 <span className="text-xs md:text-sm font-medium tracking-wide uppercase mb-1">Since</span>
                 <span className="text-xl md:text-3xl font-bold leading-none">2019</span>
               </div>
@@ -541,12 +569,10 @@ export default function About() {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-40">
         <div className="flex flex-col items-center mb-16">
           <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            Our Journey
+            <AnimatedText text="Our Journey" />
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              Key Milestone
-            </span>
+            <AnimatedText text="Key Milestone" className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm" />
           </h2>
         </div>
 
@@ -574,9 +600,15 @@ export default function About() {
                 {/* Content Card */}
                 <div className="w-full pl-12 md:pl-0 md:w-5/12">
                   <div className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg transition-all duration-300 hover:border-[#00AAFF]/50 hover:shadow-[0_5px_20px_rgba(0,170,255,0.1)]">
-                    <span className="inline-block text-[#00AAFF] font-black text-xl mb-2">{item.year}</span>
-                    <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
-                    <p className="text-white/70 text-sm leading-relaxed">{item.description}</p>
+                    <span className="inline-block text-[#00AAFF] font-black text-xl mb-2">
+                      <AnimatedText text={item.year} />
+                    </span>
+                    <h4 className="text-xl font-bold text-white mb-2">
+                      <AnimatedText text={item.title} />
+                    </h4>
+                    <p className="text-white/70 text-sm leading-relaxed">
+                      <AnimatedText text={item.description} />
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -587,14 +619,15 @@ export default function About() {
 
       {/* NEW SECTION: LIFE AT ENTRYLAB */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
+        {/* Soft blur background behind Our Culture */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
+        
         <div className="flex flex-col items-center mb-16">
           <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            Life at EntryLab
+            <AnimatedText text="Life at EntryLab" />
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              Our Culture
-            </span>
+            <AnimatedText text="Our Culture" className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm" />
           </h2>
         </div>
 
@@ -602,10 +635,11 @@ export default function About() {
           {cultureData.map((item, index) => (
             <div 
               key={index} 
-              className="group bg-[#1a1a1a]/80 backdrop-blur-md border border-white/5 rounded-2xl p-6 transition-colors duration-300 ease-out hover:border-white/20 flex flex-col items-start"
+              className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] rounded-2xl p-6 transition-colors duration-300 ease-out flex flex-col items-start relative z-10"
+              style={{ borderColor: item.color }}
             >
               <div 
-                className="p-3 rounded-lg mb-5 transition-transform duration-300 group-hover:scale-110"
+                className="p-3 rounded-lg mb-5 transition-transform duration-300 ease-out group-hover:scale-110"
                 style={{ backgroundColor: `${item.color}15` }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -613,9 +647,11 @@ export default function About() {
                   {item.iconExtras}
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+              <h3 className="text-lg font-bold text-white mb-2">
+                <AnimatedText text={item.title} />
+              </h3>
               <p className="text-white/60 leading-relaxed text-sm">
-                {item.description}
+                <AnimatedText text={item.description} />
               </p>
             </div>
           ))}
