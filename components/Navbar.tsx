@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useSpring } from 'framer-motion'
 
-const navItems = ['Home', 'Services', 'Insights', 'Teams', 'Gallery', 'About', 'Careers', 'Contact']
+const navItems = ['Home', 'About', 'Services', 'Insights', 'Testimonials', 'Teams', 'Gallery', 'Careers', 'Contact']
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('Home')
 
-  // Framer Motion hook to replace the raw window.scrollY implementation
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -20,12 +19,10 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Toggle navbar background on scroll
       setScrolled(window.scrollY > 50)
       
-      // Active section detection
       const sections = navItems.map(item => document.getElementById(item.toLowerCase()))
-      const scrollPosition = window.scrollY + 100 // Offset for the fixed navbar
+      const scrollPosition = window.scrollY + 100 
 
       sections.forEach((section) => {
         if (section) {
@@ -39,7 +36,6 @@ export default function Navbar() {
     }
 
     window.addEventListener('scroll', handleScroll)
-    // Run once on mount to handle mid-page reloads accurately
     handleScroll() 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -61,12 +57,10 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
         <div className="cursor-pointer" onClick={() => scrollTo('home')}>
           <Image src="https://iili.io/FC3KC6g.png" alt="EntryLab" width={120} height={40} />
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8">
           {navItems.map((item) => (
             <button
@@ -81,11 +75,9 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Call to Action Button */}
         <button className="btn-primary text-sm hidden md:block">Get Started</button>
       </div>
-      
-      {/* Updated Hydration-Safe Scroll Progress Indicator */}
+
       <motion.div 
         className="absolute bottom-0 left-0 h-[2px] bg-primary w-full origin-left"
         style={{ scaleX }}
