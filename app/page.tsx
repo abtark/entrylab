@@ -1,4 +1,3 @@
-// app/page.tsx
 import Preloader from '@/components/Preloader'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
@@ -10,6 +9,7 @@ import About from '@/components/About'
 import Careers from '@/components/Careers'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import Testimonials from '@/components/Testimonials'
 
 export default function Home() {
   return (
@@ -25,9 +25,10 @@ export default function Home() {
       <Careers />
       <Contact />
       <Footer />
+      <Testimonials />
       
       <footer className="bg-[#0a0a0a] py-8 text-center border-t border-gray-900">
-        <p className="text-gray-500 text-sm">© {new Date().getFullYear()} EntryLab. Where Every Search Has a Value.</p>
+        <p className="text-gray-500 text-sm">© {new Date().getFullYear()} EntryLab. Where Every Search Has a Value</p>
       </footer>
     </main>
   )
