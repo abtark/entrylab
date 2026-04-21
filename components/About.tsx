@@ -1,9 +1,8 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { motion, useInView, animate, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
+import { motion, useInView, animate } from 'framer-motion'
 
-// Ultra-smooth Magnetic Item using requestAnimationFrame & linear interpolation
 const MagneticItem = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   const ref = useRef<HTMLDivElement>(null)
   const requestRef = useRef<number>()
@@ -51,7 +50,6 @@ const MagneticItem = ({ children, className }: { children: React.ReactNode, clas
   )
 }
 
-// Animated Number Counter Component
 const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, suffix?: string, decimals?: number }) => {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
@@ -73,57 +71,29 @@ const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, s
   return <span ref={ref} className="text-3xl font-bold text-white mb-1 tracking-tight">0{suffix}</span>
 }
 
-// Cinematic Scroll Reveal Text Component
-const ScrollRevealText = ({ children, className = "", direction = "top" }: { children: React.ReactNode, className?: string, direction?: "top" | "bottom" | "left" | "right" }) => {
-  const ref = useRef<HTMLSpanElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 95%", "end 50%"]
-  })
-
-  // Feathered mask transitioning from fully hidden to fully visible
-  const p1 = useTransform(scrollYProgress, [0, 1], [-20, 100])
-  const p2 = useTransform(scrollYProgress, [0, 1], [0, 120])
-  
-  const angle = direction === "bottom" ? "to top" : direction === "left" ? "to right" : direction === "right" ? "to left" : "to bottom"
-  const maskImage = useMotionTemplate`linear-gradient(${angle}, black ${p1}%, transparent ${p2}%)`
-
+const ScrollRevealPro = ({ 
+  children, 
+  className = "", 
+  delay = 0 
+}: { 
+  children: React.ReactNode, 
+  className?: string,
+  delay?: number
+}) => {
   return (
     <motion.span
-      ref={ref}
-      style={{ WebkitMaskImage: maskImage, maskImage }}
-      className={`inline-block w-full will-change-[mask-image] ${className}`}
+      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+      transition={{ 
+        duration: 0.8, 
+        ease: [0.22, 1, 0.36, 1],
+        delay: delay 
+      }}
+      className={`inline-block ${className}`}
     >
       {children}
     </motion.span>
-  )
-}
-
-// Interactive LetterMorph Component (Special Text Only)
-const LetterMorphText = ({ text, className = "" }: { text: string, className?: string }) => {
-  return (
-    <span className={`inline-block ${className}`}>
-      {text.split(" ").map((word, wordIndex) => (
-        <span key={wordIndex} className="inline-block mr-[0.25em] whitespace-nowrap">
-          {word.split("").map((char, charIndex) => (
-            <motion.span
-              key={charIndex}
-              whileHover={{
-                fontWeight: [null, 700, 900, 800],
-                color: [null, "#00AAFF", "#E0F2FE", "#00AAFF"],
-                scale: [1, 1.15, 1.05, 1.1],
-                skewX: [0, -10, 5, -5],
-                transition: { duration: 0.5, times: [0, 0.33, 0.66, 1], ease: "easeInOut" }
-              }}
-              className="inline-block transition-colors duration-300 will-change-transform"
-              style={{ transformOrigin: "bottom center" }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </span>
-      ))}
-    </span>
   )
 }
 
@@ -288,7 +258,6 @@ export default function About() {
         }
       `}} />
 
-      {/* Floating Objects (Behind Container) */}
       <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
         <motion.div 
           animate={{ y: [0, -30, 0], x: [0, 15, 0] }}
@@ -312,10 +281,8 @@ export default function About() {
         />
       </div>
 
-      {/* NEW TOP SECTION: Heading, Description & Feature Cards */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
         
-        {/* NEW SECTION HEADING (NO ANIMATION) */}
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight pb-2">
             <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
@@ -325,17 +292,14 @@ export default function About() {
           <div className="w-16 h-[2px] bg-gradient-to-r from-[#00AAFF] to-blue-500 rounded-full mt-3" />
         </div>
 
-        {/* DESCRIPTION TEXT */}
         <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-2">
-          <ScrollRevealText>
+          <ScrollRevealPro>
             We're a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
-          </ScrollRevealText>
+          </ScrollRevealPro>
         </p>
 
-        {/* THREE FEATURE CARDS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
           
-          {/* CARD 1: Our Mission */}
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-[#00AAFF]/20 to-blue-600/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -345,14 +309,13 @@ export default function About() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-white mb-3">
-              <ScrollRevealText direction="bottom">Our Mission</ScrollRevealText>
+              <ScrollRevealPro>Our Mission</ScrollRevealPro>
             </h3>
             <p className="text-white/70 leading-relaxed text-base">
-              <ScrollRevealText direction="bottom">To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealText>
+              <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
             </p>
           </div>
 
-          {/* CARD 2: Our Vision */}
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -361,14 +324,13 @@ export default function About() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-white mb-3">
-              <ScrollRevealText direction="bottom">Our Vision</ScrollRevealText>
+              <ScrollRevealPro>Our Vision</ScrollRevealPro>
             </h3>
             <p className="text-white/70 leading-relaxed text-base">
-              <ScrollRevealText direction="bottom">To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealText>
+              <ScrollRevealPro>To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealPro>
             </p>
           </div>
 
-          {/* CARD 3: Our Values */}
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -376,24 +338,21 @@ export default function About() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-white mb-3">
-              <ScrollRevealText direction="bottom">Our Values</ScrollRevealText>
+              <ScrollRevealPro>Our Values</ScrollRevealPro>
             </h3>
             <p className="text-white/70 leading-relaxed text-base">
-              <ScrollRevealText direction="bottom">Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealText>
+              <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
             </p>
           </div>
 
         </div>
       </div>
 
-      {/* MAIN CONTAINER */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
-        {/* Soft blur background behind container */}
         <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-12 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
           
-          {/* ROW 1: IMAGE */}
           <div className="w-full mb-6 flex justify-center">
             <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl drop-shadow-2xl z-10 bg-black/20">
               <img 
@@ -405,26 +364,18 @@ export default function About() {
             </MagneticItem>
           </div>
 
-          {/* DIVIDER */}
           <div className="w-full h-px bg-white/10 mb-8" />
 
-          {/* ROW 2: DESCRIPTION (Scroll Reveal) */}
           <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
             {paragraphs.map((p, pIndex) => (
               <p key={pIndex} className={p.highlight ? "pt-2 font-semibold text-xl md:text-2xl tracking-wide text-[#00AAFF]" : ""}>
-                {p.highlight ? (
-                  <LetterMorphText text={p.text} />
-                ) : (
-                  <ScrollRevealText direction="bottom">{p.text}</ScrollRevealText>
-                )}
+                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
               </p>
             ))}
           </div>
 
-          {/* DIVIDER */}
           <div className="w-full h-px bg-white/10 my-8" />
 
-          {/* ROW 3: SOCIAL ICONS */}
           <div className="h-[40px] flex items-center justify-center">
             {isReady && (
               <motion.div 
@@ -469,46 +420,41 @@ export default function About() {
         </div>
       </div>
 
-      {/* NEW BOTTOM SECTION: Our Story */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32">
-        {/* Soft blur background behind Our Story */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-purple-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
-          {/* LEFT SIDE: TEXT CONTENT */}
           <div className="flex flex-col items-start text-left">
             <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-              <ScrollRevealText direction="bottom">Our Story</ScrollRevealText>
+              <ScrollRevealPro>Our Story</ScrollRevealPro>
             </span>
             
             <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 pb-1">
-              <ScrollRevealText direction="bottom" className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">
+              <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">
                 From a Small Team to a Trusted Agency
-              </ScrollRevealText>
+              </ScrollRevealPro>
             </h3>
             
             <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
-              <ScrollRevealText direction="bottom">
+              <ScrollRevealPro>
                 EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals.
-              </ScrollRevealText>
+              </ScrollRevealPro>
             </p>
             
             <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
-              <ScrollRevealText direction="bottom">
+              <ScrollRevealPro>
                 Over the years, we've had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
-              </ScrollRevealText>
+              </ScrollRevealPro>
             </p>
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
-              <ScrollRevealText direction="bottom">
+              <ScrollRevealPro>
                 But EntryLab is more than just work — it's a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That's why we built this space to celebrate those moments.
-              </ScrollRevealText>
+              </ScrollRevealPro>
             </p>
 
-            {/* STATS / COUNTERS */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full">
-              {/* Stat 1 */}
               <div className="flex flex-col items-start">
                 <div className="mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -517,11 +463,10 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={25} suffix="+" />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealText direction="bottom">Team<br/>-mates</ScrollRevealText>
+                  <ScrollRevealPro>Team-mates</ScrollRevealPro>
                 </span>
               </div>
 
-              {/* Stat 2 */}
               <div className="flex flex-col items-start">
                 <div className="mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -530,11 +475,10 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={99.9} suffix="%" decimals={1} />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealText direction="bottom">Accuracy</ScrollRevealText>
+                  <ScrollRevealPro>Accuracy</ScrollRevealPro>
                 </span>
               </div>
 
-              {/* Stat 3 */}
               <div className="flex flex-col items-start">
                 <div className="mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -543,11 +487,10 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={15} suffix="k+" />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealText direction="bottom">Projects</ScrollRevealText>
+                  <ScrollRevealPro>Projects</ScrollRevealPro>
                 </span>
               </div>
 
-              {/* Stat 4 */}
               <div className="flex flex-col items-start">
                 <div className="mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -556,15 +499,13 @@ export default function About() {
                 </div>
                 <AnimatedNumber value={7} suffix="+" />
                 <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealText direction="bottom">Years</ScrollRevealText>
+                  <ScrollRevealPro>Years</ScrollRevealPro>
                 </span>
               </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE: TWO STACKED IMAGES & BADGE */}
           <div className="flex flex-col gap-6 lg:gap-8 w-full mt-8 lg:mt-0">
-            {/* Top Image */}
             <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/5">
               <img 
                 src="https://iili.io/Br9rhHN.jpg" 
@@ -573,9 +514,7 @@ export default function About() {
               />
             </div>
             
-            {/* Bottom Image Container */}
             <div className="relative w-full aspect-video group">
-              {/* Image Box */}
               <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border border-white/5 relative z-10">
                 <img 
                   src="https://iili.io/BgW7HSn.jpg" 
@@ -584,7 +523,6 @@ export default function About() {
                 />
               </div>
               
-              {/* Overlay Badge */}
               <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-purple-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
                 <span className="text-xs md:text-sm font-medium tracking-wide uppercase mb-1">Since</span>
                 <span className="text-xl md:text-3xl font-bold leading-none">2019</span>
@@ -595,21 +533,19 @@ export default function About() {
         </div>
       </div>
 
-      {/* NEW SECTION: OUR JOURNEY (TIMELINE) */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-40">
         <div className="flex flex-col items-center mb-16">
           <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            <ScrollRevealText direction="bottom">Our Journey</ScrollRevealText>
+            <ScrollRevealPro>Our Journey</ScrollRevealPro>
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <ScrollRevealText direction="bottom" className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
               Key Milestone
-            </ScrollRevealText>
+            </ScrollRevealPro>
           </h2>
         </div>
 
         <div className="relative max-w-4xl mx-auto pb-10">
-          {/* Vertical Center Line */}
           <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#00AAFF]/40 via-purple-500/40 to-transparent transform md:-translate-x-1/2 z-0" />
 
           {timelineData.map((item, index) => {
@@ -623,23 +559,20 @@ export default function About() {
                 viewport={{ once: true, margin: "-100px" }}
                 className={`relative z-10 flex items-center justify-between w-full mb-12 ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'} flex-row`}
               >
-                {/* Spacer for desktop */}
                 <div className="hidden md:block w-5/12" />
                 
-                {/* Timeline Dot */}
                 <div className="absolute left-[20px] md:left-1/2 w-4 h-4 rounded-full bg-[#00AAFF] border-4 border-[#111] transform -translate-x-1/2 shadow-[0_0_15px_#00AAFF] z-20" />
                 
-                {/* Content Card */}
                 <div className="w-full pl-12 md:pl-0 md:w-5/12">
                   <div className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg transition-all duration-300 hover:border-[#00AAFF]/50 hover:shadow-[0_5px_20px_rgba(0,170,255,0.1)]">
                     <span className="inline-block text-[#00AAFF] font-black text-xl mb-2">
-                      <ScrollRevealText direction="bottom">{item.year}</ScrollRevealText>
+                      <ScrollRevealPro>{item.year}</ScrollRevealPro>
                     </span>
                     <h4 className="text-xl font-bold text-white mb-2">
-                      <ScrollRevealText direction="bottom">{item.title}</ScrollRevealText>
+                      <ScrollRevealPro>{item.title}</ScrollRevealPro>
                     </h4>
                     <p className="text-white/70 text-sm leading-relaxed">
-                      <ScrollRevealText direction="bottom">{item.description}</ScrollRevealText>
+                      <ScrollRevealPro>{item.description}</ScrollRevealPro>
                     </p>
                   </div>
                 </div>
@@ -649,19 +582,18 @@ export default function About() {
         </div>
       </div>
 
-      {/* NEW SECTION: LIFE AT ENTRYLAB */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
         {/* Soft blur background behind Our Culture */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="flex flex-col items-center mb-16">
           <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            <ScrollRevealText direction="bottom">Life at EntryLab</ScrollRevealText>
+            <ScrollRevealPro>Life at EntryLab</ScrollRevealPro>
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <ScrollRevealText direction="bottom" className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
               Our Culture
-            </ScrollRevealText>
+            </ScrollRevealPro>
           </h2>
         </div>
 
@@ -682,10 +614,10 @@ export default function About() {
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-white mb-2">
-                <ScrollRevealText direction="bottom">{item.title}</ScrollRevealText>
+                <ScrollRevealPro>{item.title}</ScrollRevealPro>
               </h3>
               <p className="text-white/60 leading-relaxed text-sm">
-                <ScrollRevealText direction="bottom">{item.description}</ScrollRevealText>
+                <ScrollRevealPro>{item.description}</ScrollRevealPro>
               </p>
             </div>
           ))}
