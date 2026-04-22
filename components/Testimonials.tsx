@@ -1,125 +1,141 @@
+'use client';
+
 import React from 'react';
-import {
-  FaOctopusDeploy,
-  FaPagelines,
-  FaCentercode,
-  FaCloudversify,
-  FaDhl,
-  FaDropbox,
-  FaLinkedin,
-  FaFoursquare,
-  FaHackerrank,
-  FaHubspot,
-  FaMagento,
-  FaPushed,
-  FaStar,
-  FaPaperPlane
-} from 'react-icons/fa';
 
-// Card Data with absolute positioning for desktop staggered layout
-const desktopCards = [
-  // Left Side (4 cards vertically stacked & staggered)
-  { id: 1, Icon: FaOctopusDeploy, position: 'top-[15%] left-[5%]', delay: '0s' },
-  { id: 2, Icon: FaPagelines, position: 'top-[40%] left-[12%]', delay: '1s' },
-  { id: 3, Icon: FaCentercode, position: 'top-[65%] left-[6%]', delay: '2s' },
-  { id: 4, Icon: FaCloudversify, position: 'top-[25%] left-[20%]', delay: '1.5s' },
+// Define the structure for card data with precise positioning for desktop staggered layout
+interface IconCardData {
+  id: string;
+  name: string;
+  icon: JSX.Element;
+  desktopPosition: string; // Tailwind absolute position class (e.g., 'top-[10%] left-[5%]')
+}
 
-  // Center (5 cards spread horizontally in middle area, slight arch)
-  { id: 5, Icon: FaDhl, position: 'top-[10%] left-[30%]', delay: '0.5s' },
-  { id: 6, Icon: FaDropbox, position: 'top-[5%] left-[42%]', delay: '2.5s' },
-  { id: 7, Icon: FaLinkedin, position: 'top-[8%] left-[50%] -translate-x-1/2', delay: '1.2s' },
-  { id: 8, Icon: FaPaperPlane, position: 'top-[5%] right-[42%]', delay: '0.8s' },
-  { id: 9, Icon: FaFoursquare, position: 'top-[10%] right-[30%]', delay: '2s' },
+// Company-icon data array using Font Awesome-style direct SVGs for a portable solution
+const iconCards: IconCardData[] = [
+  // LEFT Group (4 cards)
+  { id: '1-left-top', name: 'Octopus Deploy', 
+    desktopPosition: 'lg:top-[10%] lg:left-[calc(50%-580px)] lg:-translate-x-1/2 lg:-translate-y-[20px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3S372.4 82 382 72c9.5-10.1 21-17.5 33.7-21.7s26.3-5.3 39.8-3c13.6 2.3 26.3 8.1 36.8 16.9s18.2 20 22.8 32.7c5.8 15.7 7.7 32.6 5.5 49.2-2.2 16.6-8 32.2-16.8 45.9-8.8 13.7-20.6 25-34.5 33.1s-29.8 12.6-46.3 13.2-32.8-2.6-47.5-9.4c-14.7-6.8-27.5-16.9-37.4-29.4s-16.7-27-20.1-42.5-3.3-31.4 0-46.8c3.3-15.3 9.7-29.7 18.8-42s20.6-22 34-28.7c13.3-6.6 28.2-10 43.3-9.8s29.7 3.5 43.1 9.6c13.4 6 25 14.9 34.2 26.2s15.6 24.4 18.6 38.5 2.6 28.7-.3 42.8z"/></svg> },
+  { id: '1-left-mid-in', name: 'Pagelines', 
+    desktopPosition: 'lg:top-[30%] lg:left-[calc(50%-480px)] lg:-translate-x-1/2 lg:translate-y-[15px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7-26.3-2.6-38.2-7.8-22.1-13.2-30.1-23.3-13.3-22.1-15.6-35.1s-1.8-26.6 2-39.5c3.8-12.9 10.3-24.8 19.2-34.8c8.9-10 19.8-17.6 31.9-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2z"/></svg> },
+  { id: '1-left-mid-out', name: 'Centercode', 
+    desktopPosition: 'lg:top-[50%] lg:left-[calc(50%-550px)] lg:-translate-x-1/2 lg:-translate-y-[10px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7c26.3-23 64.8-11.2 108.8-1.4s93 23 113.8 19.3c21.3-3.8 31.5-16.7 32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6z"/></svg> },
+  { id: '1-left-bottom', name: 'Cloudversify', 
+    desktopPosition: 'lg:top-[70%] lg:left-[calc(50%-480px)] lg:-translate-x-1/2 lg:translate-y-[25px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
 
-  // Right Side (4 cards vertically stacked & staggered)
-  { id: 10, Icon: FaHackerrank, position: 'top-[25%] right-[20%]', delay: '1.5s' },
-  { id: 11, Icon: FaHubspot, position: 'top-[15%] right-[5%]', delay: '0.2s' },
-  { id: 12, Icon: FaMagento, position: 'top-[40%] right-[12%]', delay: '2.2s' },
-  { id: 13, Icon: FaPushed, position: 'top-[65%] right-[6%]', delay: '0.9s' },
+  // CENTER Group (5 cards spreading horizontally, arching)
+  { id: '2-center-top-1', name: 'DHL', 
+    desktopPosition: 'lg:top-[12%] lg:left-[calc(50%-330px)] lg:-translate-x-1/2 lg:-translate-y-[15px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '2-center-top-2', name: 'Dropbox', 
+    desktopPosition: 'lg:top-[12%] lg:left-[calc(50%-210px)] lg:-translate-x-1/2 lg:translate-y-[20px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '2-center-bottom', name: 'LinkedIn', 
+    desktopPosition: 'lg:top-[12%] lg:left-[50%] lg:-translate-x-1/2 lg:-translate-y-[25px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '2-center-top-3', name: 'Pinwheel', 
+    desktopPosition: 'lg:top-[12%] lg:left-[calc(50%+210px)] lg:-translate-x-1/2 lg:translate-y-[20px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '2-center-top-4', name: 'Foursquare', 
+    desktopPosition: 'lg:top-[12%] lg:left-[calc(50%+330px)] lg:-translate-x-1/2 lg:-translate-y-[15px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+
+  // RIGHT Group (4 cards, mirrored left stagger)
+  { id: '3-right-top', name: 'HackerRank', 
+    desktopPosition: 'lg:top-[10%] lg:right-[calc(50%-580px)] lg:translate-x-1/2 lg:-translate-y-[20px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '3-right-mid-in', name: 'Hubspot', 
+    desktopPosition: 'lg:top-[30%] lg:right-[calc(50%-480px)] lg:translate-x-1/2 lg:translate-y-[15px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '3-right-mid-out', name: 'Magento', 
+    desktopPosition: 'lg:top-[50%] lg:right-[calc(50%-550px)] lg:translate-x-1/2 lg:-translate-y-[10px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
+  { id: '3-right-bottom', name: 'Pushed', 
+    desktopPosition: 'lg:top-[70%] lg:right-[calc(50%-480px)] lg:translate-x-1/2 lg:translate-y-[25px]',
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-8 h-8 fill-gray-900 group-hover:fill-blue-600 transition-colors"><path d="M495.9 110.8c-26.3-23-64.8-11.2-108.8-1.4-44.1 9.8-93 23-113.8 19.3-21.3-3.8-31.5-16.7-32.9-24.3-1.4-7.6-.8-15.6 1.7-22.1 4.7-12.7 13.5-23 25-29.2 11.4-6.2 24.6-9.1 37.6-8.2 13 1 25.1 5.3 35.3 12.1 10.1 6.8 18.2 16 23.4 26.6 6.8 13.9 9.8 29.5 8.7 45.1-.9 15.6-5.8 30.6-14 43.6s-19.4 23.5-32.5 30.8c-13.1 7.3-27.8 11.2-42.6 11.5s-29.5-2.9-42.7-9.5c-13.1-6.6-24.3-16.1-32.3-27.8-8-11.6-13-24.9-14.7-38.8-1.7-13.8-.4-27.8 3.8-41s11.2-25 20.3-35.1c9.1-10 20.1-17.6 32.2-22.3s25.2-6.5 38.3-5.3c13.1 1.2 25.4 5.7 35.8 13 10.4 7.3 18.7 17 23.9 28.2 6.6 14.1 9.7 29.9 8.9 45.7-.8 15.8-5.3 31-13 44.5s-18.3 24.5-30.8 32.7c-12.5 8.2-26.8 13.3-41.5 14.8s-29.7-.8-43.5-6.6c-13.7-5.8-25.8-14.9-34.9-26.3s-15.1-24.7-17.5-38.9c-2.4-14.2-.9-28.8 4.3-42.3s13-25 22.8-35.1c9.8-10.1 21.6-17.7 34.6-22.3 13-4.6 27-6.3 40.8-5s27.3 5.3 39.2 11.8c11.9 6.5 22 15.4 29.8 26.2 7.8 10.8 13.1 23.3 15.6 36.7 2.5 13.4 2.3 27.2-.6 40.5s-8.6 25.7-16.7 36.3c-8.1 10.6-18.4 19.3-30 25.4s-24.6 9.8-37.9 10.9-26.7-.4-39.1-4.7c-12.4-4.3-23.7-11.1-33-20.1s-16.4-19.9-20.8-32.2-6.2-25.7-5.1-39.1 5.3-26.2 13-37.7 18.2-21 31.1-27.9s27.5-10.6 42.6-11c15.1-.4 30.1 2.3 43.9 7.9s26 13.8 35.6 23.8 16.5 21.7 20.6 34.7c4.1 13 .5 26.8-2.6 39.6s-9 24.4-17.1 34.4-18.1 18-30 23.6-25 8.7-38.3 8.7z"/></svg> },
 ];
+
+// Reusable Icon Card Component
+const IconCard: React.FC<{ card: IconCardData; isDesktopLayout?: boolean }> = ({ card, isDesktopLayout = false }) => (
+  <div className={`${isDesktopLayout ? `absolute group ${card.desktopPosition}` : 'flex flex-col items-center gap-2 group'} transition-all duration-300`}>
+    <div className="w-16 h-16 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex items-center justify-center p-3 transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+      {React.cloneElement(card.icon, {
+        className: 'w-full h-full fill-gray-900 group-hover:fill-blue-600 transition-colors'
+      })}
+    </div>
+    {!isDesktopLayout && (
+      <span className="text-[10px] text-gray-500 font-medium tracking-tight whitespace-nowrap">{card.name}</span>
+    )}
+  </div>
+);
 
 export default function Testimonials() {
   return (
-    <section className="relative w-full min-h-screen bg-gray-900 overflow-hidden py-20 lg:py-32 flex flex-col items-center justify-center font-sans z-0">
+    <section className="relative w-full min-h-screen bg-gray-950 overflow-hidden py-24 sm:py-32 flex flex-col items-center justify-center font-sans">
       
-      {/* Desktop Floating Cards (Hidden on Mobile/Tablet) */}
-      <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-10 max-w-7xl mx-auto">
-        {desktopCards.map((card) => (
-          <div
-            key={card.id}
-            className={`absolute ${card.position} pointer-events-auto`}
-            style={{ animation: `float 6s ease-in-out infinite ${card.delay}` }}
-          >
-            <div className="w-16 h-16 xl:w-20 xl:h-20 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center text-gray-800 text-3xl xl:text-4xl hover:scale-110 hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <card.Icon />
-            </div>
-          </div>
+      {/* Absolute Staggered Layout for Desktop (Hidden on Mobile/Tablet) */}
+      <div className="absolute inset-0 hidden lg:block max-w-7xl mx-auto h-[600px] pointer-events-none z-10">
+        {iconCards.map((card) => (
+          <IconCard key={card.id} card={card} isDesktopLayout={true} />
         ))}
       </div>
 
-      {/* Center Content */}
-      <div className="relative z-20 flex flex-col items-center text-center px-6 max-w-3xl mx-auto mt-10 lg:mt-32">
+      {/* Main Content (Title, Description, CTA, Mobile Grid) */}
+      <div className="relative z-20 flex flex-col items-center text-center px-6 max-w-4xl mx-auto lg:mt-32">
         
-        {/* Animated Gradient Top Label */}
-        <div className="mb-6 inline-block">
-          <span className="text-sm md:text-base font-bold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-white to-blue-400 animate-gradient-text px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+        {/* Animated Gradient Top Section Title */}
+        <div className="w-full flex justify-center mb-8 sm:mb-12">
+          <h1 className="text-sm sm:text-base font-bold tracking-widest uppercase bg-gradient-to-r from-blue-500 via-white to-blue-500 bg-clip-text text-transparent shimmer-effect">
             Testimonials
-          </span>
+          </h1>
         </div>
 
-        {/* Main Title */}
-        <h2 className="flex flex-col gap-2 mb-6">
+        {/* Main Title with brand color line */}
+        <h2 className="flex flex-col gap-1 mb-6">
           <span className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-500 tracking-tight leading-tight">
             Trusted by top-tier businesses
           </span>
-          <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-400 tracking-tight">
+          <span className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-300 tracking-tight">
             around the world
           </span>
         </h2>
 
         {/* Description */}
-        <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
           See how professionals use our solutions to optimize and complete their customer journeys with confidence.
         </p>
 
         {/* CTA Button */}
-        <button className="group flex items-center gap-3 bg-blue-600 text-white px-6 md:px-8 py-4 rounded-full text-sm md:text-base font-medium hover:bg-blue-500 transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:-translate-y-1">
-          <FaStar className="text-yellow-400 text-lg group-hover:scale-110 transition-transform" />
+        <button className="flex items-center gap-3 bg-blue-600 text-white px-6 py-4 rounded-full text-sm sm:text-base font-medium hover:bg-blue-500 transition-colors shadow-lg shadow-blue-900/40 hover:shadow-blue-900/60 hover:-translate-y-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="w-5 h-5 fill-yellow-400"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3L288 439.8l128.2 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.2 329 542.6 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381 150.3 316.9 18z"/></svg>
           <span>Achieved a 4.9 rating for successfully completing projects</span>
         </button>
-      </div>
 
-      {/* Mobile & Tablet Cards Grid (Hidden on Desktop) */}
-      <div className="lg:hidden w-full max-w-md mx-auto mt-16 px-6 relative z-20">
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 place-items-center">
-          {desktopCards.map((card) => (
-            <div
-              key={`mobile-${card.id}`}
-              className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-xl shadow-lg flex items-center justify-center text-gray-800 text-2xl hover:scale-105 transition-transform cursor-pointer"
-            >
-              <card.Icon />
-            </div>
-          ))}
+        {/* Mobile/Tablet Card Grid (Visible on smaller screens, stacks below description) */}
+        <div className="lg:hidden w-full max-w-md mx-auto mt-20 sm:mt-24 px-4">
+          <div className="grid grid-cols-2 gap-x-12 gap-y-10 place-items-center">
+            {iconCards.map((card) => (
+              <IconCard key={`mobile-${card.id}`} card={card} />
+            ))}
+          </div>
         </div>
+
       </div>
 
-      {/* Custom Styles for Animations */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-          100% { transform: translateY(0px); }
+      {/* Tailwind CSS custom animation keyframes defined in a global style tag */}
+      <style jsx global>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
         }
-        @keyframes gradient-text {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-text {
+        .shimmer-effect {
           background-size: 200% auto;
-          animation: gradient-text 4s linear infinite;
+          animation: shimmer 5s linear infinite;
         }
-      `}} />
+      `}</style>
     </section>
   );
 }
