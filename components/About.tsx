@@ -294,7 +294,7 @@ export default function About() {
 
         <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-2">
           <ScrollRevealPro>
-            We're a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
+            We&apos;re a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
           </ScrollRevealPro>
         </p>
 
@@ -444,13 +444,13 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
               <ScrollRevealPro>
-                Over the years, we've had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
+                Over the years, we&apos;ve had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
               </ScrollRevealPro>
             </p>
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
               <ScrollRevealPro>
-                But EntryLab is more than just work — it's a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That's why we built this space to celebrate those moments.
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments.
               </ScrollRevealPro>
             </p>
 
