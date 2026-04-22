@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, PanInfo } from "framer-motion";
 
 type MemberType = "Onsite" | "Remote";
 type FilterType = "All" | MemberType;
@@ -223,6 +223,12 @@ export default function Teams() {
 
   const next = () => setActiveIndex((prev) => (prev + 1) % total);
   const prev = () => setActiveIndex((prev) => (prev - 1 + total) % total);
+
+  const handleDragEnd = (e: Event, { offset, velocity }: PanInfo) => {
+    const swipe = offset.x;
+    if (swipe < -50 || velocity.x < -400) next();
+    else if (swipe > 50 || velocity.x > 400) prev();
+  };
 
   const positions = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
   
