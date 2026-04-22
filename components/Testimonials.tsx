@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- Data ---
 const reviews = [
   {
     name: "Daniel Carter",
@@ -147,7 +146,6 @@ const reviews = [
   }
 ];
 
-// --- Animation Variants ---
 const textRevealContainer = {
   hidden: {},
   visible: {
@@ -160,14 +158,27 @@ const textRevealItem = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
-// --- Components ---
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 20 : -20,
+    opacity: 0
+  }),
+  center: {
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -20 : 20,
+    opacity: 0
+  })
+};
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex gap-1">
     {[...Array(5)].map((_, i) => (
       <svg
         key={i}
-        className={`h-5 w-5 ${i < rating ? "text-green-500" : "text-neutral-600"}`}
+        className={`h-4 w-4 ${i < rating ? "text-green-500" : "text-neutral-600"}`}
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -178,10 +189,10 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 const MarqueeCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div className="flex w-[350px] min-w-[350px] flex-col justify-between gap-6 rounded-xl border border-white/5 bg-white/5 p-6 shadow-sm backdrop-blur-sm">
+  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-5 rounded-2xl border border-white/5 bg-white/5 p-6 shadow-sm backdrop-blur-xl">
     <div className="flex items-center justify-between">
       <svg
-        className="h-8 w-8 text-blue-500/30"
+        className="h-6 w-6 text-blue-500/30"
         fill="currentColor"
         viewBox="0 0 24 24"
       >
@@ -206,45 +217,35 @@ const MarqueeCard = ({ review }: { review: typeof reviews[0] }) => (
 );
 
 export default function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [[page, direction], setPage] = useState([0, 0]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length);
-  };
+  const currentIndex = ((page % reviews.length) + reviews.length) % reviews.length;
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
   };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 4000);
+    const timer = setInterval(() => {
+      paginate(1);
+    }, 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [page]);
 
   const activeReview = reviews[currentIndex];
-  const prevAvatarIndex = (currentIndex - 1 + reviews.length) % reviews.length;
-  const nextAvatarIndex = (currentIndex + 1) % reviews.length;
+  const prevIndex = (currentIndex - 1 + reviews.length) % reviews.length;
+  const nextIndex = (currentIndex + 1) % reviews.length;
 
   return (
-    <section className="relative w-full overflow-hidden bg-neutral-900 py-24 text-white">
-      {/* Inline styles for custom animations */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        @keyframes text-gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-text {
-          background-size: 200% auto;
-          animation: text-gradient 4s linear infinite;
-        }
-      `}} />
+    <section id="testimonials" className="relative w-full overflow-hidden bg-neutral-900 py-24 text-white">
+      
+      <div className="pointer-events-none absolute -left-[20%] top-0 h-[600px] w-[600px] rounded-full bg-blue-600/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-[20%] bottom-0 h-[600px] w-[600px] rounded-full bg-purple-600/10 blur-[120px]" />
+      <div className="pointer-events-none absolute left-[40%] top-[40%] h-[400px] w-[400px] rounded-full bg-teal-600/10 blur-[100px]" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        {/* --- Header Area --- */}
-        <div className="mb-20 flex flex-col items-center text-center">
+        <div className="mb-24 flex flex-col items-center text-center">
           <motion.div
             variants={textRevealContainer}
             initial="hidden"
@@ -253,14 +254,13 @@ export default function Testimonials() {
             className="flex flex-col items-center gap-4"
           >
             <motion.div variants={textRevealItem}>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-gray-200 shadow-[0_0_15px_rgba(255,255,255,0.05)] backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-gray-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl">
                 <span className="drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]">⭐</span>
                 Achieved 4.9 rating for successfully completing projects.
               </div>
             </motion.div>
 
-            {/* Note: Main heading excluded from scroll reveal per requirements */}
-            <h2 className="animate-gradient-text mt-4 bg-gradient-to-r from-blue-500 via-blue-200 to-white bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
+            <h2 className="mt-4 bg-gradient-to-l from-white to-blue-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
               Testimonials
             </h2>
 
@@ -270,10 +270,8 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
-        {/* --- Main 2-Column Section --- */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:gap-20">
           
-          {/* Left Column */}
           <motion.div
             variants={textRevealContainer}
             initial="hidden"
@@ -286,96 +284,101 @@ export default function Testimonials() {
               <span className="text-gray-400">about our presence</span>
             </motion.h3>
             
-            <motion.p variants={textRevealItem} className="mt-6 max-w-md text-lg text-gray-400">
+            <motion.p variants={textRevealItem} className="mt-6 max-w-md text-sm leading-relaxed text-gray-400 md:text-base">
               See how professionals use our solutions to optimize and complete their customer journeys with confidence.
             </motion.p>
 
             <motion.div variants={textRevealItem} className="mt-10 flex gap-4">
               <button
-                onClick={prevSlide}
-                className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:bg-white/10 hover:text-blue-400"
+                onClick={() => paginate(-1)}
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-blue-400"
                 aria-label="Previous testimonial"
               >
-                <svg className="h-6 w-6 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <button
-                onClick={nextSlide}
-                className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:bg-white/10 hover:text-blue-400"
+                onClick={() => paginate(1)}
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-blue-400"
                 aria-label="Next testimonial"
               >
-                <svg className="h-6 w-6 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Review Card */}
-          <div className="relative flex h-full min-h-[400px] w-full items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="relative w-full rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-2xl backdrop-blur-xl sm:p-10"
-              >
-                <div className="mb-6 flex items-start justify-between">
-                  <svg className="h-10 w-10 text-blue-500/30" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                  <StarRating rating={activeReview.rating} />
-                </div>
-                
-                <p className="mb-10 text-lg leading-relaxed text-gray-200 md:text-xl">
-                  "{activeReview.review}"
-                </p>
-
-                <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <div className="relative flex w-full items-center justify-center">
+            <div className="relative flex min-h-[380px] w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl sm:p-10">
+              <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                  key={page}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.3 }
+                  }}
+                  className="flex h-full flex-col justify-between"
+                >
                   <div>
-                    <h4 className="text-lg font-bold text-white">{activeReview.name}</h4>
-                    <p className="text-sm text-gray-400">{activeReview.role}</p>
+                    <div className="mb-6 flex items-start justify-between">
+                      <svg className="h-8 w-8 text-blue-500/30" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                      </svg>
+                      <StarRating rating={activeReview.rating} />
+                    </div>
+                    
+                    <p className="mb-8 min-h-[120px] text-sm leading-relaxed text-gray-300">
+                      "{activeReview.review}"
+                    </p>
                   </div>
 
-                  {/* 3 Avatars Section */}
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={reviews[prevAvatarIndex].avatar}
-                      alt="Previous"
-                      className="h-10 w-10 scale-75 rounded-full object-cover opacity-30 blur-[1px] transition-all duration-500"
-                    />
-                    <div className="relative rounded-full rounded-full border-2 border-blue-500 p-0.5 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                  <div className="flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
+                    <div>
+                      <h4 className="text-base font-bold text-white">{activeReview.name}</h4>
+                      <p className="text-xs text-gray-400">{activeReview.role}</p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
                       <img
-                        src={activeReview.avatar}
-                        alt={activeReview.name}
-                        className="h-14 w-14 scale-100 rounded-full object-cover opacity-100 transition-all duration-500"
+                        src={reviews[prevIndex].avatar}
+                        alt="Previous"
+                        className="h-10 w-10 scale-90 rounded-full object-cover opacity-30"
+                      />
+                      <div className="relative rounded-full border border-blue-500/50 p-0.5 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                        <img
+                          src={activeReview.avatar}
+                          alt={activeReview.name}
+                          className="h-12 w-12 scale-100 rounded-full object-cover opacity-100"
+                        />
+                      </div>
+                      <img
+                        src={reviews[nextIndex].avatar}
+                        alt="Next"
+                        className="h-10 w-10 scale-90 rounded-full object-cover opacity-30"
                       />
                     </div>
-                    <img
-                      src={reviews[nextAvatarIndex].avatar}
-                      alt="Next"
-                      className="h-10 w-10 scale-75 rounded-full object-cover opacity-30 blur-[1px] transition-all duration-500"
-                    />
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* --- Marquee Section --- */}
-      <div className="relative mt-32 flex w-full flex-col gap-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+      <div className="relative mx-auto mt-32 flex w-full max-w-6xl flex-col gap-6 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         
-        {/* Row 1: Right to Left */}
         <div className="flex w-full">
           <motion.div
             className="flex min-w-max gap-6 pr-6"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
+            animate={{ x: ["-50%", "0%"] }}
+            transition={{ duration: 100, ease: "linear", repeat: Infinity }}
           >
             {[...reviews.slice(0, 10), ...reviews.slice(0, 10)].map((review, idx) => (
               <MarqueeCard key={`row1-${idx}`} review={review} />
@@ -383,12 +386,11 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
-        {/* Row 2: Left to Right */}
         <div className="flex w-full">
           <motion.div
             className="flex min-w-max gap-6 pr-6"
-            animate={{ x: ["-50%", "0%"] }}
-            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 100, ease: "linear", repeat: Infinity }}
           >
             {[...reviews.slice(10, 20), ...reviews.slice(10, 20)].map((review, idx) => (
               <MarqueeCard key={`row2-${idx}`} review={review} />
