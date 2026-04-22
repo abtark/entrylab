@@ -1,4 +1,3 @@
-import Preloader from '@/components/Preloader'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
@@ -13,23 +12,22 @@ import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
-    <main className="relative bg-background">
-      <Preloader />
+    <main className="bg-[#111111] min-h-screen text-white overflow-hidden selection:bg-[#00AAFF]/30 selection:text-white">
       <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Insights />
-      <Testimonials />
-      <Teams />
-      <Gallery />
-      <Careers />
-      <Contact />
+
+      <div className="flex flex-col w-full">
+        <Hero />          {/* id="home" */}
+        <About />         {/* id="about" */}
+        <Services />      {/* id="services" */}
+        <Insights />      {/* id="insights" */}
+        <Testimonials />  {/* id="testimonials" */}
+        <Teams />         {/* id="teams" */}
+        <Gallery />       {/* id="gallery" */}
+        <Careers />       {/* id="careers" */}
+        <Contact />       {/* id="contact" */}
+      </div>
+
       <Footer />
-      
-      <footer className="bg-[#0a0a0a] py-8 text-center border-t border-gray-900">
-        <p className="text-gray-500 text-sm">© {new Date().getFullYear()} EntryLab. Where Every Search Has a Value</p>
-      </footer>
     </main>
   )
 }
