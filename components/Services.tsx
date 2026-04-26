@@ -123,6 +123,33 @@ const servicesData = [
   }
 ]
 
+const processData = [
+  {
+    title: "Understand",
+    description: "We analyze requirements and data specifications thoroughly.",
+    icon: "fa-magnifying-glass",
+    color: "#00AAFF"
+  },
+  {
+    title: "Plan",
+    description: "Create a detailed project plan with timelines and quality benchmarks.",
+    icon: "fa-clipboard-list",
+    color: "#FF9900"
+  },
+  {
+    title: "Execute",
+    description: "Our skilled team processes data with precision and care.",
+    icon: "fa-cogs",
+    color: "#00E676"
+  },
+  {
+    title: "Deliver",
+    description: "Quality-checked output delivered on time with full support.",
+    icon: "fa-paper-plane",
+    color: "#B829FF"
+  }
+]
+
 const TiltFlipCard = ({ 
   service, 
   index, 
@@ -277,6 +304,8 @@ export default function Services() {
   return (
     <section id="services" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
+        
+        {/* Top Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -284,14 +313,21 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
+          <span className="text-[#00AAFF] font-bold tracking-wider uppercase text-sm md:text-base mb-2 block">
+            WHAT WE OFFER
+          </span>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
               Our Services
             </span>
           </h2>
-          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mb-6"></div>
+          <p className="text-white max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
+            Comprehensive research and data processing services, customized to meet specific business needs. Focused on delivering precise insights and maximizing efficiency for better decision-making.
+          </p>
         </motion.div>
         
+        {/* 9 Services Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {servicesData.map((service, i) => (
             <TiltFlipCard 
@@ -303,6 +339,100 @@ export default function Services() {
             />
           ))}
         </div>
+
+        {/* Process Section */}
+        <div className="mt-32">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <span className="text-[#00AAFF] font-bold tracking-wider uppercase text-sm md:text-base mb-2 block">
+              HOW WE WORK
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
+                Our Process
+              </span>
+            </h2>
+            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {processData.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { 
+                    opacity: 1, 
+                    transition: { staggerChildren: 0.15, delayChildren: i * 0.1 } 
+                  }
+                }}
+                className="group p-8 rounded-2xl border-2 flex flex-col items-center text-center bg-transparent"
+                style={{ borderColor: step.color }}
+              >
+                <motion.div 
+                  variants={{ 
+                    hidden: { opacity: 0, y: 20 }, 
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
+                  }}
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
+                  style={{ backgroundColor: `${step.color}20` }}
+                >
+                  <i className={`fa-solid ${step.icon} text-3xl`} style={{ color: step.color }}></i>
+                </motion.div>
+                
+                <motion.h3 
+                  variants={{ 
+                    hidden: { opacity: 0, y: 20 }, 
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
+                  }}
+                  className="text-2xl font-bold text-white mb-3"
+                >
+                  {step.title}
+                </motion.h3>
+                
+                <motion.p 
+                  variants={{ 
+                    hidden: { opacity: 0, y: 20 }, 
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
+                  }}
+                  className="text-white/80 leading-relaxed text-sm"
+                >
+                  {step.description}
+                </motion.p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mt-32 max-w-3xl mx-auto"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
+              Need a Custom Solution?
+            </span>
+          </h2>
+          <p className="text-white/90 text-lg md:text-xl mb-10">
+            We tailor our services to match your exact requirements. Let's discuss your project today.
+          </p>
+          <button className="bg-[#00AAFF] hover:bg-[#0088CC] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,170,255,0.4)] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)]">
+            Get a Free Quote <i className="fa-solid fa-arrow-right ml-2"></i>
+          </button>
+        </motion.div>
+
       </div>
     </section>
   )
