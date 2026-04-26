@@ -7,7 +7,7 @@ const reviews = [
   {
     name: "Daniel Carter",
     role: "VP of Data Operations",
-    review: "The team demonstrated exceptional analytical capability and precision in handling complex datasets. Their structured approach to web research and data validation significantly enhanced our decision-making processes. Delivery timelines were met with consistency and professionalism.",
+    review: "The team demonstrated exceptional analytical capability and precision in handling complex datasets. Their structured approach to web research and data validation significantly enhanced our decision-making processes.",
     rating: 5,
     avatar: "https://iili.io/B49UNNj.png"
   },
