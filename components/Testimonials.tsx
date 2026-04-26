@@ -4,176 +4,52 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const reviews = [
-  {
-    name: "Daniel Carter",
-    role: "VP of Data Operations",
-    review: "The team demonstrated exceptional analytical capability and precision in handling complex datasets. Their structured approach to web research and data validation significantly enhanced our decision-making processes.",
-    rating: 5,
-    avatar: "https://iili.io/B49UNNj.png"
-  },
-  {
-    name: "Olivia Bennett",
-    role: "CFO",
-    review: "I was particularly impressed by the accuracy and reliability of the data analysis provided. The reporting was clear, well-organized, and actionable. Their ability to extract meaningful insights from large data volumes is commendable.",
-    rating: 5,
-    avatar: "https://iili.io/B49sj14.png"
-  },
-  {
-    name: "Liam Foster",
-    role: "CEO",
-    review: "An outstanding engagement overall. The team showcased deep expertise in both data analytics and targeted web research. Their insights directly contributed to strategic improvements across our organization.",
-    rating: 5,
-    avatar: "https://iili.io/B49UwAb.png"
-  },
-  {
-    name: "Sophie Laurent",
-    role: "General Manager",
-    review: "The level of professionalism and analytical rigor was excellent. Their web research outputs were comprehensive and well-structured, supporting our operational planning effectively.",
-    rating: 4,
-    avatar: "https://iili.io/B49shBf.png"
-  },
-  {
-    name: "Ethan Hughes",
-    role: "EVP",
-    review: "Highly satisfied with the quality of data interpretation and reporting. The team demonstrated strong technical competence and delivered consistently accurate results under tight timelines.",
-    rating: 5,
-    avatar: "https://iili.io/B49UVK7.png"
-  },
-  {
-    name: "Amelia Clarke",
-    role: "Assistant General Manager",
-    review: "A highly reliable partner for data-driven initiatives. Their attention to detail and methodical research approach ensured high-quality outputs throughout the engagement.",
-    rating: 5,
-    avatar: "https://iili.io/B49sWLG.png"
-  },
-  {
-    name: "Noah Schneider",
-    role: "Chief Strategy Officer",
-    review: "Their ability to align data insights with strategic objectives was particularly valuable. The web research was thorough, and the analytical outputs were both relevant and actionable.",
-    rating: 5,
-    avatar: "https://iili.io/B49UEV2.png"
-  },
-  {
-    name: "Isabella Rossi",
-    role: "VP of Marketing Analytics",
-    review: "The team provided well-structured datasets and insightful analysis that supported our campaign optimization efforts. Their research depth and clarity in reporting stood out.",
-    rating: 5,
-    avatar: "https://iili.io/B49s07I.png"
-  },
-  {
-    name: "Jack Thompson",
-    role: "COO",
-    review: "Operational efficiency improved significantly due to their precise data handling and validation processes. Their analytical framework is robust and dependable.",
-    rating: 5,
-    avatar: "https://iili.io/B49Ult4.png"
-  },
-  {
-    name: "Emily Watson",
-    role: "Chief Experience Officer",
-    review: "The team delivered high-quality insights supported by credible and well-documented web research. Their professionalism and consistency were evident throughout the project.",
-    rating: 5,
-    avatar: "https://iili.io/B49sldN.png"
-  },
-  {
-    name: "Lucas Meyer",
-    role: "General Manager",
-    review: "A strong demonstration of data expertise. The team delivered structured, accurate, and highly usable datasets that integrated seamlessly into our internal systems.",
-    rating: 5,
-    avatar: "https://iili.io/B49UcNf.png"
-  },
-  {
-    name: "Grace Mitchell",
-    role: "VP of HR Analytics",
-    review: "Their analytical outputs were clear, precise, and aligned with our internal metrics. The web research component added significant contextual value to our analysis.",
-    rating: 5,
-    avatar: "https://iili.io/B49sagp.png"
-  },
-  {
-    name: "Henry Walker",
-    role: "CFO",
-    review: "Exceptional accuracy in financial data analysis and benchmarking research. Their insights contributed meaningfully to our forecasting and planning activities.",
-    rating: 4,
-    avatar: "https://iili.io/B49UY9s.png"
-  },
-  {
-    name: "Chloe Dubois",
-    role: "AGM",
-    review: "The team maintained a high standard of data integrity and delivered well-validated research outputs. Their structured methodology ensured reliability at every stage.",
-    rating: 5,
-    avatar: "https://iili.io/B49s7qv.png"
-  },
-  {
-    name: "Oliver Brown",
-    role: "CEO",
-    review: "An excellent experience overall. The depth of analysis and quality of research exceeded expectations, providing clear strategic advantages.",
-    rating: 5,
-    avatar: "https://iili.io/B49U5Sn.png"
-  },
-  {
-    name: "Mia Wilson",
-    role: "VP of Sales Analytics",
-    review: "The insights generated were directly applicable to our sales optimization strategies. Their data models and research inputs were both accurate and practical.",
-    rating: 5,
-    avatar: "https://iili.io/B49sAXa.png"
-  },
-  {
-    name: "William Taylor",
-    role: "EVP",
-    review: "Highly professional execution with strong analytical depth. The team handled complex data requirements efficiently and delivered high-value insights.",
-    rating: 5,
-    avatar: "https://iili.io/B49URcX.png"
-  },
-  {
-    name: "Ava Johnson",
-    role: "General Manager",
-    review: "A dependable and technically proficient team. Their web research and data analysis capabilities consistently met our expectations.",
-    rating: 5,
-    avatar: "https://iili.io/B49sImF.png"
-  },
-  {
-    name: "Benjamin Scott",
-    role: "COO",
-    review: "Their structured approach to data processing and validation ensured accuracy and reliability. The outputs were delivered in a clear and actionable format.",
-    rating: 5,
-    avatar: "https://iili.io/B49UAFt.png"
-  },
-  {
-    name: "Ella Martin",
-    role: "CXO",
-    review: "The overall quality of data analysis and research was strong. While the deliverables were accurate and useful, slightly more frequent progress updates would further enhance the experience.",
-    rating: 4,
-    avatar: "https://iili.io/B49sx5P.png"
-  }
+  { name: "Daniel Carter", role: "VP of Data Operations", review: "The team demonstrated exceptional analytical capability and precision in handling complex datasets. Their structured approach to web research and data validation significantly enhanced our decision-making processes.", rating: 5, avatar: "https://iili.io/B49UNNj.png" },
+  { name: "Olivia Bennett", role: "CFO", review: "I was particularly impressed by the accuracy and reliability of the data analysis provided. The reporting was clear, well-organized, and actionable. Their ability to extract meaningful insights from large data volumes is commendable.", rating: 5, avatar: "https://iili.io/B49sj14.png" },
+  { name: "Liam Foster", role: "CEO", review: "An outstanding engagement overall. The team showcased deep expertise in both data analytics and targeted web research. Their insights directly contributed to strategic improvements across our organization.", rating: 5, avatar: "https://iili.io/B49UwAb.png" },
+  { name: "Sophie Laurent", role: "General Manager", review: "The level of professionalism and analytical rigor was excellent. Their web research outputs were comprehensive and well-structured, supporting our operational planning effectively.", rating: 4, avatar: "https://iili.io/B49shBf.png" },
+  { name: "Ethan Hughes", role: "EVP", review: "Highly satisfied with the quality of data interpretation and reporting. The team demonstrated strong technical competence and delivered consistently accurate results under tight timelines.", rating: 5, avatar: "https://iili.io/B49UVK7.png" },
+  { name: "Amelia Clarke", role: "Assistant General Manager", review: "A highly reliable partner for data-driven initiatives. Their attention to detail and methodical research approach ensured high-quality outputs throughout the engagement.", rating: 5, avatar: "https://iili.io/B49sWLG.png" },
+  { name: "Noah Schneider", role: "Chief Strategy Officer", review: "Their ability to align data insights with strategic objectives was particularly valuable. The web research was thorough, and the analytical outputs were both relevant and actionable.", rating: 5, avatar: "https://iili.io/B49UEV2.png" },
+  { name: "Isabella Rossi", role: "VP of Marketing Analytics", review: "The team provided well-structured datasets and insightful analysis that supported our campaign optimization efforts. Their research depth and clarity in reporting stood out.", rating: 5, avatar: "https://iili.io/B49s07I.png" },
+  { name: "Jack Thompson", role: "COO", review: "Operational efficiency improved significantly due to their precise data handling and validation processes. Their analytical framework is robust and dependable.", rating: 5, avatar: "https://iili.io/B49Ult4.png" },
+  { name: "Emily Watson", role: "Chief Experience Officer", review: "The team delivered high-quality insights supported by credible and well-documented web research. Their professionalism and consistency were evident throughout the project.", rating: 5, avatar: "https://iili.io/B49sldN.png" },
+  { name: "Lucas Meyer", role: "General Manager", review: "A strong demonstration of data expertise. The team delivered structured, accurate, and highly usable datasets that integrated seamlessly into our internal systems.", rating: 5, avatar: "https://iili.io/B49UcNf.png" },
+  { name: "Grace Mitchell", role: "VP of HR Analytics", review: "Their analytical outputs were clear, precise, and aligned with our internal metrics. The web research component added significant contextual value to our analysis.", rating: 5, avatar: "https://iili.io/B49sagp.png" },
+  { name: "Henry Walker", role: "CFO", review: "Exceptional accuracy in financial data analysis and benchmarking research. Their insights contributed meaningfully to our forecasting and planning activities.", rating: 4, avatar: "https://iili.io/B49UY9s.png" },
+  { name: "Chloe Dubois", role: "AGM", review: "The team maintained a high standard of data integrity and delivered well-validated research outputs. Their structured methodology ensured reliability at every stage.", rating: 5, avatar: "https://iili.io/B49s7qv.png" },
+  { name: "Oliver Brown", role: "CEO", review: "An excellent experience overall. The depth of analysis and quality of research exceeded expectations, providing clear strategic advantages.", rating: 5, avatar: "https://iili.io/B49U5Sn.png" },
+  { name: "Mia Wilson", role: "VP of Sales Analytics", review: "The insights generated were directly applicable to our sales optimization strategies. Their data models and research inputs were both accurate and practical.", rating: 5, avatar: "https://iili.io/B49sAXa.png" },
+  { name: "William Taylor", role: "EVP", review: "Highly professional execution with strong analytical depth. The team handled complex data requirements efficiently and delivered high-value insights.", rating: 5, avatar: "https://iili.io/B49URcX.png" },
+  { name: "Ava Johnson", role: "General Manager", review: "A dependable and technically proficient team. Their web research and data analysis capabilities consistently met our expectations.", rating: 5, avatar: "https://iili.io/B49sImF.png" },
+  { name: "Benjamin Scott", role: "COO", review: "Their structured approach to data processing and validation ensured accuracy and reliability. The outputs were delivered in a clear and actionable format.", rating: 5, avatar: "https://iili.io/B49UAFt.png" },
+  { name: "Ella Martin", role: "CXO", review: "The overall quality of data analysis and research was strong. While the deliverables were accurate and useful, slightly more frequent progress updates would further enhance the experience.", rating: 4, avatar: "https://iili.io/B49sx5P.png" }
 ];
+
+const marqueeRow1 = [...reviews.slice(0, 10), ...reviews.slice(0, 10)];
+const marqueeRow2 = [...reviews.slice(10, 20), ...reviews.slice(10, 20)];
 
 const textRevealContainer = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 }
-  }
+  visible: { transition: { staggerChildren: 0.1 } }
 };
 
 const textRevealItem = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
 const swapAnimation = {
-  initial: { opacity: 0, x: 20, filter: "blur(4px)" },
-  animate: { opacity: 1, x: 0, filter: "blur(0px)" },
-  exit: { opacity: 0, x: -20, filter: "blur(4px)" },
-  transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
+  initial: { opacity: 0, x: 20 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -20 },
+  transition: { duration: 0.4, ease: "easeOut" }
 };
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex gap-1">
     {[...Array(5)].map((_, i) => (
-      <svg
-        key={i}
-        className={`h-4 w-4 ${i < rating ? "text-green-500" : "text-neutral-600"}`}
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
+      <svg key={i} className={`h-4 w-4 ${i < rating ? "text-green-500" : "text-neutral-600"}`} fill="currentColor" viewBox="0 0 20 20">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
       </svg>
     ))}
@@ -181,7 +57,7 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 const MarqueeCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-5 backdrop-blur-xl transition-all duration-500 hover:scale-[1.03] hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-5 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.08)]">
     <div className="flex items-center justify-between">
       <svg className="h-5 w-5 text-[#00AAFF]/30" fill="currentColor" viewBox="0 0 24 24">
         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -190,7 +66,7 @@ const MarqueeCard = ({ review }: { review: typeof reviews[0] }) => (
     </div>
     <p className="text-sm leading-relaxed text-gray-300">"{review.review}"</p>
     <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-3">
-      <img src={review.avatar} alt={review.name} className="h-9 w-9 rounded-full object-cover" />
+      <img src={review.avatar} alt={review.name} className="h-9 w-9 rounded-full object-cover" loading="lazy" />
       <div>
         <h4 className="text-sm font-semibold text-white">{review.name}</h4>
         <p className="text-xs text-gray-400">{review.role}</p>
@@ -207,7 +83,7 @@ export default function Testimonials() {
       setIndex((prev) => (prev + 1) % reviews.length);
     }, 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [index]); 
 
   const paginate = (dir: number) => {
     setIndex((prev) => (prev + dir + reviews.length) % reviews.length);
@@ -229,18 +105,20 @@ export default function Testimonials() {
           animation: slide-gradient 5s linear infinite;
         }
         @keyframes scroll-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
         @keyframes scroll-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
+          0% { transform: translate3d(-50%, 0, 0); }
+          100% { transform: translate3d(0, 0, 0); }
         }
         .animate-scroll-left {
-          animation: scroll-left 180s linear infinite;
+          animation: scroll-left 120s linear infinite;
+          will-change: transform;
         }
         .animate-scroll-right {
-          animation: scroll-right 180s linear infinite;
+          animation: scroll-right 120s linear infinite;
+          will-change: transform;
         }
       `}} />
 
@@ -249,17 +127,10 @@ export default function Testimonials() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-24 flex flex-col items-center text-center">
-          <motion.div
-            variants={textRevealContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col items-center gap-4"
-          >
+          <motion.div variants={textRevealContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="flex flex-col items-center gap-4">
             <motion.div variants={textRevealItem}>
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-gray-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl">
-                <span>⭐</span>
-                Achieved 4.9 rating for successfully completing projects.
+                <span>⭐</span> Achieved 4.9 rating for successfully completing projects.
               </div>
             </motion.div>
 
@@ -286,27 +157,17 @@ export default function Testimonials() {
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button
-                onClick={() => paginate(-1)}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-[#00AAFF]"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                </svg>
+              <button onClick={() => paginate(-1)} aria-label="Previous testimonial" className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all hover:bg-white/10 hover:text-[#00AAFF]">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
               </button>
-              <button
-                onClick={() => paginate(1)}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-[#00AAFF]"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
+              <button onClick={() => paginate(1)} aria-label="Next testimonial" className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all hover:bg-white/10 hover:text-[#00AAFF]">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
               </button>
             </div>
           </div>
 
           <div className="relative">
-            <div className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] sm:p-8">
+            <div className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] sm:p-8">
               <div className="mb-6 flex items-start justify-between">
                 <svg className="h-10 w-10 text-[#00AAFF]/30" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -316,11 +177,7 @@ export default function Testimonials() {
 
               <div className="relative flex-grow overflow-hidden">
                 <AnimatePresence mode="wait">
-                  <motion.p
-                    key={`review-${index}`}
-                    {...swapAnimation}
-                    className="mb-8 min-h-[120px] text-sm leading-relaxed text-gray-200 md:text-base"
-                  >
+                  <motion.p key={`review-${index}`} {...swapAnimation} className="mb-8 min-h-[120px] text-sm leading-relaxed text-gray-200 md:text-base">
                     "{active.review}"
                   </motion.p>
                 </AnimatePresence>
@@ -337,7 +194,7 @@ export default function Testimonials() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <img src={reviews[prevIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-20 blur-[1px]" />
+                  <img src={reviews[prevIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-30" />
                   <div className="relative rounded-full border border-[#00AAFF]/40 p-1 shadow-[0_0_20px_rgba(0,170,255,0.15)]">
                     <AnimatePresence mode="wait">
                       <motion.img
@@ -347,12 +204,12 @@ export default function Testimonials() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ duration: 0.3 }}
                         className="h-12 w-12 rounded-full object-cover"
                       />
                     </AnimatePresence>
                   </div>
-                  <img src={reviews[nextIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-20 blur-[1px]" />
+                  <img src={reviews[nextIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-30" />
                 </div>
               </div>
             </div>
@@ -363,16 +220,12 @@ export default function Testimonials() {
       <div className="relative mx-auto mt-36 mb-12 flex w-full max-w-6xl flex-col gap-10 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div className="group flex">
           <div className="animate-scroll-left flex min-w-max gap-6 pt-[25px] group-hover:[animation-play-state:paused]">
-            {[...reviews.slice(0, 10), ...reviews.slice(0, 10)].map((r, i) => (
-              <MarqueeCard key={`row1-${i}`} review={r} />
-            ))}
+            {marqueeRow1.map((r, i) => <MarqueeCard key={`row1-${i}`} review={r} />)}
           </div>
         </div>
         <div className="group flex">
           <div className="animate-scroll-right flex min-w-max gap-6 pb-[25px] group-hover:[animation-play-state:paused]">
-            {[...reviews.slice(10, 20), ...reviews.slice(10, 20)].map((r, i) => (
-              <MarqueeCard key={`row2-${i}`} review={r} />
-            ))}
+            {marqueeRow2.map((r, i) => <MarqueeCard key={`row2-${i}`} review={r} />)}
           </div>
         </div>
       </div>
