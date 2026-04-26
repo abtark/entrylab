@@ -141,13 +141,13 @@ const processData = [
     title: "Execute",
     description: "Our skilled team processes data with precision and care.",
     icon: "fa-cogs",
-    color: "#00E676"
+    color: "#FF8C00"
   },
   {
     title: "Deliver",
     description: "Quality-checked output delivered on time with full support.",
     icon: "fa-paper-plane",
-    color: "#B829FF"
+    color: "#00E676"
   }
 ]
 
@@ -216,7 +216,6 @@ const TiltFlipCard = ({
         style={{ transformStyle: "preserve-3d" }}
         className="relative w-full h-full rounded-2xl shadow-xl"
       >
-        {/* ================= FRONT SIDE ================= */}
         <div
           className="absolute inset-0 w-full h-full p-6 rounded-2xl overflow-hidden bg-[#181818] border flex flex-col justify-center items-center text-center transition-colors duration-300 group-hover:border-transparent"
           style={{ 
@@ -226,13 +225,11 @@ const TiltFlipCard = ({
             '--theme-color': service.color
           } as React.CSSProperties}
         >
-          {/* Hover Effects Layer */}
           <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)] pointer-events-none" />
           <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-black/30 backdrop-blur-sm pointer-events-none" />
           <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 shadow-[0_0_30px_var(--theme-color)] pointer-events-none" />
           <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-[100%] transition-transform duration-[1.5s] ease-in-out z-10 skew-x-[-30deg] pointer-events-none" />
 
-          {/* Front Content */}
           <div className="relative z-20 w-full h-full flex flex-col justify-center items-center">
             <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-4">
               <i className={`fa-solid ${service.icon} text-5xl mb-3 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
@@ -248,7 +245,6 @@ const TiltFlipCard = ({
           </div>
         </div>
 
-        {/* ================= BACK SIDE ================= */}
         <div
           className="absolute inset-0 w-full h-full rounded-2xl p-5 flex flex-col justify-start overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
           style={{ 
@@ -258,11 +254,9 @@ const TiltFlipCard = ({
             backgroundColor: service.color
           }}
         >
-          {/* Subtle dark gradient overlay for better text contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/40 z-0 rounded-2xl pointer-events-none"></div>
           
           <div className="relative z-10 w-full h-full flex flex-col">
-            {/* Back Header */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
@@ -275,7 +269,6 @@ const TiltFlipCard = ({
               </h3>
             </motion.div>
             
-            {/* Back Bullets */}
             <div className="flex flex-col gap-2.5 flex-grow justify-center">
               {service.bullets.map((bullet, i) => (
                 <motion.div
@@ -306,7 +299,6 @@ export default function Services() {
     <section id="services" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
         
-        {/* Top Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -328,7 +320,6 @@ export default function Services() {
           </p>
         </motion.div>
         
-        {/* 9 Services Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {servicesData.map((service, i) => (
             <TiltFlipCard 
@@ -341,7 +332,6 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Process Section */}
         <div className="mt-32">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -378,17 +368,16 @@ export default function Services() {
                 className="group p-6 md:p-8 rounded-2xl border flex flex-col items-start bg-[#181818] transition-colors duration-300"
                 style={{ borderColor: `${step.color}30` }}
               >
-                {/* Inline Header */}
                 <div className="flex items-center gap-4 mb-4">
                   <motion.div 
                     variants={{ 
                       hidden: { opacity: 0, scale: 0.5 }, 
                       visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 15 } } 
                     }}
-                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ backgroundColor: `${step.color}20` }}
                   >
-                    <i className={`fa-solid ${step.icon} text-xl`} style={{ color: step.color }}></i>
+                    <i className={`fa-solid ${step.icon} text-xl transition-transform duration-300 group-hover:scale-125`} style={{ color: step.color }}></i>
                   </motion.div>
                   
                   <motion.h3 
@@ -402,7 +391,6 @@ export default function Services() {
                   </motion.h3>
                 </div>
                 
-                {/* Description */}
                 <motion.p 
                   variants={{ 
                     hidden: { opacity: 0, y: 20 }, 
@@ -417,7 +405,6 @@ export default function Services() {
           </div>
         </div>
 
-        {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -433,7 +420,7 @@ export default function Services() {
           <p className="text-white/90 text-lg md:text-xl mb-10">
             We tailor our services to match your exact requirements. Let's discuss your project today.
           </p>
-          <Link href="/contact" passHref>
+          <Link href="#contact" passHref>
             <button className="bg-[#00AAFF] hover:bg-[#0088CC] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,170,255,0.4)] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)]">
               Get a Free Quote <i className="fa-solid fa-arrow-right ml-2"></i>
             </button>
