@@ -181,16 +181,16 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 const MarqueeCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-5 rounded-2xl border border-white/5 bg-white/5 p-6 shadow-sm backdrop-blur-xl">
+  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-5 shadow-sm backdrop-blur-xl">
     <div className="flex items-center justify-between">
-      <svg className="h-6 w-6 text-blue-500/30" fill="currentColor" viewBox="0 0 24 24">
+      <svg className="h-5 w-5 text-blue-500/30" fill="currentColor" viewBox="0 0 24 24">
         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
       </svg>
       <StarRating rating={review.rating} />
     </div>
     <p className="text-sm leading-relaxed text-gray-300">"{review.review}"</p>
-    <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-4">
-      <img src={review.avatar} alt={review.name} className="h-10 w-10 rounded-full object-cover" />
+    <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-3">
+      <img src={review.avatar} alt={review.name} className="h-9 w-9 rounded-full object-cover" />
       <div>
         <h4 className="text-sm font-semibold text-white">{review.name}</h4>
         <p className="text-xs text-gray-400">{review.role}</p>
@@ -220,19 +220,18 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="relative w-full overflow-hidden bg-neutral-900 py-24 text-white">
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes brand-gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+        @keyframes slide-gradient {
+          0% { background-position: 200% center; }
+          100% { background-position: 0% center; }
         }
         .animate-brand-gradient {
           background-size: 200% auto;
-          animation: brand-gradient 6s linear infinite;
+          animation: slide-gradient 5s linear infinite;
         }
       `}} />
 
-      <div className="pointer-events-none absolute -left-[10%] top-0 h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-[10%] bottom-0 h-[500px] w-[500px] rounded-full bg-blue-400/5 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-[10%] top-0 h-[500px] w-[500px] rounded-full bg-[#00AAFF]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-[10%] bottom-0 h-[500px] w-[500px] rounded-full bg-[#00AAFF]/5 blur-[120px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-24 flex flex-col items-center text-center">
@@ -250,7 +249,7 @@ export default function Testimonials() {
               </div>
             </motion.div>
 
-            <h2 className="animate-brand-gradient mt-4 bg-gradient-to-r from-blue-600 via-blue-200 to-white bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
+            <h2 className="animate-brand-gradient mt-4 bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
               Testimonials
             </h2>
 
@@ -273,7 +272,7 @@ export default function Testimonials() {
             <div className="mt-10 flex gap-4">
               <button
                 onClick={() => paginate(-1)}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-blue-400"
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-[#00AAFF]"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -281,7 +280,7 @@ export default function Testimonials() {
               </button>
               <button
                 onClick={() => paginate(1)}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-blue-400"
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all hover:bg-white/10 hover:text-[#00AAFF]"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -291,9 +290,9 @@ export default function Testimonials() {
           </div>
 
           <div className="relative">
-            <div className="flex min-h-[400px] flex-col rounded-2xl border border-white/10 bg-white/5 p-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl sm:p-10">
+            <div className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl sm:p-8">
               <div className="mb-6 flex items-start justify-between">
-                <svg className="h-10 w-10 text-blue-500/30" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="h-10 w-10 text-[#00AAFF]/30" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
                 <StarRating rating={active.rating} />
@@ -304,14 +303,14 @@ export default function Testimonials() {
                   <motion.p
                     key={`review-${index}`}
                     {...swapAnimation}
-                    className="mb-8 min-h-[140px] text-sm leading-relaxed text-gray-200 md:text-base"
+                    className="mb-8 min-h-[120px] text-sm leading-relaxed text-gray-200 md:text-base"
                   >
                     "{active.review}"
                   </motion.p>
                 </AnimatePresence>
               </div>
 
-              <div className="flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
+              <div className="flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
                 <div className="flex-grow overflow-hidden">
                   <AnimatePresence mode="wait">
                     <motion.div key={`info-${index}`} {...swapAnimation}>
@@ -322,8 +321,8 @@ export default function Testimonials() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <img src={reviews[prevIdx].avatar} alt="" className="h-10 w-10 scale-90 rounded-full object-cover opacity-20 blur-[1px]" />
-                  <div className="relative rounded-full border border-blue-500/40 p-1 shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+                  <img src={reviews[prevIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-20 blur-[1px]" />
+                  <div className="relative rounded-full border border-[#00AAFF]/40 p-1 shadow-[0_0_20px_rgba(0,170,255,0.15)]">
                     <AnimatePresence mode="wait">
                       <motion.img
                         key={`avatar-${index}`}
@@ -333,11 +332,11 @@ export default function Testimonials() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.4 }}
-                        className="h-14 w-14 rounded-full object-cover"
+                        className="h-12 w-12 rounded-full object-cover"
                       />
                     </AnimatePresence>
                   </div>
-                  <img src={reviews[nextIdx].avatar} alt="" className="h-10 w-10 scale-90 rounded-full object-cover opacity-20 blur-[1px]" />
+                  <img src={reviews[nextIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-20 blur-[1px]" />
                 </div>
               </div>
             </div>
@@ -345,10 +344,10 @@ export default function Testimonials() {
         </div>
       </div>
 
-      <div className="relative mx-auto mt-32 flex w-full max-w-6xl flex-col gap-8 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+      <div className="relative mx-auto mt-28 flex w-full max-w-6xl flex-col gap-6 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div className="flex">
           <motion.div
-            className="flex min-w-max gap-8 pr-8"
+            className="flex min-w-max gap-6 pr-6"
             animate={{ x: ["-50%", "0%"] }}
             transition={{ duration: 110, ease: "linear", repeat: Infinity }}
           >
@@ -359,7 +358,7 @@ export default function Testimonials() {
         </div>
         <div className="flex">
           <motion.div
-            className="flex min-w-max gap-8 pr-8"
+            className="flex min-w-max gap-6 pr-6"
             animate={{ x: ["0%", "-50%"] }}
             transition={{ duration: 110, ease: "linear", repeat: Infinity }}
           >
