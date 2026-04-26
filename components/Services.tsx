@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion'
 
 const servicesData = [
   { 
@@ -170,36 +170,34 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
       style={{ 
         rotateX, 
         rotateY: tiltRotateY, 
-        transformStyle: "preserve-3d",
-        perspective: 1200
+        perspective: 1200 
       }}
-      className="group relative transform-gpu h-[260px] w-full cursor-pointer will-change-transform z-10 hover:z-20"
+      className={`group relative h-[280px] w-full cursor-pointer z-10 transition-all duration-300 ${isFlipped ? 'z-50 scale-105' : 'hover:z-20 hover:scale-[1.03]'}`}
     >
       <motion.div
-        animate={{ 
-          rotateY: isFlipped ? 180 : 0,
-          filter: isFlipped ? ["blur(0px)", "blur(3px)", "blur(0px)"] : ["blur(0px)", "blur(3px)", "blur(0px)"]
-        }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         style={{ transformStyle: "preserve-3d" }}
-        className="relative w-full h-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.03]"
+        className="relative w-full h-full rounded-2xl shadow-xl"
       >
-        {/* FRONT FACE (Original Design) */}
+        {/* ================= FRONT SIDE ================= */}
         <div
-          className="absolute inset-0 isolate w-full h-full p-6 md:p-8 rounded-2xl overflow-hidden bg-[#181818] border flex flex-col justify-center items-center text-center transition-colors duration-300 group-hover:border-transparent"
+          className="absolute inset-0 w-full h-full p-6 rounded-2xl overflow-hidden bg-[#181818] border flex flex-col justify-center items-center text-center transition-colors duration-300 group-hover:border-transparent"
           style={{ 
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
-            '--theme-color': service.color,
-            borderColor: `${service.color}60`
+            borderColor: `${service.color}60`,
+            '--theme-color': service.color
           } as React.CSSProperties}
         >
-          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)]" />
-          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-black/20 backdrop-blur-md" />
-          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 shadow-[0_0_30px_var(--theme-color)] pointer-events-none rounded-2xl" />
-          <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-[100%] transition-transform duration-[1.5s] ease-in-out z-10 skew-x-[-30deg]" />
+          {/* Hover Effects Layer */}
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)] pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-black/30 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 shadow-[0_0_30px_var(--theme-color)] pointer-events-none" />
+          <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-[100%] transition-transform duration-[1.5s] ease-in-out z-10 skew-x-[-30deg] pointer-events-none" />
 
-          <div className="relative z-20 w-full h-full flex flex-col justify-center items-center transform translate-z-[40px]">
+          {/* Front Content */}
+          <div className="relative z-20 w-full h-full flex flex-col justify-center items-center">
             <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-6">
               <i className={`fa-solid ${service.icon} text-5xl mb-4 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
               <h3 className="text-xl font-bold transition-colors duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
@@ -214,9 +212,9 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
           </div>
         </div>
 
-        {/* BACK FACE (Flipped Content) */}
+        {/* ================= BACK SIDE ================= */}
         <div
-          className="absolute inset-0 w-full h-full rounded-2xl p-5 md:p-6 flex flex-col justify-center shadow-[0_0_40px_rgba(0,0,0,0.4)] overflow-hidden"
+          className="absolute inset-0 w-full h-full rounded-2xl p-6 flex flex-col justify-start overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
           style={{ 
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
@@ -224,32 +222,35 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
             backgroundColor: service.color
           }}
         >
-          <div className="absolute inset-0 bg-black/10 z-0"></div>
+          {/* Subtle dark gradient overlay for better text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/40 z-0 rounded-2xl pointer-events-none"></div>
           
-          <div className="relative z-10">
+          <div className="relative z-10 w-full h-full flex flex-col">
+            {/* Back Header */}
             <motion.div
-              initial={{ opacity: 0, y: -15 }}
-              animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, delay: isFlipped ? 0.2 : 0 }}
-              className="flex items-center gap-3 mb-4 pb-3 md:pb-4 border-b border-white/30"
+              initial={{ opacity: 0, y: -20 }}
+              animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, delay: isFlipped ? 0.3 : 0 }}
+              className="flex items-center gap-3 mb-4 pb-3 border-b border-white/30"
             >
-              <i className={`fa-solid ${service.icon} text-2xl md:text-3xl text-white drop-shadow-md`}></i>
-              <h3 className="text-[1.1rem] md:text-[1.2rem] font-bold text-white leading-tight text-left drop-shadow-sm">
+              <i className={`fa-solid ${service.icon} text-2xl text-white drop-shadow-md`}></i>
+              <h3 className="text-lg font-bold text-white text-left leading-tight drop-shadow-md">
                 {service.title}
               </h3>
             </motion.div>
             
-            <div className="flex flex-col gap-2 md:gap-2.5">
+            {/* Back Bullets */}
+            <div className="flex flex-col gap-3 flex-grow justify-center">
               {service.bullets.map((bullet, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 15 }}
                   animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                  transition={{ duration: 0.4, delay: isFlipped ? 0.3 + (i * 0.08) : 0 }}
-                  className="flex items-start gap-2.5 md:gap-3"
+                  transition={{ duration: 0.4, delay: isFlipped ? 0.4 + (i * 0.08) : 0 }}
+                  className="flex items-start gap-3"
                 >
-                  <i className="fa-solid fa-check text-white mt-[3px] text-xs md:text-sm shrink-0 drop-shadow-sm"></i>
-                  <span className="text-white text-xs md:text-sm text-left leading-snug font-medium drop-shadow-sm">
+                  <i className="fa-solid fa-check text-white mt-[4px] text-xs shrink-0 drop-shadow-sm"></i>
+                  <span className="text-white text-sm text-left leading-tight font-medium drop-shadow-sm">
                     {bullet}
                   </span>
                 </motion.div>
@@ -264,16 +265,16 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-32 bg-[#111111]">
+    <section id="services" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
               Our Services
             </span>
@@ -281,7 +282,7 @@ export default function Services() {
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {servicesData.map((service, i) => (
             <TiltFlipCard 
               key={service.title} 
