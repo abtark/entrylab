@@ -1,52 +1,41 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react'
-import { motion, useInView, animate } from 'framer-motion'
+import React, { useRef, useEffect } from 'react'
+import { motion, useInView, animate, useMotionValue, useSpring } from 'framer-motion'
 
-const MagneticItem = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+const MagneticItem = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const requestRef = useRef<number>()
-  const target = useRef({ x: 0, y: 0 })
-  const current = useRef({ x: 0, y: 0 })
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
 
-  const render = () => {
-    current.current.x += (target.current.x - current.current.x) * 0.1
-    current.current.y += (target.current.y - current.current.y) * 0.1
-
-    if (ref.current) {
-      ref.current.style.transform = `translate3d(${current.current.x}px, ${current.current.y}px, 0)`
-    }
-    requestRef.current = requestAnimationFrame(render)
-  }
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(render)
-    return () => cancelAnimationFrame(requestRef.current!)
-  }, [])
+  const springConfig = { damping: 20, stiffness: 150, mass: 0.1 }
+  const springX = useSpring(x, springConfig)
+  const springY = useSpring(y, springConfig)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return
     const { left, top, width, height } = ref.current.getBoundingClientRect()
     const centerX = left + width / 2
     const centerY = top + height / 2
-    target.current.x = ((e.clientX - centerX) / (width / 2)) * 6
-    target.current.y = ((e.clientY - centerY) / (height / 2)) * 6
+    x.set(((e.clientX - centerX) / (width / 2)) * 6)
+    y.set(((e.clientY - centerY) / (height / 2)) * 6)
   }
 
   const handleMouseLeave = () => {
-    target.current.x = 0
-    target.current.y = 0
+    x.set(0)
+    y.set(0)
   }
 
   return (
-    <div
+    <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`will-change-transform transform-gpu ${className || ''}`}
+      style={{ x: springX, y: springY }}
+      className={`will-change-transform ${className}`}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }
 
@@ -217,18 +206,11 @@ const cultureData = [
 ]
 
 export default function About() {
-  const [isReady, setIsReady] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 1500)
-    return () => clearTimeout(timer)
-  }, [])
-
   const iconContainerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 },
+      transition: { delayChildren: 1.5, staggerChildren: 0.15 },
     },
   }
 
@@ -282,7 +264,6 @@ export default function About() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
-        
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight pb-2">
             <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
@@ -299,7 +280,6 @@ export default function About() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
-          
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="p-4 rounded-xl bg-gradient-to-br from-[#00AAFF]/20 to-blue-600/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -344,7 +324,6 @@ export default function About() {
               <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
             </p>
           </div>
-
         </div>
       </div>
 
@@ -377,44 +356,43 @@ export default function About() {
           <div className="w-full h-px bg-white/10 my-8" />
 
           <div className="h-[40px] flex items-center justify-center">
-            {isReady && (
-              <motion.div 
-                variants={iconContainerVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex items-center justify-center gap-8"
+            <motion.div 
+              variants={iconContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="flex items-center justify-center gap-8"
+            >
+              <motion.a 
+                variants={iconVariants}
+                href="https://www.facebook.com/EntryLab" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
               >
-                <motion.a 
-                  variants={iconVariants}
-                  href="https://www.facebook.com/EntryLab" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
-                >
-                  <i className="fa-brands fa-facebook"></i>
-                </motion.a>
-                
-                <motion.a 
-                  variants={iconVariants}
-                  href="https://www.linkedin.com/company/entrylab" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
-                >
-                  <i className="fa-brands fa-linkedin"></i>
-                </motion.a>
-                
-                <motion.a 
-                  variants={iconVariants}
-                  href="https://rocketreach.co/entrylab-profile_b704b6e0c514e80c" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
-                >
-                  <i className="fa-solid fa-rocket"></i>
-                </motion.a>
-              </motion.div>
-            )}
+                <i className="fa-brands fa-facebook"></i>
+              </motion.a>
+              
+              <motion.a 
+                variants={iconVariants}
+                href="https://www.linkedin.com/company/entrylab" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              >
+                <i className="fa-brands fa-linkedin"></i>
+              </motion.a>
+              
+              <motion.a 
+                variants={iconVariants}
+                href="https://rocketreach.co/entrylab-profile_b704b6e0c514e80c" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              >
+                <i className="fa-solid fa-rocket"></i>
+              </motion.a>
+            </motion.div>
           </div>
 
         </div>
@@ -583,7 +561,6 @@ export default function About() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
-        {/* Soft blur background behind Our Culture */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="flex flex-col items-center mb-16">
