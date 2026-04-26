@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import Link from 'next/link'
 
 const servicesData = [
   { 
@@ -127,7 +128,7 @@ const processData = [
   {
     title: "Understand",
     description: "We analyze requirements and data specifications thoroughly.",
-    icon: "fa-magnifying-glass",
+    icon: "fa-brain",
     color: "#00AAFF"
   },
   {
@@ -371,39 +372,43 @@ export default function Services() {
                   hidden: { opacity: 0 },
                   visible: { 
                     opacity: 1, 
-                    transition: { staggerChildren: 0.15, delayChildren: i * 0.1 } 
+                    transition: { staggerChildren: 0.2, delayChildren: i * 0.1 } 
                   }
                 }}
-                className="group p-8 rounded-2xl border-2 flex flex-col items-center text-center bg-transparent"
-                style={{ borderColor: step.color }}
+                className="group p-6 md:p-8 rounded-2xl border flex flex-col items-start bg-[#181818] transition-colors duration-300"
+                style={{ borderColor: `${step.color}30` }}
               >
-                <motion.div 
-                  variants={{ 
-                    hidden: { opacity: 0, y: 20 }, 
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
-                  }}
-                  className="w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
-                  style={{ backgroundColor: `${step.color}20` }}
-                >
-                  <i className={`fa-solid ${step.icon} text-3xl`} style={{ color: step.color }}></i>
-                </motion.div>
+                {/* Inline Header */}
+                <div className="flex items-center gap-4 mb-4">
+                  <motion.div 
+                    variants={{ 
+                      hidden: { opacity: 0, scale: 0.5 }, 
+                      visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 15 } } 
+                    }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+                    style={{ backgroundColor: `${step.color}20` }}
+                  >
+                    <i className={`fa-solid ${step.icon} text-xl`} style={{ color: step.color }}></i>
+                  </motion.div>
+                  
+                  <motion.h3 
+                    variants={{ 
+                      hidden: { opacity: 0, x: -20 }, 
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } } 
+                    }}
+                    className="text-xl font-bold text-white"
+                  >
+                    {step.title}
+                  </motion.h3>
+                </div>
                 
-                <motion.h3 
-                  variants={{ 
-                    hidden: { opacity: 0, y: 20 }, 
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
-                  }}
-                  className="text-2xl font-bold text-white mb-3"
-                >
-                  {step.title}
-                </motion.h3>
-                
+                {/* Description */}
                 <motion.p 
                   variants={{ 
                     hidden: { opacity: 0, y: 20 }, 
                     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
                   }}
-                  className="text-white/80 leading-relaxed text-sm"
+                  className="text-white/80 leading-relaxed text-sm text-left"
                 >
                   {step.description}
                 </motion.p>
@@ -428,9 +433,11 @@ export default function Services() {
           <p className="text-white/90 text-lg md:text-xl mb-10">
             We tailor our services to match your exact requirements. Let's discuss your project today.
           </p>
-          <button className="bg-[#00AAFF] hover:bg-[#0088CC] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,170,255,0.4)] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)]">
-            Get a Free Quote <i className="fa-solid fa-arrow-right ml-2"></i>
-          </button>
+          <Link href="/contact" passHref>
+            <button className="bg-[#00AAFF] hover:bg-[#0088CC] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,170,255,0.4)] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)]">
+              Get a Free Quote <i className="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+          </Link>
         </motion.div>
 
       </div>
