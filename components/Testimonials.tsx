@@ -181,9 +181,9 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 const MarqueeCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-5 shadow-sm backdrop-blur-xl">
+  <div className="flex w-[320px] min-w-[320px] flex-col justify-between gap-4 rounded-xl border border-white/5 bg-white/5 p-5 backdrop-blur-xl transition-all duration-500 hover:scale-[1.03] hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
     <div className="flex items-center justify-between">
-      <svg className="h-5 w-5 text-blue-500/30" fill="currentColor" viewBox="0 0 24 24">
+      <svg className="h-5 w-5 text-[#00AAFF]/30" fill="currentColor" viewBox="0 0 24 24">
         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
       </svg>
       <StarRating rating={review.rating} />
@@ -228,6 +228,24 @@ export default function Testimonials() {
           background-size: 200% auto;
           animation: slide-gradient 5s linear infinite;
         }
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-scroll-left {
+          animation: scroll-left 180s linear infinite;
+        }
+        .animate-scroll-right {
+          animation: scroll-right 180s linear infinite;
+        }
+        .pause-on-hover:hover .animate-scroll-left,
+        .pause-on-hover:hover .animate-scroll-right {
+          animation-play-state: paused;
+        }
       `}} />
 
       <div className="pointer-events-none absolute -left-[10%] top-0 h-[500px] w-[500px] rounded-full bg-[#00AAFF]/10 blur-[120px]" />
@@ -252,8 +270,10 @@ export default function Testimonials() {
             <h2 className="animate-brand-gradient mt-4 bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
               Testimonials
             </h2>
+            
+            <motion.div variants={textRevealItem} className="mt-2 h-[3px] w-20 rounded-full bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,0.5)]" />
 
-            <motion.p variants={textRevealItem} className="mt-4 max-w-2xl text-base text-gray-400">
+            <motion.p variants={textRevealItem} className="mt-6 max-w-2xl text-base text-gray-400">
               Results that speaks volume, our mission is to drive progress and enhance by delivering superior services that exceed expectations.
             </motion.p>
           </motion.div>
@@ -290,7 +310,7 @@ export default function Testimonials() {
           </div>
 
           <div className="relative">
-            <div className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl sm:p-8">
+            <div className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] sm:p-8">
               <div className="mb-6 flex items-start justify-between">
                 <svg className="h-10 w-10 text-[#00AAFF]/30" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -344,28 +364,20 @@ export default function Testimonials() {
         </div>
       </div>
 
-      <div className="relative mx-auto mt-28 flex w-full max-w-6xl flex-col gap-6 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+      <div className="pause-on-hover relative mx-auto mt-28 flex w-full max-w-6xl flex-col gap-6 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div className="flex">
-          <motion.div
-            className="flex min-w-max gap-6 pr-6"
-            animate={{ x: ["-50%", "0%"] }}
-            transition={{ duration: 110, ease: "linear", repeat: Infinity }}
-          >
+          <div className="animate-scroll-left flex min-w-max gap-6 pr-6">
             {[...reviews.slice(0, 10), ...reviews.slice(0, 10)].map((r, i) => (
               <MarqueeCard key={`row1-${i}`} review={r} />
             ))}
-          </motion.div>
+          </div>
         </div>
         <div className="flex">
-          <motion.div
-            className="flex min-w-max gap-6 pr-6"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 110, ease: "linear", repeat: Infinity }}
-          >
+          <div className="animate-scroll-right flex min-w-max gap-6 pr-6">
             {[...reviews.slice(10, 20), ...reviews.slice(10, 20)].map((r, i) => (
               <MarqueeCard key={`row2-${i}`} review={r} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
