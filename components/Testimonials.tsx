@@ -362,14 +362,14 @@ export default function Testimonials() {
 
       <div className="relative mx-auto mt-36 mb-12 flex w-full max-w-6xl flex-col gap-10 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div className="group flex">
-          <div className="animate-scroll-left flex min-w-max gap-6 pr-6 group-hover:[animation-play-state:paused]">
+          <div className="animate-scroll-left flex min-w-max gap-6 pt-[25px] group-hover:[animation-play-state:paused]">
             {[...reviews.slice(0, 10), ...reviews.slice(0, 10)].map((r, i) => (
               <MarqueeCard key={`row1-${i}`} review={r} />
             ))}
           </div>
         </div>
         <div className="group flex">
-          <div className="animate-scroll-right flex min-w-max gap-6 pr-6 group-hover:[animation-play-state:paused]">
+          <div className="animate-scroll-right flex min-w-max gap-6 pb-[25px] group-hover:[animation-play-state:paused]">
             {[...reviews.slice(10, 20), ...reviews.slice(10, 20)].map((r, i) => (
               <MarqueeCard key={`row2-${i}`} review={r} />
             ))}
