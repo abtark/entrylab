@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 const servicesData = [
   { 
@@ -123,9 +123,17 @@ const servicesData = [
   }
 ]
 
-const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], index: number }) => {
-  const [isFlipped, setIsFlipped] = useState(false)
-  
+const TiltFlipCard = ({ 
+  service, 
+  index, 
+  isFlipped, 
+  onClick 
+}: { 
+  service: typeof servicesData[0], 
+  index: number,
+  isFlipped: boolean,
+  onClick: () => void 
+}) => {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 })
@@ -166,13 +174,13 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={() => setIsFlipped(!isFlipped)}
+      onClick={onClick}
       style={{ 
         rotateX, 
         rotateY: tiltRotateY, 
         perspective: 1200 
       }}
-      className={`group relative h-[280px] w-full cursor-pointer z-10 transition-all duration-300 ${isFlipped ? 'z-50 scale-105' : 'hover:z-20 hover:scale-[1.03]'}`}
+      className={`group relative h-[250px] w-full cursor-pointer z-10 transition-all duration-300 ${isFlipped ? 'z-50 scale-105' : 'hover:z-20 hover:scale-[1.03]'}`}
     >
       <motion.div
         animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -198,14 +206,14 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
 
           {/* Front Content */}
           <div className="relative z-20 w-full h-full flex flex-col justify-center items-center">
-            <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-6">
-              <i className={`fa-solid ${service.icon} text-5xl mb-4 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
+            <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-4">
+              <i className={`fa-solid ${service.icon} text-5xl mb-3 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
               <h3 className="text-xl font-bold transition-colors duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
                 {service.title}
               </h3>
             </div>
-            <div className="absolute bottom-2 left-0 w-full px-2 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] delay-75">
-              <p className="text-white/95 leading-relaxed font-medium text-sm">
+            <div className="absolute bottom-5 left-0 w-full px-3 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] delay-75">
+              <p className="text-white/95 leading-tight font-medium text-sm">
                 {service.description}
               </p>
             </div>
@@ -214,7 +222,7 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
 
         {/* ================= BACK SIDE ================= */}
         <div
-          className="absolute inset-0 w-full h-full rounded-2xl p-6 flex flex-col justify-start overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+          className="absolute inset-0 w-full h-full rounded-2xl p-5 flex flex-col justify-start overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
           style={{ 
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
@@ -231,26 +239,26 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
               initial={{ opacity: 0, y: -20 }}
               animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
               transition={{ duration: 0.4, delay: isFlipped ? 0.3 : 0 }}
-              className="flex items-center gap-3 mb-4 pb-3 border-b border-white/30"
+              className="flex items-center gap-3 mb-3 pb-3 border-b border-white/30"
             >
-              <i className={`fa-solid ${service.icon} text-2xl text-white drop-shadow-md`}></i>
-              <h3 className="text-lg font-bold text-white text-left leading-tight drop-shadow-md">
+              <i className={`fa-solid ${service.icon} text-[1.3rem] text-white drop-shadow-md`}></i>
+              <h3 className="text-[1.05rem] font-bold text-white text-left leading-tight drop-shadow-md">
                 {service.title}
               </h3>
             </motion.div>
             
             {/* Back Bullets */}
-            <div className="flex flex-col gap-3 flex-grow justify-center">
+            <div className="flex flex-col gap-2.5 flex-grow justify-center">
               {service.bullets.map((bullet, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 15 }}
                   animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                   transition={{ duration: 0.4, delay: isFlipped ? 0.4 + (i * 0.08) : 0 }}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-2.5"
                 >
-                  <i className="fa-solid fa-check text-white mt-[4px] text-xs shrink-0 drop-shadow-sm"></i>
-                  <span className="text-white text-sm text-left leading-tight font-medium drop-shadow-sm">
+                  <i className="fa-solid fa-check text-white mt-[3px] text-[0.7rem] shrink-0 drop-shadow-sm"></i>
+                  <span className="text-white text-[0.8rem] text-left leading-tight font-medium drop-shadow-sm">
                     {bullet}
                   </span>
                 </motion.div>
@@ -264,6 +272,8 @@ const TiltFlipCard = ({ service, index }: { service: typeof servicesData[0], ind
 }
 
 export default function Services() {
+  const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
+
   return (
     <section id="services" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
@@ -288,6 +298,8 @@ export default function Services() {
               key={service.title} 
               service={service} 
               index={i} 
+              isFlipped={flippedIndex === i}
+              onClick={() => setFlippedIndex(flippedIndex === i ? null : i)}
             />
           ))}
         </div>
