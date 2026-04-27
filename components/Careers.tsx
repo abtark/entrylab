@@ -41,8 +41,9 @@ const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
   );
 };
 
+// Text Reveal Animation Variant
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
@@ -129,6 +130,7 @@ export default function Careers() {
     {
       title: "A Healthy, Focused Culture",
       desc: "Work in a calm, respectful environment where collaboration thrives, quality comes first, and long-term growth is genuinely valued.",
+      image: "https://iili.io/BPPQ7YQ.png",
       bullets: [
         "Clear priorities that help you focus on meaningful, high-impact work",
         "Open communication and mutual respect across all teams",
@@ -139,6 +141,7 @@ export default function Careers() {
     {
       title: "Comfort in Your Daily Routine",
       desc: "Enjoy complimentary meals, coffee, and snacks—so you can stay energized and focused throughout your day.",
+      image: "https://iili.io/BPPZlS4.png",
       bullets: [
         "Fresh, nutritious meals available throughout the workday",
         "Unlimited coffee, tea, and healthy snacks",
@@ -149,6 +152,7 @@ export default function Careers() {
     {
       title: "Wellness That Matters",
       desc: "Stay active and balanced with access to sports facilities that support both physical and mental well-being.",
+      image: "https://iili.io/BPPtQEu.png",
       bullets: [
         "Fully equipped treadmill for daily fitness routines",
         "Indoor and outdoor sports facilities for recreation",
@@ -159,6 +163,7 @@ export default function Careers() {
     {
       title: "Stress-Free Commute",
       desc: "Take advantage of our shuttle services and convenient parking options, making your daily travel simpler and more reliable.",
+      image: "https://iili.io/BPPb9Sf.png",
       bullets: [
         "Reliable shuttle services covering key routes",
         "Safe and accessible parking for employees",
@@ -169,6 +174,7 @@ export default function Careers() {
     {
       title: "Meaningful Rewards & Benefits",
       desc: "We recognize your commitment with festival bonuses, leave encashment, and loyalty rewards that grow with you.",
+      image: "https://iili.io/BPPbmzB.png",
       bullets: [
         "Competitive festival bonuses to celebrate special occasions",
         "Leave encashment options for added flexibility",
@@ -179,6 +185,7 @@ export default function Careers() {
     {
       title: "A Respectful Workplace for Everyone",
       desc: "We maintain a considerate environment with dedicated prayer spaces, allowing you to work comfortably while honoring your personal beliefs.",
+      image: "https://iili.io/BPPpxjV.png",
       bullets: [
         "Dedicated prayer spaces for personal reflection and practice",
         "A culture that respects individual values and beliefs",
@@ -186,6 +193,33 @@ export default function Careers() {
         "An environment where everyone feels comfortable and supported",
       ],
     },
+  ];
+
+  const hiringSteps = [
+    {
+      step: "STEP 01",
+      title: "Initial Assessment",
+      desc: [
+        "After confirming your email, you will complete a one-time, time-limited assessment. This step is required to proceed.",
+        "Successful completion enables you to submit your resume, while unsuccessful attempts will result in disqualification."
+      ]
+    },
+    {
+      step: "STEP 02",
+      title: "Task or Onsite Visit",
+      desc: [
+        "Based on the role, you may be assigned a practical task or invited for an onsite visit.",
+        "Your performance on the task, along with your resume, will be evaluated to determine your eligibility for the next stage."
+      ]
+    },
+    {
+      step: "STEP 03",
+      title: "In-Person Interview",
+      desc: [
+        "Qualified candidates will be invited to a face-to-face interview with relevant team members.",
+        "This discussion will focus on your experience, skills, and career aspirations, while also giving you insight into working at EntryLab."
+      ]
+    }
   ];
 
   const doubledMarquee = [...marqueeImages, ...marqueeImages];
@@ -204,13 +238,14 @@ export default function Careers() {
   return (
     <main className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24">
       
+      {/* 1. Header Section */}
       <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
         <motion.div
           className="relative mb-6"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <motion.h1
             className="text-5xl md:text-7xl font-black tracking-tighter uppercase text-transparent bg-clip-text drop-shadow-lg"
@@ -230,12 +265,13 @@ export default function Careers() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <p>Innovators Wanted; Join the EntryLabs Revolution.</p>
         </motion.div>
       </section>
 
+      {/* 2. Core Values Section */}
       <section className="py-10 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {coreValues.map((value, index) => (
@@ -245,7 +281,7 @@ export default function Careers() {
                 whileHover="hover"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <motion.div
@@ -272,7 +308,7 @@ export default function Careers() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <p className="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed">
             Our philosophy is simple; hire great people and give them the resources and support to do their best work.
@@ -280,6 +316,7 @@ export default function Careers() {
         </motion.div>
       </section>
 
+      {/* 3. Marquee Section */}
       <section className="py-32 relative w-full overflow-hidden flex flex-col justify-center">
         <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
         <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
@@ -287,7 +324,7 @@ export default function Careers() {
         <motion.div
           className="flex gap-8 w-max will-change-transform items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 300 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 600 }} // Slower speed
         >
           {doubledMarquee.map((src, index) => (
             <div
@@ -307,13 +344,14 @@ export default function Careers() {
         </motion.div>
       </section>
 
+      {/* 4. Our Advantages Section */}
       <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
         <motion.div 
           className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <div className="flex flex-col text-left">
             <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">
@@ -335,7 +373,7 @@ export default function Careers() {
           <div className="flex gap-4">
             <button
               onClick={prevAdv}
-              className="p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-300 text-white"
+              className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
               aria-label="Previous advantage"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -344,7 +382,7 @@ export default function Careers() {
             </button>
             <button
               onClick={nextAdv}
-              className="p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-300 text-white"
+              className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
               aria-label="Next advantage"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -359,7 +397,7 @@ export default function Careers() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           {advantages.map((adv, i) => {
             const diff = (i - advIndex + advantages.length) % advantages.length;
@@ -394,10 +432,10 @@ export default function Careers() {
                   alt={adv.title}
                   className="w-32 h-32 mb-6 object-contain mix-blend-multiply"
                 />
-                <h3 className="text-2xl font-bold text-[#00AAFF] mb-4">
+                <h3 className="text-2xl font-bold text-[#30C7CC] mb-4">
                   {adv.title}
                 </h3>
-                <p className="text-gray-700 leading-relaxed text-sm md:text-base font-medium">
+                <p className="text-[#00AAFF] leading-relaxed text-sm md:text-base font-medium">
                   {adv.desc}
                 </p>
               </motion.div>
@@ -406,16 +444,17 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-24 px-6 max-w-4xl mx-auto">
+      {/* 5. A Workplace Designed Around You Section */}
+      <section className="py-24 px-6 max-w-5xl mx-auto">
         <motion.div 
           className="text-center mb-16"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <motion.h2
-            className="text-3xl md:text-4xl font-black tracking-tight uppercase text-transparent bg-clip-text drop-shadow-lg mb-4"
+            className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
             style={{
               backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
               backgroundSize: "200% auto",
@@ -425,7 +464,7 @@ export default function Careers() {
           >
             A Workplace Designed Around You
           </motion.h2>
-          <p className="text-neutral-300 text-lg md:text-xl">
+          <p className="text-neutral-300 text-lg md:text-xl max-w-3xl mx-auto">
             We create an environment where your well-being, comfort, and growth come first—so you can do your best work every day.
           </p>
         </motion.div>
@@ -435,7 +474,7 @@ export default function Careers() {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           {workplaceItems.map((item, i) => {
             const isOpen = openAcc === i;
@@ -453,7 +492,7 @@ export default function Careers() {
                   className="w-full flex items-center justify-between p-6 md:p-8 text-left"
                 >
                   <h3 className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? "text-[#00AAFF]" : "text-white"}`}>
-                    {String(i + 1).padStart(2, '0')}. {item.title}
+                    {item.title}
                   </h3>
                   <div className={`shrink-0 ml-4 transition-transform duration-300 ${isOpen ? "rotate-180 text-[#00AAFF]" : "text-white/50"}`}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -469,21 +508,30 @@ export default function Careers() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <div className="px-6 md:px-8 pb-8 pt-0">
-                        <p className="text-neutral-300 mb-6 leading-relaxed">
-                          {item.desc}
-                        </p>
-                        <ul className="space-y-3">
-                          {item.bullets.map((bullet, bi) => (
-                            <li key={bi} className="flex items-start gap-3">
-                              <svg className="shrink-0 w-6 h-6 text-[#00AAFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                <polyline points="22 4 12 14.01 9 11.01"/>
-                              </svg>
-                              <span className="text-neutral-400 text-sm md:text-base">{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
+                      <div className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0">
+                        <div className="flex-1">
+                          <p className="text-neutral-300 mb-6 leading-relaxed">
+                            {item.desc}
+                          </p>
+                          <ul className="space-y-3">
+                            {item.bullets.map((bullet, bi) => (
+                              <li key={bi} className="flex items-start gap-3">
+                                <svg className="shrink-0 w-6 h-6 text-[#00AAFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                  <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                <span className="text-neutral-400 text-sm md:text-base">{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="w-full md:w-1/3 shrink-0 flex justify-center">
+                          <img 
+                            src={item.image} 
+                            alt={item.title} 
+                            className="w-full max-w-[200px] h-auto object-contain drop-shadow-2xl" 
+                          />
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -493,6 +541,61 @@ export default function Careers() {
           })}
         </motion.div>
       </section>
+
+      {/* 6. Hiring Process Section */}
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <motion.div 
+          className="text-center mb-16"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <motion.h2
+            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
+            style={{
+              backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
+              backgroundSize: "200% auto",
+            }}
+            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
+            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
+          >
+            Hiring Process
+          </motion.h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {hiringSteps.map((step, i) => (
+            <motion.div
+              key={`hiring-step-${i}`}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.2 }}
+              className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col items-start hover:bg-white/10 transition-colors duration-300"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#00AAFF] shadow-[0_0_12px_2px_rgba(0,170,255,0.8)] animate-pulse"></div>
+                <span className="text-white/60 text-sm font-bold tracking-widest uppercase">
+                  {step.step}
+                </span>
+              </div>
+              <h3 className="text-2xl font-bold text-[#00AAFF] mb-4">
+                {step.title}
+              </h3>
+              <div className="space-y-4">
+                {step.desc.map((p, pIndex) => (
+                  <p key={pIndex} className="text-gray-400 text-sm leading-relaxed">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
     </main>
   );
 }
