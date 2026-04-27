@@ -1,7 +1,12 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
-const MagneticItem = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+interface MagneticItemProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -9,7 +14,7 @@ const MagneticItem = ({ children, className }: { children: React.ReactNode; clas
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const mouseX = e.clientX - rect.left - rect.width / 2;
     const mouseY = e.clientY - rect.top - rect.height / 2;
@@ -120,7 +125,7 @@ export default function Careers() {
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {coreValues.map((value, index) => (
-            <MagneticItem key={index}>
+            <MagneticItem key={`core-value-${value.title}-${index}`}>
               <motion.div
                 className={`group flex items-center gap-6 p-6 rounded-3xl cursor-pointer transition-shadow duration-500 shadow-lg hover:shadow-2xl ${value.bgColor}`}
                 whileHover="hover"
@@ -162,14 +167,14 @@ export default function Careers() {
         >
           {doubledMarquee.map((src, index) => (
             <div
-              key={index}
+              key={`marquee-img-${index}`}
               className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${
                 index % 2 === 0 ? "-translate-y-6" : "translate-y-6"
               }`}
             >
               <img
                 src={src}
-                alt={`Gallery image ${index + 1}`}
+                alt={`Gallery visual ${index + 1}`}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
