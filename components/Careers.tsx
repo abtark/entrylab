@@ -348,48 +348,53 @@ export default function Careers() {
 
       <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
         <motion.div 
-          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6"
+          className="flex flex-col justify-between items-start mb-16 gap-6"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <div className="flex flex-col text-left">
-            <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">
-              Our Advantages
-            </h4>
-            <motion.h2
-              className="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg capitalize"
-              style={{
-                backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
-                backgroundSize: "200% auto",
-              }}
-              animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-            >
-              Why Work With Us?
-            </motion.h2>
-          </div>
+          <div className="flex flex-col md:flex-row justify-between w-full items-start md:items-end gap-6">
+            <div className="flex flex-col text-left flex-1">
+              <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">
+                Our Advantages
+              </h4>
+              <motion.h2
+                className="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg capitalize"
+                style={{
+                  backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
+                  backgroundSize: "200% auto",
+                }}
+                animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
+                transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
+              >
+                Why Work With Us?
+              </motion.h2>
+              <p className="text-neutral-300 mt-4 max-w-2xl text-base md:text-lg">
+                Expertise, creativity, and reliability drive meaningful results. A commitment to understanding client needs ensures tailored solutions and a smooth, professional experience from start to finish.
+              </p>
+            </div>
 
-          <div className="flex gap-4">
-            <button
-              onClick={prevAdv}
-              className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
-              aria-label="Previous advantage"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-            <button
-              onClick={nextAdv}
-              className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
-              aria-label="Next advantage"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
+            <div className="flex gap-4 shrink-0">
+              <button
+                onClick={prevAdv}
+                className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
+                aria-label="Previous advantage"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={nextAdv}
+                className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
+                aria-label="Next advantage"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
           </div>
         </motion.div>
 
@@ -408,6 +413,7 @@ export default function Careers() {
             else if (diff === advantages.length - 1) position = -1;
 
             const isFocused = position === 0;
+            const isVisible = position !== 2;
             const imgSrc = isFocused ? adv.icon : adv.icon.replace('.gif', '.md.gif');
 
             return (
@@ -422,10 +428,12 @@ export default function Careers() {
                   zIndex: position === 0 ? 10 : 5,
                 }}
                 transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 ${
+                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border-4 ${
+                  isVisible ? "border-[#00AAFF]" : "border-transparent"
+                } ${
                   isFocused
-                    ? "bg-[#F0F9FF] border border-[#00AAFF]/40 shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)]"
-                    : "bg-white border border-transparent shadow-lg"
+                    ? "bg-[#F0F9FF] shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)]"
+                    : "bg-white shadow-lg"
                 }`}
               >
                 <img
@@ -518,38 +526,58 @@ export default function Careers() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="overflow-hidden"
                     >
-                      <motion.div 
-                        className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0"
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.1 }}
-                      >
+                      <div className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0">
                         <div className="flex-1">
-                          <p className="text-neutral-300 mb-6 leading-relaxed">
+                          <motion.p 
+                            className="text-neutral-300 mb-6 leading-relaxed"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                          >
                             {item.desc}
-                          </p>
-                          <ul className="space-y-3">
+                          </motion.p>
+                          <motion.ul 
+                            className="space-y-3"
+                            initial="hidden"
+                            animate="visible"
+                            variants={{
+                              visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
+                            }}
+                          >
                             {item.bullets.map((bullet, bi) => (
-                              <li key={bi} className="flex items-start gap-3 text-[#00AAFF]">
-                                <svg className="shrink-0 w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <motion.li 
+                                key={bi} 
+                                className="flex items-start gap-3"
+                                variants={{
+                                  hidden: { opacity: 0, x: -10 },
+                                  visible: { opacity: 1, x: 0 }
+                                }}
+                              >
+                                <svg className="shrink-0 w-6 h-6" style={{ color: item.themeColor }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                   <polyline points="22 4 12 14.01 9 11.01"/>
                                 </svg>
-                                <span className="text-sm md:text-base font-medium">{bullet}</span>
-                              </li>
+                                <span className="text-sm md:text-base font-medium" style={{ color: item.themeColor }}>{bullet}</span>
+                              </motion.li>
                             ))}
-                          </ul>
+                          </motion.ul>
                         </div>
-                        <div className="w-full md:w-1/3 shrink-0 flex justify-center">
+                        <motion.div 
+                          className="w-full md:w-1/3 shrink-0 flex justify-center"
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: 0.2 }}
+                        >
                           <img 
                             src={item.image} 
                             alt={item.title} 
                             className="w-full max-w-[200px] h-auto object-contain drop-shadow-2xl" 
                           />
-                        </div>
-                      </motion.div>
+                        </motion.div>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
