@@ -41,7 +41,6 @@ const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
   );
 };
 
-// Text Reveal Animation Variant
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
@@ -131,6 +130,7 @@ export default function Careers() {
       title: "A Healthy, Focused Culture",
       desc: "Work in a calm, respectful environment where collaboration thrives, quality comes first, and long-term growth is genuinely valued.",
       image: "https://iili.io/BPPQ7YQ.png",
+      themeColor: "#4CBC96",
       bullets: [
         "Clear priorities that help you focus on meaningful, high-impact work",
         "Open communication and mutual respect across all teams",
@@ -142,6 +142,7 @@ export default function Careers() {
       title: "Comfort in Your Daily Routine",
       desc: "Enjoy complimentary meals, coffee, and snacks—so you can stay energized and focused throughout your day.",
       image: "https://iili.io/BPPZlS4.png",
+      themeColor: "#6D75FE",
       bullets: [
         "Fresh, nutritious meals available throughout the workday",
         "Unlimited coffee, tea, and healthy snacks",
@@ -153,6 +154,7 @@ export default function Careers() {
       title: "Wellness That Matters",
       desc: "Stay active and balanced with access to sports facilities that support both physical and mental well-being.",
       image: "https://iili.io/BPPtQEu.png",
+      themeColor: "#E24E68",
       bullets: [
         "Fully equipped treadmill for daily fitness routines",
         "Indoor and outdoor sports facilities for recreation",
@@ -164,6 +166,7 @@ export default function Careers() {
       title: "Stress-Free Commute",
       desc: "Take advantage of our shuttle services and convenient parking options, making your daily travel simpler and more reliable.",
       image: "https://iili.io/BPPb9Sf.png",
+      themeColor: "#F4BE53",
       bullets: [
         "Reliable shuttle services covering key routes",
         "Safe and accessible parking for employees",
@@ -175,6 +178,7 @@ export default function Careers() {
       title: "Meaningful Rewards & Benefits",
       desc: "We recognize your commitment with festival bonuses, leave encashment, and loyalty rewards that grow with you.",
       image: "https://iili.io/BPPbmzB.png",
+      themeColor: "#D37E3A",
       bullets: [
         "Competitive festival bonuses to celebrate special occasions",
         "Leave encashment options for added flexibility",
@@ -186,6 +190,7 @@ export default function Careers() {
       title: "A Respectful Workplace for Everyone",
       desc: "We maintain a considerate environment with dedicated prayer spaces, allowing you to work comfortably while honoring your personal beliefs.",
       image: "https://iili.io/BPPpxjV.png",
+      themeColor: "#7DBA2B",
       bullets: [
         "Dedicated prayer spaces for personal reflection and practice",
         "A culture that respects individual values and beliefs",
@@ -236,9 +241,8 @@ export default function Careers() {
     setAdvIndex((prev) => (prev - 1 + advantages.length) % advantages.length);
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24">
+    <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24">
       
-      {/* 1. Header Section */}
       <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
         <motion.div
           className="relative mb-6"
@@ -271,7 +275,6 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      {/* 2. Core Values Section */}
       <section className="py-10 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {coreValues.map((value, index) => (
@@ -316,7 +319,6 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      {/* 3. Marquee Section */}
       <section className="py-32 relative w-full overflow-hidden flex flex-col justify-center">
         <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
         <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
@@ -324,7 +326,7 @@ export default function Careers() {
         <motion.div
           className="flex gap-8 w-max will-change-transform items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 600 }} // Slower speed
+          transition={{ repeat: Infinity, ease: "linear", duration: 600 }}
         >
           {doubledMarquee.map((src, index) => (
             <div
@@ -344,7 +346,6 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      {/* 4. Our Advantages Section */}
       <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
         <motion.div 
           className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6"
@@ -444,7 +445,6 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      {/* 5. A Workplace Designed Around You Section */}
       <section className="py-24 px-6 max-w-5xl mx-auto">
         <motion.div 
           className="text-center mb-16"
@@ -481,20 +481,32 @@ export default function Careers() {
             return (
               <div 
                 key={`workplace-${i}`} 
-                className={`rounded-2xl overflow-hidden transition-all duration-300 border ${
-                  isOpen 
-                    ? "bg-[#00AAFF]/10 border-l-4 border-l-[#00AAFF] border-t-white/10 border-r-white/10 border-b-white/10" 
-                    : "bg-white/5 border-white/10 hover:bg-white/10"
-                }`}
+                className="rounded-2xl overflow-hidden transition-all duration-300 border"
+                style={isOpen ? {
+                  backgroundColor: `${item.themeColor}1A`,
+                  borderLeft: `4px solid ${item.themeColor}`,
+                  borderTop: '1px solid rgba(255,255,255,0.1)',
+                  borderRight: '1px solid rgba(255,255,255,0.1)',
+                  borderBottom: '1px solid rgba(255,255,255,0.1)',
+                } : {
+                  backgroundColor: 'rgba(255,255,255,0.05)',
+                  borderColor: 'rgba(255,255,255,0.1)'
+                }}
               >
                 <button 
                   onClick={() => setOpenAcc(i)} 
-                  className="w-full flex items-center justify-between p-6 md:p-8 text-left"
+                  className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-white/5 transition-colors"
                 >
-                  <h3 className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? "text-[#00AAFF]" : "text-white"}`}>
+                  <h3 
+                    className="text-lg md:text-xl font-bold transition-colors"
+                    style={{ color: isOpen ? item.themeColor : '#ffffff' }}
+                  >
                     {item.title}
                   </h3>
-                  <div className={`shrink-0 ml-4 transition-transform duration-300 ${isOpen ? "rotate-180 text-[#00AAFF]" : "text-white/50"}`}>
+                  <div 
+                    className="shrink-0 ml-4 transition-transform duration-300"
+                    style={{ color: isOpen ? item.themeColor : 'rgba(255,255,255,0.5)', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M6 9l6 6 6-6"/>
                     </svg>
@@ -508,19 +520,24 @@ export default function Careers() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <div className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0">
+                      <motion.div 
+                        className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                      >
                         <div className="flex-1">
                           <p className="text-neutral-300 mb-6 leading-relaxed">
                             {item.desc}
                           </p>
                           <ul className="space-y-3">
                             {item.bullets.map((bullet, bi) => (
-                              <li key={bi} className="flex items-start gap-3">
-                                <svg className="shrink-0 w-6 h-6 text-[#00AAFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <li key={bi} className="flex items-start gap-3 text-[#00AAFF]">
+                                <svg className="shrink-0 w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                   <polyline points="22 4 12 14.01 9 11.01"/>
                                 </svg>
-                                <span className="text-neutral-400 text-sm md:text-base">{bullet}</span>
+                                <span className="text-sm md:text-base font-medium">{bullet}</span>
                               </li>
                             ))}
                           </ul>
@@ -532,7 +549,7 @@ export default function Careers() {
                             className="w-full max-w-[200px] h-auto object-contain drop-shadow-2xl" 
                           />
                         </div>
-                      </div>
+                      </motion.div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -542,7 +559,6 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      {/* 6. Hiring Process Section */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <motion.div 
           className="text-center mb-16"
@@ -552,7 +568,7 @@ export default function Careers() {
           viewport={{ once: true, margin: "-50px" }}
         >
           <motion.h2
-            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
+            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4 capitalize"
             style={{
               backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
               backgroundSize: "200% auto",
@@ -562,6 +578,9 @@ export default function Careers() {
           >
             Hiring Process
           </motion.h2>
+          <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto mt-4">
+            A simple and transparent journey where we review applications, interview candidates, and select the best fit to join our team.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -586,9 +605,16 @@ export default function Careers() {
               </h3>
               <div className="space-y-4">
                 {step.desc.map((p, pIndex) => (
-                  <p key={pIndex} className="text-gray-400 text-sm leading-relaxed">
+                  <motion.p 
+                    key={pIndex} 
+                    className="text-gray-400 text-sm leading-relaxed"
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                  >
                     {p}
-                  </p>
+                  </motion.p>
                 ))}
               </div>
             </motion.div>
