@@ -284,6 +284,7 @@ export default function Careers() {
 
   return (
     <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24 relative z-0">
+      
       <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
         <motion.div
           className="relative mb-6 text-center"
@@ -326,7 +327,7 @@ export default function Careers() {
           viewport={{ once: true, margin: "-50px" }}
         >
           <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">Core Values</h4>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-neutral-400">
+          <h2 className="text-lg md:text-xl text-neutral-300 font-medium tracking-tight">
             A few things you should know about us.
           </h2>
         </motion.div>
@@ -374,20 +375,21 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-32 relative w-full overflow-hidden flex flex-col justify-center">
+      <section className="py-24 relative w-full overflow-hidden flex flex-col justify-center">
         <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
         <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
 
         <motion.div
-          className="flex gap-8 w-max will-change-transform items-center"
+          className="flex gap-8 w-max items-center"
+          style={{ willChange: "transform" }}
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 80 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 120 }}
         >
           {doubledMarquee.map((src, index) => (
             <div
               key={`marquee-img-${index}`}
               className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${
-                index % 2 === 0 ? "-translate-y-20" : "translate-y-20"
+                index % 2 === 0 ? "-translate-y-16" : "translate-y-16"
               }`}
             >
               <img
@@ -649,14 +651,14 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-20 px-6 max-w-7xl mx-auto relative">
+      <section className="py-12 px-6 max-w-7xl mx-auto relative">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30" style={{ backgroundColor: "#00AAFF" }}></div>
           <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30" style={{ backgroundColor: "#30C7CC" }}></div>
         </div>
 
         <motion.div 
-          className="text-center mb-20 relative z-10"
+          className="text-center mb-16 relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -717,9 +719,14 @@ export default function Careers() {
         </div>
       </section>
 
-      <section className="py-20 px-6 max-w-7xl mx-auto relative z-10">
+      <section className="py-12 px-6 max-w-7xl mx-auto relative z-10">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[30%] left-[20%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full blur-[100px] opacity-20" style={{ backgroundColor: "#9333EA" }}></div>
+          <div className="absolute bottom-[20%] right-[20%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-20" style={{ backgroundColor: "#0284C7" }}></div>
+        </div>
+
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-16 relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -738,7 +745,7 @@ export default function Careers() {
           </motion.h2>
         </motion.div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col relative z-10">
           {openPositions.map((job, index) => (
             <motion.div
               key={index}
@@ -769,7 +776,7 @@ export default function Careers() {
         </div>
 
         <motion.div 
-          className="mt-16 flex justify-center"
+          className="mt-16 flex justify-center relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
