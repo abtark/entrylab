@@ -42,9 +42,9 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden z-0">
       
-      {/* Background decorations */}
-      <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] rounded-full blur-[120px] opacity-20 bg-[#00AAFF] pointer-events-none -z-10" />
-      <div className="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] rounded-full blur-[120px] opacity-10 bg-purple-500 pointer-events-none -z-10" />
+      {/* Global Background decorations */}
+      <div className="absolute top-[5%] right-[5%] w-[400px] h-[400px] rounded-full blur-[150px] opacity-20 bg-[#00AAFF] pointer-events-none -z-10" />
+      <div className="absolute bottom-[20%] left-[5%] w-[500px] h-[500px] rounded-full blur-[150px] opacity-10 bg-purple-600 pointer-events-none -z-10" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         
@@ -120,143 +120,169 @@ export default function Contact() {
         </motion.div>
 
         {/* BOTTOM 2 COLUMNS SECTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-stretch mb-24">
           
-          {/* Left Column: Glass Background Info Blocks */}
+          {/* Left Column: Individual Glass Info Blocks with Decorative Shapes Behind */}
           <motion.div 
-            className="bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between h-full gap-8"
-            variants={fadeUp}
+            className="relative flex flex-col justify-between h-full gap-6"
+            variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
+            {/* Multiple colorful shapes behind the left items */}
+            <div className="absolute -top-10 -left-10 w-64 h-64 bg-[#00AAFF]/30 rounded-full blur-[100px] pointer-events-none -z-10" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px] pointer-events-none -z-10" />
+            <div className="absolute -bottom-10 right-0 w-64 h-64 bg-pink-500/20 rounded-full blur-[100px] pointer-events-none -z-10" />
+
             {/* Customer Support */}
-            <motion.div variants={textRevealVariants} className="flex gap-5 group cursor-pointer">
+            <motion.div variants={textRevealVariants} className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg flex flex-col items-start gap-4 group cursor-pointer hover:border-white/20 transition-all duration-300">
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-headset text-[#00AAFF] text-xl"></i>
               </div>
-              <div className="flex flex-col">
-                <h4 className="text-lg font-bold text-white mb-2">Customer Support</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  Our team is always here to help with any questions or concerns, ensuring your experience stays smooth and stress-free.
-                </p>
-              </div>
+              <h4 className="text-xl font-bold text-white">Customer Support</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Our team is always here to help with any questions or concerns, ensuring your experience stays smooth and stress-free.
+              </p>
             </motion.div>
 
             {/* Feedback & Suggestions */}
-            <motion.div variants={textRevealVariants} className="flex gap-5 group cursor-pointer">
+            <motion.div variants={textRevealVariants} className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg flex flex-col items-start gap-4 group cursor-pointer hover:border-white/20 transition-all duration-300">
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-comment-dots text-[#00AAFF] text-xl"></i>
               </div>
-              <div className="flex flex-col">
-                <h4 className="text-lg font-bold text-white mb-2">Feedback & Suggestions</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  We value your ideas and feedback, as they help us improve and create a better experience for everyone.
-                </p>
-              </div>
+              <h4 className="text-xl font-bold text-white">Feedback & Suggestions</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                We value your ideas and feedback, as they help us improve and create a better experience for everyone.
+              </p>
             </motion.div>
 
             {/* Media Inquiries */}
-            <motion.div variants={textRevealVariants} className="flex gap-5 group cursor-pointer">
+            <motion.div variants={textRevealVariants} className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg flex flex-col items-start gap-4 group cursor-pointer hover:border-white/20 transition-all duration-300">
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-envelope text-[#00AAFF] text-xl"></i>
               </div>
-              <div className="flex flex-col">
-                <h4 className="text-lg font-bold text-white mb-2">Media Inquiries</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  For press and media-related inquiries, please contact us at <a href="mailto:info@entrylab.net" className="text-[#00AAFF] hover:underline transition-all">info@entrylab.net</a>
-                </p>
-              </div>
+              <h4 className="text-xl font-bold text-white">Media Inquiries</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                For press and media-related inquiries, please contact us at <a href="mailto:info@entrylab.net" className="text-[#00AAFF] hover:underline transition-all">info@entrylab.net</a>
+              </p>
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Contact Form */}
-          <motion.div 
-            className="bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl h-full flex flex-col"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-[#00AAFF] mb-2">Let's Talk!</h3>
-              <p className="text-gray-300 text-sm">Get in touch with us using the following form below.</p>
-            </div>
+          {/* Right Column: Contact Form with Decorative Shapes Behind */}
+          <div className="relative h-full">
+            {/* Multiple colorful shapes behind the form */}
+            <div className="absolute -top-12 -right-12 w-72 h-72 bg-[#00AAFF]/30 rounded-full blur-[100px] pointer-events-none -z-10" />
+            <div className="absolute top-1/2 left-0 -translate-x-1/2 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none -z-10" />
+            <div className="absolute -bottom-10 right-10 w-80 h-80 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none -z-10" />
 
-            <form className="flex flex-col gap-6 flex-grow justify-between">
-              
-              <div className="flex flex-col gap-5">
-                {/* Row 1: First and Last Name */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <input 
-                    type="text" 
-                    placeholder="First Name" 
-                    className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Last Name" 
-                    className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
-                  />
-                </div>
+            <motion.div 
+              className="bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl h-full flex flex-col relative z-10"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-[#00AAFF] mb-2">Let's Talk!</h3>
+                <p className="text-gray-300 text-sm">Get in touch with us using the following form below.</p>
+              </div>
 
-                {/* Row 2: Email Input */}
-                <div className="relative">
-                  <i className="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-[#00AAFF]"></i>
-                  <input 
-                    type="email" 
-                    placeholder="Your Email" 
-                    className="w-full bg-[#111111] border border-gray-700/60 py-4 pr-4 pl-12 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
-                  />
-                </div>
-
-                {/* Row 3: Phone Number Input */}
-                <div className="flex border border-gray-700/60 bg-[#111111] rounded-xl focus-within:border-[#00AAFF] transition-colors overflow-hidden">
-                  <div className="flex items-center px-4 border-r border-gray-700/60 text-gray-400 bg-[#151515] text-sm font-medium">
-                    +880
+              <form className="flex flex-col gap-6 flex-grow justify-between">
+                
+                <div className="flex flex-col gap-5">
+                  {/* Row 1: First and Last Name */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <input 
+                      type="text" 
+                      placeholder="First Name" 
+                      className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
+                    />
+                    <input 
+                      type="text" 
+                      placeholder="Last Name" 
+                      className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
+                    />
                   </div>
-                  <input 
-                    type="tel" 
-                    placeholder="Phone Number" 
-                    className="w-full bg-transparent p-4 text-white text-sm focus:outline-none" 
-                  />
+
+                  {/* Row 2: Email Input */}
+                  <div className="relative">
+                    <i className="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-[#00AAFF]"></i>
+                    <input 
+                      type="email" 
+                      placeholder="Your Email" 
+                      className="w-full bg-[#111111] border border-gray-700/60 py-4 pr-4 pl-12 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
+                    />
+                  </div>
+
+                  {/* Row 3: Phone Number Input */}
+                  <div className="flex border border-gray-700/60 bg-[#111111] rounded-xl focus-within:border-[#00AAFF] transition-colors overflow-hidden">
+                    <div className="flex items-center px-4 border-r border-gray-700/60 text-gray-400 bg-[#151515] text-sm font-medium">
+                      +880
+                    </div>
+                    <input 
+                      type="tel" 
+                      placeholder="Phone Number" 
+                      className="w-full bg-transparent p-4 text-white text-sm focus:outline-none" 
+                    />
+                  </div>
+
+                  {/* Row 4: Textarea */}
+                  <div className="relative">
+                    <textarea 
+                      placeholder="How can we help you?" 
+                      rows={4} 
+                      maxLength={180}
+                      value={message}
+                      onChange={handleMessageChange}
+                      className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors resize-none"
+                    ></textarea>
+                    <span className="absolute bottom-4 right-4 text-xs font-medium text-gray-500">
+                      {message.length}/180
+                    </span>
+                  </div>
                 </div>
 
-                {/* Row 4: Textarea */}
-                <div className="relative">
-                  <textarea 
-                    placeholder="How can we help you?" 
-                    rows={4} 
-                    maxLength={180}
-                    value={message}
-                    onChange={handleMessageChange}
-                    className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors resize-none"
-                  ></textarea>
-                  <span className="absolute bottom-4 right-4 text-xs font-medium text-gray-500">
-                    {message.length}/180
-                  </span>
+                <div className="mt-4">
+                  {/* Row 5: Submit Button */}
+                  <button 
+                    type="button" 
+                    className="btn-primary w-full flex items-center justify-center gap-2 rounded-xl shadow-[0_0_15px_rgba(0,170,255,0.3)] hover:shadow-[0_0_25px_rgba(0,170,255,0.5)] transition-all"
+                  >
+                    <i className="fa-solid fa-paper-plane text-sm"></i> Submit
+                  </button>
+
+                  {/* Footer Terms */}
+                  <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
+                    By contacting us, you agree to our <a href="#" className="text-white hover:text-[#00AAFF] underline transition-colors">Terms of Service</a> and <a href="#" className="text-white hover:text-[#00AAFF] underline transition-colors">Privacy Policy</a>
+                  </p>
                 </div>
-              </div>
 
-              <div className="mt-4">
-                {/* Row 5: Submit Button */}
-                <button 
-                  type="button" 
-                  className="btn-primary w-full flex items-center justify-center gap-2 rounded-xl shadow-[0_0_15px_rgba(0,170,255,0.3)] hover:shadow-[0_0_25px_rgba(0,170,255,0.5)] transition-all"
-                >
-                  <i className="fa-solid fa-paper-plane text-sm"></i> Submit
-                </button>
-
-                {/* Footer Terms */}
-                <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                  By contacting us, you agree to our <a href="#" className="text-white hover:text-[#00AAFF] underline transition-colors">Terms of Service</a> and <a href="#" className="text-white hover:text-[#00AAFF] underline transition-colors">Privacy Policy</a>
-                </p>
-              </div>
-
-            </form>
-          </motion.div>
-
+              </form>
+            </motion.div>
+          </div>
         </div>
+
+        {/* MAP SECTION */}
+        <motion.div 
+          className="w-full h-[350px] md:h-[450px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative z-10"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <iframe 
+            src="https://maps.google.com/maps?q=8QVM%2BJ2%20Chattogram%2C%20Chuna%20factory%20moor%2C%2021%20Golondaz%20Rd%2C%20JD%204216&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen={false} 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full h-full grayscale contrast-125 opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-700 ease-in-out"
+          />
+        </motion.div>
+
       </div>
     </section>
   )
