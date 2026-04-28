@@ -153,8 +153,8 @@ export default function Careers() {
     {
       title: "A Healthy, Focused Culture",
       desc: "Work in a calm, respectful environment where collaboration thrives, quality comes first, and long-term growth is genuinely valued.",
-      image: "https://iili.io/Bi9MLUN.png",
-      themeColor: "#FF6DA1",
+      image: "https://iili.io/BiCsYDG.png",
+      themeColor: "#FD7FAC",
       bullets: [
         "Clear priorities that help you focus on meaningful, high-impact work",
         "Open communication and mutual respect across all teams",
@@ -165,8 +165,8 @@ export default function Careers() {
     {
       title: "Comfort in Your Daily Routine",
       desc: "Enjoy complimentary meals, coffee, and snacks—so you can stay energized and focused throughout your day.",
-      image: "https://iili.io/Bi9Vihu.png",
-      themeColor: "#E5B94C",
+      image: "https://iili.io/BiCs7Ns.png",
+      themeColor: "#EB3E3C",
       bullets: [
         "Fresh, nutritious meals available throughout the workday",
         "Unlimited coffee, tea, and healthy snacks",
@@ -177,8 +177,8 @@ export default function Careers() {
     {
       title: "Wellness That Matters",
       desc: "Stay active and balanced with access to sports facilities that support both physical and mental well-being.",
-      image: "https://iili.io/Bi9jnyB.png",
-      themeColor: "#E8793C",
+      image: "https://iili.io/BiCsTlI.png",
+      themeColor: "#FBAD5C",
       bullets: [
         "Fully equipped treadmill for daily fitness routines",
         "Indoor and outdoor sports facilities for recreation",
@@ -189,8 +189,8 @@ export default function Careers() {
     {
       title: "Stress-Free Commute",
       desc: "Take advantage of our convenient parking options and transport support, making your daily commute simpler and more reliable.",
-      image: "https://iili.io/BiJ28Zv.png",
-      themeColor: "#00D67F",
+      image: "https://iili.io/BiCsxPp.png",
+      themeColor: "#977FFB",
       bullets: [
         "Transport allowance provided to help cover daily travel expenses",
         "Safe and accessible parking for all team-mates",
@@ -201,8 +201,8 @@ export default function Careers() {
     {
       title: "Meaningful Rewards & Benefits",
       desc: "We recognize your commitment with festival bonuses, leave encashment, and loyalty rewards that grow with you.",
-      image: "https://iili.io/Bi9eHSj.png",
-      themeColor: "#29ADFC",
+      image: "https://iili.io/BiCsIKN.png",
+      themeColor: "#B26FE7",
       bullets: [
         "Competitive festival bonuses to celebrate special occasions",
         "Leave encashment options for added flexibility",
@@ -213,8 +213,8 @@ export default function Careers() {
     {
       title: "A Respectful Workplace for Everyone",
       desc: "We maintain a considerate environment with dedicated prayer spaces, allowing you to work comfortably while honoring your personal beliefs.",
-      image: "https://iili.io/BiJCmbt.png",
-      themeColor: "#DF4F3E",
+      image: "https://iili.io/BiCsoVR.png",
+      themeColor: "#57E0FA",
       bullets: [
         "Dedicated prayer spaces for personal reflection and practice",
         "A culture that respects individual values and beliefs",
@@ -301,14 +301,16 @@ export default function Careers() {
 
       <section className="py-10 px-6 max-w-7xl mx-auto relative z-10">
         <motion.div 
-          className="text-center mb-12"
+          className="flex flex-col items-end text-right w-full mb-12"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[#00AAFF] mb-3">Core Values</h2>
-          <p className="text-neutral-400 text-lg">A few things you should know about us.</p>
+          <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">Core Values</h4>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-400">
+            A few things you should know about us.
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -361,7 +363,7 @@ export default function Careers() {
         <motion.div
           className="flex gap-8 w-max will-change-transform items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 300 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 100 }}
         >
           {doubledMarquee.map((src, index) => (
             <div
@@ -490,9 +492,9 @@ export default function Careers() {
 
       <section className="pt-8 pb-24 px-6 max-w-5xl mx-auto relative">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[10%] left-[5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full blur-[100px] opacity-25" style={{ backgroundColor: "#FF6DA1" }}></div>
-          <div className="absolute top-[40%] right-[5%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-25" style={{ backgroundColor: "#00D98D" }}></div>
-          <div className="absolute bottom-[10%] left-[20%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-25" style={{ backgroundColor: "#FF8150" }}></div>
+          <div className="absolute top-[10%] left-[5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full blur-[100px] opacity-30" style={{ backgroundColor: "#FD7FAC" }}></div>
+          <div className="absolute top-[40%] right-[5%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30" style={{ backgroundColor: "#977FFB" }}></div>
+          <div className="absolute bottom-[10%] left-[20%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30" style={{ backgroundColor: "#57E0FA" }}></div>
         </div>
 
         <motion.div 
@@ -631,8 +633,8 @@ export default function Careers() {
 
       <section className="py-24 px-6 max-w-7xl mx-auto relative">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-25" style={{ backgroundColor: "#00AAFF" }}></div>
-          <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-25" style={{ backgroundColor: "#30C7CC" }}></div>
+          <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30" style={{ backgroundColor: "#00AAFF" }}></div>
+          <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30" style={{ backgroundColor: "#30C7CC" }}></div>
         </div>
 
         <motion.div 
