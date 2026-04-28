@@ -20,8 +20,8 @@ const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const mouseX = e.clientX - rect.left - rect.width / 2;
     const mouseY = e.clientY - rect.top - rect.height / 2;
-    x.set(mouseX * 0.05);
-    y.set(mouseY * 0.05);
+    x.set(mouseX * 0.02);
+    y.set(mouseY * 0.02);
   };
 
   const handleMouseLeave = () => {
@@ -166,7 +166,7 @@ export default function Careers() {
       title: "Comfort in Your Daily Routine",
       desc: "Enjoy complimentary meals, coffee, and snacks—so you can stay energized and focused throughout your day.",
       image: "https://iili.io/Bi9Vihu.png",
-      themeColor: "#FF8150",
+      themeColor: "#E5B94C",
       bullets: [
         "Fresh, nutritious meals available throughout the workday",
         "Unlimited coffee, tea, and healthy snacks",
@@ -189,8 +189,8 @@ export default function Careers() {
     {
       title: "Stress-Free Commute",
       desc: "Take advantage of our convenient parking options and transport support, making your daily commute simpler and more reliable.",
-      image: "https://iili.io/Bi9wO0J.png",
-      themeColor: "#00D98D",
+      image: "https://iili.io/BiJ28Zv.png",
+      themeColor: "#00D67F",
       bullets: [
         "Transport allowance provided to help cover daily travel expenses",
         "Safe and accessible parking for all team-mates",
@@ -202,7 +202,7 @@ export default function Careers() {
       title: "Meaningful Rewards & Benefits",
       desc: "We recognize your commitment with festival bonuses, leave encashment, and loyalty rewards that grow with you.",
       image: "https://iili.io/Bi9eHSj.png",
-      themeColor: "#F18545",
+      themeColor: "#29ADFC",
       bullets: [
         "Competitive festival bonuses to celebrate special occasions",
         "Leave encashment options for added flexibility",
@@ -213,8 +213,8 @@ export default function Careers() {
     {
       title: "A Respectful Workplace for Everyone",
       desc: "We maintain a considerate environment with dedicated prayer spaces, allowing you to work comfortably while honoring your personal beliefs.",
-      image: "https://iili.io/BPPpxjV.png",
-      themeColor: "#FD8A02",
+      image: "https://iili.io/BiJCmbt.png",
+      themeColor: "#DF4F3E",
       bullets: [
         "Dedicated prayer spaces for personal reflection and practice",
         "A culture that respects individual values and beliefs",
@@ -265,7 +265,7 @@ export default function Careers() {
     setAdvIndex((prev) => (prev - 1 + advantages.length) % advantages.length);
 
   return (
-    <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24">
+    <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24 relative z-0">
       <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
         <motion.div
           className="relative mb-6 text-center"
@@ -299,7 +299,7 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-10 px-6 max-w-7xl mx-auto">
+      <section className="py-10 px-6 max-w-7xl mx-auto relative z-10">
         <motion.div 
           className="text-center mb-12"
           variants={fadeUp}
@@ -311,11 +311,11 @@ export default function Careers() {
           <p className="text-neutral-400 text-lg">A few things you should know about us.</p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {coreValues.map((value, index) => (
             <MagneticItem key={`core-value-${value.title}-${index}`}>
               <motion.div
-                className={`group flex flex-col items-center justify-center gap-4 p-6 rounded-2xl cursor-pointer transition-all duration-500 shadow-md hover:shadow-xl ${value.bgColor}`}
+                className={`group flex flex-row items-center justify-start gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-500 shadow-md hover:shadow-xl ${value.bgColor}`}
                 whileHover="hover"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -323,17 +323,17 @@ export default function Careers() {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >
                 <motion.div
-                  className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-2xl overflow-hidden bg-white/60 flex items-center justify-center shadow-inner"
+                  className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl overflow-hidden bg-white/60 flex items-center justify-center shadow-inner"
                   variants={{ hover: { scale: 1.1 } }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
                   <img
                     src={value.image}
                     alt={value.title}
-                    className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-sm"
+                    className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-sm"
                   />
                 </motion.div>
-                <h3 className={`text-lg md:text-xl font-bold tracking-tight text-center ${value.textColor}`}>
+                <h3 className={`text-lg md:text-xl font-bold tracking-tight ${value.textColor}`}>
                   {value.title}
                 </h3>
               </motion.div>
@@ -381,7 +381,7 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="pt-24 pb-12 px-6 max-w-7xl mx-auto overflow-hidden">
+      <section className="pt-24 pb-12 px-6 max-w-7xl mx-auto overflow-hidden relative z-10">
         <motion.div 
           className="flex flex-col justify-between items-start mb-16 gap-6"
           variants={fadeUp}
@@ -489,10 +489,10 @@ export default function Careers() {
       </section>
 
       <section className="pt-8 pb-24 px-6 max-w-5xl mx-auto relative">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full blur-[100px] opacity-20" style={{ backgroundColor: "#FF6DA1" }}></div>
-          <div className="absolute top-[40%] right-[5%] w-[500px] h-[500px] rounded-full blur-[120px] opacity-20" style={{ backgroundColor: "#00D98D" }}></div>
-          <div className="absolute bottom-[10%] left-[20%] w-[450px] h-[450px] rounded-full blur-[110px] opacity-20" style={{ backgroundColor: "#FF8150" }}></div>
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[10%] left-[5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full blur-[100px] opacity-25" style={{ backgroundColor: "#FF6DA1" }}></div>
+          <div className="absolute top-[40%] right-[5%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-25" style={{ backgroundColor: "#00D98D" }}></div>
+          <div className="absolute bottom-[10%] left-[20%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-25" style={{ backgroundColor: "#FF8150" }}></div>
         </div>
 
         <motion.div 
@@ -630,9 +630,9 @@ export default function Careers() {
       </section>
 
       <section className="py-24 px-6 max-w-7xl mx-auto relative">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute top-[20%] left-[15%] w-[450px] h-[450px] rounded-full blur-[110px] opacity-15" style={{ backgroundColor: "#00AAFF" }}></div>
-          <div className="absolute bottom-[20%] right-[15%] w-[500px] h-[500px] rounded-full blur-[120px] opacity-15" style={{ backgroundColor: "#30C7CC" }}></div>
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-25" style={{ backgroundColor: "#00AAFF" }}></div>
+          <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-25" style={{ backgroundColor: "#30C7CC" }}></div>
         </div>
 
         <motion.div 
@@ -653,7 +653,7 @@ export default function Careers() {
           >
             Hiring Process
           </motion.h2>
-          <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto mt-2">
+          <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto mt-2 pb-6">
             A simple and transparent journey where we review applications, interview candidates, and select the best fit to join our team.
           </p>
         </motion.div>
