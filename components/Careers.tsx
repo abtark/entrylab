@@ -251,6 +251,24 @@ export default function Careers() {
     }
   ];
 
+  const openPositions = [
+    {
+      dept: "Information Management",
+      title: "Junior Executive",
+      details: "Onsite / Full Time / Entry Level"
+    },
+    {
+      dept: "Information Management",
+      title: "Research Executive",
+      details: "Onsite / Full Time / Junior Level"
+    },
+    {
+      dept: "Information Management",
+      title: "HR Manager",
+      details: "Onsite / Full Time / Senior Level"
+    }
+  ];
+
   const doubledMarquee = [...marqueeImages, ...marqueeImages];
 
   useEffect(() => {
@@ -307,10 +325,12 @@ export default function Careers() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">Core Values</h4>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-400">
-            A few things you should know about us.
+          <h2 className="text-3xl md:text-5xl font-black text-[#00AAFF] mb-2 tracking-tight">
+            Core Values
           </h2>
+          <p className="text-neutral-400 text-lg md:text-xl mt-2 max-w-2xl">
+            A few things you should know about us.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -363,7 +383,7 @@ export default function Careers() {
         <motion.div
           className="flex gap-8 w-max will-change-transform items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 100 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
         >
           {doubledMarquee.map((src, index) => (
             <div
@@ -697,6 +717,73 @@ export default function Careers() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      <section className="py-24 px-6 max-w-7xl mx-auto relative z-10">
+        <motion.div 
+          className="text-center mb-16"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <motion.h2
+            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4 capitalize"
+            style={{
+              backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
+              backgroundSize: "200% auto",
+            }}
+            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
+            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
+          >
+            Open Positions
+          </motion.h2>
+        </motion.div>
+
+        <div className="flex flex-col">
+          {openPositions.map((job, index) => (
+            <motion.div
+              key={index}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.1 }}
+              className="border-b border-white/10 py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 group"
+            >
+              <div className="w-full md:w-1/3">
+                <span className="text-[#00AAFF] font-medium text-lg">{job.dept}</span>
+              </div>
+              <div className="w-full md:w-1/3 flex flex-col">
+                <h3 className="text-2xl font-bold text-white group-hover:text-[#00AAFF] transition-colors">{job.title}</h3>
+                <span className="text-neutral-400 mt-2">{job.details}</span>
+              </div>
+              <div className="w-full md:w-1/3 flex justify-start md:justify-end">
+                <button className="flex items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-white hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-300 overflow-hidden relative group/btn">
+                  <span className="relative z-10 font-semibold">Apply</span>
+                  <svg className="w-5 h-5 relative z-10 opacity-0 -translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div 
+          className="mt-16 flex justify-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <button className="group flex items-center gap-2 px-8 py-4 rounded-full bg-[#00AAFF] text-white font-bold hover:bg-white hover:text-[#00AAFF] transition-all duration-300 shadow-[0_0_20px_rgba(0,170,255,0.4)]">
+            See All Jobs
+            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </motion.div>
       </section>
     </main>
   );
