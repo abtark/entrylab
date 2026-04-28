@@ -4,11 +4,78 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
 export default function Contact() {
-  const [message, setMessage] = useState('')
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+  
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
-  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length <= 180) {
-      setMessage(e.target.value)
+  // Strict client-side validation acts as the first line of defense against injections 
+  // by explicitly blocking unauthorized characters (like <, >, ', ", ;, etc.)
+  const validateForm = () => {
+    let newErrors: { [key: string]: string } = {}
+
+    // First Name: Letters only
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First Name is required.'
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
+      newErrors.firstName = 'Only letters (a-z) are allowed.'
+    }
+
+    // Last Name: Letters only
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last Name is required.'
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.lastName)) {
+      newErrors.lastName = 'Only letters (a-z) are allowed.'
+    }
+
+    // Email: Valid email format
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required.'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address.'
+    }
+
+    // Phone: Numbers only
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required.'
+    } else if (!/^[0-9]+$/.test(formData.phone)) {
+      newErrors.phone = 'Only numbers are allowed.'
+    }
+
+    // Message: Letters only (as requested), max 180 characters handled in onChange
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required.'
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.message)) {
+      newErrors.message = 'Only letters (a-z) and spaces are allowed.'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    
+    if (name === 'message' && value.length > 180) return
+
+    setFormData(prev => ({ ...prev, [name]: value }))
+    // Clear error for this field as the user types
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (validateForm()) {
+      // Proceed with form submission (e.g., API call)
+      console.log('Form is clean and ready to send:', formData)
+      // Reset form after successful submission if needed
     }
   }
 
@@ -17,21 +84,13 @@ export default function Contact() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1
-      }
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 }
     }
   }
 
   const textRevealVariants = {
     hidden: { opacity: 0, y: 30, filter: "blur(5px)" },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
-    }
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
   }
 
   const fadeUp = {
@@ -39,12 +98,15 @@ export default function Contact() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   }
 
+  // Premium Liquid Glass Styling
+  const liquidGlassClass = "bg-white/[0.03] backdrop-blur-2xl border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.5)] rounded-3xl"
+
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden z-0">
       
-      {/* Global Background decorations */}
-      <div className="absolute top-[5%] right-[5%] w-[400px] h-[400px] rounded-full blur-[150px] opacity-20 bg-[#00AAFF] pointer-events-none -z-10" />
-      <div className="absolute bottom-[20%] left-[5%] w-[500px] h-[500px] rounded-full blur-[150px] opacity-10 bg-purple-600 pointer-events-none -z-10" />
+      {/* Background decorations */}
+      <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] rounded-full blur-[120px] opacity-20 bg-[#00AAFF] pointer-events-none -z-10" />
+      <div className="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] rounded-full blur-[120px] opacity-10 bg-purple-500 pointer-events-none -z-10" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         
@@ -77,7 +139,7 @@ export default function Contact() {
         >
           {/* Column 1: Get In Touch */}
           <motion.div variants={textRevealVariants} className="flex flex-col lg:w-[45%]">
-            <h3 className="text-4xl md:text-5xl font-black text-[#00AAFF] mb-4 drop-shadow-sm tracking-tight">
+            <h3 className="text-3xl md:text-4xl font-black text-[#00AAFF] mb-4 drop-shadow-sm tracking-tight">
               Get In Touch
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed max-w-[90%]">
@@ -122,7 +184,7 @@ export default function Contact() {
         {/* BOTTOM 2 COLUMNS SECTION */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-stretch mb-24">
           
-          {/* Left Column: Individual Glass Info Blocks with Decorative Shapes Behind */}
+          {/* Left Column: Individual Liquid Glass Info Blocks */}
           <motion.div 
             className="relative flex flex-col justify-between h-full gap-6"
             variants={containerVariants}
@@ -130,13 +192,13 @@ export default function Contact() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
-            {/* Multiple colorful shapes behind the left items */}
+            {/* Colorful shapes behind the left items */}
             <div className="absolute -top-10 -left-10 w-64 h-64 bg-[#00AAFF]/30 rounded-full blur-[100px] pointer-events-none -z-10" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px] pointer-events-none -z-10" />
             <div className="absolute -bottom-10 right-0 w-64 h-64 bg-pink-500/20 rounded-full blur-[100px] pointer-events-none -z-10" />
 
             {/* Customer Support */}
-            <motion.div variants={textRevealVariants} className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg flex flex-col items-start gap-4 group cursor-pointer hover:border-white/20 transition-all duration-300">
+            <motion.div variants={textRevealVariants} className={`${liquidGlassClass} p-8 flex flex-col items-start gap-4 group cursor-pointer hover:border-white/30 transition-all duration-300`}>
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-headset text-[#00AAFF] text-xl"></i>
               </div>
@@ -147,7 +209,7 @@ export default function Contact() {
             </motion.div>
 
             {/* Feedback & Suggestions */}
-            <motion.div variants={textRevealVariants} className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg flex flex-col items-start gap-4 group cursor-pointer hover:border-white/20 transition-all duration-300">
+            <motion.div variants={textRevealVariants} className={`${liquidGlassClass} p-8 flex flex-col items-start gap-4 group cursor-pointer hover:border-white/30 transition-all duration-300`}>
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-comment-dots text-[#00AAFF] text-xl"></i>
               </div>
@@ -158,7 +220,7 @@ export default function Contact() {
             </motion.div>
 
             {/* Media Inquiries */}
-            <motion.div variants={textRevealVariants} className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg flex flex-col items-start gap-4 group cursor-pointer hover:border-white/20 transition-all duration-300">
+            <motion.div variants={textRevealVariants} className={`${liquidGlassClass} p-8 flex flex-col items-start gap-4 group cursor-pointer hover:border-white/30 transition-all duration-300`}>
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-envelope text-[#00AAFF] text-xl"></i>
               </div>
@@ -169,15 +231,15 @@ export default function Contact() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Contact Form with Decorative Shapes Behind */}
-          <div className="relative h-full">
-            {/* Multiple colorful shapes behind the form */}
+          {/* Right Column: Liquid Glass Contact Form */}
+          <div className="relative h-full flex flex-col">
+            {/* Colorful shapes behind the form */}
             <div className="absolute -top-12 -right-12 w-72 h-72 bg-[#00AAFF]/30 rounded-full blur-[100px] pointer-events-none -z-10" />
             <div className="absolute top-1/2 left-0 -translate-x-1/2 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none -z-10" />
             <div className="absolute -bottom-10 right-10 w-80 h-80 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none -z-10" />
 
             <motion.div 
-              className="bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl h-full flex flex-col relative z-10"
+              className={`${liquidGlassClass} p-8 md:p-10 h-full flex flex-col relative z-10`}
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
@@ -188,65 +250,93 @@ export default function Contact() {
                 <p className="text-gray-300 text-sm">Get in touch with us using the following form below.</p>
               </div>
 
-              <form className="flex flex-col gap-6 flex-grow justify-between">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6 flex-grow justify-between">
                 
                 <div className="flex flex-col gap-5">
                   {/* Row 1: First and Last Name */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <input 
-                      type="text" 
-                      placeholder="First Name" 
-                      className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="Last Name" 
-                      className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
-                    />
+                    <div className="flex flex-col">
+                      <input 
+                        type="text" 
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        placeholder="First Name" 
+                        className={`w-full bg-black/40 border ${errors.firstName ? 'border-red-500' : 'border-white/10'} p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors`} 
+                      />
+                      {errors.firstName && <span className="text-red-500 text-xs mt-1 ml-1">{errors.firstName}</span>}
+                    </div>
+                    <div className="flex flex-col">
+                      <input 
+                        type="text" 
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        placeholder="Last Name" 
+                        className={`w-full bg-black/40 border ${errors.lastName ? 'border-red-500' : 'border-white/10'} p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors`} 
+                      />
+                      {errors.lastName && <span className="text-red-500 text-xs mt-1 ml-1">{errors.lastName}</span>}
+                    </div>
                   </div>
 
                   {/* Row 2: Email Input */}
-                  <div className="relative">
-                    <i className="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-[#00AAFF]"></i>
-                    <input 
-                      type="email" 
-                      placeholder="Your Email" 
-                      className="w-full bg-[#111111] border border-gray-700/60 py-4 pr-4 pl-12 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
-                    />
+                  <div className="flex flex-col">
+                    <div className="relative">
+                      <i className="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-[#00AAFF]"></i>
+                      <input 
+                        type="text" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Your Email" 
+                        className={`w-full bg-black/40 border ${errors.email ? 'border-red-500' : 'border-white/10'} py-4 pr-4 pl-12 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors`} 
+                      />
+                    </div>
+                    {errors.email && <span className="text-red-500 text-xs mt-1 ml-1">{errors.email}</span>}
                   </div>
 
                   {/* Row 3: Phone Number Input */}
-                  <div className="flex border border-gray-700/60 bg-[#111111] rounded-xl focus-within:border-[#00AAFF] transition-colors overflow-hidden">
-                    <div className="flex items-center px-4 border-r border-gray-700/60 text-gray-400 bg-[#151515] text-sm font-medium">
-                      +880
+                  <div className="flex flex-col">
+                    <div className={`flex border ${errors.phone ? 'border-red-500' : 'border-white/10'} bg-black/40 rounded-xl focus-within:border-[#00AAFF] transition-colors overflow-hidden`}>
+                      <div className="flex items-center px-4 border-r border-white/10 text-gray-400 bg-black/50 text-sm font-medium">
+                        +880
+                      </div>
+                      <input 
+                        type="text" 
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="Phone Number" 
+                        className="w-full bg-transparent p-4 text-white text-sm focus:outline-none" 
+                      />
                     </div>
-                    <input 
-                      type="tel" 
-                      placeholder="Phone Number" 
-                      className="w-full bg-transparent p-4 text-white text-sm focus:outline-none" 
-                    />
+                    {errors.phone && <span className="text-red-500 text-xs mt-1 ml-1">{errors.phone}</span>}
                   </div>
 
                   {/* Row 4: Textarea */}
-                  <div className="relative">
-                    <textarea 
-                      placeholder="How can we help you?" 
-                      rows={4} 
-                      maxLength={180}
-                      value={message}
-                      onChange={handleMessageChange}
-                      className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors resize-none"
-                    ></textarea>
-                    <span className="absolute bottom-4 right-4 text-xs font-medium text-gray-500">
-                      {message.length}/180
-                    </span>
+                  <div className="flex flex-col">
+                    <div className="relative">
+                      <textarea 
+                        name="message"
+                        placeholder="How can we help you?" 
+                        rows={4} 
+                        maxLength={180}
+                        value={formData.message}
+                        onChange={handleChange}
+                        className={`w-full bg-black/40 border ${errors.message ? 'border-red-500' : 'border-white/10'} p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors resize-none`}
+                      ></textarea>
+                      <span className="absolute bottom-4 right-4 text-xs font-medium text-gray-400">
+                        {formData.message.length}/180
+                      </span>
+                    </div>
+                    {errors.message && <span className="text-red-500 text-xs mt-1 ml-1">{errors.message}</span>}
                   </div>
                 </div>
 
                 <div className="mt-4">
                   {/* Row 5: Submit Button */}
                   <button 
-                    type="button" 
+                    type="submit" 
                     className="btn-primary w-full flex items-center justify-center gap-2 rounded-xl shadow-[0_0_15px_rgba(0,170,255,0.3)] hover:shadow-[0_0_25px_rgba(0,170,255,0.5)] transition-all"
                   >
                     <i className="fa-solid fa-paper-plane text-sm"></i> Submit
@@ -263,16 +353,17 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* MAP SECTION */}
+        {/* MAP SECTION (Highly Zoomed In) */}
         <motion.div 
-          className="w-full h-[350px] md:h-[450px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative z-10"
+          className="w-full h-[350px] md:h-[450px] rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
+          {/* Zoom parameter &z=18 focuses closely on the specific location */}
           <iframe 
-            src="https://maps.google.com/maps?q=8QVM%2BJ2%20Chattogram%2C%20Chuna%20factory%20moor%2C%2021%20Golondaz%20Rd%2C%20JD%204216&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=Chuna%20factory%20moor,%2021%20Golondaz%20Rd,%20Chattogram&t=&z=18&ie=UTF8&iwloc=&output=embed"
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
