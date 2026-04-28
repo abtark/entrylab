@@ -319,18 +319,16 @@ export default function Careers() {
 
       <section className="py-10 px-6 max-w-7xl mx-auto relative z-10">
         <motion.div 
-          className="flex flex-col items-end text-right w-full mb-12"
+          className="flex flex-col items-start text-left w-full mb-12"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <h2 className="text-3xl md:text-5xl font-black text-[#00AAFF] mb-2 tracking-tight">
-            Core Values
-          </h2>
-          <p className="text-neutral-400 text-lg md:text-xl mt-2 max-w-2xl">
+          <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">Core Values</h4>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-neutral-400">
             A few things you should know about us.
-          </p>
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -383,7 +381,7 @@ export default function Careers() {
         <motion.div
           className="flex gap-8 w-max will-change-transform items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 80 }}
         >
           {doubledMarquee.map((src, index) => (
             <div
@@ -417,7 +415,7 @@ export default function Careers() {
                 Our Advantages
               </h4>
               <motion.h2
-                className="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg capitalize"
+                className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg capitalize"
                 style={{
                   backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
                   backgroundSize: "200% auto",
@@ -525,7 +523,7 @@ export default function Careers() {
           viewport={{ once: true, margin: "-50px" }}
         >
           <motion.h2
-            className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
+            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
             style={{
               backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
               backgroundSize: "200% auto",
@@ -651,7 +649,7 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-24 px-6 max-w-7xl mx-auto relative">
+      <section className="py-20 px-6 max-w-7xl mx-auto relative">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30" style={{ backgroundColor: "#00AAFF" }}></div>
           <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30" style={{ backgroundColor: "#30C7CC" }}></div>
@@ -719,7 +717,7 @@ export default function Careers() {
         </div>
       </section>
 
-      <section className="py-24 px-6 max-w-7xl mx-auto relative z-10">
+      <section className="py-20 px-6 max-w-7xl mx-auto relative z-10">
         <motion.div 
           className="text-center mb-16"
           variants={fadeUp}
@@ -749,19 +747,19 @@ export default function Careers() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.1 }}
-              className="border-b border-white/10 py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 group"
+              className="border-b border-white/10 py-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
             >
               <div className="w-full md:w-1/3">
-                <span className="text-[#00AAFF] font-medium text-lg">{job.dept}</span>
+                <span className="text-white font-medium text-lg">{job.dept}</span>
               </div>
               <div className="w-full md:w-1/3 flex flex-col">
-                <h3 className="text-2xl font-bold text-white group-hover:text-[#00AAFF] transition-colors">{job.title}</h3>
+                <h3 className="text-2xl font-bold text-white">{job.title}</h3>
                 <span className="text-neutral-400 mt-2">{job.details}</span>
               </div>
               <div className="w-full md:w-1/3 flex justify-start md:justify-end">
-                <button className="flex items-center gap-2 px-8 py-3 rounded-full border border-white/20 text-white hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-300 overflow-hidden relative group/btn">
-                  <span className="relative z-10 font-semibold">Apply</span>
-                  <svg className="w-5 h-5 relative z-10 opacity-0 -translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <button className="relative flex items-center justify-center w-[140px] h-[48px] rounded-full border border-white/20 text-white hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-300 overflow-hidden group/btn">
+                  <span className="font-semibold absolute transition-transform duration-300 group-hover/btn:-translate-x-3">Apply</span>
+                  <svg className="w-5 h-5 absolute right-5 opacity-0 translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </button>
