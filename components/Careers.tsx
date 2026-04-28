@@ -242,10 +242,9 @@ export default function Careers() {
 
   return (
     <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24">
-      
       <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
         <motion.div
-          className="relative mb-6"
+          className="relative mb-6 text-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -262,10 +261,11 @@ export default function Careers() {
           >
             CAREER AT ENTRYLAB
           </motion.h1>
+          <div className="w-24 md:w-32 h-1.5 md:h-2 bg-[#00AAFF] rounded-full mx-auto mt-6 shadow-[0_0_15px_rgba(0,170,255,0.6)]"></div>
         </motion.div>
 
         <motion.div
-          className="text-center max-w-3xl mx-auto space-y-2 text-lg md:text-xl text-neutral-300 font-medium"
+          className="text-center max-w-3xl mx-auto space-y-2 text-lg md:text-xl text-neutral-300 font-medium mt-8"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -326,7 +326,7 @@ export default function Careers() {
         <motion.div
           className="flex gap-8 w-max will-change-transform items-center"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 600 }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 400 }}
         >
           {doubledMarquee.map((src, index) => (
             <div
@@ -346,7 +346,7 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-24 px-6 max-w-7xl mx-auto overflow-hidden">
+      <section className="pt-24 pb-12 px-6 max-w-7xl mx-auto overflow-hidden">
         <motion.div 
           className="flex flex-col justify-between items-start mb-16 gap-6"
           variants={fadeUp}
@@ -428,8 +428,8 @@ export default function Careers() {
                   zIndex: position === 0 ? 10 : 5,
                 }}
                 transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border-4 ${
-                  isVisible ? "border-[#00AAFF]" : "border-transparent"
+                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border-2 ${
+                  isVisible ? "border-[#00CCCC]" : "border-transparent"
                 } ${
                   isFocused
                     ? "bg-[#F0F9FF] shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)]"
@@ -444,7 +444,7 @@ export default function Careers() {
                 <h3 className="text-2xl font-bold text-[#30C7CC] mb-4">
                   {adv.title}
                 </h3>
-                <p className="text-[#00AAFF] leading-relaxed text-sm md:text-base font-medium">
+                <p className="text-[#171717] leading-relaxed text-sm md:text-base font-medium">
                   {adv.desc}
                 </p>
               </motion.div>
@@ -453,9 +453,13 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-24 px-6 max-w-5xl mx-auto">
+      <section className="pt-12 pb-24 px-6 max-w-5xl mx-auto relative">
+        <div className="absolute top-1/4 left-0 w-64 md:w-96 h-64 md:h-96 bg-[#4CBC96]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+        <div className="absolute top-1/2 right-0 w-64 md:w-96 h-64 md:h-96 bg-[#6D75FE]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-1/4 w-64 md:w-80 h-64 md:h-80 bg-[#E24E68]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-16 relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -478,7 +482,7 @@ export default function Careers() {
         </motion.div>
 
         <motion.div 
-          className="space-y-4"
+          className="space-y-4 relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -489,7 +493,7 @@ export default function Careers() {
             return (
               <div 
                 key={`workplace-${i}`} 
-                className="rounded-2xl overflow-hidden transition-all duration-300 border"
+                className="rounded-2xl overflow-hidden transition-all duration-300 border backdrop-blur-md"
                 style={isOpen ? {
                   backgroundColor: `${item.themeColor}1A`,
                   borderLeft: `4px solid ${item.themeColor}`,
@@ -497,7 +501,7 @@ export default function Careers() {
                   borderRight: '1px solid rgba(255,255,255,0.1)',
                   borderBottom: '1px solid rgba(255,255,255,0.1)',
                 } : {
-                  backgroundColor: 'rgba(255,255,255,0.05)',
+                  backgroundColor: 'rgba(255,255,255,0.02)',
                   borderColor: 'rgba(255,255,255,0.1)'
                 }}
               >
@@ -532,7 +536,8 @@ export default function Careers() {
                       <div className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0">
                         <div className="flex-1">
                           <motion.p 
-                            className="text-neutral-300 mb-6 leading-relaxed"
+                            className="mb-6 leading-relaxed font-medium"
+                            style={{ color: item.themeColor }}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 }}
@@ -587,9 +592,12 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-24 px-6 max-w-7xl mx-auto">
+      <section className="py-24 px-6 max-w-7xl mx-auto relative">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-[#00AAFF]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#F4BE53]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-16 pb-8 relative z-10"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -611,7 +619,7 @@ export default function Careers() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
           {hiringSteps.map((step, i) => (
             <motion.div
               key={`hiring-step-${i}`}
@@ -620,7 +628,7 @@ export default function Careers() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.2 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col items-start hover:bg-white/10 transition-colors duration-300"
+              className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 flex flex-col items-start hover:bg-white/10 transition-colors duration-300"
             >
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00AAFF] shadow-[0_0_12px_2px_rgba(0,170,255,0.8)] animate-pulse"></div>
@@ -649,7 +657,6 @@ export default function Careers() {
           ))}
         </div>
       </section>
-
     </main>
   );
 }
