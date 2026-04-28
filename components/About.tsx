@@ -1,662 +1,606 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect, MouseEvent } from "react";
-import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import React, { useRef, useEffect } from 'react'
+import { motion, useInView, animate, useMotionValue, useSpring } from 'framer-motion'
 
-interface MagneticItemProps {
-  children: React.ReactNode;
-  className?: string;
-}
+const MagneticItem = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
 
-const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const springConfig = { damping: 20, stiffness: 150, mass: 0.1 }
+  const springX = useSpring(x, springConfig)
+  const springY = useSpring(y, springConfig)
 
-  const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left - rect.width / 2;
-    const mouseY = e.clientY - rect.top - rect.height / 2;
-    x.set(mouseX * 0.05);
-    y.set(mouseY * 0.05);
-  };
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return
+    const { left, top, width, height } = ref.current.getBoundingClientRect()
+    const centerX = left + width / 2
+    const centerY = top + height / 2
+    x.set(((e.clientX - centerX) / (width / 2)) * 6)
+    y.set(((e.clientY - centerY) / (height / 2)) * 6)
+  }
 
   const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+    x.set(0)
+    y.set(0)
+  }
 
   return (
     <motion.div
-      className={className}
+      ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}
+      className={`will-change-transform ${className}`}
     >
       {children}
     </motion.div>
-  );
-};
+  )
+}
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-};
-
-export default function Careers() {
-  const [advIndex, setAdvIndex] = useState(0);
-  const [openAcc, setOpenAcc] = useState(0);
-
-  const coreValues = [
-    {
-      title: "Accountability",
-      image: "https://iili.io/BPj2VPS.png",
-      bgColor: "bg-[#FEF9C3]",
-      textColor: "text-[#CA8A04]",
-    },
-    {
-      title: "Responsibility",
-      image: "https://iili.io/BPhgOUF.png",
-      bgColor: "bg-[#DBEAFE]",
-      textColor: "text-[#2563EB]",
-    },
-    {
-      title: "Sustainability",
-      image: "https://iili.io/BPhgrVp.png",
-      bgColor: "bg-[#DCFCE7]",
-      textColor: "text-[#16A34A]",
-    },
-    {
-      title: "Transparency",
-      image: "https://iili.io/BPhgmx4.png",
-      bgColor: "bg-[#FFEDD5]",
-      textColor: "text-[#EA580C]",
-    },
-  ];
-
-  const marqueeImages = [
-    "https://iili.io/BPINPee.jpg",
-    "https://iili.io/BPINLzb.jpg",
-    "https://iili.io/BPINDqQ.jpg",
-    "https://iili.io/BPIO971.jpg",
-    "https://iili.io/BPIO3hJ.jpg",
-    "https://iili.io/BPIOn2I.jpg",
-    "https://iili.io/BPIOAQf.jpg",
-    "https://iili.io/BPIOlY7.jpg",
-    "https://iili.io/BPIO1pe.jpg",
-    "https://iili.io/BPIOXCx.jpg",
-    "https://iili.io/BPIOkyF.jpg",
-    "https://iili.io/BPIO4GR.jpg",
-  ];
-
-  const advantages = [
-    {
-      title: "Culture & Environment",
-      desc: "A collaborative, inclusive workplace with open communication and transparent leadership that empowers every voice.",
-      icon: "https://iili.io/BP8qJOQ.gif",
-    },
-    {
-      title: "Growth & Development",
-      desc: "Grow with continuous learning, mentorship, and clear career paths designed to help you reach your full potential.",
-      icon: "https://iili.io/BP85bje.gif",
-    },
-    {
-      title: "Impact & Purpose",
-      desc: "Work on meaningful projects that create real-world impact and deliver lasting value to customers and communities.",
-      icon: "https://iili.io/BP80bwB.gif",
-    },
-    {
-      title: "Flexibility & Balance",
-      desc: "Enjoy flexible work options and a balanced environment that supports productivity, well-being, and personal priorities.",
-      icon: "https://iili.io/BP8vUN9.gif",
-    },
-    {
-      title: "Innovation & Excellence",
-      desc: "Be part of a forward-thinking team where creativity thrives and excellence drives everything we build and deliver.",
-      icon: "https://iili.io/BP8rY2j.gif",
-    },
-    {
-      title: "Recognition & Rewards",
-      desc: "We value your work with fair rewards, recognition, and a culture that celebrates contributions and shared success.",
-      icon: "https://iili.io/BP8QwiB.gif",
-    },
-  ];
-
-  const workplaceItems = [
-    {
-      title: "A Healthy, Focused Culture",
-      desc: "Work in a calm, respectful environment where collaboration thrives, quality comes first, and long-term growth is genuinely valued.",
-      image: "https://iili.io/BPPQ7YQ.png",
-      themeColor: "#4CBC96",
-      bullets: [
-        "Clear priorities that help you focus on meaningful, high-impact work",
-        "Open communication and mutual respect across all teams",
-        "Leadership that supports growth, feedback, and accountability",
-        "A sustainable pace that values consistency over burnout",
-      ],
-    },
-    {
-      title: "Comfort in Your Daily Routine",
-      desc: "Enjoy complimentary meals, coffee, and snacks—so you can stay energized and focused throughout your day.",
-      image: "https://iili.io/BPPZlS4.png",
-      themeColor: "#6D75FE",
-      bullets: [
-        "Fresh, nutritious meals available throughout the workday",
-        "Unlimited coffee, tea, and healthy snacks",
-        "Clean, thoughtfully designed workspaces for better productivity",
-        "Breakout areas to relax, recharge, or collaborate informally",
-      ],
-    },
-    {
-      title: "Wellness That Matters",
-      desc: "Stay active and balanced with access to sports facilities that support both physical and mental well-being.",
-      image: "https://iili.io/BPPtQEu.png",
-      themeColor: "#E24E68",
-      bullets: [
-        "Fully equipped treadmill for daily fitness routines",
-        "Indoor and outdoor sports facilities for recreation",
-        "Wellness-focused initiatives and regular health activities",
-        "A culture that encourages balance between work and personal life",
-      ],
-    },
-    {
-      title: "Stress-Free Commute",
-      desc: "Take advantage of our shuttle services and convenient parking options, making your daily travel simpler and more reliable.",
-      image: "https://iili.io/BPPb9Sf.png",
-      themeColor: "#F4BE53",
-      bullets: [
-        "Reliable shuttle services covering key routes",
-        "Safe and accessible parking for employees",
-        "Coordinated schedules to reduce commute uncertainty",
-        "Supportive policies that ease daily travel challenges",
-      ],
-    },
-    {
-      title: "Meaningful Rewards & Benefits",
-      desc: "We recognize your commitment with festival bonuses, leave encashment, and loyalty rewards that grow with you.",
-      image: "https://iili.io/BPPbmzB.png",
-      themeColor: "#D37E3A",
-      bullets: [
-        "Competitive festival bonuses to celebrate special occasions",
-        "Leave encashment options for added flexibility",
-        "Loyalty rewards that recognize long-term contributions",
-        "Structured benefits designed for financial stability",
-      ],
-    },
-    {
-      title: "A Respectful Workplace for Everyone",
-      desc: "We maintain a considerate environment with dedicated prayer spaces, allowing you to work comfortably while honoring your personal beliefs.",
-      image: "https://iili.io/BPPpxjV.png",
-      themeColor: "#7DBA2B",
-      bullets: [
-        "Dedicated prayer spaces for personal reflection and practice",
-        "A culture that respects individual values and beliefs",
-        "Policies that ensure fairness and dignity at work",
-        "An environment where everyone feels comfortable and supported",
-      ],
-    },
-  ];
-
-  const hiringSteps = [
-    {
-      step: "STEP 01",
-      title: "Initial Assessment",
-      desc: [
-        "After confirming your email, you will complete a one-time, time-limited assessment. This step is required to proceed.",
-        "Successful completion enables you to submit your resume, while unsuccessful attempts will result in disqualification."
-      ]
-    },
-    {
-      step: "STEP 02",
-      title: "Task or Onsite Visit",
-      desc: [
-        "Based on the role, you may be assigned a practical task or invited for an onsite visit.",
-        "Your performance on the task, along with your resume, will be evaluated to determine your eligibility for the next stage."
-      ]
-    },
-    {
-      step: "STEP 03",
-      title: "In-Person Interview",
-      desc: [
-        "Qualified candidates will be invited to a face-to-face interview with relevant team members.",
-        "This discussion will focus on your experience, skills, and career aspirations, while also giving you insight into working at EntryLab."
-      ]
-    }
-  ];
-
-  const doubledMarquee = [...marqueeImages, ...marqueeImages];
+const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, suffix?: string, decimals?: number }) => {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: "-50px" })
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setAdvIndex((prev) => (prev + 1) % advantages.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [advantages.length]);
+    if (inView && ref.current) {
+      animate(0, value, {
+        duration: 2.5,
+        ease: "easeOut",
+        onUpdate: (latest) => {
+          if (ref.current) {
+            ref.current.textContent = Number(latest).toFixed(decimals) + suffix
+          }
+        }
+      })
+    }
+  }, [inView, value, suffix, decimals])
 
-  const nextAdv = () => setAdvIndex((prev) => (prev + 1) % advantages.length);
-  const prevAdv = () =>
-    setAdvIndex((prev) => (prev - 1 + advantages.length) % advantages.length);
+  return <span ref={ref} className="text-3xl font-bold text-white mb-1 tracking-tight">0{suffix}</span>
+}
+
+const ScrollRevealPro = ({ 
+  children, 
+  className = "", 
+  delay = 0 
+}: { 
+  children: React.ReactNode, 
+  className?: string,
+  delay?: number
+}) => {
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+      transition={{ 
+        duration: 0.8, 
+        ease: [0.22, 1, 0.36, 1],
+        delay: delay 
+      }}
+      className={`inline-block ${className}`}
+    >
+      {children}
+    </motion.span>
+  )
+}
+
+const paragraphs = [
+  {
+    text: 'Founded on the principle that "Where Every Search Has a Value", EntryLab is a modern technology agency dedicated to extracting meaningful insights from complex data architectures.',
+    highlight: false
+  },
+  {
+    text: 'It is a Chattogram-based R & D firm specializing in precision-driven data intelligence. We architect clarity from complexity—transforming fragmented information into strategic, decision-ready insights.',
+    highlight: false
+  },
+  {
+    text: 'Leveraging advanced research frameworks and a detail-obsessed approach, we deliver intelligence that is not just accurate, but actionable and high-impact.',
+    highlight: false
+  },
+  {
+    text: 'EntryLab—Where Every Search Has a Value',
+    highlight: true
+  }
+]
+
+const timelineData = [
+  {
+    year: "2019",
+    title: "EntryLab Founded",
+    description: "Started with a small team of 3 passionate data professionals."
+  },
+  {
+    year: "2020",
+    title: "First 100 Projects",
+    description: "Reached our first milestone of 100 completed projects."
+  },
+  {
+    year: "2021",
+    title: "Team Expansion",
+    description: "Grew to 20+ team members and expanded service offerings."
+  },
+  {
+    year: "2022",
+    title: "International Clients",
+    description: "Started serving clients from USA, UK, and Australia."
+  },
+  {
+    year: "2023",
+    title: "New Office",
+    description: "Moved to a modern, spacious office to accommodate our growing team."
+  },
+  {
+    year: "2024",
+    title: "12000+ Projects",
+    description: "Crossed the 12000+ project milestone with 99.9% accuracy."
+  },
+  {
+    year: "2025",
+    title: "Own Work Space",
+    description: "New Journey - New workspace with highly decorated interior."
+  }
+]
+
+const cultureData = [
+  {
+    title: "Collaborative Environment",
+    description: "We believe in teamwork. Every project is a collaborative effort where everyone's ideas matter.",
+    icon: <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />,
+    iconExtras: <circle cx="9" cy="7" r="4" />,
+    color: "#00AAFF"
+  },
+  {
+    title: "Growth & Learning",
+    description: "Regular training sessions and skill development programs keep our team at the cutting edge.",
+    icon: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />,
+    color: "#8B5CF6"
+  },
+  {
+    title: "Work-Life Balance",
+    description: "We value our team's well-being with flexible schedules and regular team outings.",
+    icon: <circle cx="12" cy="12" r="10" />,
+    iconExtras: <polyline points="12 6 12 12 16 14" />,
+    color: "#10B981"
+  },
+  {
+    title: "Celebrate Together",
+    description: "From project milestones to festivals, we celebrate every achievement as a family.",
+    icon: <path d="M12 2v20" />,
+    iconExtras: <><path d="m17 5-5-3-5 3v14l5 3 5-3V5z"/></>,
+    color: "#F59E0B"
+  },
+  {
+    title: "Innovation First",
+    description: "We encourage creative problem-solving and constantly improve our processes.",
+    icon: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
+    color: "#EF4444"
+  },
+  {
+    title: "Open Communication",
+    description: "Transparent, honest communication is the foundation of our workplace culture.",
+    icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
+    color: "#3B82F6"
+  },
+  {
+    title: "Trip & Tour",
+    description: "We believe in creating memories together beyond the office walls.",
+    icon: <path d="M2 22 22 2" />,
+    iconExtras: <><path d="M22 2v10" /><path d="M12 2h10" /><path d="m2 22 10-10" /></>,
+    color: "#EC4899"
+  },
+  {
+    title: "Fun & Creativity",
+    description: "We love thinking outside the box and enjoying the process.",
+    icon: <circle cx="12" cy="12" r="10" />,
+    iconExtras: <><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></>,
+    color: "#14B8A6"
+  },
+  {
+    title: "Recognition & Rewards",
+    description: "We celebrate achievements big and small.",
+    icon: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />,
+    color: "#EAB308"
+  }
+]
+
+export default function About() {
+  const iconContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { delayChildren: 1.5, staggerChildren: 0.15 },
+    },
+  }
+
+  const iconVariants = {
+    hidden: { opacity: 0, scale: 0.6 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: 'spring', bounce: 0.5, duration: 0.6 },
+    },
+  }
+
+  const timelineVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  }
 
   return (
-    <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24">
-      <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
-        <motion.div
-          className="relative mb-6 text-center"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.h1
-            className="text-5xl md:text-7xl font-black tracking-tighter uppercase text-transparent bg-clip-text drop-shadow-lg"
-            style={{
-              backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
-              backgroundSize: "200% auto",
-            }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            CAREER AT ENTRYLAB
-          </motion.h1>
-          <div className="w-24 md:w-32 h-1.5 md:h-2 bg-[#00AAFF] rounded-full mx-auto mt-6 shadow-[0_0_15px_rgba(0,170,255,0.6)]"></div>
-        </motion.div>
+    <section id="about" className="relative py-32 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes gradient-r2l {
+          0% { background-position: 200% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-r2l {
+          animation: gradient-r2l 4s linear infinite;
+        }
+      `}} />
 
-        <motion.div
-          className="text-center max-w-3xl mx-auto space-y-2 text-lg md:text-xl text-neutral-300 font-medium mt-8"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <p>Innovators Wanted; Join the EntryLabs Revolution.</p>
-        </motion.div>
-      </section>
+      <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
+        <motion.div 
+          animate={{ y: [0, -30, 0], x: [0, 15, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[10%] left-[5%] w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-[#00AAFF] to-blue-500 blur-[80px] opacity-60 will-change-transform transform-gpu"
+        />
+        <motion.div 
+          animate={{ y: [0, 40, 0], rotate: [0, 10, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] right-[5%] w-24 h-24 md:w-40 md:h-40 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 blur-[80px] opacity-60 will-change-transform transform-gpu"
+        />
+        <motion.div 
+          animate={{ y: [0, -20, 0], x: [0, -20, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute bottom-[10%] right-[15%] w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-tl from-cyan-400 to-teal-400 blur-[80px] opacity-60 will-change-transform transform-gpu"
+        />
+        <motion.div 
+          animate={{ y: [0, 30, 0], rotate: [0, -15, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          className="absolute bottom-[20%] left-[10%] w-20 h-20 md:w-32 md:h-32 rounded-xl bg-gradient-to-br from-indigo-500 to-[#00AAFF] blur-[80px] opacity-60 will-change-transform transform-gpu"
+        />
+      </div>
 
-      <section className="py-10 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {coreValues.map((value, index) => (
-            <MagneticItem key={`core-value-${value.title}-${index}`}>
-              <motion.div
-                className={`group flex flex-col md:flex-row items-center gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-500 shadow-md hover:shadow-xl ${value.bgColor}`}
-                whileHover="hover"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <motion.div
-                  className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-xl overflow-hidden bg-white/50 flex items-center justify-center shadow-inner"
-                  variants={{ hover: { scale: 1.1 } }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <img
-                    src={value.image}
-                    alt={value.title}
-                    className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-sm"
-                  />
-                </motion.div>
-                <h3 className={`text-lg md:text-xl font-bold tracking-tight text-center md:text-left ${value.textColor}`}>
-                  {value.title}
-                </h3>
-              </motion.div>
-            </MagneticItem>
-          ))}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
+        <div className="flex flex-col items-center mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight pb-2">
+            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+              About EntryLab
+            </span>
+          </h2>
+          <div className="w-16 h-[2px] bg-gradient-to-r from-[#00AAFF] to-blue-500 rounded-full mt-3" />
         </div>
 
-        <motion.div
-          className="text-center mt-16 max-w-3xl mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <p className="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed">
-            Our philosophy is simple; hire great people and give them the resources and support to do their best work.
-          </p>
-        </motion.div>
-      </section>
+        <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-2">
+          <ScrollRevealPro>
+            We&apos;re a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
+          </ScrollRevealPro>
+        </p>
 
-      <section className="py-32 relative w-full overflow-hidden flex flex-col justify-center">
-        <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none"></div>
-
-        <motion.div
-          className="flex gap-8 w-max will-change-transform items-center"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 400 }}
-        >
-          {doubledMarquee.map((src, index) => (
-            <div
-              key={`marquee-img-${index}`}
-              className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${
-                index % 2 === 0 ? "-translate-y-20" : "translate-y-20"
-              }`}
-            >
-              <img
-                src={src}
-                alt={`EntryLab Workspace ${index + 1}`}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+            <div className="p-4 rounded-xl bg-gradient-to-br from-[#00AAFF]/20 to-blue-600/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
+              </svg>
             </div>
-          ))}
-        </motion.div>
-      </section>
-
-      <section className="pt-24 pb-12 px-6 max-w-7xl mx-auto overflow-hidden">
-        <motion.div 
-          className="flex flex-col justify-between items-start mb-16 gap-6"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <div className="flex flex-col md:flex-row justify-between w-full items-start md:items-end gap-6">
-            <div className="flex flex-col text-left flex-1">
-              <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">
-                Our Advantages
-              </h4>
-              <motion.h2
-                className="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg capitalize"
-                style={{
-                  backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
-                  backgroundSize: "200% auto",
-                }}
-                animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-                transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-              >
-                Why Work With Us?
-              </motion.h2>
-              <p className="text-neutral-300 mt-4 max-w-2xl text-base md:text-lg">
-                Expertise, creativity, and reliability drive meaningful results. A commitment to understanding client needs ensures tailored solutions and a smooth, professional experience from start to finish.
-              </p>
-            </div>
-
-            <div className="flex gap-4 shrink-0">
-              <button
-                onClick={prevAdv}
-                className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
-                aria-label="Previous advantage"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                onClick={nextAdv}
-                className="group p-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00AAFF]/50 transition-all duration-300 text-white hover:text-[#00AAFF]"
-                aria-label="Next advantage"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-            </div>
+            <h3 className="text-xl font-bold text-white mb-3">
+              <ScrollRevealPro>Our Mission</ScrollRevealPro>
+            </h3>
+            <p className="text-white/70 leading-relaxed text-base">
+              <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
+            </p>
           </div>
-        </motion.div>
 
-        <motion.div 
-          className="relative h-[480px] w-full flex items-center justify-center"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {advantages.map((adv, i) => {
-            const diff = (i - advIndex + advantages.length) % advantages.length;
-            let position = 2; 
-            if (diff === 0) position = 0; 
-            else if (diff === 1) position = 1; 
-            else if (diff === advantages.length - 1) position = -1;
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+            <div className="p-4 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">
+              <ScrollRevealPro>Our Vision</ScrollRevealPro>
+            </h3>
+            <p className="text-white/70 leading-relaxed text-base">
+              <ScrollRevealPro>To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealPro>
+            </p>
+          </div>
 
-            const isFocused = position === 0;
-            const isVisible = position !== 2;
-            const imgSrc = isFocused ? adv.icon : adv.icon.replace('.gif', '.md.gif');
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+            <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-3">
+              <ScrollRevealPro>Our Values</ScrollRevealPro>
+            </h3>
+            <p className="text-white/70 leading-relaxed text-base">
+              <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
+            </p>
+          </div>
+        </div>
+      </div>
 
-            return (
-              <motion.div
-                key={`adv-${i}`}
-                initial={false}
-                animate={{
-                  x: position === 0 ? "0%" : position === 1 ? "110%" : position === -1 ? "-110%" : "0%",
-                  scale: position === 0 ? 1 : position === 2 ? 0.8 : 0.85,
-                  opacity: position === 0 ? 1 : position === 2 ? 0 : 0.6,
-                  filter: position === 0 ? "blur(0px)" : "blur(6px)",
-                  zIndex: position === 0 ? 10 : 5,
-                }}
-                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border-2 ${
-                  isVisible ? "border-[#00CCCC]" : "border-transparent"
-                } ${
-                  isFocused
-                    ? "bg-[#F0F9FF] shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)]"
-                    : "bg-white shadow-lg"
-                }`}
-              >
-                <img
-                  src={imgSrc}
-                  alt={adv.title}
-                  className="w-32 h-32 mb-6 object-contain mix-blend-multiply"
-                />
-                <h3 className="text-2xl font-bold text-[#30C7CC] mb-4">
-                  {adv.title}
-                </h3>
-                <p className="text-[#171717] leading-relaxed text-sm md:text-base font-medium">
-                  {adv.desc}
-                </p>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </section>
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
+        
+        <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-12 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+          
+          <div className="w-full mb-6 flex justify-center">
+            <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl drop-shadow-2xl z-10 bg-black/20">
+              <img 
+                src="https://iili.io/B8oQEyg.png" 
+                alt="About EntryLab" 
+                className="w-full h-auto object-contain rounded-2xl relative z-0"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF]/20 via-white/10 to-[#00AAFF]/20 bg-[length:200%_auto] animate-gradient-r2l mix-blend-overlay pointer-events-none z-10 rounded-2xl" />
+            </MagneticItem>
+          </div>
 
-      <section className="pt-12 pb-24 px-6 max-w-5xl mx-auto relative">
-        <div className="absolute top-1/4 left-0 w-64 md:w-96 h-64 md:h-96 bg-[#4CBC96]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-        <div className="absolute top-1/2 right-0 w-64 md:w-96 h-64 md:h-96 bg-[#6D75FE]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/4 w-64 md:w-80 h-64 md:h-80 bg-[#E24E68]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+          <div className="w-full h-px bg-white/10 mb-8" />
 
-        <motion.div 
-          className="text-center mb-16 relative z-10"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.h2
-            className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
-            style={{
-              backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
-              backgroundSize: "200% auto",
-            }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            A Workplace Designed Around You
-          </motion.h2>
-          <p className="text-neutral-300 text-lg md:text-xl max-w-3xl mx-auto">
-            We create an environment where your well-being, comfort, and growth come first—so you can do your best work every day.
-          </p>
-        </motion.div>
+          <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
+            {paragraphs.map((p, pIndex) => (
+              <p key={pIndex} className={p.highlight ? "pt-2 font-semibold text-xl md:text-2xl tracking-wide text-[#00AAFF]" : ""}>
+                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
+              </p>
+            ))}
+          </div>
 
-        <motion.div 
-          className="space-y-4 relative z-10"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {workplaceItems.map((item, i) => {
-            const isOpen = openAcc === i;
-            return (
-              <div 
-                key={`workplace-${i}`} 
-                className="rounded-2xl overflow-hidden transition-all duration-300 border backdrop-blur-md"
-                style={isOpen ? {
-                  backgroundColor: `${item.themeColor}1A`,
-                  borderLeft: `4px solid ${item.themeColor}`,
-                  borderTop: '1px solid rgba(255,255,255,0.1)',
-                  borderRight: '1px solid rgba(255,255,255,0.1)',
-                  borderBottom: '1px solid rgba(255,255,255,0.1)',
-                } : {
-                  backgroundColor: 'rgba(255,255,255,0.02)',
-                  borderColor: 'rgba(255,255,255,0.1)'
-                }}
-              >
-                <button 
-                  onClick={() => setOpenAcc(i)} 
-                  className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-white/5 transition-colors"
-                >
-                  <h3 
-                    className="text-lg md:text-xl font-bold transition-colors"
-                    style={{ color: isOpen ? item.themeColor : '#ffffff' }}
-                  >
-                    {item.title}
-                  </h3>
-                  <div 
-                    className="shrink-0 ml-4 transition-transform duration-300"
-                    style={{ color: isOpen ? item.themeColor : 'rgba(255,255,255,0.5)', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                  </div>
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0">
-                        <div className="flex-1">
-                          <motion.p 
-                            className="mb-6 leading-relaxed font-medium"
-                            style={{ color: item.themeColor }}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: 0.1 }}
-                          >
-                            {item.desc}
-                          </motion.p>
-                          <motion.ul 
-                            className="space-y-3"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                              visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
-                            }}
-                          >
-                            {item.bullets.map((bullet, bi) => (
-                              <motion.li 
-                                key={bi} 
-                                className="flex items-start gap-3"
-                                variants={{
-                                  hidden: { opacity: 0, x: -10 },
-                                  visible: { opacity: 1, x: 0 }
-                                }}
-                              >
-                                <svg className="shrink-0 w-6 h-6" style={{ color: item.themeColor }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                  <polyline points="22 4 12 14.01 9 11.01"/>
-                                </svg>
-                                <span className="text-sm md:text-base font-medium" style={{ color: item.themeColor }}>{bullet}</span>
-                              </motion.li>
-                            ))}
-                          </motion.ul>
-                        </div>
-                        <motion.div 
-                          className="w-full md:w-1/3 shrink-0 flex justify-center"
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.4, delay: 0.2 }}
-                        >
-                          <img 
-                            src={item.image} 
-                            alt={item.title} 
-                            className="w-full max-w-[200px] h-auto object-contain drop-shadow-2xl" 
-                          />
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </motion.div>
-      </section>
+          <div className="w-full h-px bg-white/10 my-8" />
 
-      <section className="py-24 px-6 max-w-7xl mx-auto relative">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-[#00AAFF]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[#F4BE53]/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-
-        <motion.div 
-          className="text-center mb-16 pb-8 relative z-10"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <motion.h2
-            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4 capitalize"
-            style={{
-              backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)",
-              backgroundSize: "200% auto",
-            }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            Hiring Process
-          </motion.h2>
-          <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto mt-4">
-            A simple and transparent journey where we review applications, interview candidates, and select the best fit to join our team.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-          {hiringSteps.map((step, i) => (
-            <motion.div
-              key={`hiring-step-${i}`}
-              variants={fadeUp}
+          <div className="h-[40px] flex items-center justify-center">
+            <motion.div 
+              variants={iconContainerVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.2 }}
-              className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 flex flex-col items-start hover:bg-white/10 transition-colors duration-300"
+              viewport={{ once: true }}
+              className="flex items-center justify-center gap-8"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#00AAFF] shadow-[0_0_12px_2px_rgba(0,170,255,0.8)] animate-pulse"></div>
-                <span className="text-white/60 text-sm font-bold tracking-widest uppercase">
-                  {step.step}
+              <motion.a 
+                variants={iconVariants}
+                href="https://www.facebook.com/EntryLab" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              >
+                <i className="fa-brands fa-facebook"></i>
+              </motion.a>
+              
+              <motion.a 
+                variants={iconVariants}
+                href="https://www.linkedin.com/company/entrylab" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              >
+                <i className="fa-brands fa-linkedin"></i>
+              </motion.a>
+              
+              <motion.a 
+                variants={iconVariants}
+                href="https://rocketreach.co/entrylab-profile_b704b6e0c514e80c" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              >
+                <i className="fa-solid fa-rocket"></i>
+              </motion.a>
+            </motion.div>
+          </div>
+
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-purple-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          
+          <div className="flex flex-col items-start text-left">
+            <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
+              <ScrollRevealPro>Our Story</ScrollRevealPro>
+            </span>
+            
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 pb-1">
+              <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">
+                From a Small Team to a Trusted Agency
+              </ScrollRevealPro>
+            </h3>
+            
+            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
+              <ScrollRevealPro>
+                EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals.
+              </ScrollRevealPro>
+            </p>
+            
+            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
+              <ScrollRevealPro>
+                Over the years, we&apos;ve had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
+              </ScrollRevealPro>
+            </p>
+            
+            <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
+              <ScrollRevealPro>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments.
+              </ScrollRevealPro>
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full">
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={25} suffix="+" />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  <ScrollRevealPro>Team-mates</ScrollRevealPro>
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-[#00AAFF] mb-4">
-                {step.title}
-              </h3>
-              <div className="space-y-4">
-                {step.desc.map((p, pIndex) => (
-                  <motion.p 
-                    key={pIndex} 
-                    className="text-gray-400 text-sm leading-relaxed"
-                    variants={fadeUp}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                  >
-                    {p}
-                  </motion.p>
-                ))}
+
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={99.9} suffix="%" decimals={1} />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  <ScrollRevealPro>Accuracy</ScrollRevealPro>
+                </span>
               </div>
-            </motion.div>
+
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={15} suffix="k+" />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  <ScrollRevealPro>Projects</ScrollRevealPro>
+                </span>
+              </div>
+
+              <div className="flex flex-col items-start">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <AnimatedNumber value={7} suffix="+" />
+                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
+                  <ScrollRevealPro>Years</ScrollRevealPro>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-6 lg:gap-8 w-full mt-8 lg:mt-0">
+            <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/5">
+              <img 
+                src="https://iili.io/Br9rhHN.jpg" 
+                alt="EntryLab Team Top" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 ease-out"
+              />
+            </div>
+            
+            <div className="relative w-full aspect-video group">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border border-white/5 relative z-10">
+                <img 
+                  src="https://iili.io/BgW7HSn.jpg" 
+                  alt="EntryLab Team Bottom" 
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+              </div>
+              
+              <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-purple-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
+                <span className="text-xs md:text-sm font-medium tracking-wide uppercase mb-1">Since</span>
+                <span className="text-xl md:text-3xl font-bold leading-none">2019</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-40">
+        <div className="flex flex-col items-center mb-16">
+          <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
+            <ScrollRevealPro>Our Journey</ScrollRevealPro>
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
+            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+              Key Milestone
+            </ScrollRevealPro>
+          </h2>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto pb-10">
+          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#00AAFF]/40 via-purple-500/40 to-transparent transform md:-translate-x-1/2 z-0" />
+
+          {timelineData.map((item, index) => {
+            const isLeft = index % 2 === 0;
+            return (
+              <motion.div 
+                key={index}
+                variants={timelineVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                className={`relative z-10 flex items-center justify-between w-full mb-12 ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'} flex-row`}
+              >
+                <div className="hidden md:block w-5/12" />
+                
+                <div className="absolute left-[20px] md:left-1/2 w-4 h-4 rounded-full bg-[#00AAFF] border-4 border-[#111] transform -translate-x-1/2 shadow-[0_0_15px_#00AAFF] z-20" />
+                
+                <div className="w-full pl-12 md:pl-0 md:w-5/12">
+                  <div className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg transition-all duration-300 hover:border-[#00AAFF]/50 hover:shadow-[0_5px_20px_rgba(0,170,255,0.1)]">
+                    <span className="inline-block text-[#00AAFF] font-black text-xl mb-2">
+                      <ScrollRevealPro>{item.year}</ScrollRevealPro>
+                    </span>
+                    <h4 className="text-xl font-bold text-white mb-2">
+                      <ScrollRevealPro>{item.title}</ScrollRevealPro>
+                    </h4>
+                    <p className="text-white/70 text-sm leading-relaxed">
+                      <ScrollRevealPro>{item.description}</ScrollRevealPro>
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
+        
+        <div className="flex flex-col items-center mb-16">
+          <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
+            <ScrollRevealPro>Life at EntryLab</ScrollRevealPro>
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
+            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+              Our Culture
+            </ScrollRevealPro>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
+          {cultureData.map((item, index) => (
+            <div 
+              key={index} 
+              className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] rounded-2xl p-6 flex flex-col items-start relative z-10"
+              style={{ borderColor: item.color }}
+            >
+              <div 
+                className="p-3 rounded-lg mb-5 transition-transform duration-300 ease-out group-hover:scale-110 will-change-transform"
+                style={{ backgroundColor: `${item.color}15` }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  {item.icon}
+                  {item.iconExtras}
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">
+                <ScrollRevealPro>{item.title}</ScrollRevealPro>
+              </h3>
+              <p className="text-white/60 leading-relaxed text-sm">
+                <ScrollRevealPro>{item.description}</ScrollRevealPro>
+              </p>
+            </div>
           ))}
         </div>
-      </section>
-    </main>
-  );
+      </div>
+
+    </section>
+  )
 }
