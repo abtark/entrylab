@@ -7,7 +7,7 @@ export default function Contact() {
   const [message, setMessage] = useState('')
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length <= 150) {
+    if (e.target.value.length <= 180) {
       setMessage(e.target.value)
     }
   }
@@ -67,17 +67,17 @@ export default function Contact() {
           <motion.div variants={textRevealVariants} className="w-16 h-[2px] bg-[#00AAFF] mt-2 rounded-full shadow-[0_0_10px_rgba(0,170,255,0.6)]" />
         </motion.div>
 
-        {/* TOP 3 COLUMNS SECTION */}
+        {/* TOP SECTION: 2 COLUMNS (Space Between) */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 mb-24"
+          className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-8 mb-24"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {/* Column 1 */}
-          <motion.div variants={textRevealVariants} className="flex flex-col">
-            <h3 className="text-5xl md:text-6xl font-black text-[#00AAFF] mb-4 drop-shadow-sm tracking-tight">
+          {/* Column 1: Get In Touch */}
+          <motion.div variants={textRevealVariants} className="flex flex-col lg:w-[45%]">
+            <h3 className="text-4xl md:text-5xl font-black text-[#00AAFF] mb-4 drop-shadow-sm tracking-tight">
               Get In Touch
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed max-w-[90%]">
@@ -85,81 +85,88 @@ export default function Contact() {
             </p>
           </motion.div>
 
-          {/* Column 2 */}
-          <motion.div variants={textRevealVariants} className="flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#00AAFF]/10 flex items-center justify-center shrink-0">
+          {/* Column 2: Our Address & Contact Info */}
+          <motion.div variants={textRevealVariants} className="flex flex-col sm:flex-row gap-10 lg:w-[50%] justify-start lg:justify-end">
+            
+            {/* Our Address */}
+            <div className="flex gap-4 group cursor-pointer">
+              <div className="w-10 h-10 rounded-full bg-[#00AAFF]/10 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-location-dot text-[#00AAFF]"></i>
               </div>
-              <h4 className="text-xl font-bold text-[#00AAFF] drop-shadow-sm">
-                Our Address
-              </h4>
+              <div className="flex flex-col">
+                <h4 className="text-xl font-bold text-[#00AAFF] drop-shadow-sm mb-2">
+                  Our Address
+                </h4>
+                <p className="text-gray-400 text-sm leading-relaxed">Chuna Factory Moor, Artillery Road</p>
+                <p className="text-gray-400 text-sm leading-relaxed">Chittagong, Bangladesh</p>
+              </div>
             </div>
-            <div>
-              <p className="text-gray-400 text-sm leading-relaxed">Chuna Factory Moor, Artillery Road</p>
-              <p className="text-gray-400 text-sm leading-relaxed">Chittagong, Bangladesh</p>
-            </div>
-          </motion.div>
 
-          {/* Column 3 */}
-          <motion.div variants={textRevealVariants} className="flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#00AAFF]/10 flex items-center justify-center shrink-0">
+            {/* Contact Info */}
+            <div className="flex gap-4 group cursor-pointer">
+              <div className="w-10 h-10 rounded-full bg-[#00AAFF]/10 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-phone text-[#00AAFF]"></i>
               </div>
-              <h4 className="text-xl font-bold text-[#00AAFF] drop-shadow-sm">
-                Contact Info
-              </h4>
+              <div className="flex flex-col">
+                <h4 className="text-xl font-bold text-[#00AAFF] drop-shadow-sm mb-2">
+                  Contact Info
+                </h4>
+                <p className="text-gray-400 text-sm leading-relaxed">+880 1600 123 123</p>
+                <p className="text-gray-400 text-sm leading-relaxed">info@entrylab.net</p>
+              </div>
             </div>
-            <div>
-              <p className="text-gray-400 text-sm leading-relaxed">+880 1600 123 123</p>
-              <p className="text-gray-400 text-sm leading-relaxed">info@entrylab.net</p>
-            </div>
+
           </motion.div>
         </motion.div>
 
         {/* BOTTOM 2 COLUMNS SECTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-stretch">
           
-          {/* Left Column: Info Blocks */}
+          {/* Left Column: Glass Background Info Blocks */}
           <motion.div 
-            className="flex flex-col justify-between h-full py-4 lg:py-8"
-            variants={containerVariants}
+            className="bg-[#1a1a1a]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between h-full gap-8"
+            variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
             {/* Customer Support */}
-            <motion.div variants={textRevealVariants} className="flex flex-col items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)]">
+            <motion.div variants={textRevealVariants} className="flex gap-5 group cursor-pointer">
+              <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-headset text-[#00AAFF] text-xl"></i>
               </div>
-              <h4 className="text-xl font-bold text-white">Customer Support</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Our team is always here to help with any questions or concerns, ensuring your experience stays smooth and stress-free.
-              </p>
+              <div className="flex flex-col">
+                <h4 className="text-lg font-bold text-white mb-2">Customer Support</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Our team is always here to help with any questions or concerns, ensuring your experience stays smooth and stress-free.
+                </p>
+              </div>
             </motion.div>
 
             {/* Feedback & Suggestions */}
-            <motion.div variants={textRevealVariants} className="flex flex-col items-start gap-4 mt-8 lg:mt-0">
-              <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)]">
+            <motion.div variants={textRevealVariants} className="flex gap-5 group cursor-pointer">
+              <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-comment-dots text-[#00AAFF] text-xl"></i>
               </div>
-              <h4 className="text-xl font-bold text-white">Feedback & Suggestions</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                We value your ideas and feedback, as they help us improve and create a better experience for everyone.
-              </p>
+              <div className="flex flex-col">
+                <h4 className="text-lg font-bold text-white mb-2">Feedback & Suggestions</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  We value your ideas and feedback, as they help us improve and create a better experience for everyone.
+                </p>
+              </div>
             </motion.div>
 
             {/* Media Inquiries */}
-            <motion.div variants={textRevealVariants} className="flex flex-col items-start gap-4 mt-8 lg:mt-0">
-              <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)]">
+            <motion.div variants={textRevealVariants} className="flex gap-5 group cursor-pointer">
+              <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-envelope text-[#00AAFF] text-xl"></i>
               </div>
-              <h4 className="text-xl font-bold text-white">Media Inquiries</h4>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                For press and media-related inquiries, please contact us at <a href="mailto:info@entrylab.net" className="text-[#00AAFF] hover:underline transition-all">info@entrylab.net</a>
-              </p>
+              <div className="flex flex-col">
+                <h4 className="text-lg font-bold text-white mb-2">Media Inquiries</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  For press and media-related inquiries, please contact us at <a href="mailto:info@entrylab.net" className="text-[#00AAFF] hover:underline transition-all">info@entrylab.net</a>
+                </p>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -188,7 +195,7 @@ export default function Contact() {
                   />
                   <input 
                     type="text" 
-                    placeholder="Second Name" 
+                    placeholder="Last Name" 
                     className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors" 
                   />
                 </div>
@@ -220,13 +227,13 @@ export default function Contact() {
                   <textarea 
                     placeholder="How can we help you?" 
                     rows={4} 
-                    maxLength={150}
+                    maxLength={180}
                     value={message}
                     onChange={handleMessageChange}
                     className="w-full bg-[#111111] border border-gray-700/60 p-4 rounded-xl text-white text-sm focus:outline-none focus:border-[#00AAFF] transition-colors resize-none"
                   ></textarea>
                   <span className="absolute bottom-4 right-4 text-xs font-medium text-gray-500">
-                    {message.length}/150
+                    {message.length}/180
                   </span>
                 </div>
               </div>
