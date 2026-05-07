@@ -129,7 +129,6 @@ export default function Hero() {
   const [displayedText, setDisplayedText] = useState("")
   const [headingIndex, setHeadingIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
 
   useEffect(() => {
@@ -189,9 +188,9 @@ export default function Hero() {
 
       <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
           <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
@@ -207,18 +206,18 @@ export default function Hero() {
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
           className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
         >
           Transforming information into insights that power smarter decisions and accelerate growth.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
           className="mt-10 mb-8"
         >
           <a
@@ -235,64 +234,16 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <div 
-          className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36 cursor-pointer"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <motion.div
-            className="absolute inset-0 rounded-3xl bg-[#00AAFF] mix-blend-screen"
-            animate={{ 
-              opacity: isHovered ? 0.6 : 0.4,
-              scale: isHovered ? 1.15 : 1
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            style={{ filter: "blur(20px)" }}
-          />
+        <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
+          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-25 blur-[25px] mix-blend-screen pointer-events-none" />
 
-          <motion.div
-            className="absolute inset-0 rounded-3xl bg-[#00AAFF]"
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            style={{ filter: "blur(35px)" }}
-          />
-          
-          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/40 flex items-center justify-center overflow-hidden z-10 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,170,255,0.4)]">
-            <motion.div 
-              className="absolute inset-0 shadow-[inset_0_0_30px_rgba(0,170,255,0.5)]"
-              animate={{ opacity: isHovered ? 1 : 0.6 }}
-              transition={{ duration: 0.3 }}
-            />
-            
-            <motion.div 
-              className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,170,255,0.8)]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isHovered ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            
-            <motion.div 
-              className="absolute inset-0 bg-[#00AAFF]/30"
-              animate={{ opacity: [0.2, 0.5, 0.2] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            />
-            
+          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/30 flex items-center justify-center overflow-hidden z-10 shadow-[inset_0_0_20px_rgba(0,170,255,0.3),0_0_15px_rgba(0,170,255,0.3)]">
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
             
-            <motion.img 
+            <img 
               src="https://iili.io/BZZjMzu.png" 
               alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-20"
-              animate={{ 
-                scale: isHovered ? 1.05 : 1,
-              }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            />
-            
-            <motion.div 
-              className="absolute inset-0 z-30 mix-blend-screen pointer-events-none"
-              animate={{ background: ["radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0.5) 30%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)"] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
             />
           </div>
         </div>
