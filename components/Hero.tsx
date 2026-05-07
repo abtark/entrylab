@@ -16,98 +16,152 @@ const headings = [
   "Search That Moves Forward"
 ]
 
-const circuits = [
-  "M 100 -50 L 100 100 L 300 100 L 350 190 L 440 190",
-  "M -50 250 L 150 250 L 200 300 L 350 300 L 380 250 L 420 250",
-  "M 50 550 L 50 450 L 250 450 L 350 310 L 440 310",
-  "M 500 650 L 500 450 L 450 400 L 450 350 L 500 310",
-  "M 950 550 L 950 450 L 750 450 L 650 310 L 560 310",
-  "M 1050 250 L 850 250 L 800 200 L 650 200 L 620 250 L 580 250",
-  "M 900 -50 L 900 100 L 700 100 L 650 190 L 560 190",
-  "M 500 -50 L 500 100 L 550 150 L 550 170 L 500 190",
-  "M -50 150 L 200 150 L 250 200 L 400 200 L 440 220",
-  "M 1050 350 L 800 350 L 750 300 L 600 300 L 560 280",
-  "M -50 50 L 150 50 L 250 150 L 350 150 L 420 220",
-  "M 1050 100 L 850 100 L 750 150 L 600 150 L 560 220"
+const circuitPaths = [
+  "M 0 250 L 250 250 L 350 350 L 350 650 L 840 650",
+  "M 0 450 L 150 450 L 250 550 L 820 550 L 860 590",
+  "M 0 710 L 300 710 L 400 810 L 820 810 L 860 750",
+  "M 0 900 L 250 900 L 440 710 L 820 710",
+  "M 1920 250 L 1670 250 L 1570 350 L 1570 650 L 1080 650",
+  "M 1920 450 L 1770 450 L 1670 550 L 1100 550 L 1060 590",
+  "M 1920 710 L 1620 710 L 1520 810 L 1100 810 L 1060 750",
+  "M 1920 900 L 1670 900 L 1480 710 L 1100 710",
+  "M 450 0 L 450 150 L 600 300 L 600 450 L 860 450",
+  "M 1470 0 L 1470 150 L 1320 300 L 1320 450 L 1060 450"
 ]
 
-const endPoints = [
-  { cx: 440, cy: 190 }, { cx: 420, cy: 250 }, { cx: 440, cy: 310 },
-  { cx: 500, cy: 310 }, { cx: 560, cy: 310 }, { cx: 580, cy: 250 },
-  { cx: 560, cy: 190 }, { cx: 500, cy: 190 }, { cx: 440, cy: 220 },
-  { cx: 560, cy: 280 }, { cx: 420, cy: 220 }, { cx: 560, cy: 220 }
+const nodes = [
+  { cx: 250, cy: 250 }, { cx: 350, cy: 350 }, { cx: 150, cy: 450 }, { cx: 250, cy: 550 },
+  { cx: 300, cy: 710 }, { cx: 400, cy: 810 }, { cx: 250, cy: 900 }, { cx: 440, cy: 710 },
+  { cx: 1670, cy: 250 }, { cx: 1570, cy: 350 }, { cx: 1770, cy: 450 }, { cx: 1670, cy: 550 },
+  { cx: 1620, cy: 710 }, { cx: 1520, cy: 810 }, { cx: 1670, cy: 900 }, { cx: 1480, cy: 710 },
+  { cx: 450, cy: 150 }, { cx: 600, cy: 300 }, { cx: 1470, cy: 150 }, { cx: 1320, cy: 300 }
 ]
 
 export default function Hero() {
   const [index, setIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % headings.length)
-    }, 2500)
+    }, 3000)
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <section id="home" className="relative w-full h-screen bg-[#02050A] overflow-hidden flex flex-col items-center pt-[18vh] md:pt-[22vh] z-0">
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes neon-gradient {
-          0% { background-position: 200% center; }
-          100% { background-position: 0% center; }
-        }
-        .text-neon {
-          animation: neon-gradient 4s linear infinite;
-        }
-        @keyframes scanline {
-          0% { transform: translateY(-100vh); }
-          100% { transform: translateY(100vh); }
-        }
-        .animate-scan {
-          animation: scanline 6s linear infinite;
-        }
-      `}} />
-
-      <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#00AAFF] rounded-full blur-[150px] opacity-20 animate-pulse pointer-events-none" />
+    <section id="home" className="relative w-full h-screen bg-[#02050A] overflow-hidden flex flex-col items-center z-0">
       
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_20%,transparent_80%)] pointer-events-none" />
+      <motion.div 
+        className="absolute top-[-20%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[#00AAFF] rounded-full blur-[180px] pointer-events-none"
+        animate={{ 
+          opacity: [0.05, 0.15, 0.05],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ 
+          duration: 25, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+      />
       
-      <div className="absolute left-0 right-0 h-[2px] bg-[#00AAFF]/20 shadow-[0_0_20px_rgba(0,170,255,0.5)] animate-scan pointer-events-none z-50" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,170,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,black_30%,transparent_100%)] pointer-events-none z-0" />
 
-      <div className="absolute left-4 md:left-10 top-1/4 flex flex-col gap-6 opacity-60 pointer-events-none z-10 hidden md:flex">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 bg-[#00AAFF] rounded-full animate-ping" style={{ animationDelay: `${i * 0.3}s` }} />
-            <div className="w-8 h-[1px] bg-[#00AAFF]/40" />
-          </div>
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full z-10 pointer-events-none">
+        {circuitPaths.map((path, i) => (
+          <g key={`circuit-base-${i}`}>
+            <path
+              d={path}
+              stroke="rgba(0,170,255,0.15)"
+              strokeWidth="2"
+              fill="none"
+              strokeLinejoin="round"
+            />
+            
+            <motion.path
+              d={path}
+              stroke="#00AAFF"
+              strokeWidth="4"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, pathOffset: 1 }}
+              animate={{ pathLength: 0.1, pathOffset: -0.1 }}
+              transition={{ 
+                duration: 6 + (i % 3) * 1.5, 
+                repeat: Infinity, 
+                ease: "linear", 
+                delay: i * 0.4 
+              }}
+              style={{ filter: "drop-shadow(0 0 10px #00AAFF)" }}
+            />
+            
+            <motion.path
+              d={path}
+              stroke="#ffffff"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, pathOffset: 1 }}
+              animate={{ pathLength: 0.05, pathOffset: -0.05 }}
+              transition={{ 
+                duration: 6 + (i % 3) * 1.5, 
+                repeat: Infinity, 
+                ease: "linear", 
+                delay: i * 0.4 + 0.1
+              }}
+              style={{ filter: "drop-shadow(0 0 15px #00AAFF)" }}
+            />
+          </g>
         ))}
-      </div>
 
-      <div className="absolute right-4 md:right-10 top-1/3 flex flex-col items-end gap-4 opacity-50 pointer-events-none z-10 hidden md:flex">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-[1px] bg-[#00AAFF]/60" />
-          <span className="text-[#00AAFF] text-[10px] font-mono tracking-widest">SYS.ACTV</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-[1px] bg-[#00AAFF]/40" />
-          <span className="text-[#00AAFF] text-[10px] font-mono tracking-widest">NET.LINK</span>
-        </div>
-        <div className="w-8 h-8 rounded-full border border-[#00AAFF]/30 border-t-[#00AAFF] animate-spin mt-4" style={{ animationDuration: '3s' }} />
-      </div>
+        {nodes.map((node, i) => (
+          <g key={`node-${i}`}>
+            <rect
+              x={node.cx - 8}
+              y={node.cy - 8}
+              width="16"
+              height="16"
+              rx="4"
+              fill="#02050A"
+              stroke="rgba(0,170,255,0.4)"
+              strokeWidth="2"
+            />
+            <motion.rect
+              x={node.cx - 4}
+              y={node.cy - 4}
+              width="8"
+              height="8"
+              rx="2"
+              fill="#00AAFF"
+              animate={{ 
+                opacity: [0.3, 1, 0.3],
+                filter: ["drop-shadow(0 0 2px #00AAFF)", "drop-shadow(0 0 12px #00AAFF)", "drop-shadow(0 0 2px #00AAFF)"]
+              }}
+              transition={{ 
+                duration: 3 + (i % 3), 
+                repeat: Infinity, 
+                delay: i * 0.2, 
+                ease: "easeInOut" 
+              }}
+            />
+          </g>
+        ))}
+      </svg>
 
-      <div className="relative z-40 flex flex-col items-center text-center px-6 w-full max-w-5xl">
-        <div className="relative w-full h-[100px] sm:h-[120px] md:h-[160px] flex items-center justify-center">
+      <div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-4xl pt-[18vh] md:pt-[20vh] pointer-events-auto">
+        <div className="relative w-full h-[120px] md:h-[180px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.h1
               key={index}
-              initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95, y: 15 }}
+              initial={{ opacity: 0, filter: "blur(20px)", scale: 0.95, y: 15 }}
               animate={{ opacity: 1, filter: "blur(0px)", scale: 1, y: 0 }}
-              exit={{ opacity: 0, filter: "blur(15px)", scale: 1.05, y: -15 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text text-neon w-full drop-shadow-[0_0_20px_rgba(0,170,255,0.4)]"
+              exit={{ opacity: 0, filter: "blur(20px)", scale: 1.05, y: -15 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-transparent bg-clip-text w-full drop-shadow-[0_0_25px_rgba(0,170,255,0.3)]"
               style={{
-                backgroundImage: "linear-gradient(to left, #00AAFF 0%, #ffffff 50%, #44BBFF 100%)",
+                backgroundImage: "linear-gradient(to right, #00AAFF 0%, #ffffff 50%, #00AAFF 100%)",
                 backgroundSize: "200% auto",
+                animation: "neon-gradient 6s linear infinite"
               }}
             >
               {headings[index]}
@@ -118,8 +172,8 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
-          className="text-white/80 text-base md:text-xl max-w-2xl mt-4 md:mt-8 font-medium tracking-wide drop-shadow-md"
+          transition={{ delay: 0.6, duration: 1.2, ease: "easeOut" }}
+          className="text-white/70 text-lg md:text-2xl max-w-3xl mt-4 font-medium tracking-wide drop-shadow-md"
         >
           Transforming information into insights that power smarter decisions and accelerate growth.
         </motion.p>
@@ -127,100 +181,55 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
-          className="mt-10"
+          transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
+          className="mt-12"
         >
           <a
             href="#about"
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-md border border-[#00AAFF]/50 px-8 py-4 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)] transition-all duration-500"
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/40 px-10 py-5 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-700 shadow-[0_0_20px_rgba(0,170,255,0.15)] hover:shadow-[0_0_40px_rgba(0,170,255,0.6)]"
           >
-            <div className="absolute inset-0 bg-[#00AAFF] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
-            <span className="relative z-10 text-white font-semibold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
-            <svg className="absolute right-5 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-5 h-5 z-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            <span className="relative z-10 text-white text-lg font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-4">Learn More</span>
+            <svg className="absolute right-6 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-6 h-6 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </a>
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-[50vh] z-20 pointer-events-none">
-        <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMax slice" className="w-full h-full">
-          {circuits.map((path, i) => (
-            <g key={`circuit-${i}`}>
-              <path
-                d={path}
-                stroke="rgba(0,170,255,0.15)"
-                strokeWidth="1.5"
-                fill="none"
-              />
-              <motion.path
-                d={path}
-                stroke="#00AAFF"
-                strokeWidth={isHovered ? "4" : "2.5"}
-                fill="none"
-                strokeLinecap="round"
-                initial={{ pathLength: 0, pathOffset: 1 }}
-                animate={{ pathLength: 0.3, pathOffset: -0.3 }}
-                transition={{ 
-                  duration: 10 + (i % 4) * 2, 
-                  repeat: Infinity, 
-                  ease: "easeInOut", 
-                  delay: i * 0.5 
-                }}
-                style={{ filter: "drop-shadow(0 0 8px #00AAFF)" }}
-              />
-            </g>
-          ))}
+      <div className="absolute left-1/2 top-[60vh] md:top-[65vh] -translate-x-1/2 z-30 pointer-events-auto">
+        <motion.div
+          className="relative flex items-center justify-center p-8 md:p-12 rounded-[2.5rem] md:rounded-[3rem] bg-[#00AAFF]/10 backdrop-blur-2xl border-2 border-[#00AAFF]/30 w-48 h-48 md:w-64 md:h-64 cursor-pointer overflow-hidden group"
+          whileHover={{ scale: 1.05 }}
+          animate={{
+            boxShadow: [
+              "0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,170,255,0.2), inset 0 0 30px rgba(0,170,255,0.2)",
+              "0 20px 50px rgba(0,0,0,0.8), 0 0 80px rgba(0,170,255,0.7), inset 0 0 60px rgba(0,170,255,0.6)",
+              "0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,170,255,0.2), inset 0 0 30px rgba(0,170,255,0.2)"
+            ]
+          }}
+          transition={{ 
+            scale: { duration: 0.6, ease: "easeOut" },
+            boxShadow: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50" />
+          <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] border border-white/20 [mask-image:linear-gradient(to_bottom right,white,transparent)]" />
           
-          {endPoints.map((point, i) => (
-            <motion.circle
-              key={`node-${i}`}
-              cx={point.cx}
-              cy={point.cy}
-              r={isHovered ? 6 : 4}
-              fill="#02050A"
-              stroke="#00AAFF"
-              strokeWidth="2"
-              className="transition-all duration-700"
-              animate={{ 
-                filter: ["drop-shadow(0 0 2px #00AAFF)", "drop-shadow(0 0 15px #00AAFF)", "drop-shadow(0 0 2px #00AAFF)"],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{ duration: 3, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
-            />
-          ))}
-        </svg>
-
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] pointer-events-auto">
-          <motion.div
-            className="cursor-pointer relative flex items-center justify-center p-6 md:p-10 rounded-full bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 w-32 h-32 md:w-48 md:h-48"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            animate={{
-              scale: isHovered ? 1.08 : 1,
-              boxShadow: [
-                "0 15px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,170,255,0.2), inset 0 0 20px rgba(0,170,255,0.2)",
-                "0 15px 50px rgba(0,0,0,0.8), 0 0 70px rgba(0,170,255,0.9), inset 0 0 50px rgba(0,170,255,0.6)",
-                "0 15px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,170,255,0.2), inset 0 0 20px rgba(0,170,255,0.2)"
-              ]
-            }}
-            transition={{ 
-              scale: { duration: 0.5, ease: "easeOut" },
-              boxShadow: { duration: 6, repeat: Infinity, ease: "easeInOut" }
-            }}
-          >
-            <div className="absolute inset-0 rounded-full border-2 border-white/10 [mask-image:linear-gradient(to_bottom,white,transparent)]" />
-            
-            <img 
-              src="https://iili.io/BZs4Bn9.png" 
-              alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]" 
-            />
-          </motion.div>
-        </div>
+          <img 
+            src="https://iili.io/BZs4Bn9.png" 
+            alt="EntryLab Logo" 
+            className="relative w-32 md:w-44 object-contain z-10 drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] transition-all duration-700" 
+          />
+        </motion.div>
+        
+        <div className="absolute top-1/2 left-[-16px] w-8 h-2 bg-[#00AAFF] rounded-full blur-[2px] shadow-[0_0_10px_#00AAFF] -translate-y-1/2" />
+        <div className="absolute top-1/2 right-[-16px] w-8 h-2 bg-[#00AAFF] rounded-full blur-[2px] shadow-[0_0_10px_#00AAFF] -translate-y-1/2" />
+        <div className="absolute left-1/2 top-[-16px] w-2 h-8 bg-[#00AAFF] rounded-full blur-[2px] shadow-[0_0_10px_#00AAFF] -translate-x-1/2" />
+        <div className="absolute left-1/2 bottom-[-16px] w-2 h-8 bg-[#00AAFF] rounded-full blur-[2px] shadow-[0_0_10px_#00AAFF] -translate-x-1/2" />
       </div>
       
-      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-30 pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-48 bg-gradient-to-t from-[#02050A] via-[#02050A]/90 to-transparent z-20 pointer-events-none" />
     </section>
   )
 }
