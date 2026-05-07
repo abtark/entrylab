@@ -17,15 +17,25 @@ const headings = [
 ]
 
 const circuits = [
-  "M -100 350 L 150 350 L 250 250 L 420 250 L 470 200",
-  "M -100 150 L 50 150 L 150 50 L 350 50 L 400 100 L 470 100",
-  "M 1100 350 L 850 350 L 750 250 L 580 250 L 530 200",
-  "M 1100 150 L 950 150 L 850 50 L 650 50 L 600 100 L 530 100",
-  "M 150 500 L 150 400 L 300 250 L 350 250",
-  "M 850 500 L 850 400 L 700 250 L 650 250",
-  "M 500 500 L 500 350 L 470 320",
-  "M 0 250 L 100 250 L 200 150 L 300 150 L 350 200",
-  "M 1000 250 L 900 250 L 800 150 L 700 150 L 650 200"
+  "M 100 -50 L 100 100 L 300 100 L 350 190 L 440 190",
+  "M -50 250 L 150 250 L 200 300 L 350 300 L 380 250 L 420 250",
+  "M 50 550 L 50 450 L 250 450 L 350 310 L 440 310",
+  "M 500 650 L 500 450 L 450 400 L 450 350 L 500 310",
+  "M 950 550 L 950 450 L 750 450 L 650 310 L 560 310",
+  "M 1050 250 L 850 250 L 800 200 L 650 200 L 620 250 L 580 250",
+  "M 900 -50 L 900 100 L 700 100 L 650 190 L 560 190",
+  "M 500 -50 L 500 100 L 550 150 L 550 170 L 500 190",
+  "M -50 150 L 200 150 L 250 200 L 400 200 L 440 220",
+  "M 1050 350 L 800 350 L 750 300 L 600 300 L 560 280",
+  "M -50 50 L 150 50 L 250 150 L 350 150 L 420 220",
+  "M 1050 100 L 850 100 L 750 150 L 600 150 L 560 220"
+]
+
+const endPoints = [
+  { cx: 440, cy: 190 }, { cx: 420, cy: 250 }, { cx: 440, cy: 310 },
+  { cx: 500, cy: 310 }, { cx: 560, cy: 310 }, { cx: 580, cy: 250 },
+  { cx: 560, cy: 190 }, { cx: 500, cy: 190 }, { cx: 440, cy: 220 },
+  { cx: 560, cy: 280 }, { cx: 420, cy: 220 }, { cx: 560, cy: 220 }
 ]
 
 export default function Hero() {
@@ -139,71 +149,78 @@ export default function Hero() {
             <g key={`circuit-${i}`}>
               <path
                 d={path}
-                stroke={isHovered ? "rgba(0,170,255,0.6)" : "rgba(0,170,255,0.2)"}
-                strokeWidth={isHovered ? "2" : "1"}
+                stroke="rgba(0,170,255,0.15)"
+                strokeWidth="1.5"
                 fill="none"
-                className="transition-all duration-700"
               />
               <motion.path
                 d={path}
                 stroke="#00AAFF"
-                strokeWidth={isHovered ? "3" : "2"}
+                strokeWidth={isHovered ? "4" : "2.5"}
                 fill="none"
+                strokeLinecap="round"
                 initial={{ pathLength: 0, pathOffset: 1 }}
-                animate={{ pathLength: 0.15, pathOffset: 0 }}
-                transition={{ duration: 3 + (i % 2), repeat: Infinity, ease: "linear", delay: i * 0.2 }}
-                style={{ filter: isHovered ? "drop-shadow(0 0 8px #00AAFF)" : "drop-shadow(0 0 4px #00AAFF)" }}
+                animate={{ pathLength: 0.3, pathOffset: -0.3 }}
+                transition={{ 
+                  duration: 10 + (i % 4) * 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut", 
+                  delay: i * 0.5 
+                }}
+                style={{ filter: "drop-shadow(0 0 8px #00AAFF)" }}
               />
             </g>
           ))}
           
-          {[
-            { cx: 470, cy: 200 }, { cx: 470, cy: 100 }, { cx: 530, cy: 200 }, { cx: 530, cy: 100 },
-            { cx: 350, cy: 250 }, { cx: 650, cy: 250 }, { cx: 470, cy: 320 }, { cx: 350, cy: 200 }, { cx: 650, cy: 200 }
-          ].map((point, i) => (
+          {endPoints.map((point, i) => (
             <motion.circle
               key={`node-${i}`}
               cx={point.cx}
               cy={point.cy}
-              r={isHovered ? 5 : 3}
+              r={isHovered ? 6 : 4}
               fill="#02050A"
               stroke="#00AAFF"
               strokeWidth="2"
-              className="transition-all duration-500"
-              animate={{ filter: ["drop-shadow(0 0 2px #00AAFF)", "drop-shadow(0 0 10px #00AAFF)", "drop-shadow(0 0 2px #00AAFF)"] }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+              className="transition-all duration-700"
+              animate={{ 
+                filter: ["drop-shadow(0 0 2px #00AAFF)", "drop-shadow(0 0 15px #00AAFF)", "drop-shadow(0 0 2px #00AAFF)"],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 3, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
             />
           ))}
         </svg>
 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] pointer-events-auto">
           <motion.div
-            className="cursor-pointer relative flex items-center justify-center p-8"
+            className="cursor-pointer relative flex items-center justify-center p-6 md:p-10 rounded-full bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 w-32 h-32 md:w-48 md:h-48"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             animate={{
-              scale: isHovered ? 1.05 : 1,
+              scale: isHovered ? 1.08 : 1,
+              boxShadow: [
+                "0 15px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,170,255,0.2), inset 0 0 20px rgba(0,170,255,0.2)",
+                "0 15px 50px rgba(0,0,0,0.8), 0 0 70px rgba(0,170,255,0.9), inset 0 0 50px rgba(0,170,255,0.6)",
+                "0 15px 50px rgba(0,0,0,0.8), 0 0 20px rgba(0,170,255,0.2), inset 0 0 20px rgba(0,170,255,0.2)"
+              ]
             }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ 
+              scale: { duration: 0.5, ease: "easeOut" },
+              boxShadow: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+            }}
           >
-            <motion.div 
-              className="absolute inset-0 bg-[#00AAFF]/20 rounded-full blur-[40px] pointer-events-none"
-              animate={{ 
-                opacity: isHovered ? 0.8 : 0.3,
-                scale: isHovered ? 1.5 : 1 
-              }}
-              transition={{ duration: 0.5 }}
-            />
+            <div className="absolute inset-0 rounded-full border-2 border-white/10 [mask-image:linear-gradient(to_bottom,white,transparent)]" />
+            
             <img 
               src="https://iili.io/BZs4Bn9.png" 
               alt="EntryLab Logo" 
-              className="relative h-12 md:h-16 w-auto z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" 
+              className="relative w-20 md:w-28 object-contain z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]" 
             />
           </motion.div>
         </div>
       </div>
       
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#02050A] to-transparent z-30 pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-30 pointer-events-none" />
     </section>
   )
 }
