@@ -45,7 +45,7 @@ const nodes = [
 
 const floatingIcons = [
   { 
-    id: 'sheet', cx: 200, cy: 400, delay: 0, 
+    id: 'sheet', cx: 400, cy: 600, delay: 0, 
     path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
   },
   { 
@@ -53,28 +53,28 @@ const floatingIcons = [
     path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
   },
   { 
-    id: 'idea', cx: 300, cy: 980, delay: 3, 
+    id: 'idea', cx: 500, cy: 880, delay: 3, 
     path: <><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></> 
   },
   { 
-    id: 'data', cx: 1720, cy: 400, delay: 0.8, 
-    path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
+    id: 'linkedin', cx: 750, cy: 880, delay: 1.2, 
+    path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
+  },
+  { 
+    id: 'email', cx: 1170, cy: 880, delay: 2.7, 
+    path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
+  },
+  { 
+    id: 'chat', cx: 1420, cy: 880, delay: 3.8, 
+    path: <><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></> 
   },
   { 
     id: 'chrome', cx: 1520, cy: 760, delay: 2.3, 
     path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
   },
   { 
-    id: 'chat', cx: 1620, cy: 980, delay: 3.8, 
-    path: <><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></> 
-  },
-  { 
-    id: 'linkedin', cx: 500, cy: 880, delay: 1.2, 
-    path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
-  },
-  { 
-    id: 'email', cx: 1420, cy: 880, delay: 2.7, 
-    path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
+    id: 'data', cx: 1520, cy: 600, delay: 0.8, 
+    path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
   }
 ]
 
@@ -158,16 +158,16 @@ const CircuitBackground = React.memo(() => {
       {floatingIcons.map((icon) => (
         <motion.g
           key={icon.id}
-          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
-          animate={{ y: [-12, 12, -12] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
+          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.25)]"
+          animate={{ y: [-6, 6, -6] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
         >
           <rect
-            x={icon.cx - 32}
-            y={icon.cy - 32}
-            width="64"
-            height="64"
-            rx="18"
+            x={icon.cx - 36}
+            y={icon.cy - 36}
+            width="72"
+            height="72"
+            rx="20"
             fill="#02050A"
             fillOpacity="0.95"
             stroke="rgba(0,170,255,0.4)"
@@ -181,7 +181,7 @@ const CircuitBackground = React.memo(() => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="#00AAFF"
-            strokeWidth="2"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             className="opacity-90"
@@ -259,9 +259,9 @@ export default function Hero() {
 
       <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="w-full"
         >
           <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
@@ -277,18 +277,18 @@ export default function Hero() {
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
         >
           Transforming information into insights that power smarter decisions and accelerate growth.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+          initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           className="mt-10 mb-8"
         >
           <a
@@ -306,15 +306,15 @@ export default function Hero() {
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
         <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
-          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-25 blur-[25px] mix-blend-screen pointer-events-none" />
+          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-30 blur-[25px] mix-blend-screen pointer-events-none" />
 
-          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/30 flex items-center justify-center overflow-hidden z-10 shadow-[inset_0_0_20px_rgba(0,170,255,0.3),0_0_15px_rgba(0,170,255,0.3)]">
+          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/40 flex items-center justify-center overflow-hidden z-10 shadow-[inset_0_0_20px_rgba(0,170,255,0.4),0_0_20px_rgba(0,170,255,0.4)]">
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
             
             <img 
               src="https://iili.io/BZZjMzu.png" 
               alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.5)]" 
             />
           </div>
         </div>
