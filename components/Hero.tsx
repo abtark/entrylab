@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const headings = [
   "Precision search, Real impact",
@@ -18,37 +18,33 @@ const headings = [
 ]
 
 const circuitPaths = [
-  "M 960 540 L 800 400 L 400 400 L 200 200 L 0 200",
-  "M 960 540 L 800 540 L 400 540 L 0 540",
-  "M 960 540 L 800 680 L 500 680 L 300 880 L 0 880",
-  "M 960 540 L 1120 400 L 1520 400 L 1720 200 L 1920 200",
-  "M 960 540 L 1120 540 L 1520 540 L 1920 540",
-  "M 960 540 L 1120 680 L 1420 680 L 1620 880 L 1920 880",
-  "M 960 540 L 850 450 L 700 450 L 400 150 L 400 0",
-  "M 960 540 L 1070 450 L 1220 450 L 1520 150 L 1520 0",
-  "M 960 540 L 880 680 L 750 680 L 500 930 L 500 1080",
-  "M 960 540 L 1040 680 L 1170 680 L 1420 930 L 1420 1080",
-  "M 960 540 L 800 300 L 450 300 L 250 100 L 0 100",
-  "M 960 540 L 1120 300 L 1470 300 L 1670 100 L 1920 100",
-  "M 960 540 L 800 780 L 550 780 L 350 980 L 0 980",
-  "M 960 540 L 1120 780 L 1370 780 L 1570 980 L 1920 980"
+  "M 960 760 L 800 600 L 400 600 L 200 400 L 0 400",
+  "M 960 760 L 800 760 L 400 760 L 0 760",
+  "M 960 760 L 800 880 L 500 880 L 300 980 L 0 980",
+  "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
+  "M 960 760 L 1120 760 L 1520 760 L 1920 760",
+  "M 960 760 L 1120 880 L 1420 880 L 1620 980 L 1920 980",
+  "M 960 760 L 850 650 L 700 650 L 400 350 L 400 0",
+  "M 960 760 L 1070 650 L 1220 650 L 1520 350 L 1520 0",
+  "M 960 760 L 880 880 L 750 880 L 500 1080",
+  "M 960 760 L 1040 880 L 1170 880 L 1420 1080",
+  "M 960 760 L 800 500 L 450 500 L 250 300 L 0 300",
+  "M 960 760 L 1120 500 L 1470 500 L 1670 300 L 1920 300"
 ]
 
 const nodes = [
-  { cx: 800, cy: 400 }, { cx: 400, cy: 400 }, { cx: 200, cy: 200 },
-  { cx: 800, cy: 540 }, { cx: 400, cy: 540 },
-  { cx: 800, cy: 680 }, { cx: 500, cy: 680 }, { cx: 300, cy: 880 },
-  { cx: 1120, cy: 400 }, { cx: 1520, cy: 400 }, { cx: 1720, cy: 200 },
-  { cx: 1120, cy: 540 }, { cx: 1520, cy: 540 },
-  { cx: 1120, cy: 680 }, { cx: 1420, cy: 680 }, { cx: 1620, cy: 880 },
-  { cx: 850, cy: 450 }, { cx: 700, cy: 450 }, { cx: 400, cy: 150 },
-  { cx: 1070, cy: 450 }, { cx: 1220, cy: 450 }, { cx: 1520, cy: 150 },
-  { cx: 880, cy: 680 }, { cx: 750, cy: 680 }, { cx: 500, cy: 930 },
-  { cx: 1040, cy: 680 }, { cx: 1170, cy: 680 }, { cx: 1420, cy: 930 },
-  { cx: 800, cy: 300 }, { cx: 450, cy: 300 }, { cx: 250, cy: 100 },
-  { cx: 1120, cy: 300 }, { cx: 1470, cy: 300 }, { cx: 1670, cy: 100 },
-  { cx: 800, cy: 780 }, { cx: 550, cy: 780 }, { cx: 350, cy: 980 },
-  { cx: 1120, cy: 780 }, { cx: 1370, cy: 780 }, { cx: 1570, cy: 980 }
+  { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
+  { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
+  { cx: 800, cy: 880 }, { cx: 500, cy: 880 }, { cx: 300, cy: 980 },
+  { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
+  { cx: 1120, cy: 760 }, { cx: 1520, cy: 760 },
+  { cx: 1120, cy: 880 }, { cx: 1420, cy: 880 }, { cx: 1620, cy: 980 },
+  { cx: 850, cy: 650 }, { cx: 700, cy: 650 }, { cx: 400, cy: 350 },
+  { cx: 1070, cy: 650 }, { cx: 1220, cy: 650 }, { cx: 1520, cy: 350 },
+  { cx: 880, cy: 880 }, { cx: 750, cy: 880 },
+  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 },
+  { cx: 800, cy: 500 }, { cx: 450, cy: 500 }, { cx: 250, cy: 300 },
+  { cx: 1120, cy: 500 }, { cx: 1470, cy: 500 }, { cx: 1670, cy: 300 }
 ]
 
 const CircuitBackground = React.memo(() => {
@@ -65,18 +61,18 @@ const CircuitBackground = React.memo(() => {
           />
           <motion.path
             d={path}
-            stroke="rgba(0,170,255,0.3)"
+            stroke="rgba(0,170,255,0.4)"
             strokeWidth="6"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
-            animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
+            animate={{ pathLength: 0.2, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 4 + (i % 3) * 1.5, 
+              duration: 3 + (i % 3) * 1.5, 
               repeat: Infinity, 
               ease: "linear", 
-              delay: i * 0.3 
+              delay: i * 0.2 
             }}
           />
           <motion.path
@@ -87,12 +83,12 @@ const CircuitBackground = React.memo(() => {
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
-            animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
+            animate={{ pathLength: 0.2, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 4 + (i % 3) * 1.5, 
+              duration: 3 + (i % 3) * 1.5, 
               repeat: Infinity, 
               ease: "linear", 
-              delay: i * 0.3 
+              delay: i * 0.2 
             }}
           />
         </g>
@@ -117,9 +113,9 @@ const CircuitBackground = React.memo(() => {
             height="5"
             rx="1"
             fill="#00AAFF"
-            animate={{ opacity: [0.2, 1, 0.2] }}
+            animate={{ opacity: [0.1, 1, 0.1] }}
             transition={{ 
-              duration: 2 + (i % 3), 
+              duration: 1.5 + (i % 3), 
               repeat: Infinity, 
               delay: i * 0.1, 
               ease: "easeInOut" 
@@ -150,7 +146,7 @@ export default function Hero() {
       } else {
         timeout = setTimeout(() => {
           setDisplayedText(currentText.substring(0, displayedText.length - 1))
-        }, 40)
+        }, 30)
       }
     } else {
       if (displayedText.length === currentText.length) {
@@ -158,7 +154,7 @@ export default function Hero() {
       } else {
         timeout = setTimeout(() => {
           setDisplayedText(currentText.substring(0, displayedText.length + 1))
-        }, 60)
+        }, 50)
       }
     }
 
@@ -198,7 +194,7 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
         >
           Transforming information into insights that power smarter decisions and accelerate growth.
@@ -207,8 +203,8 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="mt-10 mb-16"
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="mt-10 mb-8"
         >
           <a
             href="#about"
@@ -223,42 +219,67 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
+      <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
         <div 
           className="relative flex items-center justify-center w-40 h-40 md:w-56 md:h-56 cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <motion.div
-            className="absolute inset-0 rounded-[2rem] bg-[#00AAFF]"
+            className="absolute inset-0 rounded-[2rem] bg-[#00AAFF] mix-blend-screen"
             animate={{ 
-              opacity: isHovered ? 0.3 : 0.1,
-              scale: isHovered ? 1.1 : 1,
-              filter: isHovered ? "blur(40px)" : "blur(20px)"
+              opacity: isHovered ? 0.4 : 0.15,
+              scale: isHovered ? 1.15 : 1
             }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            style={{ filter: "blur(30px)" }}
+          />
+
+          <motion.div
+            className="absolute inset-0 rounded-[2rem] bg-[#00AAFF]"
+            animate={{ opacity: [0, 0.5, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            style={{ filter: "blur(50px)" }}
           />
           
-          <motion.div
-            className="absolute inset-0 rounded-[2rem] bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/30 flex items-center justify-center overflow-hidden shadow-[inset_0_0_20px_rgba(0,170,255,0.15)]"
-            animate={{
-              borderColor: isHovered ? "rgba(0,170,255,0.8)" : "rgba(0,170,255,0.3)",
-              boxShadow: isHovered 
-                ? "inset 0 0 40px rgba(0,170,255,0.4), 0 0 30px rgba(0,170,255,0.3)" 
-                : "inset 0 0 20px rgba(0,170,255,0.15), 0 0 0px rgba(0,170,255,0)"
-            }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
+          <div className="absolute inset-0 rounded-[2rem] bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/30 flex items-center justify-center overflow-hidden z-10">
+            <motion.div 
+              className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,170,255,0.2)]"
+              animate={{ opacity: isHovered ? 1 : 0.5 }}
+              transition={{ duration: 0.3 }}
+            />
+            
+            <motion.div 
+              className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,170,255,0.6)]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+            />
+
+            <motion.div 
+              className="absolute inset-0 bg-[#00AAFF]/20"
+              animate={{ opacity: [0, 0.4, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/10 to-transparent opacity-60" />
             
             <motion.img 
               src="https://iili.io/BZZjMzu.png" 
               alt="EntryLab Logo" 
-              className="relative w-24 md:w-36 object-contain z-10"
-              animate={{ scale: isHovered ? 1.05 : 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative w-32 md:w-44 object-contain z-20"
+              animate={{ 
+                scale: isHovered ? 1.08 : 1,
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             />
-          </motion.div>
+            
+            <motion.div 
+              className="absolute inset-0 z-30 mix-blend-screen pointer-events-none"
+              animate={{ background: ["radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0.4) 30%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)"] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
         </div>
       </div>
       
