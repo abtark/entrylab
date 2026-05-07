@@ -67,12 +67,12 @@ const CircuitBackground = React.memo(() => {
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
-            animate={{ pathLength: 0.2, pathOffset: 1, opacity: [0, 1, 1, 0] }}
+            animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 5 + (i % 3) * 2, 
+              duration: 8, 
               repeat: Infinity, 
               ease: "linear", 
-              delay: i * 0.4 
+              delay: i * 0.66 
             }}
           />
           <motion.path
@@ -83,12 +83,12 @@ const CircuitBackground = React.memo(() => {
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
-            animate={{ pathLength: 0.2, pathOffset: 1, opacity: [0, 1, 1, 0] }}
+            animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 5 + (i % 3) * 2, 
+              duration: 8, 
               repeat: Infinity, 
               ease: "linear", 
-              delay: i * 0.4 
+              delay: i * 0.66 
             }}
           />
         </g>
@@ -115,9 +115,9 @@ const CircuitBackground = React.memo(() => {
             fill="#00AAFF"
             animate={{ opacity: [0.1, 1, 0.1] }}
             transition={{ 
-              duration: 3 + (i % 3) * 1.5, 
+              duration: 4, 
               repeat: Infinity, 
-              delay: i * 0.2, 
+              delay: (i % 5) * 0.8, 
               ease: "easeInOut" 
             }}
           />
@@ -150,7 +150,7 @@ export default function Hero() {
       }
     } else {
       if (displayedText.length === currentText.length) {
-        timeout = setTimeout(() => setIsDeleting(true), 3500)
+        timeout = setTimeout(() => setIsDeleting(true), 6000)
       } else {
         timeout = setTimeout(() => {
           setDisplayedText(currentText.substring(0, displayedText.length + 1))
@@ -221,45 +221,32 @@ export default function Hero() {
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
         <div 
-          className="relative flex items-center justify-center w-40 h-40 md:w-56 md:h-56 cursor-pointer"
+          className="relative flex items-center justify-center w-32 h-32 md:w-44 md:h-44 cursor-pointer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <motion.div
-            className="absolute inset-0 rounded-[2rem] bg-[#00AAFF] mix-blend-screen"
+            className="absolute inset-0 rounded-3xl bg-[#00AAFF] mix-blend-screen"
             animate={{ 
-              opacity: isHovered ? 0.4 : 0.15,
-              scale: isHovered ? 1.15 : 1
+              opacity: isHovered ? 0.3 : 0.08,
+              scale: isHovered ? 1.1 : 1
             }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            style={{ filter: "blur(30px)" }}
+            style={{ filter: "blur(20px)" }}
           />
 
-          <motion.div
-            className="absolute inset-0 rounded-[2rem] bg-[#00AAFF]"
-            animate={{ opacity: [0, 0.5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            style={{ filter: "blur(50px)" }}
-          />
-          
-          <div className="absolute inset-0 rounded-[2rem] bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/30 flex items-center justify-center overflow-hidden z-10">
+          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/20 flex items-center justify-center overflow-hidden z-10 transition-colors duration-300" style={{ borderColor: isHovered ? "rgba(0,170,255,0.5)" : "rgba(0,170,255,0.2)" }}>
             <motion.div 
               className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,170,255,0.2)]"
-              animate={{ opacity: isHovered ? 1 : 0.5 }}
+              animate={{ opacity: isHovered ? 1 : 0.4 }}
               transition={{ duration: 0.3 }}
             />
             
             <motion.div 
-              className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,170,255,0.6)]"
+              className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,170,255,0.4)]"
               initial={{ opacity: 0 }}
               animate={{ opacity: isHovered ? 1 : 0 }}
               transition={{ duration: 0.3 }}
-            />
-
-            <motion.div 
-              className="absolute inset-0 bg-[#00AAFF]/20"
-              animate={{ opacity: [0, 0.4, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
             
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/10 to-transparent opacity-60" />
@@ -267,17 +254,11 @@ export default function Hero() {
             <motion.img 
               src="https://iili.io/BZZjMzu.png" 
               alt="EntryLab Logo" 
-              className="relative w-32 md:w-44 object-contain z-20"
+              className="relative w-20 md:w-28 object-contain z-20"
               animate={{ 
-                scale: isHovered ? 1.08 : 1,
+                scale: isHovered ? 1.05 : 1,
               }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-            />
-            
-            <motion.div 
-              className="absolute inset-0 z-30 mix-blend-screen pointer-events-none"
-              animate={{ background: ["radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0.4) 30%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         </div>
