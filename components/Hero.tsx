@@ -19,51 +19,28 @@ const headings = [
 
 const circuitPaths = [
   "M 960 760 L 800 600 L 400 600 L 200 400 L 0 400",
-  "M 960 760 L 800 760 L 400 760 L 0 760",
-  "M 960 760 L 800 880 L 500 880 L 300 980 L 0 980",
   "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
+  "M 960 760 L 800 760 L 400 760 L 0 760",
   "M 960 760 L 1120 760 L 1520 760 L 1920 760",
+  "M 960 760 L 800 880 L 500 880 L 300 980 L 0 980",
   "M 960 760 L 1120 880 L 1420 880 L 1620 980 L 1920 980",
-  "M 960 760 L 850 650 L 700 650 L 400 350 L 0 350",
-  "M 960 760 L 1070 650 L 1220 650 L 1520 350 L 1920 350",
-  "M 960 760 L 880 880 L 750 880 L 500 1080",
-  "M 960 760 L 1040 880 L 1170 880 L 1420 1080",
-  "M 960 760 L 800 500 L 450 500 L 250 300 L 0 300",
-  "M 960 760 L 1120 500 L 1470 500 L 1670 300 L 1920 300",
-  "M 960 760 L 700 800 L 200 800 L 0 900",
-  "M 960 760 L 1220 800 L 1720 800 L 1920 900",
   "M 960 760 L 850 500 L 500 200 L 0 200",
   "M 960 760 L 1070 500 L 1420 200 L 1920 200",
-  "M 960 760 L 600 700 L 100 700 L 0 700",
-  "M 960 760 L 1320 700 L 1820 700 L 1920 700",
-  "M 960 760 L 750 950 L 300 1080",
-  "M 960 760 L 1170 950 L 1620 1080",
-  "M 960 760 L 800 680 L 500 600 L 0 600",
-  "M 960 760 L 1120 680 L 1420 600 L 1920 600"
+  "M 960 760 L 880 880 L 750 880 L 500 1080",
+  "M 960 760 L 1040 880 L 1170 880 L 1420 1080"
 ]
 
 const nodes = [
   { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
-  { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
-  { cx: 800, cy: 880 }, { cx: 500, cy: 880 }, { cx: 300, cy: 980 },
   { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
+  { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
   { cx: 1120, cy: 760 }, { cx: 1520, cy: 760 },
+  { cx: 800, cy: 880 }, { cx: 500, cy: 880 }, { cx: 300, cy: 980 },
   { cx: 1120, cy: 880 }, { cx: 1420, cy: 880 }, { cx: 1620, cy: 980 },
-  { cx: 850, cy: 650 }, { cx: 700, cy: 650 }, { cx: 400, cy: 350 },
-  { cx: 1070, cy: 650 }, { cx: 1220, cy: 650 }, { cx: 1520, cy: 350 },
-  { cx: 880, cy: 880 }, { cx: 750, cy: 880 },
-  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 },
-  { cx: 800, cy: 500 }, { cx: 450, cy: 500 }, { cx: 250, cy: 300 },
-  { cx: 1120, cy: 500 }, { cx: 1470, cy: 500 }, { cx: 1670, cy: 300 },
-  { cx: 700, cy: 800 }, { cx: 200, cy: 800 },
-  { cx: 1220, cy: 800 }, { cx: 1720, cy: 800 },
   { cx: 850, cy: 500 }, { cx: 500, cy: 200 },
   { cx: 1070, cy: 500 }, { cx: 1420, cy: 200 },
-  { cx: 600, cy: 700 }, { cx: 100, cy: 700 },
-  { cx: 1320, cy: 700 }, { cx: 1820, cy: 700 },
-  { cx: 750, cy: 950 }, { cx: 1170, cy: 950 },
-  { cx: 800, cy: 680 }, { cx: 500, cy: 600 },
-  { cx: 1120, cy: 680 }, { cx: 1420, cy: 600 }
+  { cx: 880, cy: 880 }, { cx: 750, cy: 880 },
+  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 }
 ]
 
 const CircuitBackground = React.memo(() => {
@@ -152,6 +129,7 @@ export default function Hero() {
   const [displayedText, setDisplayedText] = useState("")
   const [headingIndex, setHeadingIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
 
   useEffect(() => {
@@ -257,16 +235,64 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
-          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-15 blur-[20px] mix-blend-screen" />
+        <div 
+          className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36 cursor-pointer"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <motion.div
+            className="absolute inset-0 rounded-3xl bg-[#00AAFF] mix-blend-screen"
+            animate={{ 
+              opacity: isHovered ? 0.6 : 0.4,
+              scale: isHovered ? 1.15 : 1
+            }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            style={{ filter: "blur(20px)" }}
+          />
 
-          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/30 flex items-center justify-center overflow-hidden z-10 shadow-[inset_0_0_25px_rgba(0,170,255,0.3),0_0_35px_rgba(0,170,255,0.3)]">
+          <motion.div
+            className="absolute inset-0 rounded-3xl bg-[#00AAFF]"
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            style={{ filter: "blur(35px)" }}
+          />
+          
+          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/40 flex items-center justify-center overflow-hidden z-10 transition-colors duration-300 shadow-[inset_0_0_20px_rgba(0,170,255,0.4)]">
+            <motion.div 
+              className="absolute inset-0 shadow-[inset_0_0_30px_rgba(0,170,255,0.5)]"
+              animate={{ opacity: isHovered ? 1 : 0.6 }}
+              transition={{ duration: 0.3 }}
+            />
+            
+            <motion.div 
+              className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,170,255,0.8)]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+            />
+            
+            <motion.div 
+              className="absolute inset-0 bg-[#00AAFF]/30"
+              animate={{ opacity: [0.2, 0.5, 0.2] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
             
-            <img 
+            <motion.img 
               src="https://iili.io/BZZjMzu.png" 
               alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_12px_rgba(0,170,255,0.6)]" 
+              className="relative w-20 md:w-28 object-contain z-20"
+              animate={{ 
+                scale: isHovered ? 1.05 : 1,
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            />
+            
+            <motion.div 
+              className="absolute inset-0 z-30 mix-blend-screen pointer-events-none"
+              animate={{ background: ["radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0.5) 30%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)"] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         </div>
