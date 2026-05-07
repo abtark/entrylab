@@ -24,8 +24,8 @@ const circuitPaths = [
   "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
   "M 960 760 L 1120 760 L 1520 760 L 1920 760",
   "M 960 760 L 1120 880 L 1420 880 L 1620 980 L 1920 980",
-  "M 960 760 L 850 650 L 700 650 L 400 350 L 400 0",
-  "M 960 760 L 1070 650 L 1220 650 L 1520 350 L 1520 0",
+  "M 960 760 L 850 650 L 700 650 L 400 350 L 0 350",
+  "M 960 760 L 1070 650 L 1220 650 L 1520 350 L 1920 350",
   "M 960 760 L 880 880 L 750 880 L 500 1080",
   "M 960 760 L 1040 880 L 1170 880 L 1420 1080",
   "M 960 760 L 800 500 L 450 500 L 250 300 L 0 300",
@@ -69,10 +69,10 @@ const CircuitBackground = React.memo(() => {
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
             animate={{ pathLength: 0.2, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 3 + (i % 3) * 1.5, 
+              duration: 5 + (i % 3) * 2, 
               repeat: Infinity, 
               ease: "linear", 
-              delay: i * 0.2 
+              delay: i * 0.4 
             }}
           />
           <motion.path
@@ -85,10 +85,10 @@ const CircuitBackground = React.memo(() => {
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
             animate={{ pathLength: 0.2, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 3 + (i % 3) * 1.5, 
+              duration: 5 + (i % 3) * 2, 
               repeat: Infinity, 
               ease: "linear", 
-              delay: i * 0.2 
+              delay: i * 0.4 
             }}
           />
         </g>
@@ -115,9 +115,9 @@ const CircuitBackground = React.memo(() => {
             fill="#00AAFF"
             animate={{ opacity: [0.1, 1, 0.1] }}
             transition={{ 
-              duration: 1.5 + (i % 3), 
+              duration: 3 + (i % 3) * 1.5, 
               repeat: Infinity, 
-              delay: i * 0.1, 
+              delay: i * 0.2, 
               ease: "easeInOut" 
             }}
           />
@@ -150,7 +150,7 @@ export default function Hero() {
       }
     } else {
       if (displayedText.length === currentText.length) {
-        timeout = setTimeout(() => setIsDeleting(true), 4000)
+        timeout = setTimeout(() => setIsDeleting(true), 3500)
       } else {
         timeout = setTimeout(() => {
           setDisplayedText(currentText.substring(0, displayedText.length + 1))
@@ -175,7 +175,7 @@ export default function Hero() {
 
       <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
       
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
+      <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
 
       <CircuitBackground />
 
@@ -238,7 +238,7 @@ export default function Hero() {
           <motion.div
             className="absolute inset-0 rounded-[2rem] bg-[#00AAFF]"
             animate={{ opacity: [0, 0.5, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             style={{ filter: "blur(50px)" }}
           />
           
@@ -259,7 +259,7 @@ export default function Hero() {
             <motion.div 
               className="absolute inset-0 bg-[#00AAFF]/20"
               animate={{ opacity: [0, 0.4, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
             
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/10 to-transparent opacity-60" />
@@ -277,7 +277,7 @@ export default function Hero() {
             <motion.div 
               className="absolute inset-0 z-30 mix-blend-screen pointer-events-none"
               animate={{ background: ["radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0.4) 30%, transparent 80%)", "radial-gradient(circle at 50% 50%, rgba(0,170,255,0) 0%, transparent 80%)"] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         </div>
