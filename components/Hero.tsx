@@ -45,27 +45,27 @@ const nodes = [
 
 const floatingIcons = [
   { 
-    id: 'sheet', cx: 200, cy: 400, delay: 0, 
+    id: 'sheet', cx: 200, cy: 400, delay: 0, pulseDelay: 11.5,
     path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
   },
   { 
-    id: 'search', cx: 400, cy: 760, delay: 1.5, 
+    id: 'search', cx: 400, cy: 760, delay: 1.5, pulseDelay: 9.1,
     path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
   },
   { 
-    id: 'data', cx: 1720, cy: 400, delay: 0.8, 
+    id: 'data', cx: 1720, cy: 400, delay: 0.8, pulseDelay: 11.9,
     path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
   },
   { 
-    id: 'chrome', cx: 1520, cy: 760, delay: 2.3, 
+    id: 'chrome', cx: 1520, cy: 760, delay: 2.3, pulseDelay: 9.5,
     path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
   },
   { 
-    id: 'linkedin', cx: 775, cy: 880, delay: 3, 
+    id: 'linkedin', cx: 775, cy: 880, delay: 3, pulseDelay: 9.5,
     path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
   },
   { 
-    id: 'email', cx: 1145, cy: 880, delay: 3.8, 
+    id: 'email', cx: 1145, cy: 880, delay: 3.8, pulseDelay: 9.9,
     path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
   }
 ]
@@ -92,7 +92,7 @@ const CircuitBackground = React.memo(() => {
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
             animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 12, 
+              duration: 14, 
               repeat: Infinity, 
               ease: "linear", 
               delay: i * 0.45 
@@ -108,7 +108,7 @@ const CircuitBackground = React.memo(() => {
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
             animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 12, 
+              duration: 14, 
               repeat: Infinity, 
               ease: "linear", 
               delay: i * 0.45 
@@ -138,7 +138,7 @@ const CircuitBackground = React.memo(() => {
             fill="#00AAFF"
             animate={{ opacity: [0.1, 1, 0.1] }}
             transition={{ 
-              duration: 5, 
+              duration: 4, 
               repeat: Infinity, 
               delay: (i % 5) * 0.8, 
               ease: "easeInOut" 
@@ -150,11 +150,30 @@ const CircuitBackground = React.memo(() => {
       {floatingIcons.map((icon) => (
         <motion.g
           key={icon.id}
-          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
-          animate={{ y: [-4, 4, -4] }}
+          animate={{ y: [0, -6, 0, 6, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
         >
-          <rect
+          <motion.rect
+            x={icon.cx - 32}
+            y={icon.cy - 32}
+            width="64"
+            height="64"
+            rx="18"
+            fill="none"
+            stroke="#00AAFF"
+            strokeWidth="6"
+            style={{ filter: "blur(12px)" }}
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{ 
+              duration: 14, 
+              times: [0, 0.05, 0.15, 1], 
+              repeat: Infinity, 
+              delay: icon.pulseDelay,
+              ease: "linear"
+            }}
+          />
+          
+          <motion.rect
             x={icon.cx - 32}
             y={icon.cy - 32}
             width="64"
@@ -162,9 +181,20 @@ const CircuitBackground = React.memo(() => {
             rx="18"
             fill="#02050A"
             fillOpacity="1"
-            stroke="rgba(0,170,255,0.4)"
-            strokeWidth="1.5"
+            stroke="#00AAFF"
+            animate={{ 
+              strokeOpacity: [0.4, 1, 1, 0.4],
+              strokeWidth: [1.5, 2.5, 2.5, 1.5]
+            }}
+            transition={{ 
+              duration: 14, 
+              times: [0, 0.05, 0.15, 1], 
+              repeat: Infinity, 
+              delay: icon.pulseDelay,
+              ease: "linear"
+            }}
           />
+          
           <svg
             x={icon.cx - 16}
             y={icon.cy - 16}
