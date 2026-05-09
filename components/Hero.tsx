@@ -92,7 +92,7 @@ const CircuitBackground = React.memo(() => {
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
             animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 8, 
+              duration: 12, 
               repeat: Infinity, 
               ease: "linear", 
               delay: i * 0.45 
@@ -108,7 +108,7 @@ const CircuitBackground = React.memo(() => {
             initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
             animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 8, 
+              duration: 12, 
               repeat: Infinity, 
               ease: "linear", 
               delay: i * 0.45 
@@ -138,7 +138,7 @@ const CircuitBackground = React.memo(() => {
             fill="#00AAFF"
             animate={{ opacity: [0.1, 1, 0.1] }}
             transition={{ 
-              duration: 4, 
+              duration: 5, 
               repeat: Infinity, 
               delay: (i % 5) * 0.8, 
               ease: "easeInOut" 
@@ -151,8 +151,8 @@ const CircuitBackground = React.memo(() => {
         <motion.g
           key={icon.id}
           className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
-          animate={{ y: [-12, 12, -12] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
+          animate={{ y: [-4, 4, -4] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
         >
           <rect
             x={icon.cx - 32}
@@ -161,7 +161,7 @@ const CircuitBackground = React.memo(() => {
             height="64"
             rx="18"
             fill="#02050A"
-            fillOpacity="0.95"
+            fillOpacity="1"
             stroke="rgba(0,170,255,0.4)"
             strokeWidth="1.5"
           />
