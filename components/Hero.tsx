@@ -19,30 +19,34 @@ const headings = [
 
 const circuitPaths = [
   "M 960 760 L 800 600 L 400 600 L 200 400 L 0 400",
-  "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
   "M 960 760 L 800 760 L 400 760 L 0 760",
-  "M 960 760 L 1120 760 L 1520 760 L 1920 760",
   "M 960 760 L 800 880 L 500 880 L 300 980 L 0 980",
+  "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
+  "M 960 760 L 1120 760 L 1520 760 L 1920 760",
   "M 960 760 L 1120 880 L 1420 880 L 1620 980 L 1920 980",
-  "M 960 760 L 850 500 L 500 200 L 0 200",
-  "M 960 760 L 1070 500 L 1420 200 L 1920 200",
+  "M 960 760 L 850 650 L 700 650 L 400 350 L 0 350",
+  "M 960 760 L 1070 650 L 1220 650 L 1520 350 L 1920 350",
   "M 960 760 L 880 880 L 750 880 L 500 1080",
-  "M 960 760 L 1040 880 L 1170 880 L 1420 1080"
+  "M 960 760 L 1040 880 L 1170 880 L 1420 1080",
+  "M 960 760 L 800 500 L 450 500 L 250 300 L 0 300",
+  "M 960 760 L 1120 500 L 1470 500 L 1670 300 L 1920 300"
 ]
 
-const pathDelays = [2, 2, 0, 0, 4, 4, 1, 1, 3, 3]
+const pathDelays = [2, 0, 4, 2, 0, 4, 1, 1, 3, 3, 5, 5]
 
 const nodes = [
   { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
-  { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
   { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
-  { cx: 1120, cy: 760 }, { cx: 1520, cy: 760 },
   { cx: 800, cy: 880 }, { cx: 500, cy: 880 }, { cx: 300, cy: 980 },
+  { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
+  { cx: 1120, cy: 760 }, { cx: 1520, cy: 760 },
   { cx: 1120, cy: 880 }, { cx: 1420, cy: 880 }, { cx: 1620, cy: 980 },
-  { cx: 850, cy: 500 }, { cx: 500, cy: 200 },
-  { cx: 1070, cy: 500 }, { cx: 1420, cy: 200 },
+  { cx: 850, cy: 650 }, { cx: 700, cy: 650 }, { cx: 400, cy: 350 },
+  { cx: 1070, cy: 650 }, { cx: 1220, cy: 650 }, { cx: 1520, cy: 350 },
   { cx: 880, cy: 880 }, { cx: 750, cy: 880 },
-  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 }
+  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 },
+  { cx: 800, cy: 500 }, { cx: 450, cy: 500 }, { cx: 250, cy: 300 },
+  { cx: 1120, cy: 500 }, { cx: 1470, cy: 500 }, { cx: 1670, cy: 300 }
 ]
 
 const floatingIcons = [
@@ -51,15 +55,15 @@ const floatingIcons = [
     path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
   },
   { 
-    id: 'search', cx: 400, cy: 760, pathIndex: 2, f: 0.58, floatDelay: 1.5,
+    id: 'search', cx: 400, cy: 760, pathIndex: 1, f: 0.58, floatDelay: 1.5,
     path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
   },
   { 
-    id: 'data', cx: 1720, cy: 400, pathIndex: 1, f: 0.82, floatDelay: 0.8,
+    id: 'data', cx: 1720, cy: 400, pathIndex: 3, f: 0.82, floatDelay: 0.8,
     path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
   },
   { 
-    id: 'chrome', cx: 1520, cy: 760, pathIndex: 3, f: 0.58, floatDelay: 2.3,
+    id: 'chrome', cx: 1520, cy: 760, pathIndex: 4, f: 0.58, floatDelay: 2.3,
     path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
   },
   { 
@@ -360,8 +364,7 @@ export default function Hero() {
               duration: 12,
               repeat: Infinity,
               ease: "easeInOut",
-              times: [0, 0.08, 0.92, 1],
-              delay: 0
+              times: [0, 0.08, 0.92, 1]
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
