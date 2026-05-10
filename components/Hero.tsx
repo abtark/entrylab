@@ -32,6 +32,8 @@ const circuitPaths = [
   "M 960 760 L 1120 500 L 1470 500 L 1670 300 L 1920 300"
 ]
 
+const pathDelays = [2, 0, 4, 2, 0, 4, 1, 1, 3, 3, 5, 5]
+
 const nodes = [
   { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
   { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
@@ -47,6 +49,44 @@ const nodes = [
   { cx: 1120, cy: 500 }, { cx: 1470, cy: 500 }, { cx: 1670, cy: 300 }
 ]
 
+const floatingIcons = [
+  { 
+    id: 'sheet', cx: 200, cy: 400, pathIndex: 0, f: 0.82, floatDelay: 0,
+    path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
+  },
+  { 
+    id: 'search', cx: 400, cy: 760, pathIndex: 1, f: 0.58, floatDelay: 1.5,
+    path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
+  },
+  { 
+    id: 'data', cx: 1720, cy: 400, pathIndex: 3, f: 0.82, floatDelay: 0.8,
+    path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
+  },
+  { 
+    id: 'chrome', cx: 1520, cy: 760, pathIndex: 4, f: 0.58, floatDelay: 2.3,
+    path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
+  },
+  { 
+    id: 'linkedin', cx: 775, cy: 880, pathIndex: 8, f: 0.42, floatDelay: 3,
+    path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
+  },
+  { 
+    id: 'email', cx: 1145, cy: 880, pathIndex: 9, f: 0.42, floatDelay: 3.8,
+    path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
+  }
+]
+
+const getGlowTimes = (f: number) => {
+  const peak = f - 0.075; 
+  return [
+    0,
+    Math.max(0, peak - 0.05),
+    Math.max(0, peak),
+    Math.min(1, peak + 0.15),
+    1
+  ];
+}
+
 const CircuitBackground = React.memo(() => {
   return (
     <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full z-10 pointer-events-none">
@@ -61,34 +101,30 @@ const CircuitBackground = React.memo(() => {
           />
           <motion.path
             d={path}
-            stroke="rgba(0,170,255,0.4)"
-            strokeWidth="6"
+            stroke="rgba(0,170,255,0.5)"
+            strokeWidth="3"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
-            animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
+            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
+            animate={{ pathOffset: [0, 1], opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 8, 
-              repeat: Infinity, 
-              ease: "linear", 
-              delay: i * 0.66 
+              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
+              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.9, 1] }
             }}
           />
           <motion.path
             d={path}
             stroke="#00AAFF"
-            strokeWidth="2"
+            strokeWidth="1"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, pathOffset: 0, opacity: 0 }}
-            animate={{ pathLength: 0.15, pathOffset: 1, opacity: [0, 1, 1, 0] }}
+            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
+            animate={{ pathOffset: [0, 1], opacity: [0, 1, 1, 0] }}
             transition={{ 
-              duration: 8, 
-              repeat: Infinity, 
-              ease: "linear", 
-              delay: i * 0.66 
+              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
+              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.9, 1] }
             }}
           />
         </g>
@@ -123,6 +159,73 @@ const CircuitBackground = React.memo(() => {
           />
         </g>
       ))}
+
+      {floatingIcons.map((icon) => (
+        <motion.g
+          key={icon.id}
+          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
+          animate={{ y: [-8, 8, -8] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.floatDelay }}
+        >
+          <motion.rect
+            x={icon.cx - 32}
+            y={icon.cy - 32}
+            width="64"
+            height="64"
+            rx="18"
+            fill="none"
+            stroke="#00AAFF"
+            strokeWidth="6"
+            style={{ filter: "blur(10px)" }}
+            animate={{ opacity: [0, 0, 1, 0, 0] }}
+            transition={{ 
+              duration: 12, 
+              times: getGlowTimes(icon.f), 
+              repeat: Infinity, 
+              delay: pathDelays[icon.pathIndex],
+              ease: "linear"
+            }}
+          />
+          
+          <motion.rect
+            x={icon.cx - 32}
+            y={icon.cy - 32}
+            width="64"
+            height="64"
+            rx="18"
+            fill="#02050A"
+            fillOpacity="1"
+            stroke="#00AAFF"
+            animate={{ 
+              strokeOpacity: [0.3, 0.3, 1, 0.3, 0.3],
+              strokeWidth: [1.5, 1.5, 3, 1.5, 1.5]
+            }}
+            transition={{ 
+              duration: 12, 
+              times: getGlowTimes(icon.f), 
+              repeat: Infinity, 
+              delay: pathDelays[icon.pathIndex],
+              ease: "linear"
+            }}
+          />
+          
+          <svg
+            x={icon.cx - 16}
+            y={icon.cy - 16}
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#00AAFF"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="opacity-90"
+          >
+            {icon.path}
+          </svg>
+        </motion.g>
+      ))}
     </svg>
   )
 })
@@ -133,9 +236,18 @@ export default function Hero() {
   const [displayedText, setDisplayedText] = useState("")
   const [headingIndex, setHeadingIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
 
   useEffect(() => {
+    const loadTimer = setTimeout(() => {
+      setIsInitialLoad(false)
+    }, 1500)
+    return () => clearTimeout(loadTimer)
+  }, [])
+
+  useEffect(() => {
+    if (isInitialLoad) return
+
     let timeout: NodeJS.Timeout
     const currentText = headings[headingIndex]
 
@@ -154,12 +266,12 @@ export default function Hero() {
       } else {
         timeout = setTimeout(() => {
           setDisplayedText(currentText.substring(0, displayedText.length + 1))
-        }, 50)
+        }, 40)
       }
     }
 
     return () => clearTimeout(timeout)
-  }, [displayedText, isDeleting, headingIndex])
+  }, [displayedText, isDeleting, headingIndex, isInitialLoad])
 
   return (
     <section id="home" className="relative w-full min-h-screen bg-[#02050A] overflow-hidden flex flex-col items-center justify-start pt-[12vh] md:pt-[15vh] z-0">
@@ -173,6 +285,8 @@ export default function Hero() {
         }
       `}} />
 
+      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
+      
       <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
       
       <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
@@ -180,39 +294,46 @@ export default function Hero() {
       <CircuitBackground />
 
       <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
-        <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight w-full leading-tight">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
-              {displayedText}
-            </span>
-            <span 
-              className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" 
-            />
-          </h1>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full"
+        >
+          <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight w-full leading-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
+                {isInitialLoad ? headings[0] : displayedText}
+              </span>
+              <span 
+                className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" 
+              />
+            </h1>
+          </div>
+        </motion.div>
 
         <motion.p
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
           className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
         >
           Transforming information into insights that power smarter decisions and accelerate growth.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
           className="mt-10 mb-8"
         >
           <a
             href="#about"
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-10 py-4 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)]"
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)]"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-            <span className="relative z-10 text-white text-lg font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
-            <svg className="absolute right-5 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-6 h-6 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <span className="relative z-10 text-white text-sm md:text-base font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
+            <svg className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </a>
@@ -220,47 +341,41 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <div 
-          className="relative flex items-center justify-center w-32 h-32 md:w-44 md:h-44 cursor-pointer"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <motion.div
-            className="absolute inset-0 rounded-3xl bg-[#00AAFF] mix-blend-screen"
-            animate={{ 
-              opacity: isHovered ? 0.3 : 0.08,
-              scale: isHovered ? 1.1 : 1
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            style={{ filter: "blur(20px)" }}
-          />
+        <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
+          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" />
 
-          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/20 flex items-center justify-center overflow-hidden z-10 transition-colors duration-300" style={{ borderColor: isHovered ? "rgba(0,170,255,0.5)" : "rgba(0,170,255,0.2)" }}>
-            <motion.div 
-              className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,170,255,0.2)]"
-              animate={{ opacity: isHovered ? 1 : 0.4 }}
-              transition={{ duration: 0.3 }}
-            />
+          <motion.div 
+            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border flex items-center justify-center overflow-hidden z-10"
+            animate={{
+              boxShadow: [
+                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)",
+                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
+                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
+                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)"
+              ],
+              borderColor: [
+                "rgba(0,170,255,1)",
+                "rgba(0,170,255,0.3)",
+                "rgba(0,170,255,0.3)",
+                "rgba(0,170,255,1)"
+              ]
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.08, 0.92, 1],
+              delay: 0
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
             
-            <motion.div 
-              className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,170,255,0.4)]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isHovered ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            
-            <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/10 to-transparent opacity-60" />
-            
-            <motion.img 
+            <img 
               src="https://iili.io/BZZjMzu.png" 
               alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-20"
-              animate={{ 
-                scale: isHovered ? 1.05 : 1,
-              }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
             />
-          </div>
+          </motion.div>
         </div>
       </div>
       
