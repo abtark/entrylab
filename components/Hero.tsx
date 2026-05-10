@@ -30,8 +30,6 @@ const circuitPaths = [
   "M 960 760 L 1040 880 L 1170 880 L 1420 1080"
 ]
 
-const pathDelays = [2, 2, 0, 0, 4, 4, 1, 1, 3, 3]
-
 const nodes = [
   { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
   { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
@@ -47,41 +45,30 @@ const nodes = [
 
 const floatingIcons = [
   { 
-    id: 'sheet', cx: 200, cy: 400, pathIndex: 0, f: 0.82, floatDelay: 0,
+    id: 'sheet', cx: 200, cy: 400, floatDelay: 0,
     path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
   },
   { 
-    id: 'search', cx: 400, cy: 760, pathIndex: 2, f: 0.58, floatDelay: 1.5,
+    id: 'search', cx: 400, cy: 760, floatDelay: 1.5,
     path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
   },
   { 
-    id: 'data', cx: 1720, cy: 400, pathIndex: 1, f: 0.82, floatDelay: 0.8,
+    id: 'data', cx: 1720, cy: 400, floatDelay: 0.8,
     path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
   },
   { 
-    id: 'chrome', cx: 1520, cy: 760, pathIndex: 3, f: 0.58, floatDelay: 2.3,
+    id: 'chrome', cx: 1520, cy: 760, floatDelay: 2.3,
     path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
   },
   { 
-    id: 'linkedin', cx: 775, cy: 880, pathIndex: 8, f: 0.42, floatDelay: 3,
+    id: 'linkedin', cx: 775, cy: 880, floatDelay: 3,
     path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
   },
   { 
-    id: 'email', cx: 1145, cy: 880, pathIndex: 9, f: 0.42, floatDelay: 3.8,
+    id: 'email', cx: 1145, cy: 880, floatDelay: 3.8,
     path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
   }
 ]
-
-const getGlowTimes = (f: number) => {
-  const hitTime = 1 - f;
-  return [
-    0,
-    Math.max(0, hitTime - 0.01),
-    hitTime,
-    Math.min(1, hitTime + 0.05),
-    1
-  ];
-}
 
 const CircuitBackground = React.memo(() => {
   return (
@@ -97,16 +84,16 @@ const CircuitBackground = React.memo(() => {
           />
           <motion.path
             d={path}
-            stroke="rgba(0,170,255,0.4)"
+            stroke="rgba(0,170,255,0.5)"
             strokeWidth="6"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0.15, pathOffset: 1, opacity: 0 }}
-            animate={{ pathOffset: [1, 0], opacity: [0, 0.4, 1, 0] }}
+            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
+            animate={{ pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
-              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.85, 1] }
+              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: i * 0.45 },
+              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: i * 0.45, times: [0, 0.1, 0.9, 1] }
             }}
           />
           <motion.path
@@ -116,11 +103,11 @@ const CircuitBackground = React.memo(() => {
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0.15, pathOffset: 1, opacity: 0 }}
-            animate={{ pathOffset: [1, 0], opacity: [0, 0.4, 1, 0] }}
+            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
+            animate={{ pathOffset: 1, opacity: [0, 1, 1, 0] }}
             transition={{ 
-              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
-              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.85, 1] }
+              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: i * 0.45 },
+              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: i * 0.45, times: [0, 0.1, 0.9, 1] }
             }}
           />
         </g>
@@ -159,50 +146,21 @@ const CircuitBackground = React.memo(() => {
       {floatingIcons.map((icon) => (
         <motion.g
           key={icon.id}
-          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
+          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.3)]"
           animate={{ y: [-8, 8, -8] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.floatDelay }}
         >
-          <motion.rect
-            x={icon.cx - 32}
-            y={icon.cy - 32}
-            width="64"
-            height="64"
-            rx="18"
-            fill="none"
-            stroke="#00AAFF"
-            strokeWidth="8"
-            style={{ filter: "blur(12px)" }}
-            animate={{ opacity: [0, 0, 1, 0, 0] }}
-            transition={{ 
-              duration: 12, 
-              times: getGlowTimes(icon.f), 
-              repeat: Infinity, 
-              delay: pathDelays[icon.pathIndex],
-              ease: "linear"
-            }}
-          />
-          
-          <motion.rect
+          <rect
             x={icon.cx - 32}
             y={icon.cy - 32}
             width="64"
             height="64"
             rx="18"
             fill="#02050A"
-            fillOpacity="1"
+            fillOpacity="0.8"
             stroke="#00AAFF"
-            animate={{ 
-              strokeOpacity: [0.3, 0.3, 1, 0.3, 0.3],
-              strokeWidth: [1.5, 1.5, 3, 1.5, 1.5]
-            }}
-            transition={{ 
-              duration: 12, 
-              times: getGlowTimes(icon.f), 
-              repeat: Infinity, 
-              delay: pathDelays[icon.pathIndex],
-              ease: "linear"
-            }}
+            strokeWidth="1.5"
+            className="transition-all duration-300"
           />
           
           <svg
@@ -216,7 +174,7 @@ const CircuitBackground = React.memo(() => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="opacity-90"
+            className="opacity-100"
           >
             {icon.path}
           </svg>
@@ -340,30 +298,7 @@ export default function Hero() {
         <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
           <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" />
 
-          <motion.div 
-            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border flex items-center justify-center overflow-hidden z-10"
-            animate={{
-              boxShadow: [
-                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)",
-                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
-                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
-                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)"
-              ],
-              borderColor: [
-                "rgba(0,170,255,1)",
-                "rgba(0,170,255,0.3)",
-                "rgba(0,170,255,0.3)",
-                "rgba(0,170,255,1)"
-              ]
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.08, 0.92, 1],
-              delay: 0
-            }}
-          >
+          <div className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border border-[#00AAFF]/40 flex items-center justify-center overflow-hidden z-10 shadow-[inset_0_0_30px_rgba(0,170,255,0.5),0_0_20px_rgba(0,170,255,0.4)] transition-all duration-700">
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
             
             <img 
@@ -371,7 +306,7 @@ export default function Hero() {
               alt="EntryLab Logo" 
               className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
             />
-          </motion.div>
+          </div>
         </div>
       </div>
       
