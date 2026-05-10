@@ -1,10 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const headings = [
-  "Precision search, Real impact",
   "Every Search Has a Value",
   "Search That Drives Growth",
   "Every Search Has Power",
@@ -17,365 +16,194 @@ const headings = [
   "Search That Moves Forward"
 ]
 
-const circuitPaths = [
-  "M 960 760 L 800 600 L 400 600 L 200 400 L 0 400",
-  "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
-  "M 960 760 L 800 760 L 400 760 L 0 760",
-  "M 960 760 L 1120 760 L 1520 760 L 1920 760",
-  "M 960 760 L 800 880 L 500 880 L 300 980 L 0 980",
-  "M 960 760 L 1120 880 L 1420 880 L 1620 980 L 1920 980",
-  "M 960 760 L 850 500 L 500 200 L 0 200",
-  "M 960 760 L 1070 500 L 1420 200 L 1920 200",
-  "M 960 760 L 880 880 L 750 880 L 500 1080",
-  "M 960 760 L 1040 880 L 1170 880 L 1420 1080"
+const circuits = [
+  "M -100 350 L 150 350 L 250 250 L 420 250 L 470 200",
+  "M -100 150 L 50 150 L 150 50 L 350 50 L 400 100 L 470 100",
+  "M 1100 350 L 850 350 L 750 250 L 580 250 L 530 200",
+  "M 1100 150 L 950 150 L 850 50 L 650 50 L 600 100 L 530 100",
+  "M 150 500 L 150 400 L 300 250 L 350 250",
+  "M 850 500 L 850 400 L 700 250 L 650 250",
+  "M 500 500 L 500 350 L 470 320",
+  "M 0 250 L 100 250 L 200 150 L 300 150 L 350 200",
+  "M 1000 250 L 900 250 L 800 150 L 700 150 L 650 200"
 ]
-
-const pathDelays = [2, 2, 0, 0, 4, 4, 1, 1, 3, 3]
-
-const nodes = [
-  { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
-  { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
-  { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
-  { cx: 1120, cy: 760 }, { cx: 1520, cy: 760 },
-  { cx: 800, cy: 880 }, { cx: 500, cy: 880 }, { cx: 300, cy: 980 },
-  { cx: 1120, cy: 880 }, { cx: 1420, cy: 880 }, { cx: 1620, cy: 980 },
-  { cx: 850, cy: 500 }, { cx: 500, cy: 200 },
-  { cx: 1070, cy: 500 }, { cx: 1420, cy: 200 },
-  { cx: 880, cy: 880 }, { cx: 750, cy: 880 },
-  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 }
-]
-
-const floatingIcons = [
-  { 
-    id: 'sheet', cx: 200, cy: 400, pathIndex: 0, f: 0.82, floatDelay: 0,
-    path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
-  },
-  { 
-    id: 'search', cx: 400, cy: 760, pathIndex: 2, f: 0.58, floatDelay: 1.5,
-    path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
-  },
-  { 
-    id: 'data', cx: 1720, cy: 400, pathIndex: 1, f: 0.82, floatDelay: 0.8,
-    path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
-  },
-  { 
-    id: 'chrome', cx: 1520, cy: 760, pathIndex: 3, f: 0.58, floatDelay: 2.3,
-    path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
-  },
-  { 
-    id: 'linkedin', cx: 775, cy: 880, pathIndex: 8, f: 0.42, floatDelay: 3,
-    path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
-  },
-  { 
-    id: 'email', cx: 1145, cy: 880, pathIndex: 9, f: 0.42, floatDelay: 3.8,
-    path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
-  }
-]
-
-// Calculate exact timing arrays for when the moving line passes the icon
-const getGlowTimes = (f: number) => {
-  const peak = f - 0.075; 
-  return [
-    0,
-    Math.max(0, peak - 0.05),
-    Math.max(0, peak),
-    Math.min(1, peak + 0.15),
-    1
-  ];
-}
-
-const CircuitBackground = React.memo(() => {
-  return (
-    <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full z-10 pointer-events-none">
-      {circuitPaths.map((path, i) => (
-        <g key={`circuit-base-${i}`}>
-          <path
-            d={path}
-            stroke="rgba(0,170,255,0.15)"
-            strokeWidth="1.5"
-            fill="none"
-            strokeLinejoin="round"
-          />
-          <motion.path
-            d={path}
-            stroke="rgba(0,170,255,0.5)"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
-            animate={{ pathOffset: [0, 1], opacity: [0, 1, 1, 0] }}
-            transition={{ 
-              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
-              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.9, 1] }
-            }}
-          />
-          <motion.path
-            d={path}
-            stroke="#00AAFF"
-            strokeWidth="1"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
-            animate={{ pathOffset: [0, 1], opacity: [0, 1, 1, 0] }}
-            transition={{ 
-              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
-              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.9, 1] }
-            }}
-          />
-        </g>
-      ))}
-
-      {nodes.map((node, i) => (
-        <g key={`node-${i}`}>
-          <rect
-            x={node.cx - 5}
-            y={node.cy - 5}
-            width="10"
-            height="10"
-            rx="2"
-            fill="#02050A"
-            stroke="rgba(0,170,255,0.3)"
-            strokeWidth="1.5"
-          />
-          <motion.rect
-            x={node.cx - 2.5}
-            y={node.cy - 2.5}
-            width="5"
-            height="5"
-            rx="1"
-            fill="#00AAFF"
-            animate={{ opacity: [0.1, 1, 0.1] }}
-            transition={{ 
-              duration: 4, 
-              repeat: Infinity, 
-              delay: (i % 5) * 0.8, 
-              ease: "easeInOut" 
-            }}
-          />
-        </g>
-      ))}
-
-      {floatingIcons.map((icon) => (
-        <motion.g
-          key={icon.id}
-          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
-          animate={{ y: [-8, 8, -8] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.floatDelay }}
-        >
-          <motion.rect
-            x={icon.cx - 32}
-            y={icon.cy - 32}
-            width="64"
-            height="64"
-            rx="18"
-            fill="none"
-            stroke="#00AAFF"
-            strokeWidth="6"
-            style={{ filter: "blur(10px)" }}
-            animate={{ opacity: [0, 0, 1, 0, 0] }}
-            transition={{ 
-              duration: 12, 
-              times: getGlowTimes(icon.f), 
-              repeat: Infinity, 
-              delay: pathDelays[icon.pathIndex],
-              ease: "linear"
-            }}
-          />
-          
-          <motion.rect
-            x={icon.cx - 32}
-            y={icon.cy - 32}
-            width="64"
-            height="64"
-            rx="18"
-            fill="#02050A"
-            fillOpacity="1"
-            stroke="#00AAFF"
-            animate={{ 
-              strokeOpacity: [0.3, 0.3, 1, 0.3, 0.3],
-              strokeWidth: [1.5, 1.5, 3, 1.5, 1.5]
-            }}
-            transition={{ 
-              duration: 12, 
-              times: getGlowTimes(icon.f), 
-              repeat: Infinity, 
-              delay: pathDelays[icon.pathIndex],
-              ease: "linear"
-            }}
-          />
-          
-          <svg
-            x={icon.cx - 16}
-            y={icon.cy - 16}
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#00AAFF"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="opacity-90"
-          >
-            {icon.path}
-          </svg>
-        </motion.g>
-      ))}
-    </svg>
-  )
-})
-
-CircuitBackground.displayName = 'CircuitBackground'
 
 export default function Hero() {
-  const [displayedText, setDisplayedText] = useState("")
-  const [headingIndex, setHeadingIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [index, setIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
-    const loadTimer = setTimeout(() => {
-      setIsInitialLoad(false)
-    }, 1500)
-    return () => clearTimeout(loadTimer)
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % headings.length)
+    }, 2500)
+    return () => clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    if (isInitialLoad) return
-
-    let timeout: NodeJS.Timeout
-    const currentText = headings[headingIndex]
-
-    if (isDeleting) {
-      if (displayedText.length === 0) {
-        setIsDeleting(false)
-        setHeadingIndex((prev) => (prev + 1) % headings.length)
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayedText(currentText.substring(0, displayedText.length - 1))
-        }, 30)
-      }
-    } else {
-      if (displayedText.length === currentText.length) {
-        timeout = setTimeout(() => setIsDeleting(true), 6000)
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayedText(currentText.substring(0, displayedText.length + 1))
-        }, 40)
-      }
-    }
-
-    return () => clearTimeout(timeout)
-  }, [displayedText, isDeleting, headingIndex, isInitialLoad])
-
   return (
-    <section id="home" className="relative w-full min-h-screen bg-[#02050A] overflow-hidden flex flex-col items-center justify-start pt-[12vh] md:pt-[15vh] z-0">
+    <section id="home" className="relative w-full h-screen bg-[#02050A] overflow-hidden flex flex-col items-center pt-[18vh] md:pt-[22vh] z-0">
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes custom-gradient {
+        @keyframes neon-gradient {
           0% { background-position: 200% center; }
           100% { background-position: 0% center; }
         }
-        .animate-custom-gradient {
-          animation: custom-gradient 8s linear infinite;
+        .text-neon {
+          animation: neon-gradient 4s linear infinite;
+        }
+        @keyframes scanline {
+          0% { transform: translateY(-100vh); }
+          100% { transform: translateY(100vh); }
+        }
+        .animate-scan {
+          animation: scanline 6s linear infinite;
         }
       `}} />
 
-      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#00AAFF] rounded-full blur-[150px] opacity-20 animate-pulse pointer-events-none" />
       
-      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_20%,transparent_80%)] pointer-events-none" />
       
-      <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
+      <div className="absolute left-0 right-0 h-[2px] bg-[#00AAFF]/20 shadow-[0_0_20px_rgba(0,170,255,0.5)] animate-scan pointer-events-none z-50" />
 
-      <CircuitBackground />
-
-      <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full"
-        >
-          <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight w-full leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
-                {isInitialLoad ? headings[0] : displayedText}
-              </span>
-              <span 
-                className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" 
-              />
-            </h1>
+      <div className="absolute left-4 md:left-10 top-1/4 flex flex-col gap-6 opacity-60 pointer-events-none z-10 hidden md:flex">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <div className="w-1.5 h-1.5 bg-[#00AAFF] rounded-full animate-ping" style={{ animationDelay: `${i * 0.3}s` }} />
+            <div className="w-8 h-[1px] bg-[#00AAFF]/40" />
           </div>
-        </motion.div>
+        ))}
+      </div>
+
+      <div className="absolute right-4 md:right-10 top-1/3 flex flex-col items-end gap-4 opacity-50 pointer-events-none z-10 hidden md:flex">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-[1px] bg-[#00AAFF]/60" />
+          <span className="text-[#00AAFF] text-[10px] font-mono tracking-widest">SYS.ACTV</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-[1px] bg-[#00AAFF]/40" />
+          <span className="text-[#00AAFF] text-[10px] font-mono tracking-widest">NET.LINK</span>
+        </div>
+        <div className="w-8 h-8 rounded-full border border-[#00AAFF]/30 border-t-[#00AAFF] animate-spin mt-4" style={{ animationDuration: '3s' }} />
+      </div>
+
+      <div className="relative z-40 flex flex-col items-center text-center px-6 w-full max-w-5xl">
+        <div className="relative w-full h-[100px] sm:h-[120px] md:h-[160px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={index}
+              initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, filter: "blur(0px)", scale: 1, y: 0 }}
+              exit={{ opacity: 0, filter: "blur(15px)", scale: 1.05, y: -15 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text text-neon w-full drop-shadow-[0_0_20px_rgba(0,170,255,0.4)]"
+              style={{
+                backgroundImage: "linear-gradient(to left, #00AAFF 0%, #ffffff 50%, #44BBFF 100%)",
+                backgroundSize: "200% auto",
+              }}
+            >
+              {headings[index]}
+            </motion.h1>
+          </AnimatePresence>
+        </div>
 
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-          className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
+          transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
+          className="text-white/80 text-base md:text-xl max-w-2xl mt-4 md:mt-8 font-medium tracking-wide drop-shadow-md"
         >
           Transforming information into insights that power smarter decisions and accelerate growth.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-          className="mt-10 mb-8"
+          transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
+          className="mt-10"
         >
           <a
             href="#about"
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)]"
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-md border border-[#00AAFF]/50 px-8 py-4 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)] transition-all duration-500"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-            <span className="relative z-10 text-white text-sm md:text-base font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
-            <svg className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <div className="absolute inset-0 bg-[#00AAFF] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
+            <span className="relative z-10 text-white font-semibold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
+            <svg className="absolute right-5 opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-5 h-5 z-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </a>
         </motion.div>
       </div>
 
-      <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
-          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-full h-[50vh] z-20 pointer-events-none">
+        <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMax slice" className="w-full h-full">
+          {circuits.map((path, i) => (
+            <g key={`circuit-${i}`}>
+              <path
+                d={path}
+                stroke={isHovered ? "rgba(0,170,255,0.6)" : "rgba(0,170,255,0.2)"}
+                strokeWidth={isHovered ? "2" : "1"}
+                fill="none"
+                className="transition-all duration-700"
+              />
+              <motion.path
+                d={path}
+                stroke="#00AAFF"
+                strokeWidth={isHovered ? "3" : "2"}
+                fill="none"
+                initial={{ pathLength: 0, pathOffset: 1 }}
+                animate={{ pathLength: 0.15, pathOffset: 0 }}
+                transition={{ duration: 3 + (i % 2), repeat: Infinity, ease: "linear", delay: i * 0.2 }}
+                style={{ filter: isHovered ? "drop-shadow(0 0 8px #00AAFF)" : "drop-shadow(0 0 4px #00AAFF)" }}
+              />
+            </g>
+          ))}
+          
+          {[
+            { cx: 470, cy: 200 }, { cx: 470, cy: 100 }, { cx: 530, cy: 200 }, { cx: 530, cy: 100 },
+            { cx: 350, cy: 250 }, { cx: 650, cy: 250 }, { cx: 470, cy: 320 }, { cx: 350, cy: 200 }, { cx: 650, cy: 200 }
+          ].map((point, i) => (
+            <motion.circle
+              key={`node-${i}`}
+              cx={point.cx}
+              cy={point.cy}
+              r={isHovered ? 5 : 3}
+              fill="#02050A"
+              stroke="#00AAFF"
+              strokeWidth="2"
+              className="transition-all duration-500"
+              animate={{ filter: ["drop-shadow(0 0 2px #00AAFF)", "drop-shadow(0 0 10px #00AAFF)", "drop-shadow(0 0 2px #00AAFF)"] }}
+              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+            />
+          ))}
+        </svg>
 
-          <motion.div 
-            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border flex items-center justify-center overflow-hidden z-10"
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] pointer-events-auto">
+          <motion.div
+            className="cursor-pointer relative flex items-center justify-center p-8"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             animate={{
-              boxShadow: [
-                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)",
-                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
-                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
-                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)"
-              ],
-              borderColor: [
-                "rgba(0,170,255,1)",
-                "rgba(0,170,255,0.3)",
-                "rgba(0,170,255,0.3)",
-                "rgba(0,170,255,1)"
-              ]
+              scale: isHovered ? 1.05 : 1,
             }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.08, 0.92, 1]
-            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
-            
+            <motion.div 
+              className="absolute inset-0 bg-[#00AAFF]/20 rounded-full blur-[40px] pointer-events-none"
+              animate={{ 
+                opacity: isHovered ? 0.8 : 0.3,
+                scale: isHovered ? 1.5 : 1 
+              }}
+              transition={{ duration: 0.5 }}
+            />
             <img 
-              src="https://iili.io/BZZjMzu.png" 
+              src="https://iili.io/FC3KC6g.png" 
               alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              className="relative h-12 md:h-16 w-auto z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" 
             />
           </motion.div>
         </div>
       </div>
       
-      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-40 pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#02050A] to-transparent z-30 pointer-events-none" />
     </section>
   )
 }
