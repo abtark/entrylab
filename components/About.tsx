@@ -1,9 +1,16 @@
 'use client'
 
-import React, { useRef, useEffect } from 'react'
+import { useRef, useEffect, ReactNode } from 'react'
 import { motion, useInView, animate } from 'framer-motion'
+import Link from 'next/link'
 
-const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, suffix?: string, decimals?: number }) => {
+interface AnimatedNumberProps {
+  value: number;
+  suffix?: string;
+  decimals?: number;
+}
+
+const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: AnimatedNumberProps) => {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
 
@@ -24,15 +31,17 @@ const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, s
   return <span ref={ref} className="text-3xl font-bold text-white mb-1 tracking-tight">0{suffix}</span>
 }
 
+interface ScrollRevealProProps {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}
+
 const ScrollRevealPro = ({ 
   children, 
   className = "", 
   delay = 0 
-}: { 
-  children: React.ReactNode, 
-  className?: string,
-  delay?: number
-}) => {
+}: ScrollRevealProProps) => {
   return (
     <motion.span
       initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
@@ -50,7 +59,13 @@ const ScrollRevealPro = ({
   )
 }
 
-const timelineData = [
+interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+}
+
+const timelineData: TimelineItem[] = [
   {
     year: "2019",
     title: "EntryLab Founded",
@@ -88,7 +103,15 @@ const timelineData = [
   }
 ]
 
-const cultureData = [
+interface CultureItem {
+  title: string;
+  description: string;
+  icon: ReactNode;
+  iconExtras?: ReactNode;
+  color: string;
+}
+
+const cultureData: CultureItem[] = [
   {
     title: "Collaborative Environment",
     description: "We believe in teamwork. Every project is a collaborative effort where everyone's ideas matter.",
@@ -158,7 +181,7 @@ export default function About() {
 
   return (
     <section id="about" className="relative py-32 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
-      <style dangerouslySetInnerHTML={{__html: `
+      <style>{`
         @keyframes gradient-r2l {
           0% { background-position: 200% 50%; }
           100% { background-position: 0% 50%; }
@@ -166,7 +189,7 @@ export default function About() {
         .animate-gradient-r2l {
           animation: gradient-r2l 4s linear infinite;
         }
-      `}} />
+      `}</style>
 
       <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
         <motion.div 
@@ -285,7 +308,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <a href="https://www.entrylab.net/industryinsights" className="text-[#00AAFF] hover:underline transition-all duration-300">Learn more about our Insights</a>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <Link href="https://www.entrylab.net/industryinsights" className="text-[#00AAFF] hover:underline transition-all duration-300">Learn more about our Insights</Link>
               </ScrollRevealPro>
             </p>
 
