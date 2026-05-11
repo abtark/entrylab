@@ -180,7 +180,7 @@ export default function About() {
 
   return (
     <section id="about" className="relative py-32 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
-      <style>{`
+      <style dangerouslySetInnerHTML={{__html: `
         @keyframes gradient-r2l {
           0% { background-position: 200% 50%; }
           100% { background-position: 0% 50%; }
@@ -188,7 +188,7 @@ export default function About() {
         .animate-gradient-r2l {
           animation: gradient-r2l 4s linear infinite;
         }
-      `}</style>
+      `}} />
 
       <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
         <motion.div 
@@ -199,7 +199,7 @@ export default function About() {
         <motion.div 
           animate={{ y: [0, 40, 0], rotate: [0, 10, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] right-[5%] w-24 h-24 md:w-40 md:h-40 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 blur-[80px] opacity-60 will-change-transform transform-gpu"
+          className="absolute top-[20%] right-[5%] w-24 h-24 md:w-40 md:h-40 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 blur-[80px] opacity-60 will-change-transform transform-gpu"
         />
         <motion.div 
           animate={{ y: [0, -20, 0], x: [0, -20, 0] }}
@@ -309,7 +309,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <span onClick={() => window.open('https://www.entrylab.net/industryinsights', '_blank')} className="text-[#00AAFF] cursor-pointer group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <span onClick={() => window.open('https://www.entrylab.net/industryinsights', '_blank')} onKeyDown={(e) => e.key === 'Enter' && window.open('https://www.entrylab.net/industryinsights', '_blank')} role="button" tabIndex={0} className="text-[#00AAFF] cursor-pointer group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </ScrollRevealPro>
             </p>
 
@@ -405,7 +405,7 @@ export default function About() {
         </div>
 
         <div className="relative max-w-4xl mx-auto pb-10">
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#00AAFF]/40 via-purple-500/40 to-transparent transform md:-translate-x-1/2 z-0" />
+          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#00AAFF]/40 via-blue-500/40 to-transparent transform md:-translate-x-1/2 z-0" />
 
           {timelineData.map((item, index) => {
             const isLeft = index % 2 === 0;
@@ -442,7 +442,7 @@ export default function About() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="flex flex-col items-center mb-16">
           <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
