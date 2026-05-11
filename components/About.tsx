@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, ReactNode } from 'react'
 import { motion, useInView, animate } from 'framer-motion'
-import Link from 'next/link'
 
 interface AnimatedNumberProps {
   value: number;
@@ -216,15 +215,17 @@ export default function About() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
         <div className="flex flex-col items-center mb-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight pb-2">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              About EntryLab
+          <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight uppercase">
+            <span className="relative inline-block px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-2xl">
+              <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+                ABOUT ENTRYLAB
+              </span>
             </span>
           </h2>
-          <div className="w-16 h-[2px] bg-gradient-to-r from-[#00AAFF] to-blue-500 rounded-full mt-3" />
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-6"></div>
         </div>
 
-        <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-2">
+        <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-4">
           <ScrollRevealPro>
             We&apos;re a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
           </ScrollRevealPro>
@@ -279,7 +280,7 @@ export default function About() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-16">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-purple-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-blue-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
@@ -308,7 +309,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <Link href="https://www.entrylab.net/industryinsights" className="text-[#00AAFF] hover:underline transition-all duration-300">Learn more about our Insights</Link>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <span onClick={() => window.open('https://www.entrylab.net/industryinsights', '_blank')} className="text-[#00AAFF] cursor-pointer group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </ScrollRevealPro>
             </p>
 
@@ -381,7 +382,7 @@ export default function About() {
                 />
               </div>
               
-              <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-purple-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
+              <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-blue-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
                 <span className="text-xs md:text-sm font-medium tracking-wide uppercase mb-1">Since</span>
                 <span className="text-xl md:text-3xl font-bold leading-none">2019</span>
               </div>
