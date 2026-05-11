@@ -32,7 +32,7 @@ const circuitPaths = [
   "M 960 760 L 1120 500 L 1470 500 L 1670 300 L 1920 300"
 ]
 
-const pathDelays = [2, 0, 4, 2, 0, 4, 1, 1, 3, 3, 5, 5]
+const pathDelays = [0, 6, 2, 8, 4, 10, 1, 7, 3, 9, 5, 11]
 
 const nodes = [
   { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
@@ -73,6 +73,14 @@ const floatingIcons = [
   { 
     id: 'email', cx: 1145, cy: 880, pathIndex: 9, f: 0.42, floatDelay: 3.8,
     path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
+  },
+  { 
+    id: 'cloud', cx: 500, cy: 880, pathIndex: 2, f: 0.58, floatDelay: 2.7,
+    path: <><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4.2 12 4.5 4.5 0 0 0 5.5 21h12Z"/></> 
+  },
+  { 
+    id: 'idea', cx: 1420, cy: 880, pathIndex: 5, f: 0.58, floatDelay: 3.2,
+    path: <><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></> 
   }
 ]
 
@@ -285,9 +293,9 @@ export default function Hero() {
         }
       `}} />
 
-      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.45),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
       
-      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.25),transparent_60%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.45),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
       
       <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
 
@@ -364,7 +372,8 @@ export default function Hero() {
               duration: 12,
               repeat: Infinity,
               ease: "easeInOut",
-              times: [0, 0.08, 0.92, 1]
+              times: [0, 0.08, 0.92, 1],
+              delay: 0
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
