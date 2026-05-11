@@ -113,60 +113,58 @@ interface CultureItem {
 const cultureData: CultureItem[] = [
   {
     title: "Collaborative Environment",
-    description: "We believe in teamwork. Every project is a collaborative effort where everyone's ideas matter.",
+    description: "We grow together through teamwork, where every idea inspires success.",
     icon: <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />,
     iconExtras: <circle cx="9" cy="7" r="4" />,
     color: "#00AAFF"
   },
   {
     title: "Growth & Learning",
-    description: "Regular training sessions and skill development programs keep our team at the cutting edge.",
+    description: "Continuous learning and training keep our team ahead of the curve.",
     icon: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />,
     color: "#8B5CF6"
   },
   {
     title: "Work-Life Balance",
-    description: "We value our team's well-being with flexible schedules and regular team outings.",
+    description: "Flexible work and fun outings help us maintain a healthy work-life balance.",
     icon: <circle cx="12" cy="12" r="10" />,
     iconExtras: <polyline points="12 6 12 12 16 14" />,
     color: "#10B981"
   },
   {
     title: "Celebrate Together",
-    description: "From project milestones to festivals, we celebrate every achievement as a family.",
-    icon: <path d="M12 2v20" />,
-    iconExtras: <><path d="m17 5-5-3-5 3v14l5 3 5-3V5z"/></>,
+    description: "We celebrate every milestone and festival together like one family.",
+    icon: <><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13" /><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" /></>,
     color: "#F59E0B"
   },
   {
     title: "Innovation First",
-    description: "We encourage creative problem-solving and constantly improve our processes.",
+    description: "Creativity and innovation drive us to improve and solve challenges better.",
     icon: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
     color: "#EF4444"
   },
   {
     title: "Open Communication",
-    description: "Transparent, honest communication is the foundation of our workplace culture.",
+    description: "Honest communication and transparency build trust across our workplace.",
     icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
     color: "#3B82F6"
   },
   {
     title: "Trip & Tour",
-    description: "We believe in creating memories together beyond the office walls.",
-    icon: <path d="M2 22 22 2" />,
-    iconExtras: <><path d="M22 2v10" /><path d="M12 2h10" /><path d="m2 22 10-10" /></>,
+    description: "Beyond work, we create meaningful memories and stronger connections together.",
+    icon: <><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l5.5 4L5 15.5 2.8 15 2 16l3 3 1 .8L7.5 22l.5-1.8-.5-2.2 3.5-3.5 4 5.5c.3.5.9.6 1.3.4l1.2-1.7c.3-.3.1-.7-.2-.9z"/></>,
     color: "#EC4899"
   },
   {
     title: "Fun & Creativity",
-    description: "We love thinking outside the box and enjoying the process.",
+    description: "We embrace creativity, think differently, and enjoy every step of the journey.",
     icon: <circle cx="12" cy="12" r="10" />,
     iconExtras: <><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></>,
     color: "#14B8A6"
   },
   {
     title: "Recognition & Rewards",
-    description: "We celebrate achievements big and small.",
+    description: "Every achievement, big or small, deserves recognition and celebration.",
     icon: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />,
     color: "#EAB308"
   }
@@ -216,13 +214,11 @@ export default function About() {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight uppercase">
-            <span className="relative inline-block px-8 py-3 bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-2xl">
-              <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-                ABOUT ENTRYLAB
-              </span>
+            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
+              ABOUT ENTRYLAB
             </span>
           </h2>
-          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-6"></div>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
         </div>
 
         <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-4">
@@ -295,19 +291,19 @@ export default function About() {
               </ScrollRevealPro>
             </h3>
             
-            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
+            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
                 EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals.
               </ScrollRevealPro>
             </p>
             
-            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base">
+            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
                 Over the years, we&apos;ve had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
               </ScrollRevealPro>
             </p>
             
-            <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
+            <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
                 But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <span onClick={() => window.open('https://www.entrylab.net/industryinsights', '_blank')} onKeyDown={(e) => e.key === 'Enter' && window.open('https://www.entrylab.net/industryinsights', '_blank')} role="button" tabIndex={0} className="text-[#00AAFF] cursor-pointer group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </ScrollRevealPro>
