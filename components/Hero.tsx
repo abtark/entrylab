@@ -75,11 +75,11 @@ const floatingIcons = [
     path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
   },
   { 
-    id: 'cloud', cx: 500, cy: 880, pathIndex: 2, f: 0.58, floatDelay: 2.7,
+    id: 'cloud', cx: 450, cy: 500, pathIndex: 10, f: 0.49, floatDelay: 2.7,
     path: <><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4.2 12 4.5 4.5 0 0 0 5.5 21h12Z"/></> 
   },
   { 
-    id: 'idea', cx: 1420, cy: 880, pathIndex: 5, f: 0.58, floatDelay: 3.2,
+    id: 'idea', cx: 1470, cy: 500, pathIndex: 11, f: 0.55, floatDelay: 3.2,
     path: <><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></> 
   }
 ]
@@ -293,9 +293,9 @@ export default function Hero() {
         }
       `}} />
 
-      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.45),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.6),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
       
-      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.45),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.6),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
       
       <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
 
