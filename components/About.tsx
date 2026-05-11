@@ -228,9 +228,9 @@ export default function About() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
-            <div className="p-4 rounded-xl bg-gradient-to-br from-[#00AAFF]/20 to-blue-600/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+            <div className="p-4 rounded-xl bg-[#00AAFF] mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <circle cx="12" cy="12" r="6" />
                 <circle cx="12" cy="12" r="2" />
@@ -239,14 +239,14 @@ export default function About() {
             <h3 className="text-xl font-bold text-white mb-3">
               <ScrollRevealPro>Our Mission</ScrollRevealPro>
             </h3>
-            <p className="text-white/70 leading-relaxed text-base text-justify">
+            <p className="text-white/70 leading-relaxed text-base text-left">
               <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
             </p>
           </div>
 
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
-            <div className="p-4 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+            <div className="p-4 rounded-xl bg-[#EC4899] mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
@@ -254,21 +254,21 @@ export default function About() {
             <h3 className="text-xl font-bold text-white mb-3">
               <ScrollRevealPro>Our Vision</ScrollRevealPro>
             </h3>
-            <p className="text-white/70 leading-relaxed text-base text-justify">
+            <p className="text-white/70 leading-relaxed text-base text-left">
               <ScrollRevealPro>To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealPro>
             </p>
           </div>
 
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
-            <div className="p-4 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+            <div className="p-4 rounded-xl bg-[#F97316] mb-6 transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </div>
             <h3 className="text-xl font-bold text-white mb-3">
               <ScrollRevealPro>Our Values</ScrollRevealPro>
             </h3>
-            <p className="text-white/70 leading-relaxed text-base text-justify">
+            <p className="text-white/70 leading-relaxed text-base text-left">
               <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
             </p>
           </div>
