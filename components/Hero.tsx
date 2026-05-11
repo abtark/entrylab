@@ -32,7 +32,7 @@ const circuitPaths = [
   "M 960 760 L 1120 500 L 1470 500 L 1670 300 L 1920 300"
 ]
 
-const pathDelays = [0, 6, 2, 8, 4, 10, 1, 7, 3, 9, 5, 11]
+const pathDelays = [0, 2, 4, 0, 2, 4, 6, 6, 8, 8, 10, 10]
 
 const nodes = [
   { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
@@ -73,14 +73,6 @@ const floatingIcons = [
   { 
     id: 'email', cx: 1145, cy: 880, pathIndex: 9, f: 0.42, floatDelay: 3.8,
     path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
-  },
-  { 
-    id: 'cloud', cx: 450, cy: 500, pathIndex: 10, f: 0.49, floatDelay: 2.7,
-    path: <><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4.2 12 4.5 4.5 0 0 0 5.5 21h12Z"/></> 
-  },
-  { 
-    id: 'idea', cx: 1470, cy: 500, pathIndex: 11, f: 0.55, floatDelay: 3.2,
-    path: <><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></> 
   }
 ]
 
@@ -172,8 +164,8 @@ const CircuitBackground = React.memo(() => {
         <motion.g
           key={icon.id}
           className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
-          animate={{ y: [-8, 8, -8] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: icon.floatDelay }}
+          animate={{ translateY: [-10, 10, -10] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: icon.floatDelay }}
         >
           <motion.rect
             x={icon.cx - 32}
@@ -293,9 +285,9 @@ export default function Hero() {
         }
       `}} />
 
-      <div className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,170,255,0.6),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute top-0 right-0 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(circle_at_top_right,rgba(0,170,255,0.4),transparent_60%)] pointer-events-none z-0 mix-blend-screen -translate-y-1/4 translate-x-1/4" />
       
-      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,170,255,0.6),transparent_70%)] pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute bottom-0 left-0 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[radial-gradient(circle_at_bottom_left,rgba(0,170,255,0.4),transparent_60%)] pointer-events-none z-0 mix-blend-screen translate-y-1/4 -translate-x-1/4" />
       
       <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
 
@@ -303,9 +295,9 @@ export default function Hero() {
 
       <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 60, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
           <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
@@ -321,18 +313,18 @@ export default function Hero() {
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
         >
           We transform data into meaningful insights that help you make smarter decisions, uncover opportunities, and drive sustainable growth for your business with confidence and clarity.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+          initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
           className="mt-10 mb-8"
         >
           <a
