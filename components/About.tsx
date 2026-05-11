@@ -230,6 +230,9 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="flex items-center justify-between w-full mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-[#00AAFF] text-left">
+                <ScrollRevealPro>Our Mission</ScrollRevealPro>
+              </h3>
               <div className="p-4 rounded-xl bg-[#00AAFF] transition-transform duration-300 group-hover:scale-110 will-change-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
@@ -237,9 +240,6 @@ export default function About() {
                   <circle cx="12" cy="12" r="2" />
                 </svg>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-[#00AAFF] text-right">
-                <ScrollRevealPro>Our Mission</ScrollRevealPro>
-              </h3>
             </div>
             <p className="text-white/70 leading-relaxed text-base text-left w-full">
               <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
@@ -248,15 +248,15 @@ export default function About() {
 
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="flex items-center justify-between w-full mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-[#EC4899] text-left">
+                <ScrollRevealPro>Our Vision</ScrollRevealPro>
+              </h3>
               <div className="p-4 rounded-xl bg-[#EC4899] transition-transform duration-300 group-hover:scale-110 will-change-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                   <circle cx="12" cy="12" r="3" />
                 </svg>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-[#EC4899] text-right">
-                <ScrollRevealPro>Our Vision</ScrollRevealPro>
-              </h3>
             </div>
             <p className="text-white/70 leading-relaxed text-base text-left w-full">
               <ScrollRevealPro>To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealPro>
@@ -265,14 +265,14 @@ export default function About() {
 
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="flex items-center justify-between w-full mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-[#F97316] text-left">
+                <ScrollRevealPro>Our Values</ScrollRevealPro>
+              </h3>
               <div className="p-4 rounded-xl bg-[#F97316] transition-transform duration-300 group-hover:scale-110 will-change-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-[#F97316] text-right">
-                <ScrollRevealPro>Our Values</ScrollRevealPro>
-              </h3>
             </div>
             <p className="text-white/70 leading-relaxed text-base text-left w-full">
               <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
