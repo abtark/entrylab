@@ -239,7 +239,7 @@ export default function About() {
             <h3 className="text-xl font-bold text-white mb-3">
               <ScrollRevealPro>Our Mission</ScrollRevealPro>
             </h3>
-            <p className="text-white/70 leading-relaxed text-base">
+            <p className="text-white/70 leading-relaxed text-base text-justify">
               <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
             </p>
           </div>
@@ -254,7 +254,7 @@ export default function About() {
             <h3 className="text-xl font-bold text-white mb-3">
               <ScrollRevealPro>Our Vision</ScrollRevealPro>
             </h3>
-            <p className="text-white/70 leading-relaxed text-base">
+            <p className="text-white/70 leading-relaxed text-base text-justify">
               <ScrollRevealPro>To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealPro>
             </p>
           </div>
@@ -268,7 +268,7 @@ export default function About() {
             <h3 className="text-xl font-bold text-white mb-3">
               <ScrollRevealPro>Our Values</ScrollRevealPro>
             </h3>
-            <p className="text-white/70 leading-relaxed text-base">
+            <p className="text-white/70 leading-relaxed text-base text-justify">
               <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
             </p>
           </div>
