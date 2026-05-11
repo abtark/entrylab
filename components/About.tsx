@@ -1,43 +1,7 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react'
-import { motion, useInView, animate, useMotionValue, useSpring } from 'framer-motion'
-
-const MagneticItem = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-
-  const springConfig = { damping: 20, stiffness: 150, mass: 0.1 }
-  const springX = useSpring(x, springConfig)
-  const springY = useSpring(y, springConfig)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const { left, top, width, height } = ref.current.getBoundingClientRect()
-    const centerX = left + width / 2
-    const centerY = top + height / 2
-    x.set(((e.clientX - centerX) / (width / 2)) * 6)
-    y.set(((e.clientY - centerY) / (height / 2)) * 6)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className={`will-change-transform ${className}`}
-    >
-      {children}
-    </motion.div>
-  )
-}
+import { motion, useInView, animate } from 'framer-motion'
 
 const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: { value: number, suffix?: string, decimals?: number }) => {
   const ref = useRef<HTMLSpanElement>(null)
@@ -85,25 +49,6 @@ const ScrollRevealPro = ({
     </motion.span>
   )
 }
-
-const paragraphs = [
-  {
-    text: 'Founded on the principle that "Where Every Search Has a Value", EntryLab is a modern technology agency dedicated to extracting meaningful insights from complex data architectures.',
-    highlight: false
-  },
-  {
-    text: 'It is a Chattogram-based R & D firm specializing in precision-driven data intelligence. We architect clarity from complexity—transforming fragmented information into strategic, decision-ready insights.',
-    highlight: false
-  },
-  {
-    text: 'Leveraging advanced research frameworks and a detail-obsessed approach, we deliver intelligence that is not just accurate, but actionable and high-impact.',
-    highlight: false
-  },
-  {
-    text: 'EntryLab—Where Every Search Has a Value',
-    highlight: true
-  }
-]
 
 const timelineData = [
   {
@@ -206,23 +151,6 @@ const cultureData = [
 ]
 
 export default function About() {
-  const iconContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { delayChildren: 1.5, staggerChildren: 0.15 },
-    },
-  }
-
-  const iconVariants = {
-    hidden: { opacity: 0, scale: 0.6 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { type: 'spring', bounce: 0.5, duration: 0.6 },
-    },
-  }
-
   const timelineVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
@@ -327,78 +255,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
-        
-        <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-12 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
-          
-          <div className="w-full mb-6 flex justify-center">
-            <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl drop-shadow-2xl z-10 bg-black/20">
-              <img 
-                src="https://iili.io/B8oQEyg.png" 
-                alt="About EntryLab" 
-                className="w-full h-auto object-contain rounded-2xl relative z-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF]/20 via-white/10 to-[#00AAFF]/20 bg-[length:200%_auto] animate-gradient-r2l mix-blend-overlay pointer-events-none z-10 rounded-2xl" />
-            </MagneticItem>
-          </div>
-
-          <div className="w-full h-px bg-white/10 mb-8" />
-
-          <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
-            {paragraphs.map((p, pIndex) => (
-              <p key={pIndex} className={p.highlight ? "pt-2 font-semibold text-xl md:text-2xl tracking-wide text-[#00AAFF]" : ""}>
-                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
-              </p>
-            ))}
-          </div>
-
-          <div className="w-full h-px bg-white/10 my-8" />
-
-          <div className="h-[40px] flex items-center justify-center">
-            <motion.div 
-              variants={iconContainerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="flex items-center justify-center gap-8"
-            >
-              <motion.a 
-                variants={iconVariants}
-                href="https://www.facebook.com/EntryLab" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
-              >
-                <i className="fa-brands fa-facebook"></i>
-              </motion.a>
-              
-              <motion.a 
-                variants={iconVariants}
-                href="https://www.linkedin.com/company/entrylab" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
-              >
-                <i className="fa-brands fa-linkedin"></i>
-              </motion.a>
-              
-              <motion.a 
-                variants={iconVariants}
-                href="https://rocketreach.co/entrylab-profile_b704b6e0c514e80c" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
-              >
-                <i className="fa-solid fa-rocket"></i>
-              </motion.a>
-            </motion.div>
-          </div>
-
-        </div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-16">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-purple-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -428,7 +285,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments.
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <a href="https://www.entrylab.net/industryinsights" className="text-[#00AAFF] hover:underline transition-all duration-300">Learn more about our Insights</a>
               </ScrollRevealPro>
             </p>
 
