@@ -61,13 +61,13 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ease-[0.16,1,0.3,1] ${
-        isScrolled ? 'bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/10 py-4' : 'bg-transparent py-6'
+      className={`fixed top-0 left-0 w-full z-[100] border-b transition-all duration-500 ease-[0.16,1,0.3,1] transform-gpu ${
+        isScrolled ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-white/10 py-4' : 'bg-transparent border-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
         <Link href="/" className="flex-shrink-0 cursor-pointer">
-          <Image src="https://iili.io/FC3KC6g.png" alt="EntryLab" width={140} height={45} priority />
+          <Image src="https://iili.io/FC3KC6g.png" alt="EntryLab" width={165} height={53} priority />
         </Link>
         <div className="hidden lg:flex items-center gap-1 bg-white/5 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
           {navItems.map((item) => {
@@ -105,7 +105,7 @@ export default function Navbar() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             <span className="relative z-10 text-white text-sm font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Get In Touch</span>
             <svg className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
         </div>
