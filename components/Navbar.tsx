@@ -69,7 +69,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 w-full z-[100] border-b transition-all duration-500 ease-[0.16,1,0.3,1] transform-gpu ${
-        isScrolled ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-white/10 py-4' : 'bg-transparent border-transparent py-6'
+        isScrolled ? 'bg-[#111111]/30 backdrop-blur-2xl border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] py-4' : 'bg-transparent border-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
@@ -107,7 +107,7 @@ export default function Navbar() {
           <Link
             href="/#contact"
             onClick={(e) => scrollToSection(e as any, 'contact')}
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[160px]"
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[160px]"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             <span className="relative z-10 text-white text-sm font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Get In Touch</span>
@@ -131,7 +131,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden bg-[#111111]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+            className="lg:hidden bg-[#111111]/95 backdrop-blur-2xl border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col px-6 py-4 gap-4">
               {navItems.map((item) => {
