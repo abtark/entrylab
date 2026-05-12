@@ -35,11 +35,24 @@ export default function BackToTop() {
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-[90] p-3 rounded-full bg-[#00AAFF] text-white shadow-[0_0_20px_rgba(0,170,255,0.4)] hover:bg-[#00AAFF]/80 transition-colors"
+          className="group fixed bottom-8 right-8 z-[90] flex items-center justify-center w-12 h-12 bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)]"
           aria-label="Scroll to top"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m18 15-6-6-6 6"/>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="relative z-10 text-white w-5 h-5 transition-transform duration-500 group-hover:-translate-y-1"
+          >
+            <path d="M12 19V5" strokeDasharray="2 4" />
+            <path d="M5 12l7-7 7 7" />
           </svg>
         </motion.button>
       )}
