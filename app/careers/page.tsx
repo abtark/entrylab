@@ -1,0 +1,15 @@
+import Navbar from '@/components/Navbar'
+import Careers from '@/components/Careers'
+import Footer from '@/components/Footer'
+
+export default function CareersPage() {
+  return (
+    <main className="bg-[#111111] min-h-screen text-white overflow-hidden selection:bg-[#00AAFF]/30 selection:text-white">
+      <Navbar />
+      <div className="flex flex-col w-full pt-24 pb-12">
+        <Careers />
+      </div>
+      <Footer />
+    </main>
+  )
+}
