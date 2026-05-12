@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, ReactNode } from 'react'
 import { motion, useInView, animate } from 'framer-motion'
+import Link from 'next/link'
 
 interface AnimatedNumberProps {
   value: number;
@@ -311,7 +312,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <a href="https://www.entrylab.net/industryinsights" target="_blank" rel="noopener noreferrer" className="text-[#00AAFF] group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <Link href="/industryinsights" className="text-[#00AAFF] group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></Link>
               </ScrollRevealPro>
             </p>
 
