@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 
 const navItems = [
   { name: 'Home', id: 'home' },
@@ -19,6 +21,10 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home')
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  
+  const pathname = usePathname()
+  const router = useRouter()
+  const isHomePage = pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +35,19 @@ export default function Navbar() {
   }, [])
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (id === 'insights' || id === 'careers') return
+
+    if (!isHomePage) {
+      e.preventDefault()
+      router.push(`/#${id}`)
+      return
+    }
+
     e.preventDefault()
     setIsMobileMenuOpen(false)
     const element = document.getElementById(id)
     if (element) {
-      const navHeight = 80 // Offset for fixed navbar
+      const navHeight = 80
       const elementPosition = element.getBoundingClientRect().top + window.scrollY
       window.scrollTo({
         top: elementPosition - navHeight,
@@ -53,50 +67,51 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-        
-        <a href="#home" onClick={(e) => scrollToSection(e, 'home')} className="text-2xl font-bold text-white tracking-tighter">
+        <Link href="/" className="text-2xl font-bold text-white tracking-tighter">
           Entry<span className="text-[#00AAFF]">Lab</span>
-        </a>
-
+        </Link>
         <div className="hidden lg:flex items-center gap-1 bg-white/5 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
-          {navItems.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => scrollToSection(e, item.id)}
-              className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeSection === item.id ? 'text-white' : 'text-white/60 hover:text-white'
-              }`}
-            >
-              {activeSection === item.id && (
-                <motion.div
-                  layoutId="activeNavIndicator"
-                  className="absolute inset-0 bg-[#00AAFF]/20 border border-[#00AAFF]/50 rounded-full"
-                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                />
-              )}
-              <span className="relative z-10">{item.name}</span>
-            </a>
-          ))}
-        </div>
+          {navItems.map((item) => {
+            const isInsights = item.id === 'insights'
+            const isCareers = item.id === 'careers'
+            const targetUrl = isInsights ? '/industryinsights' : isCareers ? '/careers' : `/#${item.id}`
+            const isActive = isInsights ? pathname === '/industryinsights' : isCareers ? pathname === '/careers' : activeSection === item.id && isHomePage
 
+            return (
+              <Link
+                key={item.id}
+                href={targetUrl}
+                onClick={(e) => scrollToSection(e as any, item.id)}
+                className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  isActive ? 'text-white' : 'text-white/60 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute inset-0 bg-[#00AAFF]/20 border border-[#00AAFF]/50 rounded-full"
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  />
+                )}
+                <span className="relative z-10">{item.name}</span>
+              </Link>
+            )
+          })}
+        </div>
         <div className="hidden lg:block">
-          <a
-            href="#contact"
-            onClick={(e) => scrollToSection(e, 'contact')}
+          <Link
+            href="/#contact"
             className="px-6 py-2.5 rounded-full bg-[#00AAFF] text-white font-medium hover:bg-[#00AAFF]/80 transition-colors shadow-[0_0_15px_rgba(0,170,255,0.4)]"
           >
             Get in Touch
-          </a>
+          </Link>
         </div>
-
         <button 
           className="lg:hidden text-white text-2xl"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           <i className={`fa-solid ${isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
         </button>
-
       </div>
 
       <AnimatePresence>
@@ -108,16 +123,22 @@ export default function Navbar() {
             className="lg:hidden bg-[#111111]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col px-6 py-4 gap-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={(e) => scrollToSection(e, item.id)}
-                  className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors"
-                >
-                  {item.name}
-                </a>
-              ))}
+              {navItems.map((item) => {
+                const isInsights = item.id === 'insights'
+                const isCareers = item.id === 'careers'
+                const targetUrl = isInsights ? '/industryinsights' : isCareers ? '/careers' : `/#${item.id}`
+                
+                return (
+                  <Link
+                    key={item.id}
+                    href={targetUrl}
+                    onClick={(e) => scrollToSection(e as any, item.id)}
+                    className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                )
+              })}
             </div>
           </motion.div>
         )}
