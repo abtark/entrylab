@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { Ubuntu } from 'next/font/google'
 import './globals.css'
 import SmoothScroll from '@/components/SmoothScroll'
+import BackToTop from '@/components/BackToTop'
 
-const ubuntu = Ubuntu({ 
+const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   variable: '--font-ubuntu'
@@ -28,6 +29,7 @@ export default function RootLayout({
         <SmoothScroll>
           {children}
         </SmoothScroll>
+        <BackToTop />
       </body>
     </html>
   )
