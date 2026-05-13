@@ -72,41 +72,43 @@ export default function Navbar() {
     e.preventDefault()
     setIsMobileMenuOpen(false)
 
-    if (id === 'careers') {
-      if (pathname !== '/careers') router.push('/careers')
-      return
-    }
-    
-    if (id === 'contact') {
-      if (pathname !== '/contact') router.push('/contact')
-      return
-    }
-
-    if (id === 'home') {
-      if (isHomePage) {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-        setActiveSection('home')
-      } else {
-        router.push('/')
+    setTimeout(() => {
+      if (id === 'careers') {
+        if (pathname !== '/careers') router.push('/careers')
+        return
       }
-      return
-    }
+      
+      if (id === 'contact') {
+        if (pathname !== '/contact') router.push('/contact')
+        return
+      }
 
-    if (!isHomePage) {
-      router.push(`/#${id}`)
-      return
-    }
+      if (id === 'home') {
+        if (isHomePage) {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+          setActiveSection('home')
+        } else {
+          router.push('/')
+        }
+        return
+      }
 
-    const element = document.getElementById(id)
-    if (element) {
-      const navHeight = 80
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY
-      window.scrollTo({
-        top: elementPosition - navHeight,
-        behavior: 'smooth'
-      })
-      setActiveSection(id)
-    }
+      if (!isHomePage) {
+        router.push(`/#${id}`)
+        return
+      }
+
+      const element = document.getElementById(id)
+      if (element) {
+        const navHeight = 80
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY
+        window.scrollTo({
+          top: elementPosition - navHeight,
+          behavior: 'smooth'
+        })
+        setActiveSection(id)
+      }
+    }, 150)
   }
 
   return (
@@ -175,9 +177,9 @@ export default function Navbar() {
             {isMobileMenuOpen ? (
               <motion.div
                 key="close"
-                initial={{ opacity: 0, rotate: -90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 90 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.2 }}
                 className="bg-red-500/10 text-red-500 p-2.5 rounded-lg"
               >
@@ -189,15 +191,15 @@ export default function Navbar() {
             ) : (
               <motion.div
                 key="menu"
-                initial={{ opacity: 0, rotate: 90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: -90 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.2 }}
                 className="bg-[#00AAFF]/10 text-[#00AAFF] p-2.5 rounded-lg"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <line x1="4" y1="10" x2="20" y2="10"></line>
-                  <line x1="4" y1="16" x2="20" y2="16"></line>
+                  <line x1="4" y1="9" x2="20" y2="9"></line>
+                  <line x1="4" y1="15" x2="20" y2="15"></line>
                 </svg>
               </motion.div>
             )}
@@ -208,13 +210,13 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden absolute top-full left-0 w-full bg-[#111111]/80 backdrop-blur-xl border-b border-white/10 overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden absolute top-[76px] left-0 w-full h-[calc(100vh-76px)] md:h-auto bg-[#111111]/95 backdrop-blur-2xl border-b border-white/10 overflow-y-auto shadow-2xl"
           >
-            <div className="flex flex-col px-6 py-6 gap-2 items-center">
+            <div className="flex flex-col px-6 py-10 md:py-6 gap-6 md:gap-2 items-center md:items-start justify-center min-h-[70%] md:min-h-0">
               {navItems.map((item) => {
                 const isCareers = item.id === 'careers'
                 const isActive = isCareers ? pathname === '/careers' : activeSection === item.id && isHomePage
@@ -223,20 +225,28 @@ export default function Navbar() {
                   <button
                     key={item.id}
                     onClick={(e) => handleNavigation(e, item.id)}
-                    className={`w-full text-center py-3 text-lg font-medium transition-colors outline-none rounded-lg ${
-                      isActive ? 'text-[#00AAFF] bg-[#00AAFF]/5' : 'text-white/80 hover:text-[#00AAFF] hover:bg-white/5'
+                    className={`w-full md:w-auto text-center md:text-left py-3 md:py-2 px-4 text-xl md:text-lg font-medium transition-colors outline-none rounded-lg ${
+                      isActive ? 'text-[#00AAFF] bg-[#00AAFF]/10' : 'text-white/80 hover:text-[#00AAFF] hover:bg-white/5'
                     }`}
                   >
                     {item.name}
                   </button>
                 )
               })}
-              <div className="w-full h-px bg-white/10 my-2" />
+              <div className="w-full md:hidden h-px bg-white/10 my-4" />
               <button
                 onClick={(e) => handleNavigation(e, 'contact')}
-                className="w-full text-center py-3 text-lg font-medium text-white/80 hover:text-[#00AAFF] hover:bg-white/5 transition-colors outline-none rounded-lg"
+                className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-5 py-3 md:py-2 rounded-full overflow-hidden hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-full max-w-[280px] md:w-[140px] outline-none mt-2"
               >
-                Get In Touch
+                <div className="absolute inset-0 bg-gradient-to-t from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                <span className="relative z-10 text-white text-base md:text-sm font-medium transition-transform duration-500 group-hover:-translate-x-2.5">Get In Touch</span>
+                <svg 
+                  className="absolute right-6 md:right-3 opacity-0 translate-y-3 translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 text-white w-5 h-5 md:w-4 md:h-4 z-10" 
+                  fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+                >
+                  <path d="M5 12h14" strokeDasharray="2 4" />
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
               </button>
             </div>
           </motion.div>
