@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 
 const companies = [
@@ -43,7 +43,25 @@ const stats = [
   { value: 98, suffix: '%', label: 'Client Satisfaction', image: 'https://iili.io/Bka0c91.png' }
 ]
 
-// Super Smooth Custom Counter with requestAnimationFrame
+const paragraphs = [
+  {
+    text: 'Founded on the principle that "Where Every Search Has a Value", EntryLab is a modern technology agency dedicated to extracting meaningful insights from complex data architectures.',
+    highlight: false
+  },
+  {
+    text: 'It is a Chattogram-based R & D firm specializing in precision-driven data intelligence. We architect clarity from complexity—transforming fragmented information into strategic, decision-ready insights.',
+    highlight: false
+  },
+  {
+    text: 'Leveraging advanced research frameworks and a detail-obsessed approach, we deliver intelligence that is not just accurate, but actionable and high-impact.',
+    highlight: false
+  },
+  {
+    text: 'EntryLab—Where Every Search Has a Value',
+    highlight: true
+  }
+]
+
 const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string }) => {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
@@ -52,9 +70,8 @@ const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string 
     if (!inView) return
 
     let startTime: number | null = null
-    const duration = 2500 // 2.5s duration
+    const duration = 2500
     
-    // easeOutCubic easing function
     const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
 
     const animate = (currentTime: number) => {
@@ -84,7 +101,6 @@ const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string 
   )
 }
 
-// Magnetic Card Component
 const MagneticStatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null)
   const x = useMotionValue(0)
@@ -100,7 +116,7 @@ const MagneticStatCard = ({ stat, index }: { stat: typeof stats[0]; index: numbe
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
     
-    const maxMove = 8 // Maximum pixel movement
+    const maxMove = 8
     const moveX = ((e.clientX - centerX) / (rect.width / 2)) * maxMove
     const moveY = ((e.clientY - centerY) / (rect.height / 2)) * maxMove
     
@@ -143,10 +159,163 @@ const MagneticStatCard = ({ stat, index }: { stat: typeof stats[0]; index: numbe
   )
 }
 
+const MagneticItem = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const springConfig = { damping: 20, stiffness: 150, mass: 0.1 }
+  const springX = useSpring(x, springConfig)
+  const springY = useSpring(y, springConfig)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return
+    const { left, top, width, height } = ref.current.getBoundingClientRect()
+    const centerX = left + width / 2
+    const centerY = top + height / 2
+    x.set(((e.clientX - centerX) / (width / 2)) * 6)
+    y.set(((e.clientY - centerY) / (height / 2)) * 6)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: springX, y: springY }}
+      className={`will-change-transform ${className}`}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+const ScrollRevealPro = ({ 
+  children, 
+  className = "", 
+  delay = 0 
+}: { 
+  children: React.ReactNode, 
+  className?: string,
+  delay?: number
+}) => {
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+      transition={{ 
+        duration: 0.8, 
+        ease: [0.22, 1, 0.36, 1],
+        delay: delay 
+      }}
+      className={`inline-block ${className}`}
+    >
+      {children}
+    </motion.span>
+  )
+}
+
+const InsightsContainer = () => {
+  const iconContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { delayChildren: 0.5, staggerChildren: 0.15 },
+    },
+  }
+
+  const iconVariants = {
+    hidden: { opacity: 0, scale: 0.6 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: 'spring', bounce: 0.5, duration: 0.6 },
+    },
+  }
+
+  return (
+    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-20 mb-32">
+      <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
+      
+      <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-12 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+        
+        <div className="w-full mb-6 flex justify-center">
+          <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl drop-shadow-2xl z-10 bg-black/20">
+            <img 
+              src="https://iili.io/B8oQEyg.png" 
+              alt="Insights Context" 
+              className="w-full h-auto object-contain rounded-2xl relative z-0"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF]/20 via-white/10 to-[#00AAFF]/20 bg-[length:200%_auto] animate-[gradient-r2l_4s_linear_infinite] mix-blend-overlay pointer-events-none z-10 rounded-2xl" />
+          </MagneticItem>
+        </div>
+
+        <div className="w-full h-px bg-white/10 mb-8" />
+
+        <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
+          {paragraphs.map((p, pIndex) => (
+            <p key={pIndex} className={p.highlight ? "pt-2 font-semibold text-xl md:text-2xl tracking-wide text-[#00AAFF]" : ""}>
+              <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
+            </p>
+          ))}
+        </div>
+
+        <div className="w-full h-px bg-white/10 my-8" />
+
+        <div className="h-[40px] flex items-center justify-center">
+          <motion.div 
+            variants={iconContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex items-center justify-center gap-8"
+          >
+            <motion.a 
+              variants={iconVariants}
+              href="https://www.facebook.com/EntryLab" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+            >
+              <i className="fa-brands fa-facebook"></i>
+            </motion.a>
+            
+            <motion.a 
+              variants={iconVariants}
+              href="https://www.linkedin.com/company/entrylab" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+            >
+              <i className="fa-brands fa-linkedin"></i>
+            </motion.a>
+            
+            <motion.a 
+              variants={iconVariants}
+              href="https://rocketreach.co/entrylab-profile_b704b6e0c514e80c" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+            >
+              <i className="fa-solid fa-rocket"></i>
+            </motion.a>
+          </motion.div>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
 export default function Insights() {
   return (
     <section id="insights" className="relative py-32 overflow-hidden">
-      {/* Inline styles for custom pause-on-hover marquee */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes custom-scroll {
           0% { transform: translateX(0); }
@@ -162,7 +331,6 @@ export default function Insights() {
 
       <div className="container mx-auto px-6 max-w-7xl">
         
-        {/* Animated Gradient Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -178,9 +346,7 @@ export default function Insights() {
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
         </motion.div>
 
-        {/* ROW 1: Content + Image */}
-        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 mb-32">
-          {/* Left Side: Text */}
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 mb-16">
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -196,7 +362,6 @@ export default function Insights() {
             </p>
           </motion.div>
 
-          {/* Right Side: Image */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -212,14 +377,14 @@ export default function Insights() {
           </motion.div>
         </div>
 
-        {/* ROW 2: Stats Section (Premium Upgrade) */}
+        <InsightsContainer />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mb-32 relative z-10">
           {stats.map((stat, i) => (
             <MagneticStatCard key={stat.label} stat={stat} index={i} />
           ))}
         </div>
 
-        {/* ROW 3: Logo Marquee */}
         <div 
           className="relative transform-gpu w-full overflow-hidden py-10 group-marquee" 
           style={{ 
@@ -228,7 +393,6 @@ export default function Insights() {
           }}
         >
           <div className="flex w-max animate-custom-scroll will-change-transform">
-            {/* Render array twice for seamless infinite loop */}
             {[...companies, ...companies].map((company, index) => (
               <div 
                 key={index} 
