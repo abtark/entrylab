@@ -340,8 +340,17 @@ export default function Hero() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             <span className="relative z-10 text-white text-sm md:text-base font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
-            <svg className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <svg 
+              className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-5 h-5 z-10" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 5v14" strokeDasharray="2 4" />
+              <path d="M19 12l-7 7-7-7" />
             </svg>
           </a>
         </motion.div>
@@ -392,23 +401,23 @@ export default function Hero() {
                 <motion.img 
                   key="small-logo"
                   src="https://iili.io/BZZjMzu.png" 
-                  alt="EntryLab Logo" 
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.5 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  alt="EntryLab Logo" 
                   className="absolute w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
                 />
               ) : (
                 <motion.img 
                   key="full-logo"
                   src="https://iili.io/FC3KC6g.png" 
-                  alt="EntryLab Main Logo" 
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.5 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute w-[200px] md:w-[260px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+                  alt="EntryLab Main Logo" 
+                  className="absolute w-[250px] md:w-[320px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
                 />
               )}
             </AnimatePresence>
