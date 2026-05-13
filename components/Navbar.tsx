@@ -38,7 +38,6 @@ export default function Navbar() {
 
       if (pathname === '/') {
         const sections = navItems.filter(item => item.id !== 'careers').map(item => item.id)
-        sections.push('contact')
         
         let current = 'home'
         for (const section of sections) {
@@ -124,8 +123,7 @@ export default function Navbar() {
         </div>
         <div className="hidden lg:block">
           <Link
-            href="/#contact"
-            onClick={(e) => scrollToSection(e as any, 'contact')}
+            href="/contact"
             className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-5 py-2 rounded-full overflow-hidden hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[140px]"
           >
             <div className="absolute inset-0 bg-gradient-to-l from-[#00AAFF] to-[#0088CC] translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
@@ -173,8 +171,7 @@ export default function Navbar() {
                 )
               })}
               <Link
-                href="/#contact"
-                onClick={(e) => scrollToSection(e as any, 'contact')}
+                href="/contact"
                 className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors mt-2"
               >
                 Get In Touch
