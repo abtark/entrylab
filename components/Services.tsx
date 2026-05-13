@@ -135,19 +135,19 @@ const processData = [
     title: "Plan",
     description: "Create a detailed project plan with timelines and quality benchmarks.",
     icon: "fa-clipboard-list",
-    color: "#FF9900"
+    color: "#00AAFF"
   },
   {
     title: "Execute",
     description: "Our skilled team processes data with precision and care.",
     icon: "fa-cogs",
-    color: "#FF8C00"
+    color: "#00AAFF"
   },
   {
     title: "Deliver",
     description: "Quality-checked output delivered on time with full support.",
     icon: "fa-paper-plane",
-    color: "#00E676"
+    color: "#00AAFF"
   }
 ]
 
@@ -233,7 +233,7 @@ const TiltFlipCard = ({
           <div className="relative z-20 w-full h-full flex flex-col justify-center items-center">
             <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-4">
               <i className={`fa-solid ${service.icon} text-5xl mb-3 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
-              <h3 className="text-xl font-bold transition-colors duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
+              <h3 className="!text-xl font-bold transition-colors duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] !bg-none !pb-0 !animate-none">
                 {service.title}
               </h3>
             </div>
@@ -264,7 +264,7 @@ const TiltFlipCard = ({
               className="flex items-center gap-3 mb-3 pb-3 border-b border-white/30"
             >
               <i className={`fa-solid ${service.icon} text-[1.3rem] text-white drop-shadow-md`}></i>
-              <h3 className="text-[1.05rem] font-bold text-white text-left leading-tight drop-shadow-md">
+              <h3 className="!text-[1.05rem] font-bold text-white text-left leading-tight drop-shadow-md !bg-none !pb-0 !animate-none">
                 {service.title}
               </h3>
             </motion.div>
@@ -296,7 +296,7 @@ export default function Services() {
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
 
   return (
-    <section id="services" className="relative pt-12 pb-24 md:pt-16 md:pb-32 bg-[#111111] overflow-hidden">
+    <section id="services" className="relative pt-12 pb-12 bg-[#111111] overflow-hidden">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
         
         <motion.div
@@ -321,7 +321,16 @@ export default function Services() {
               service={service} 
               index={i} 
               isFlipped={flippedIndex === i}
-              onClick={() => setFlippedIndex(flippedIndex === i ? null : i)}
+              onClick={() => {
+                if (flippedIndex !== null && flippedIndex !== i) {
+                   setFlippedIndex(null);
+                   setTimeout(() => {
+                       setFlippedIndex(i);
+                   }, 300);
+                } else {
+                   setFlippedIndex(flippedIndex === i ? null : i);
+                }
+              }}
             />
           ))}
         </div>
@@ -353,7 +362,7 @@ export default function Services() {
                     transition: { staggerChildren: 0.2, delayChildren: i * 0.1 } 
                   }
                 }}
-                className="group p-6 md:p-8 rounded-2xl border flex flex-col items-start bg-[#181818] transition-colors duration-300"
+                className="group p-6 md:p-8 rounded-2xl border flex flex-col items-start bg-[#181818] transition-all duration-300 hover:border-[#00AAFF]/80 hover:shadow-[0_0_15px_rgba(0,170,255,0.2)] hover:-translate-y-1"
                 style={{ borderColor: `${step.color}30` }}
               >
                 <div className="flex items-center gap-4 mb-4">
@@ -362,7 +371,7 @@ export default function Services() {
                       hidden: { opacity: 0, scale: 0.5 }, 
                       visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 15 } } 
                     }}
-                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-colors duration-300"
                     style={{ backgroundColor: `${step.color}20` }}
                   >
                     <i className={`fa-solid ${step.icon} text-xl transition-transform duration-300 group-hover:scale-125`} style={{ color: step.color }}></i>
@@ -373,7 +382,7 @@ export default function Services() {
                       hidden: { opacity: 0, x: -20 }, 
                       visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } } 
                     }}
-                    className="!text-xl font-bold text-white !pb-0 !bg-none !text-white !animate-none"
+                    className="!text-xl font-bold text-[#00AAFF] !pb-0 !bg-none !animate-none transition-colors duration-300"
                   >
                     {step.title}
                   </motion.h3>
@@ -404,12 +413,19 @@ export default function Services() {
           <p className="text-white/90 text-lg md:text-xl mb-10">
             We tailor our services to match your exact requirements. Let's discuss your project today.
           </p>
-          <Link href="#contact" passHref>
-            <button className="global-btn">
-              <span>Get a Free Quote</span> 
-              <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </Link>
+          <button 
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="global-btn group"
+          >
+            <span className="!translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Get a Free Quote</span> 
+            <svg 
+              className="!absolute right-4 opacity-0 -translate-y-3 !translate-x-0 group-hover:opacity-100 group-hover:!translate-y-0 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
+              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
+          </button>
         </motion.div>
 
       </div>
