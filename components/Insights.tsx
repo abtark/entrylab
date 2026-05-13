@@ -94,25 +94,25 @@ const mapPattern = [
   "00000000000000000000000000000000000000000000000000000000000000000000000011000000",
   "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
   "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
-];
+]
 
 const markers = [
-  { id: 'us', country: 'USA', flag: '🇺🇸', top: '35%', left: '20%' },
-  { id: 'ca', country: 'Canada', flag: '🇨🇦', top: '25%', left: '22%' },
-  { id: 'uk', country: 'UK', flag: '🇬🇧', top: '28%', left: '47%' },
-  { id: 'fr', country: 'France', flag: '🇫🇷', top: '33%', left: '48%' },
-  { id: 'se', country: 'Sweden', flag: '🇸🇪', top: '20%', left: '51%' },
-  { id: 'no', country: 'Norway', flag: '🇳🇴', top: '18%', left: '49%' },
-  { id: 'fi', country: 'Finland', flag: '🇫🇮', top: '18%', left: '53%' },
-  { id: 'tr', country: 'Turkey', flag: '🇹🇷', top: '38%', left: '56%' },
-  { id: 'ae', country: 'UAE', flag: '🇦🇪', top: '45%', left: '61%' },
-  { id: 'in', country: 'India', flag: '🇮🇳', top: '48%', left: '68%' },
-  { id: 'bd', country: 'Bangladesh', flag: '🇧🇩', top: '47%', left: '71%' },
-  { id: 'ng', country: 'Nigeria', flag: '🇳🇬', top: '55%', left: '49%' },
-  { id: 'za', country: 'South Africa', flag: '🇿🇦', top: '75%', left: '52%' },
-  { id: 'sg', country: 'Singapore', flag: '🇸🇬', top: '60%', left: '76%' },
-  { id: 'au', country: 'Australia', flag: '🇦🇺', top: '75%', left: '85%' },
-];
+  { id: 'se', country: 'Sweden', flag: '🇸🇪', top: '22%', left: '49%', dir: 'down', dot: 'bg-yellow-400' },
+  { id: 'no', country: 'Norway', flag: '🇳🇴', top: '26%', left: '46%', dir: 'down', dot: 'bg-red-500' },
+  { id: 'fi', country: 'Finland', flag: '🇫🇮', top: '26%', left: '52%', dir: 'down', dot: 'bg-blue-500' },
+  { id: 'uk', country: 'UK', flag: '🇬🇧', top: '34%', left: '45%', dir: 'down', dot: 'bg-red-500' },
+  { id: 'fr', country: 'France', flag: '🇫🇷', top: '40%', left: '46%', dir: 'up', dot: 'bg-red-500' },
+  { id: 'tr', country: 'Turkey', flag: '🇹🇷', top: '38%', left: '55%', dir: 'down', dot: 'bg-red-500' },
+  { id: 'ca', country: 'Canada', flag: '🇨🇦', top: '38%', left: '22%', dir: 'down', dot: 'bg-red-500' },
+  { id: 'us', country: 'USA', flag: '🇺🇸', top: '48%', left: '20%', dir: 'up', dot: 'bg-blue-500' },
+  { id: 'ng', country: 'Nigeria', flag: '🇳🇬', top: '65%', left: '48%', dir: 'up', dot: 'bg-green-500' },
+  { id: 'ae', country: 'UAE', flag: '🇦🇪', top: '48%', left: '60%', dir: 'down', dot: 'bg-red-500' },
+  { id: 'in', country: 'India', flag: '🇮🇳', top: '55%', left: '65%', dir: 'down', dot: 'bg-green-500' },
+  { id: 'bd', country: 'Bangladesh', flag: '🇧🇩', top: '60%', left: '68%', dir: 'down', dot: 'bg-red-500' },
+  { id: 'za', country: 'South Africa', flag: '🇿🇦', top: '80%', left: '51%', dir: 'up', dot: 'bg-green-500' },
+  { id: 'sg', country: 'Singapore', flag: '🇸🇬', top: '75%', left: '75%', dir: 'up', dot: 'bg-red-500' },
+  { id: 'au', country: 'Australia', flag: '🇦🇺', top: '85%', left: '85%', dir: 'up', dot: 'bg-blue-600' },
+]
 
 const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string }) => {
   const ref = useRef<HTMLSpanElement>(null)
@@ -367,32 +367,27 @@ const InsightsContainer = () => {
 
 const GlobalWorldMap = () => {
   return (
-    <div className="relative w-full py-24 md:py-32 overflow-hidden flex flex-col items-center mb-24">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
-
+    <div className="relative w-full py-24 md:py-32 overflow-hidden flex flex-col items-center bg-[#F4F9FF]">
       <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
-        <h4 className="text-xs font-semibold tracking-[0.2em] text-[#00AAFF] uppercase drop-shadow-[0_0_8px_rgba(0,170,255,0.5)] mb-6">
+        <h4 className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#64748B] uppercase mb-4">
           Around The Globe
         </h4>
-
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-white via-[#BFE8FF] to-[#00AAFF] animate-[gradient_8s_ease_infinite] bg-[length:200%_auto] mb-2 leading-tight">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-[#0F172A] mb-2 leading-tight">
           Powering Innovation for Businesses
         </h2>
-
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#00AAFF] drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] text-center mb-20 md:mb-28">
-          Across the globe
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#10B981] text-center mb-20 md:mb-28">
+          Across the Globe.
         </h2>
 
-        <div className="relative w-full max-w-5xl aspect-video md:aspect-[2/1] mx-auto">
+        <div className="relative w-full max-w-5xl aspect-[2/1] mx-auto">
           <svg 
             viewBox="0 0 80 31" 
-            className="w-full h-full opacity-90" 
+            className="w-full h-full opacity-60" 
             xmlns="http://www.w3.org/2000/svg"
           >
             {mapPattern.map((row, i) =>
               row.split('').map((dot, j) => {
                 if (dot === '1') {
-                  const delay = (i * j) % 4;
                   const isHighlighted = (i + j) % 7 === 0;
                   return (
                     <circle
@@ -400,9 +395,7 @@ const GlobalWorldMap = () => {
                       cx={j}
                       cy={i}
                       r={0.4}
-                      fill={isHighlighted ? 'rgba(203,213,225,0.42)' : 'rgba(148,163,184,0.22)'}
-                      className="animate-[pulse_3s_ease-in-out_infinite]"
-                      style={{ animationDelay: `${delay}s` }}
+                      fill={isHighlighted ? '#94A3B8' : '#CBD5E1'}
                     />
                   );
                 }
@@ -414,26 +407,32 @@ const GlobalWorldMap = () => {
           {markers.map((marker) => (
             <div
               key={marker.id}
-              className="absolute group flex items-center gap-1.5 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-full bg-black/40 border border-white/10 backdrop-blur-2xl shadow-[0_0_15px_rgba(0,170,255,0.1)] hover:shadow-[0_0_25px_rgba(0,170,255,0.3)] hover:-translate-y-1 hover:scale-105 transition-all duration-500 ease-out cursor-pointer will-change-transform z-20"
-              style={{ top: marker.top, left: marker.left }}
+              className="absolute flex flex-col items-center z-20 transition-transform duration-300 hover:scale-110"
+              style={{ top: marker.top, left: marker.left, transform: marker.dir === 'down' ? 'translate(-50%, -100%)' : 'translate(-50%, 0)' }}
             >
-              <span className="text-xs md:text-sm">{marker.flag}</span>
-              <span className="hidden md:block text-[10px] md:text-xs font-medium text-white tracking-wide">
-                {marker.country}
-              </span>
-              <div className="w-1.5 h-1.5 rounded-full bg-[#00AAFF] animate-pulse shadow-[0_0_5px_#00AAFF]"></div>
+              {marker.dir === 'down' ? (
+                <>
+                  <div className="bg-white text-[#0F172A] text-[10px] md:text-xs font-bold px-2 py-1 rounded-full shadow-md flex items-center gap-1.5 border border-gray-100">
+                    <span className="text-sm leading-none">{marker.flag}</span>
+                    <span className="leading-none">{marker.country}</span>
+                  </div>
+                  <div className="w-px h-3 md:h-4 bg-gray-300"></div>
+                  <div className={`w-2 h-2 rounded-full ${marker.dot} shadow-[0_0_0_2px_white]`}></div>
+                </>
+              ) : (
+                <>
+                  <div className={`w-2 h-2 rounded-full ${marker.dot} shadow-[0_0_0_2px_white]`}></div>
+                  <div className="w-px h-3 md:h-4 bg-gray-300"></div>
+                  <div className="bg-white text-[#0F172A] text-[10px] md:text-xs font-bold px-2 py-1 rounded-full shadow-md flex items-center gap-1.5 border border-gray-100">
+                    <span className="text-sm leading-none">{marker.flag}</span>
+                    <span className="leading-none">{marker.country}</span>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
       </div>
-
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}} />
     </div>
   );
 }
@@ -509,9 +508,11 @@ export default function Insights() {
             <MagneticStatCard key={stat.label} stat={stat} index={i} />
           ))}
         </div>
+      </div>
         
-        <GlobalWorldMap />
+      <GlobalWorldMap />
 
+      <div className="container mx-auto px-6 max-w-7xl pt-10">
         <div 
           className="relative transform-gpu w-full overflow-hidden py-10 group-marquee" 
           style={{ 
