@@ -345,6 +345,7 @@ export default function Services() {
           >
             <h5>HOW WE WORK</h5>
             <h2>OUR PROCESS</h2>
+            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -416,19 +417,19 @@ export default function Services() {
           <p className="text-white/90 text-base md:text-lg mb-10 max-w-3xl leading-relaxed">
             We tailor our services to match your exact requirements. Let's discuss your project today.
           </p>
-          <button 
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="global-btn group"
-          >
-            <span className="!translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Get a Free Quote</span> 
-            <svg 
-              className="!absolute right-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
-              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </button>
+          <Link href="/contact" passHref>
+            <button className="global-btn group relative overflow-hidden w-[180px]">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0088CC] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-0" />
+              <span className="relative z-10 !translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Get a Free Quote</span> 
+              <svg 
+                className="!absolute right-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
+                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </Link>
         </motion.div>
 
       </div>
