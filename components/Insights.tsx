@@ -240,10 +240,10 @@ const InsightsContainer = () => {
   }
 
   return (
-    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-20 mb-32">
+    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-10 md:py-12 mb-20 md:mb-24">
       <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
       
-      <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-12 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
+      <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
         
         <div className="w-full mb-6 flex justify-center">
           <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl drop-shadow-2xl z-10 bg-black/20">
@@ -256,9 +256,9 @@ const InsightsContainer = () => {
           </MagneticItem>
         </div>
 
-        <div className="w-full h-px bg-white/10 mb-8" />
+        <div className="w-full h-px bg-white/10 mb-6 md:mb-8" />
 
-        <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
+        <div className="w-full flex flex-col items-center text-center space-y-4 md:space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[180px] md:min-h-[140px]">
           {paragraphs.map((p, pIndex) => (
             p.highlight ? (
               <h5 key={pIndex} className="pt-2 text-center w-full !text-lg md:!text-xl">
@@ -272,7 +272,7 @@ const InsightsContainer = () => {
           ))}
         </div>
 
-        <div className="w-full h-px bg-white/10 my-8" />
+        <div className="w-full h-px bg-white/10 my-6 md:my-8" />
 
         <div className="h-[40px] flex items-center justify-center">
           <motion.div 
@@ -282,35 +282,29 @@ const InsightsContainer = () => {
             viewport={{ once: true }}
             className="flex items-center justify-center gap-8"
           >
-            <motion.a 
+            <motion.button 
               variants={iconVariants}
-              href="https://www.facebook.com/EntryLab" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              onClick={() => window.open("https://www.facebook.com/EntryLab", "_blank")}
+              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform cursor-pointer appearance-none bg-transparent border-none p-0 outline-none"
             >
               <i className="fa-brands fa-facebook"></i>
-            </motion.a>
+            </motion.button>
             
-            <motion.a 
+            <motion.button 
               variants={iconVariants}
-              href="https://www.linkedin.com/company/entrylab" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              onClick={() => window.open("https://www.linkedin.com/company/entrylab", "_blank")}
+              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform cursor-pointer appearance-none bg-transparent border-none p-0 outline-none"
             >
               <i className="fa-brands fa-linkedin"></i>
-            </motion.a>
+            </motion.button>
             
-            <motion.a 
+            <motion.button 
               variants={iconVariants}
-              href="https://rocketreach.co/entrylab-profile_b704b6e0c514e80c" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform"
+              onClick={() => window.open("https://rocketreach.co/entrylab-profile_b704b6e0c514e80c", "_blank")}
+              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform cursor-pointer appearance-none bg-transparent border-none p-0 outline-none"
             >
               <i className="fa-solid fa-rocket"></i>
-            </motion.a>
+            </motion.button>
           </motion.div>
         </div>
 
@@ -321,15 +315,15 @@ const InsightsContainer = () => {
 
 const GlobalWorldMap = () => {
   return (
-    <div className="relative w-full py-24 md:py-32 overflow-hidden flex flex-col items-center">
+    <div className="relative w-full py-12 md:py-16 overflow-hidden flex flex-col items-center">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
         <h5>Around The Globe</h5>
         <h3 className="text-center">Powering Innovation for Businesses</h3>
-        <h4 className="mb-16 md:mb-24 text-center">Across the Globe.</h4>
+        <h4 className="mb-10 md:mb-16 text-center">Across the Globe.</h4>
 
-        <div className="relative w-full flex justify-center mt-12 md:mt-24 mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
+        <div className="relative w-full flex justify-center mt-8 md:mt-12 mb-8 md:mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
           <img 
             src="https://iili.io/BbpOJjV.webp" 
             alt="Global Map" 
@@ -364,7 +358,7 @@ export default function Insights() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-24"
+          className="text-center mb-12 md:mb-16"
         >
           <h2>INDUSTRY INSIGHTS</h2>
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
