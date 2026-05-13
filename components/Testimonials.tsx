@@ -96,14 +96,6 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="relative w-full overflow-hidden bg-neutral-900 py-24 text-white">
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes slide-gradient {
-          0% { background-position: 200% center; }
-          100% { background-position: 0% center; }
-        }
-        .animate-brand-gradient {
-          background-size: 200% auto;
-          animation: slide-gradient 5s linear infinite;
-        }
         @keyframes scroll-left {
           0% { transform: translate3d(0, 0, 0); }
           100% { transform: translate3d(-50%, 0, 0); }
@@ -134,11 +126,8 @@ export default function Testimonials() {
               </div>
             </motion.div>
 
-            <h2 className="animate-brand-gradient mt-4 bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
-              Testimonials
-            </h2>
-            
-            <motion.div variants={textRevealItem} className="mt-2 h-[3px] w-20 rounded-full bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,0.5)]" />
+            <h2>TESTIMONIALS</h2>
+            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
 
             <motion.p variants={textRevealItem} className="mt-6 max-w-2xl text-base text-gray-400">
               Results that speaks volume, our mission is to drive progress and enhance by delivering superior services that exceed expectations.
@@ -148,7 +137,7 @@ export default function Testimonials() {
 
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:gap-20">
           <div className="flex flex-col justify-center">
-            <h3 className="text-3xl font-bold leading-tight md:text-4xl">
+            <h3 className="mt-8 text-left">
               Words of praise from others <br className="hidden md:block" />
               <span className="text-gray-400">about our presence</span>
             </h3>
