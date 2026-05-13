@@ -280,6 +280,8 @@ export default function Hero() {
     return () => clearTimeout(timeout)
   }, [displayedText, isDeleting, headingIndex, isInitialLoad])
 
+  const isH1 = headings[headingIndex] === "Every Search Has a Value"
+
   return (
     <section id="home" className="relative w-full min-h-screen bg-[#02050A] overflow-hidden flex flex-col items-center justify-start pt-[12vh] md:pt-[15vh] z-0">
       <style dangerouslySetInnerHTML={{__html: `
@@ -307,15 +309,22 @@ export default function Hero() {
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
-          <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight w-full leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
-                {isInitialLoad ? headings[0] : displayedText}
-              </span>
-              <span 
-                className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" 
-              />
-            </h1>
+          <div className="relative w-full min-h-[140px] md:min-h-[180px] flex items-center justify-center">
+            {isH1 ? (
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight w-full leading-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
+                  {isInitialLoad ? headings[0] : displayedText}
+                </span>
+                <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" />
+              </h1>
+            ) : (
+              <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight w-full leading-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
+                  {isInitialLoad ? headings[0] : displayedText}
+                </span>
+                <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" />
+              </h2>
+            )}
           </div>
         </motion.div>
 
@@ -336,12 +345,12 @@ export default function Hero() {
         >
           <a
             href="#about"
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-3xl overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)]"
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-3xl overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[160px]"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             <span className="relative z-10 text-white text-sm md:text-base font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
             <svg 
-              className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-5 h-5 z-10" 
+              className="absolute right-4 opacity-0 -translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 text-white w-5 h-5 z-10" 
               fill="none" 
               stroke="currentColor" 
               strokeWidth="2.5" 
@@ -357,22 +366,15 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <motion.div 
-          layout
+        <div 
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`relative cursor-pointer h-28 md:h-36 ${
+          className={`relative cursor-pointer h-28 md:h-36 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isExpanded ? 'w-[280px] md:w-[360px]' : 'w-28 md:w-36'
           }`}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0 : 0.8 }}
         >
-          <motion.div 
-            layout 
-            className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" 
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          />
+          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" />
 
           <motion.div 
-            layout
             className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border overflow-hidden z-10"
             animate={{
               boxShadow: [
@@ -390,35 +392,30 @@ export default function Hero() {
             }}
             transition={{
               boxShadow: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
-              borderColor: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
-              layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+              borderColor: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] }
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80 pointer-events-none" />
             
             <motion.img 
               src="https://iili.io/BZZjMzu.png" 
-              initial={{ left: "50%", x: "-50%", y: "-50%" }}
-              animate={{ left: isExpanded ? "20%" : "50%" }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0.6 : 0.3 }}
-              className="absolute top-1/2 w-16 md:w-20 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              initial={false}
+              animate={{ left: isExpanded ? "28%" : "50%", x: "-50%", y: "-50%" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0 : 0.2 }}
+              className="absolute top-1/2 w-14 md:w-18 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
               alt="EntryLab Logo"
             />
 
             <motion.img 
-              src="https://iili.io/FC3KC6g.png" 
-              initial={{ left: "50%", x: "-50%", y: "-50%", opacity: 0, scale: 0.9 }}
-              animate={{ 
-                left: isExpanded ? "65%" : "50%", 
-                opacity: isExpanded ? 1 : 0, 
-                scale: isExpanded ? 1 : 0.9 
-              }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: isExpanded ? 1.1 : 0 }}
-              className="absolute top-1/2 w-[170px] md:w-[220px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
-              alt="EntryLab Main Logo"
+              src="https://iili.io/BmFa1cJ.png" 
+              initial={false}
+              animate={{ left: isExpanded ? "68%" : "50%", x: "-50%", y: "-50%", opacity: isExpanded ? 1 : 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0.3 : 0 }}
+              className="absolute top-1/2 w-[110px] md:w-[150px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              alt="EntryLab Text Logo"
             />
           </motion.div>
-        </motion.div>
+        </div>
       </div>
       
       <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-40 pointer-events-none" />
