@@ -10,9 +10,9 @@ const navItems = [
   { name: 'Home', id: 'home' },
   { name: 'About', id: 'about' },
   { name: 'Services', id: 'services' },
-  { name: 'Testimonials', id: 'testimonials' },
   { name: 'Teams', id: 'teams' },
   { name: 'Gallery', id: 'gallery' },
+  { name: 'Testimonials', id: 'testimonials' },
   { name: 'Careers', id: 'careers' }
 ]
 
@@ -104,25 +104,9 @@ export default function Navbar() {
           })}
         </div>
         <div className="hidden lg:block">
-          <Link
-            href="/#contact"
-            onClick={(e) => scrollToSection(e as any, 'contact')}
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-full overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[160px]"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-            <span className="relative z-10 text-white text-sm font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Get In Touch</span>
-            <svg 
-              className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14" strokeDasharray="2 4" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
+          <Link href="/#contact" onClick={(e) => scrollToSection(e as any, 'contact')} className="global-btn w-fit">
+            <span>Get In Touch</span>
+            <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </Link>
         </div>
         <button 
