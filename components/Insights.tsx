@@ -260,9 +260,15 @@ const InsightsContainer = () => {
 
         <div className="w-full flex flex-col items-center text-center space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[220px] md:min-h-[160px]">
           {paragraphs.map((p, pIndex) => (
-            <p key={pIndex} className={p.highlight ? "pt-2 font-semibold text-xl md:text-2xl tracking-wide text-[#00AAFF]" : ""}>
-              <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
-            </p>
+            p.highlight ? (
+              <h5 key={pIndex} className="pt-2 text-center w-full !text-lg md:!text-xl">
+                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
+              </h5>
+            ) : (
+              <p key={pIndex}>
+                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
+              </p>
+            )
           ))}
         </div>
 
@@ -319,15 +325,9 @@ const GlobalWorldMap = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
-        <h4 className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#00AAFF] uppercase mb-4">
-          Around The Globe
-        </h4>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent mb-2 leading-tight">
-          Powering Innovation for Businesses
-        </h2>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#00AAFF] drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] text-center mb-16 md:mb-24">
-          Across the Globe.
-        </h2>
+        <h5>Around The Globe</h5>
+        <h3 className="text-center">Powering Innovation for Businesses</h3>
+        <h4 className="mb-16 md:mb-24 text-center">Across the Globe.</h4>
 
         <div className="relative w-full flex justify-center mt-12 md:mt-24 mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
           <img 
@@ -366,12 +366,8 @@ export default function Insights() {
           transition={{ duration: 0.8 }}
           className="text-center mb-24"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-              Industry Insights
-            </span>
-          </h2>
-          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
+          <h2>INDUSTRY INSIGHTS</h2>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
         </motion.div>
 
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 mb-16">
@@ -380,9 +376,9 @@ export default function Insights() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="w-full md:w-1/2 flex flex-col justify-center"
+            className="w-full md:w-1/2 flex flex-col justify-center text-left"
           >
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h3 className="mb-6 !text-left !pb-0">
               Unlock the power of search data
             </h3>
             <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium">
