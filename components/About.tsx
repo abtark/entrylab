@@ -177,7 +177,7 @@ export default function About() {
   }
 
   return (
-    <section id="about" className="relative py-32 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
+    <section id="about" className="relative pt-32 pb-12 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
       <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
         <motion.div 
           animate={{ y: [0, -30, 0], x: [0, 15, 0] }}
@@ -416,7 +416,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-8">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="flex flex-col items-center mb-16">
@@ -428,8 +428,11 @@ export default function About() {
           {cultureData.map((item, index) => (
             <div 
               key={index} 
-              className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] rounded-2xl p-6 flex flex-col items-start relative z-10"
-              style={{ borderColor: item.color }}
+              className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] rounded-2xl p-6 flex flex-col items-start relative z-10 transition-all duration-300 hover:shadow-[0_0_15px_var(--hover-glow)] hover:-translate-y-1"
+              style={{ 
+                borderColor: item.color,
+                '--hover-glow': `${item.color}40`
+              } as React.CSSProperties}
             >
               <div 
                 className="p-3 rounded-lg mb-5 transition-transform duration-300 ease-out group-hover:scale-110 will-change-transform"
