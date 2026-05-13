@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
-import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 
@@ -58,17 +57,35 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [pathname])
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    if (id === 'careers') return
+  const handleNavigation = (e: React.MouseEvent, id: string) => {
+    e.preventDefault()
+    setIsMobileMenuOpen(false)
+
+    if (id === 'careers') {
+      if (pathname !== '/careers') router.push('/careers')
+      return
+    }
+    
+    if (id === 'contact') {
+      if (pathname !== '/contact') router.push('/contact')
+      return
+    }
+
+    if (id === 'home') {
+      if (isHomePage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setActiveSection('home')
+      } else {
+        router.push('/')
+      }
+      return
+    }
 
     if (!isHomePage) {
-      e.preventDefault()
       router.push(`/#${id}`)
       return
     }
 
-    e.preventDefault()
-    setIsMobileMenuOpen(false)
     const element = document.getElementById(id)
     if (element) {
       const navHeight = 80
@@ -91,21 +108,19 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-        <Link href="/" className="flex-shrink-0 cursor-pointer">
+        <div onClick={(e) => handleNavigation(e, 'home')} className="flex-shrink-0 cursor-pointer">
           <Image src="https://iili.io/FC3KC6g.png" alt="EntryLab" width={165} height={53} priority />
-        </Link>
+        </div>
         <div className="hidden lg:flex items-center gap-1 bg-white/5 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
           {navItems.map((item) => {
             const isCareers = item.id === 'careers'
-            const targetUrl = isCareers ? '/careers' : `/#${item.id}`
             const isActive = isCareers ? pathname === '/careers' : activeSection === item.id && isHomePage
 
             return (
-              <Link
+              <button
                 key={item.id}
-                href={targetUrl}
-                onClick={(e) => scrollToSection(e as any, item.id)}
-                className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${
+                onClick={(e) => handleNavigation(e, item.id)}
+                className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-300 outline-none ${
                   isActive ? 'text-white' : 'text-white/60 hover:text-white'
                 }`}
               >
@@ -117,28 +132,28 @@ export default function Navbar() {
                   />
                 )}
                 <span className="relative z-10">{item.name}</span>
-              </Link>
+              </button>
             )
           })}
         </div>
         <div className="hidden lg:block">
-          <Link
-            href="/contact"
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-5 py-2 rounded-full overflow-hidden hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[140px]"
+          <button
+            onClick={(e) => handleNavigation(e, 'contact')}
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-5 py-2 rounded-full overflow-hidden hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[140px] outline-none"
           >
-            <div className="absolute inset-0 bg-gradient-to-l from-[#00AAFF] to-[#0088CC] translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             <span className="relative z-10 text-white text-sm font-medium transition-transform duration-500 group-hover:-translate-x-2.5">Get In Touch</span>
             <svg 
-              className="absolute right-3 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" 
+              className="absolute right-3 opacity-0 translate-y-3 translate-x-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" 
               fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
             >
               <path d="M5 12h14" strokeDasharray="2 4" />
               <path d="M12 5l7 7-7 7" />
             </svg>
-          </Link>
+          </button>
         </div>
         <button 
-          className="lg:hidden text-white text-2xl"
+          className="lg:hidden text-white text-2xl outline-none"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           <i className={`fa-solid ${isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
@@ -155,27 +170,21 @@ export default function Navbar() {
             className="lg:hidden bg-[#111111]/95 backdrop-blur-2xl border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col px-6 py-4 gap-4">
-              {navItems.map((item) => {
-                const isCareers = item.id === 'careers'
-                const targetUrl = isCareers ? '/careers' : `/#${item.id}`
-                
-                return (
-                  <Link
-                    key={item.id}
-                    href={targetUrl}
-                    onClick={(e) => scrollToSection(e as any, item.id)}
-                    className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                )
-              })}
-              <Link
-                href="/contact"
-                className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors mt-2"
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={(e) => handleNavigation(e, item.id)}
+                  className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors text-left outline-none"
+                >
+                  {item.name}
+                </button>
+              ))}
+              <button
+                onClick={(e) => handleNavigation(e, 'contact')}
+                className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors mt-2 text-left outline-none"
               >
                 Get In Touch
-              </Link>
+              </button>
             </div>
           </motion.div>
         )}
