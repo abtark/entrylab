@@ -255,14 +255,8 @@ export default function Teams() {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="z-10 text-center mb-16 flex flex-col items-center px-4">
-        <motion.h2 
-          animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-          transition={{ duration: 5, ease: "linear", repeat: Infinity }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text"
-        >
-          Meet The Experts
-        </motion.h2>
-        <div className="h-1 w-16 bg-[#00AAFF] mt-4 rounded-full" />
+        <h2>MEET THE EXPERTS</h2>
+        <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
         <p className="mt-6 max-w-2xl text-white/70 text-center text-md md:text-lg leading-relaxed font-medium">
           Meet a team of highly skilled professionals, each bringing expertise and dedication to deliver strategic insights, innovative solutions, and reliable support for achieving long-term success.
         </p>
