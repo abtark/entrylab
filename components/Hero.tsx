@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const headings = [
   "Precision search, Real impact",
@@ -243,6 +243,7 @@ export default function Hero() {
   const [headingIndex, setHeadingIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
     const loadTimer = setTimeout(() => {
@@ -347,10 +348,22 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
-          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" />
+        <motion.div 
+          layout
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={`relative flex items-center justify-center cursor-pointer h-28 md:h-36 ${
+            isExpanded ? 'w-[280px] md:w-[360px]' : 'w-28 md:w-36'
+          }`}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div 
+            layout 
+            className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" 
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          />
 
           <motion.div 
+            layout
             className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border flex items-center justify-center overflow-hidden z-10"
             animate={{
               boxShadow: [
@@ -367,22 +380,40 @@ export default function Hero() {
               ]
             }}
             transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.08, 0.92, 1],
-              delay: 0
+              boxShadow: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
+              borderColor: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
+              layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80 pointer-events-none" />
             
-            <img 
-              src="https://iili.io/BZZjMzu.png" 
-              alt="EntryLab Logo" 
-              className="relative w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
-            />
+            <AnimatePresence mode="wait">
+              {!isExpanded ? (
+                <motion.img 
+                  key="small-logo"
+                  src="https://iili.io/BZZjMzu.png" 
+                  alt="EntryLab Logo" 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+                />
+              ) : (
+                <motion.img 
+                  key="full-logo"
+                  src="https://iili.io/FC3KC6g.png" 
+                  alt="EntryLab Main Logo" 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute w-[200px] md:w-[260px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+                />
+              )}
+            </AnimatePresence>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
       
       <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-40 pointer-events-none" />
