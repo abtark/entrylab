@@ -16,21 +16,95 @@ body {
   overflow-x: hidden;
 }
 
-.btn-primary {
-  @apply relative overflow-hidden bg-primary text-white font-bold py-3 px-8 rounded transition-colors duration-300 hover:bg-primary-hover;
+@layer base {
+  @keyframes text-gradient-r2l {
+    0% { background-position: 200% center; }
+    100% { background-position: 0% center; }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-ubuntu;
+  }
+
+  h1, .hero-h2 {
+    @apply text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-tight capitalize text-transparent bg-clip-text bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] w-full;
+    background-size: 200% auto;
+    animation: text-gradient-r2l 5s linear infinite;
+  }
+
+  h2 {
+    @apply text-4xl md:text-5xl font-bold tracking-tight uppercase text-transparent bg-clip-text bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] text-center pb-2;
+    background-size: 200% auto;
+    animation: text-gradient-r2l 5s linear infinite;
+  }
+
+  h3 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight capitalize text-transparent bg-clip-text bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] pb-2;
+    background-size: 200% auto;
+    animation: text-gradient-r2l 5s linear infinite;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-bold tracking-tight text-[#00AAFF] drop-shadow-sm mb-2;
+  }
+
+  h5 {
+    @apply text-sm md:text-base font-bold tracking-widest uppercase text-[#00AAFF] mb-3 block;
+  }
+
+  h6 {
+    @apply text-primary;
+  }
 }
 
-.btn-primary::before {
-  content: '';
-  @apply absolute top-0 -left-[100%] w-full h-full bg-shine transition-transform duration-500 skew-x-[30deg];
-}
+@layer components {
+  .btn-primary {
+    @apply relative overflow-hidden bg-primary text-white font-bold py-3 px-8 rounded transition-colors duration-300 hover:bg-primary-hover;
+  }
 
-.btn-primary:hover::before {
-  @apply left-[100%];
-}
+  .btn-primary::before {
+    content: '';
+    @apply absolute top-0 -left-[100%] w-full h-full bg-shine transition-transform duration-500 skew-x-[30deg];
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  @apply text-primary font-ubuntu;
+  .btn-primary:hover::before {
+    @apply left-[100%];
+  }
+
+  .global-btn {
+    @apply relative flex items-center justify-center gap-2 bg-[#00AAFF]/10 backdrop-blur-2xl border border-[#00AAFF]/30 px-8 py-3.5 rounded-full text-white text-sm md:text-base font-bold tracking-wider overflow-hidden hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)];
+  }
+
+  .global-btn::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full transition-transform duration-500 ease-[0.16,1,0.3,1] z-0;
+  }
+
+  .global-btn:hover::before {
+    @apply translate-y-0;
+  }
+
+  .global-btn > span {
+    @apply relative z-10 transition-transform duration-500;
+  }
+
+  .global-btn > svg, .global-btn > i {
+    @apply relative z-10 transition-transform duration-500 w-5 h-5;
+  }
+
+  .global-btn > svg path, 
+  .global-btn > svg line, 
+  .global-btn > svg polyline {
+    stroke-dasharray: 2 4;
+  }
+
+  .global-btn:hover > span {
+    @apply -translate-x-1.5;
+  }
+
+  .global-btn:hover > svg, .global-btn:hover > i {
+    @apply translate-x-1.5;
+  }
 }
 
 ::-webkit-scrollbar {
