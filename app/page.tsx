@@ -2,10 +2,9 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Services from '@/components/Services'
-import Testimonials from '@/components/Testimonials'
 import Teams from '@/components/Teams'
 import Gallery from '@/components/Gallery'
-import Contact from '@/components/Contact'
+import Testimonials from '@/components/Testimonials'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -16,10 +15,9 @@ export default function Home() {
         <Hero />
         <About />
         <Services />
-        <Testimonials />
         <Teams />
         <Gallery />
-        <Contact />
+        <Testimonials />
       </div>
       <Footer />
     </main>
