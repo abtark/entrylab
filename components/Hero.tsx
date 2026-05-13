@@ -299,14 +299,14 @@ export default function Hero() {
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
-          <div className="relative w-full min-h-[140px] md:min-h-[180px] flex items-center justify-center">
+          <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
             {isH1 ? (
-              <h1>
+              <h1 className="!text-4xl sm:!text-5xl md:!text-6xl lg:!text-7xl">
                 {isInitialLoad ? headings[0] : displayedText}
                 <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" />
               </h1>
             ) : (
-              <h2 className="hero-h2">
+              <h2 className="hero-h2 !text-4xl sm:!text-5xl md:!text-6xl lg:!text-7xl">
                 {isInitialLoad ? headings[0] : displayedText}
                 <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" />
               </h2>
@@ -318,7 +318,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
+          className="text-white/70 text-sm sm:text-base md:text-lg max-w-3xl mt-0 font-medium tracking-wide"
         >
           We transform data into meaningful insights that help you make smarter decisions, uncover opportunities, and drive sustainable growth for your business with confidence and clarity.
         </motion.p>
@@ -327,15 +327,15 @@ export default function Hero() {
           initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
-          className="mt-10 mb-8"
+          className="mt-6 md:mt-8 mb-8"
         >
           <button 
             onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="global-btn group w-[160px] mx-auto !px-0 cursor-pointer"
+            className="global-btn group w-[130px] md:w-[140px] !py-2.5 !px-0 mx-auto cursor-pointer !text-xs md:!text-sm"
           >
-            <span className="!translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Learn More</span>
+            <span className="!translate-x-0 group-hover:!-translate-x-2.5 transition-transform duration-500">Learn More</span>
             <svg 
-              className="!absolute right-4 opacity-0 -translate-y-3 !translate-x-0 group-hover:opacity-100 group-hover:!translate-y-0 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
+              className="!absolute right-3 opacity-0 -translate-y-2 !translate-x-0 group-hover:opacity-100 group-hover:!translate-y-0 group-hover:!translate-x-0 transition-all duration-500 w-4 h-4 z-10" 
               fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
             >
               <path d="M12 5v14" />
@@ -349,8 +349,8 @@ export default function Hero() {
         <motion.div 
           layout
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`relative cursor-pointer h-28 md:h-36 flex items-center justify-center overflow-visible ${
-            isExpanded ? 'w-[280px] md:w-[360px]' : 'w-28 md:w-36'
+          className={`relative cursor-pointer h-20 md:h-36 flex items-center justify-center overflow-visible ${
+            isExpanded ? 'w-[220px] md:w-[360px]' : 'w-20 md:w-36'
           }`}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
@@ -390,7 +390,7 @@ export default function Hero() {
               initial={false}
               animate={{ opacity: isExpanded ? 0 : 1, filter: isExpanded ? 'blur(8px)' : 'blur(0px)' }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="absolute w-20 md:w-24 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] pointer-events-none" 
+              className="absolute w-12 md:w-24 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] pointer-events-none" 
               alt="EntryLab Logo"
             />
 
@@ -399,7 +399,7 @@ export default function Hero() {
               initial={false}
               animate={{ opacity: isExpanded ? 1 : 0, filter: isExpanded ? 'blur(0px)' : 'blur(8px)' }}
               transition={{ duration: 0.4, ease: "easeInOut", delay: isExpanded ? 0.2 : 0 }}
-              className="absolute w-[240px] md:w-[310px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] pointer-events-none" 
+              className="absolute w-[180px] md:w-[310px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] pointer-events-none" 
               alt="EntryLab Main Logo"
             />
           </motion.div>
