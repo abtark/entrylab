@@ -322,18 +322,18 @@ const GlobalWorldMap = () => {
         <h4 className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#00AAFF] uppercase mb-4">
           Around The Globe
         </h4>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center bg-gradient-to-r from-blue-600 via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent mb-2 leading-tight">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent mb-2 leading-tight">
           Powering Innovation for Businesses
         </h2>
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#00AAFF] drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] text-center mb-16 md:mb-24">
           Across the Globe.
         </h2>
 
-        <div className="relative w-full max-w-5xl mx-auto flex justify-center">
+        <div className="relative w-full flex justify-center mt-12 md:mt-24 mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
           <img 
             src="https://iili.io/BbpOJjV.webp" 
             alt="Global Map" 
-            className="w-full h-auto object-contain drop-shadow-[0_0_30px_rgba(0,170,255,0.15)]"
+            className="w-full max-w-6xl h-auto object-contain drop-shadow-[0_0_30px_rgba(0,170,255,0.15)]"
           />
         </div>
       </div>
