@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -23,6 +23,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const router = useRouter()
   const isHomePage = pathname === '/'
+  const navRef = useRef<HTMLElement>(null)
 
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -56,6 +57,16 @@ export default function Navbar() {
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [pathname])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileMenuOpen && navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isMobileMenuOpen])
 
   const handleNavigation = (e: React.MouseEvent, id: string) => {
     e.preventDefault()
@@ -100,6 +111,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
+      ref={navRef}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -111,6 +123,7 @@ export default function Navbar() {
         <div onClick={(e) => handleNavigation(e, 'home')} className="flex-shrink-0 cursor-pointer">
           <Image src="https://iili.io/FC3KC6g.png" alt="EntryLab" width={165} height={53} priority />
         </div>
+        
         <div className="hidden lg:flex items-center gap-1 bg-white/5 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
           {navItems.map((item) => {
             const isCareers = item.id === 'careers'
@@ -136,6 +149,7 @@ export default function Navbar() {
             )
           })}
         </div>
+
         <div className="hidden lg:block">
           <button
             onClick={(e) => handleNavigation(e, 'contact')}
@@ -152,11 +166,42 @@ export default function Navbar() {
             </svg>
           </button>
         </div>
+
         <button 
-          className="lg:hidden text-white text-2xl outline-none"
+          className="lg:hidden outline-none flex items-center justify-center transition-all duration-300"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <i className={`fa-solid ${isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+          <AnimatePresence mode="wait">
+            {isMobileMenuOpen ? (
+              <motion.div
+                key="close"
+                initial={{ opacity: 0, rotate: -90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: 90 }}
+                transition={{ duration: 0.2 }}
+                className="bg-red-500/10 text-red-500 p-2.5 rounded-lg"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ opacity: 0, rotate: 90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: -90 }}
+                transition={{ duration: 0.2 }}
+                className="bg-[#00AAFF]/10 text-[#00AAFF] p-2.5 rounded-lg"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="4" y1="10" x2="20" y2="10"></line>
+                  <line x1="4" y1="16" x2="20" y2="16"></line>
+                </svg>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </div>
 
@@ -166,22 +211,30 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden bg-[#111111]/95 backdrop-blur-2xl border-b border-white/10 overflow-hidden"
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden absolute top-full left-0 w-full bg-[#111111]/80 backdrop-blur-xl border-b border-white/10 overflow-hidden shadow-2xl"
           >
-            <div className="flex flex-col px-6 py-4 gap-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={(e) => handleNavigation(e, item.id)}
-                  className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors text-left outline-none"
-                >
-                  {item.name}
-                </button>
-              ))}
+            <div className="flex flex-col px-6 py-6 gap-2 items-center">
+              {navItems.map((item) => {
+                const isCareers = item.id === 'careers'
+                const isActive = isCareers ? pathname === '/careers' : activeSection === item.id && isHomePage
+
+                return (
+                  <button
+                    key={item.id}
+                    onClick={(e) => handleNavigation(e, item.id)}
+                    className={`w-full text-center py-3 text-lg font-medium transition-colors outline-none rounded-lg ${
+                      isActive ? 'text-[#00AAFF] bg-[#00AAFF]/5' : 'text-white/80 hover:text-[#00AAFF] hover:bg-white/5'
+                    }`}
+                  >
+                    {item.name}
+                  </button>
+                )
+              })}
+              <div className="w-full h-px bg-white/10 my-2" />
               <button
                 onClick={(e) => handleNavigation(e, 'contact')}
-                className="text-white/80 hover:text-[#00AAFF] text-lg font-medium transition-colors mt-2 text-left outline-none"
+                className="w-full text-center py-3 text-lg font-medium text-white/80 hover:text-[#00AAFF] hover:bg-white/5 transition-colors outline-none rounded-lg"
               >
                 Get In Touch
               </button>
