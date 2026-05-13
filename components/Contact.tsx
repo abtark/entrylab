@@ -106,14 +106,9 @@ export default function Contact() {
           viewport={{ once: true, margin: "-50px" }}
         >
           <motion.div variants={textRevealVariants} className="overflow-hidden">
-            <h2
-              className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] text-transparent bg-clip-text pb-2"
-              style={{ animation: 'gradient 4s linear infinite' }}
-            >
-              Contact Us
-            </h2>
+            <h2>CONTACT US</h2>
           </motion.div>
-          <motion.div variants={textRevealVariants} className="w-16 h-[2px] bg-[#00AAFF] mt-2 rounded-full shadow-[0_0_10px_rgba(0,170,255,0.6)]" />
+          <motion.div variants={textRevealVariants} className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4" />
         </motion.div>
 
         <motion.div 
@@ -124,9 +119,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "-50px" }}
         >
           <motion.div variants={textRevealVariants} className="flex flex-col lg:w-[45%]">
-            <h3 className="text-3xl md:text-4xl font-black text-[#00AAFF] mb-4 drop-shadow-sm tracking-tight">
-              Get In Touch
-            </h3>
+            <h4>Get In Touch</h4>
             <p className="text-gray-400 text-sm leading-relaxed max-w-[90%]">
               We'd love to hear from you. Whether you have questions, need support, or want to learn more about our services, our team is here to help.
             </p>
@@ -139,9 +132,7 @@ export default function Contact() {
                 <i className="fa-solid fa-location-dot text-[#00AAFF]"></i>
               </div>
               <div className="flex flex-col">
-                <h4 className="text-xl font-bold text-[#00AAFF] drop-shadow-sm mb-2">
-                  Our Address
-                </h4>
+                <h5 className="!mb-2 !normal-case">Our Address</h5>
                 <p className="text-gray-400 text-sm leading-relaxed">Chuna Factory Moor, Artillery Road</p>
                 <p className="text-gray-400 text-sm leading-relaxed">Chittagong, Bangladesh</p>
               </div>
@@ -152,9 +143,7 @@ export default function Contact() {
                 <i className="fa-solid fa-phone text-[#00AAFF]"></i>
               </div>
               <div className="flex flex-col">
-                <h4 className="text-xl font-bold text-[#00AAFF] drop-shadow-sm mb-2">
-                  Contact Info
-                </h4>
+                <h5 className="!mb-2 !normal-case">Contact Info</h5>
                 <p className="text-gray-400 text-sm leading-relaxed">+880 1600 123 123</p>
                 <p className="text-gray-400 text-sm leading-relaxed">info@entrylab.net</p>
               </div>
@@ -180,7 +169,7 @@ export default function Contact() {
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-headset text-[#00AAFF] text-xl"></i>
               </div>
-              <h4 className="text-xl font-bold text-white">Customer Support</h4>
+              <h4 className="!text-white !mb-0">Customer Support</h4>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Our team is always here to help with any questions or concerns, ensuring your experience stays smooth and stress-free.
               </p>
@@ -190,7 +179,7 @@ export default function Contact() {
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-comment-dots text-[#00AAFF] text-xl"></i>
               </div>
-              <h4 className="text-xl font-bold text-white">Feedback & Suggestions</h4>
+              <h4 className="!text-white !mb-0">Feedback & Suggestions</h4>
               <p className="text-gray-400 text-sm leading-relaxed">
                 We value your ideas and feedback, as they help us improve and create a better experience for everyone.
               </p>
@@ -200,7 +189,7 @@ export default function Contact() {
               <div className="w-12 h-12 rounded-2xl bg-[#00AAFF]/10 flex items-center justify-center shrink-0 shadow-[inset_0_0_10px_rgba(0,170,255,0.1)] transition-transform duration-300 group-hover:scale-110">
                 <i className="fa-solid fa-envelope text-[#00AAFF] text-xl"></i>
               </div>
-              <h4 className="text-xl font-bold text-white">Media Inquiries</h4>
+              <h4 className="!text-white !mb-0">Media Inquiries</h4>
               <p className="text-gray-400 text-sm leading-relaxed">
                 For press and media-related inquiries, please contact us at <a href="mailto:info@entrylab.net" className="text-[#00AAFF] hover:underline transition-all">info@entrylab.net</a>
               </p>
@@ -220,7 +209,7 @@ export default function Contact() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-[#00AAFF] mb-2">Let's Talk!</h3>
+                <h3 className="text-2xl font-bold text-[#00AAFF] mb-2 !pb-0 !bg-none !animate-none !text-[#00AAFF]">Let's Talk!</h3>
                 <p className="text-gray-300 text-sm">Get in touch with us using the following form below.</p>
               </div>
 
@@ -228,8 +217,8 @@ export default function Contact() {
                 
                 <div className="flex flex-col">
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
-                    <div className="flex flex-col">
+                  <div className="flex flex-col gap-0 md:flex-row md:gap-x-5">
+                    <div className="flex flex-col flex-1">
                       <input 
                         type="text" 
                         name="firstName"
@@ -242,7 +231,7 @@ export default function Contact() {
                         <span className="text-red-500 text-xs">{errors.firstName}</span>
                       </div>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col flex-1">
                       <input 
                         type="text" 
                         name="lastName"
@@ -315,11 +304,9 @@ export default function Contact() {
                 </div>
 
                 <div className="mt-2">
-                  <button 
-                    type="submit" 
-                    className="btn-primary w-full flex items-center justify-center gap-2 rounded-xl shadow-[0_0_15px_rgba(0,170,255,0.3)] hover:shadow-[0_0_25px_rgba(0,170,255,0.5)] transition-all"
-                  >
-                    <i className="fa-solid fa-paper-plane text-sm"></i> Submit
+                  <button type="submit" className="global-btn w-full mt-4">
+                    <span>Submit</span>
+                    <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                   </button>
 
                   <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
