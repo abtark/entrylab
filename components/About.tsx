@@ -179,16 +179,6 @@ export default function About() {
 
   return (
     <section id="about" className="relative py-32 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes gradient-r2l {
-          0% { background-position: 200% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-r2l {
-          animation: gradient-r2l 4s linear infinite;
-        }
-      `}} />
-
       <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
         <motion.div 
           animate={{ y: [0, -30, 0], x: [0, 15, 0] }}
@@ -214,11 +204,7 @@ export default function About() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
         <div className="flex flex-col items-center mb-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight uppercase">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              ABOUT ENTRYLAB
-            </span>
-          </h2>
+          <h2>ABOUT ENTRYLAB</h2>
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
         </div>
 
@@ -231,7 +217,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#00AAFF] text-left">
+              <h3 className="!text-xl md:!text-2xl font-bold text-[#00AAFF] text-left !bg-none !text-[#00AAFF] !animate-none !pb-0">
                 <ScrollRevealPro>Our Mission</ScrollRevealPro>
               </h3>
               <div className="p-4 rounded-xl bg-[#00AAFF] transition-transform duration-300 group-hover:scale-110 will-change-transform">
@@ -249,7 +235,7 @@ export default function About() {
 
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#EC4899] text-left">
+              <h3 className="!text-xl md:!text-2xl font-bold text-[#EC4899] text-left !bg-none !text-[#EC4899] !animate-none !pb-0">
                 <ScrollRevealPro>Our Vision</ScrollRevealPro>
               </h3>
               <div className="p-4 rounded-xl bg-[#EC4899] transition-transform duration-300 group-hover:scale-110 will-change-transform">
@@ -266,7 +252,7 @@ export default function About() {
 
           <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
             <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#F97316] text-left">
+              <h3 className="!text-xl md:!text-2xl font-bold text-[#F97316] text-left !bg-none !text-[#F97316] !animate-none !pb-0">
                 <ScrollRevealPro>Our Values</ScrollRevealPro>
               </h3>
               <div className="p-4 rounded-xl bg-[#F97316] transition-transform duration-300 group-hover:scale-110 will-change-transform">
@@ -287,16 +273,9 @@ export default function About() {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
-          <div className="flex flex-col items-start text-left">
-            <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-              <ScrollRevealPro>Our Story</ScrollRevealPro>
-            </span>
-            
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 pb-1">
-              <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">
-                From a Small Team to a Trusted Agency
-              </ScrollRevealPro>
-            </h3>
+          <div className="flex flex-col items-start text-left w-full">
+            <ScrollRevealPro><h5>Our Story</h5></ScrollRevealPro>
+            <ScrollRevealPro><h3>From a Small Team to a Trusted Agency</h3></ScrollRevealPro>
             
             <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
@@ -397,14 +376,8 @@ export default function About() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-40">
         <div className="flex flex-col items-center mb-16">
-          <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            <ScrollRevealPro>Our Journey</ScrollRevealPro>
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              Key Milestone
-            </ScrollRevealPro>
-          </h2>
+          <ScrollRevealPro><h5>Our Journey</h5></ScrollRevealPro>
+          <ScrollRevealPro><h3>Key Milestone</h3></ScrollRevealPro>
         </div>
 
         <div className="relative max-w-4xl mx-auto pb-10">
@@ -430,7 +403,7 @@ export default function About() {
                     <span className="inline-block text-[#00AAFF] font-black text-xl mb-2">
                       <ScrollRevealPro>{item.year}</ScrollRevealPro>
                     </span>
-                    <h4 className="text-xl font-bold text-white mb-2">
+                    <h4 className="!text-xl font-bold text-white mb-2 !drop-shadow-none !bg-none !animate-none">
                       <ScrollRevealPro>{item.title}</ScrollRevealPro>
                     </h4>
                     <p className="text-white/70 text-sm leading-relaxed">
@@ -448,14 +421,8 @@ export default function About() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="flex flex-col items-center mb-16">
-          <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            <ScrollRevealPro>Life at EntryLab</ScrollRevealPro>
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              Our Culture
-            </ScrollRevealPro>
-          </h2>
+          <ScrollRevealPro><h5>Life at EntryLab</h5></ScrollRevealPro>
+          <ScrollRevealPro><h3>Our Culture</h3></ScrollRevealPro>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
@@ -474,7 +441,7 @@ export default function About() {
                   {item.iconExtras}
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">
+              <h3 className="!text-lg md:!text-xl font-bold text-white mb-2 !pb-0 !bg-none !text-white !animate-none">
                 <ScrollRevealPro>{item.title}</ScrollRevealPro>
               </h3>
               <p className="text-white/60 leading-relaxed text-sm">
