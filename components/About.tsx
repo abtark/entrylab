@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, ReactNode } from 'react'
 import { motion, useInView, animate } from 'framer-motion'
-import Link from 'next/link'
 
 interface AnimatedNumberProps {
   value: number;
@@ -215,7 +214,7 @@ export default function About() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF]/40 rounded-2xl p-8 flex flex-col items-start shadow-sm transition-all duration-300 hover:border-[#00AAFF]/80 hover:shadow-[0_0_15px_rgba(0,170,255,0.2)]">
             <div className="flex items-center justify-between w-full mb-6">
               <h3 className="!text-xl md:!text-2xl font-bold text-[#00AAFF] text-left !bg-none !text-[#00AAFF] !animate-none !pb-0">
                 <ScrollRevealPro>Our Mission</ScrollRevealPro>
@@ -233,12 +232,12 @@ export default function About() {
             </p>
           </div>
 
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF]/40 rounded-2xl p-8 flex flex-col items-start shadow-sm transition-all duration-300 hover:border-[#00AAFF]/80 hover:shadow-[0_0_15px_rgba(0,170,255,0.2)]">
             <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="!text-xl md:!text-2xl font-bold text-[#EC4899] text-left !bg-none !text-[#EC4899] !animate-none !pb-0">
+              <h3 className="!text-xl md:!text-2xl font-bold text-[#00AAFF] text-left !bg-none !text-[#00AAFF] !animate-none !pb-0">
                 <ScrollRevealPro>Our Vision</ScrollRevealPro>
               </h3>
-              <div className="p-4 rounded-xl bg-[#EC4899] transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <div className="p-4 rounded-xl bg-[#00AAFF] transition-transform duration-300 group-hover:scale-110 will-change-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                   <circle cx="12" cy="12" r="3" />
@@ -250,12 +249,12 @@ export default function About() {
             </p>
           </div>
 
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
+          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF]/40 rounded-2xl p-8 flex flex-col items-start shadow-sm transition-all duration-300 hover:border-[#00AAFF]/80 hover:shadow-[0_0_15px_rgba(0,170,255,0.2)]">
             <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="!text-xl md:!text-2xl font-bold text-[#F97316] text-left !bg-none !text-[#F97316] !animate-none !pb-0">
+              <h3 className="!text-xl md:!text-2xl font-bold text-[#00AAFF] text-left !bg-none !text-[#00AAFF] !animate-none !pb-0">
                 <ScrollRevealPro>Our Values</ScrollRevealPro>
               </h3>
-              <div className="p-4 rounded-xl bg-[#F97316] transition-transform duration-300 group-hover:scale-110 will-change-transform">
+              <div className="p-4 rounded-xl bg-[#00AAFF] transition-transform duration-300 group-hover:scale-110 will-change-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
@@ -291,7 +290,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <Link href="/industryinsights" className="text-[#00AAFF] group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></Link>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <span onClick={() => window.location.href='/industryinsights'} className="text-[#00AAFF] group inline-flex items-center gap-1 transition-all duration-300 cursor-pointer"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
               </ScrollRevealPro>
             </p>
 
