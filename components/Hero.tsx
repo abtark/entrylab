@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const headings = [
-  "Precision search, Real impact",
   "Every Search Has a Value",
+  "Precision search, Real impact",
   "Search That Drives Growth",
   "Every Search Has Power",
   "Search Beyond Limits",
@@ -284,16 +284,6 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative w-full min-h-screen bg-[#02050A] overflow-hidden flex flex-col items-center justify-start pt-[12vh] md:pt-[15vh] z-0">
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes custom-gradient {
-          0% { background-position: 200% center; }
-          100% { background-position: 0% center; }
-        }
-        .animate-custom-gradient {
-          animation: custom-gradient 8s linear infinite;
-        }
-      `}} />
-
       <div className="absolute top-0 right-0 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-[radial-gradient(circle_at_top_right,rgba(0,170,255,0.5),transparent_65%)] pointer-events-none z-0 mix-blend-screen -translate-y-1/4 translate-x-1/4" />
       
       <div className="absolute bottom-0 left-0 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-[radial-gradient(circle_at_bottom_left,rgba(0,170,255,0.5),transparent_65%)] pointer-events-none z-0 mix-blend-screen translate-y-1/4 -translate-x-1/4" />
@@ -311,17 +301,13 @@ export default function Hero() {
         >
           <div className="relative w-full min-h-[140px] md:min-h-[180px] flex items-center justify-center">
             {isH1 ? (
-              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight w-full leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
-                  {isInitialLoad ? headings[0] : displayedText}
-                </span>
+              <h1>
+                {isInitialLoad ? headings[0] : displayedText}
                 <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" />
               </h1>
             ) : (
-              <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight w-full leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
-                  {isInitialLoad ? headings[0] : displayedText}
-                </span>
+              <h2 className="hero-h2">
+                {isInitialLoad ? headings[0] : displayedText}
                 <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" />
               </h2>
             )}
@@ -343,22 +329,10 @@ export default function Hero() {
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
           className="mt-10 mb-8"
         >
-          <a
-            href="#about"
-            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-3xl overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)] w-[160px]"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
-            <span className="relative z-10 text-white text-sm md:text-base font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
-            <svg 
-              className="absolute right-4 opacity-0 -translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 text-white w-5 h-5 z-10" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 5v14" strokeDasharray="2 4" />
+          <a href="#about" className="global-btn w-fit mx-auto">
+            <span>Learn More</span>
+            <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M12 5v14" />
               <path d="M19 12l-7 7-7-7" />
             </svg>
           </a>
