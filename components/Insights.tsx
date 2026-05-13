@@ -62,58 +62,6 @@ const paragraphs = [
   }
 ]
 
-const mapPattern = [
-  "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "00000000000000011111111000000000000000000000000001111111100000000000000000000000",
-  "00000000000001111111111111000000000000000000001111111111111110000000000000000000",
-  "00000000000111111111111111100000000000000000111111111111111111100000000000000000",
-  "00000000001111111111111111110000000000000001111111111111111111110000000000000000",
-  "00000000011111111111111111111000000000000011111111111111111111111100000000000000",
-  "00000000111111111111111111111000000000000111111111111111111111111110000000000000",
-  "00000000111111111111111111111000000000001111111111111111111111111111000000000000",
-  "00000000111111111111111111110000000000000111111111111111111111111111100000000000",
-  "00000000011111111111111111100000000000000011111111111111111111111111100000000000",
-  "00000000001111111111111111000000000000000001111111111111111111111111000000000000",
-  "00000000000111111111111110000000000000000001111111111111111111111111000000000000",
-  "00000000000011111111111100000000000000000000111111111111111111111110000000000000",
-  "00000000000001111111111000000000000000000000111111111111111111111100000000000000",
-  "00000000000000111111110000000000000000000000011111111111111111111000000000000000",
-  "00000000000000011111100000000000000000000000011111111111111111110000000000000000",
-  "00000000000000001111000000000000000000000000011111111111111111100000000000000000",
-  "00000000000000000110000000000000000000000000011111111111111111000000000000000000",
-  "00000000000000000110000000000000000000000000011111111111111110000000000000000000",
-  "00000000000000001110000000000000000000000000111111111111111100000000000000000000",
-  "00000000000000001111000000000000000000000000011111111111111000000000000000000000",
-  "00000000000000000111000000000000000000000000001111111111110000000000000000000000",
-  "00000000000000000111100000000000000000000000000111111111110000000000001111000000",
-  "00000000000000000011100000000000000000000000000011111111100000000000011111100000",
-  "00000000000000000001100000000000000000000000000001111111000000000000001111100000",
-  "00000000000000000001100000000000000000000000000000111110000000000000000111100000",
-  "00000000000000000000100000000000000000000000000000001100000000000000000111000000",
-  "00000000000000000000000000000000000000000000000000000000000000000000000011000000",
-  "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
-]
-
-const markers = [
-  { id: 'se', country: 'Sweden', flag: '🇸🇪', top: '22%', left: '49%', dir: 'down', dot: 'bg-yellow-400' },
-  { id: 'no', country: 'Norway', flag: '🇳🇴', top: '26%', left: '46%', dir: 'down', dot: 'bg-red-500' },
-  { id: 'fi', country: 'Finland', flag: '🇫🇮', top: '26%', left: '52%', dir: 'down', dot: 'bg-blue-500' },
-  { id: 'uk', country: 'UK', flag: '🇬🇧', top: '34%', left: '45%', dir: 'down', dot: 'bg-red-500' },
-  { id: 'fr', country: 'France', flag: '🇫🇷', top: '40%', left: '46%', dir: 'up', dot: 'bg-red-500' },
-  { id: 'tr', country: 'Turkey', flag: '🇹🇷', top: '38%', left: '55%', dir: 'down', dot: 'bg-red-500' },
-  { id: 'ca', country: 'Canada', flag: '🇨🇦', top: '38%', left: '22%', dir: 'down', dot: 'bg-red-500' },
-  { id: 'us', country: 'USA', flag: '🇺🇸', top: '48%', left: '20%', dir: 'up', dot: 'bg-blue-500' },
-  { id: 'ng', country: 'Nigeria', flag: '🇳🇬', top: '65%', left: '48%', dir: 'up', dot: 'bg-green-500' },
-  { id: 'ae', country: 'UAE', flag: '🇦🇪', top: '48%', left: '60%', dir: 'down', dot: 'bg-red-500' },
-  { id: 'in', country: 'India', flag: '🇮🇳', top: '55%', left: '65%', dir: 'down', dot: 'bg-green-500' },
-  { id: 'bd', country: 'Bangladesh', flag: '🇧🇩', top: '60%', left: '68%', dir: 'down', dot: 'bg-red-500' },
-  { id: 'za', country: 'South Africa', flag: '🇿🇦', top: '80%', left: '51%', dir: 'up', dot: 'bg-green-500' },
-  { id: 'sg', country: 'Singapore', flag: '🇸🇬', top: '75%', left: '75%', dir: 'up', dot: 'bg-red-500' },
-  { id: 'au', country: 'Australia', flag: '🇦🇺', top: '85%', left: '85%', dir: 'up', dot: 'bg-blue-600' },
-]
-
 const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string }) => {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
@@ -367,70 +315,26 @@ const InsightsContainer = () => {
 
 const GlobalWorldMap = () => {
   return (
-    <div className="relative w-full py-24 md:py-32 overflow-hidden flex flex-col items-center bg-[#F4F9FF]">
+    <div className="relative w-full py-24 md:py-32 overflow-hidden flex flex-col items-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
+
       <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
-        <h4 className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#64748B] uppercase mb-4">
+        <h4 className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#00AAFF] uppercase mb-4">
           Around The Globe
         </h4>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-[#0F172A] mb-2 leading-tight">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center bg-gradient-to-r from-blue-600 via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent mb-2 leading-tight">
           Powering Innovation for Businesses
         </h2>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#10B981] text-center mb-20 md:mb-28">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#00AAFF] drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] text-center mb-16 md:mb-24">
           Across the Globe.
         </h2>
 
-        <div className="relative w-full max-w-5xl aspect-[2/1] mx-auto">
-          <svg 
-            viewBox="0 0 80 31" 
-            className="w-full h-full opacity-60" 
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {mapPattern.map((row, i) =>
-              row.split('').map((dot, j) => {
-                if (dot === '1') {
-                  const isHighlighted = (i + j) % 7 === 0;
-                  return (
-                    <circle
-                      key={`${i}-${j}`}
-                      cx={j}
-                      cy={i}
-                      r={0.4}
-                      fill={isHighlighted ? '#94A3B8' : '#CBD5E1'}
-                    />
-                  );
-                }
-                return null;
-              })
-            )}
-          </svg>
-
-          {markers.map((marker) => (
-            <div
-              key={marker.id}
-              className="absolute flex flex-col items-center z-20 transition-transform duration-300 hover:scale-110"
-              style={{ top: marker.top, left: marker.left, transform: marker.dir === 'down' ? 'translate(-50%, -100%)' : 'translate(-50%, 0)' }}
-            >
-              {marker.dir === 'down' ? (
-                <>
-                  <div className="bg-white text-[#0F172A] text-[10px] md:text-xs font-bold px-2 py-1 rounded-full shadow-md flex items-center gap-1.5 border border-gray-100">
-                    <span className="text-sm leading-none">{marker.flag}</span>
-                    <span className="leading-none">{marker.country}</span>
-                  </div>
-                  <div className="w-px h-3 md:h-4 bg-gray-300"></div>
-                  <div className={`w-2 h-2 rounded-full ${marker.dot} shadow-[0_0_0_2px_white]`}></div>
-                </>
-              ) : (
-                <>
-                  <div className={`w-2 h-2 rounded-full ${marker.dot} shadow-[0_0_0_2px_white]`}></div>
-                  <div className="w-px h-3 md:h-4 bg-gray-300"></div>
-                  <div className="bg-white text-[#0F172A] text-[10px] md:text-xs font-bold px-2 py-1 rounded-full shadow-md flex items-center gap-1.5 border border-gray-100">
-                    <span className="text-sm leading-none">{marker.flag}</span>
-                    <span className="leading-none">{marker.country}</span>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
+        <div className="relative w-full max-w-5xl mx-auto flex justify-center">
+          <img 
+            src="https://iili.io/BbpOJjV.webp" 
+            alt="Global Map" 
+            className="w-full h-auto object-contain drop-shadow-[0_0_30px_rgba(0,170,255,0.15)]"
+          />
         </div>
       </div>
     </div>
