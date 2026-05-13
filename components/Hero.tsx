@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const headings = [
   "Precision search, Real impact",
@@ -360,10 +360,10 @@ export default function Hero() {
         <motion.div 
           layout
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`relative flex items-center justify-center cursor-pointer h-28 md:h-36 ${
+          className={`relative cursor-pointer h-28 md:h-36 ${
             isExpanded ? 'w-[280px] md:w-[360px]' : 'w-28 md:w-36'
           }`}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0 : 0.8 }}
         >
           <motion.div 
             layout 
@@ -373,7 +373,7 @@ export default function Hero() {
 
           <motion.div 
             layout
-            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border flex items-center justify-center overflow-hidden z-10"
+            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border overflow-hidden z-10"
             animate={{
               boxShadow: [
                 "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)",
@@ -396,31 +396,27 @@ export default function Hero() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80 pointer-events-none" />
             
-            <AnimatePresence mode="wait">
-              {!isExpanded ? (
-                <motion.img 
-                  key="small-logo"
-                  src="https://iili.io/BZZjMzu.png" 
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  alt="EntryLab Logo" 
-                  className="absolute w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
-                />
-              ) : (
-                <motion.img 
-                  key="full-logo"
-                  src="https://iili.io/FC3KC6g.png" 
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  alt="EntryLab Main Logo" 
-                  className="absolute w-[250px] md:w-[320px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
-                />
-              )}
-            </AnimatePresence>
+            <motion.img 
+              src="https://iili.io/BZZjMzu.png" 
+              initial={{ left: "50%", x: "-50%", y: "-50%" }}
+              animate={{ left: isExpanded ? "20%" : "50%" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0.6 : 0.3 }}
+              className="absolute top-1/2 w-16 md:w-20 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              alt="EntryLab Logo"
+            />
+
+            <motion.img 
+              src="https://iili.io/FC3KC6g.png" 
+              initial={{ left: "50%", x: "-50%", y: "-50%", opacity: 0, scale: 0.9 }}
+              animate={{ 
+                left: isExpanded ? "65%" : "50%", 
+                opacity: isExpanded ? 1 : 0, 
+                scale: isExpanded ? 1 : 0.9 
+              }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: isExpanded ? 1.1 : 0 }}
+              className="absolute top-1/2 w-[170px] md:w-[220px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              alt="EntryLab Main Logo"
+            />
           </motion.div>
         </motion.div>
       </div>
