@@ -151,21 +151,14 @@ export default function Careers() {
       
       <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
         <motion.div
-          className="relative mb-6 text-center"
+          className="relative mb-6 text-center flex flex-col items-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <motion.h1
-            className="text-5xl md:text-7xl font-black tracking-tighter uppercase text-transparent bg-clip-text drop-shadow-lg relative inline-block"
-            style={{ backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)", backgroundSize: "200% auto" }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            CAREER AT ENTRYLAB
-            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 md:w-32 h-1.5 md:h-2 bg-[#00AAFF] rounded-full shadow-[0_0_15px_rgba(0,170,255,0.6)]" />
-          </motion.h1>
+          <h2>CAREER AT ENTRYLAB</h2>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
         </motion.div>
 
         <motion.div
@@ -187,10 +180,10 @@ export default function Careers() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">Core Values</h4>
-          <h2 className="text-lg md:text-xl text-neutral-300 font-medium tracking-tight">
+          <h5>Core Values</h5>
+          <p className="text-lg md:text-xl text-neutral-300 font-medium tracking-tight">
             A few things you should know about us.
-          </h2>
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -211,7 +204,7 @@ export default function Careers() {
                 >
                   <img src={value.image} alt={value.title} loading="lazy" decoding="async" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-sm" />
                 </motion.div>
-                <h3 className={`text-lg md:text-xl font-bold tracking-tight ${value.textColor}`}>
+                <h3 className={`!text-lg md:!text-xl font-bold tracking-tight !bg-none !animate-none !pb-0 ${value.textColor}`}>
                   {value.title}
                 </h3>
               </motion.div>
@@ -260,15 +253,8 @@ export default function Careers() {
         >
           <div className="flex flex-col md:flex-row justify-between w-full items-start md:items-end gap-6">
             <div className="flex flex-col text-left flex-1">
-              <h4 className="text-[#00AAFF] font-semibold text-lg mb-2">Our Advantages</h4>
-              <motion.h2
-                className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg capitalize"
-                style={{ backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)", backgroundSize: "200% auto" }}
-                animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-                transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-              >
-                Why Work With Us?
-              </motion.h2>
+              <h5>Our Advantages</h5>
+              <h3 className="!text-left !pb-0">Why Work With Us?</h3>
               <p className="text-neutral-300 mt-4 max-w-2xl text-base md:text-lg">
                 Expertise, creativity, and reliability drive meaningful results. A commitment to understanding client needs ensures tailored solutions and a smooth, professional experience from start to finish.
               </p>
@@ -319,7 +305,7 @@ export default function Careers() {
                 className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border ${isVisible ? "border-[#00CCCC]" : "border-transparent"} ${isFocused ? "bg-[#F0F9FF] shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)] border-2" : "bg-white shadow-lg"}`}
               >
                 <img src={imgSrc} alt={adv.title} loading="lazy" decoding="async" className="w-32 h-32 mb-6 object-contain mix-blend-multiply" />
-                <h3 className="text-2xl font-bold text-[#30C7CC] mb-4">{adv.title}</h3>
+                <h3 className="!text-2xl font-bold text-[#30C7CC] mb-4 !bg-none !animate-none !pb-0">{adv.title}</h3>
                 <p className="text-[#171717] leading-relaxed text-sm md:text-base font-medium">{adv.desc}</p>
               </motion.div>
             );
@@ -335,21 +321,14 @@ export default function Careers() {
         </div>
 
         <motion.div 
-          className="text-center mb-16 relative z-10"
+          className="text-center mb-16 relative z-10 flex flex-col items-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4"
-            style={{ backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)", backgroundSize: "200% auto" }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            A Workplace Designed Around You
-          </motion.h2>
-          <p className="text-neutral-300 text-lg md:text-xl max-w-3xl mx-auto">
+          <h3>A Workplace Designed Around You</h3>
+          <p className="text-neutral-300 text-lg md:text-xl max-w-3xl mx-auto mt-4">
             We create an environment where your well-being, comfort, and growth come first—so you can do your best work every day.
           </p>
         </motion.div>
@@ -370,7 +349,7 @@ export default function Careers() {
                 style={isOpen ? { backgroundColor: `${item.themeColor}1A`, borderLeft: `4px solid ${item.themeColor}`, borderTop: '1px solid rgba(255,255,255,0.1)', borderRight: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' } : { backgroundColor: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.1)' }}
               >
                 <button onClick={() => setOpenAcc(i)} className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-white/5 transition-colors">
-                  <h3 className="text-lg md:text-xl font-bold transition-colors" style={{ color: isOpen ? item.themeColor : '#ffffff' }}>{item.title}</h3>
+                  <h3 className="!text-lg md:!text-xl font-bold transition-colors !bg-none !animate-none !pb-0" style={{ color: isOpen ? item.themeColor : '#ffffff' }}>{item.title}</h3>
                   <div className="shrink-0 ml-4 transition-transform duration-300" style={{ color: isOpen ? item.themeColor : 'rgba(255,255,255,0.5)', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                   </div>
@@ -407,27 +386,20 @@ export default function Careers() {
         </motion.div>
       </section>
 
-      <section className="py-12 px-6 max-w-7xl mx-auto relative">
+      <section className="py-12 px-6 max-w-7xl mx-auto relative z-10">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30 bg-[#00AAFF]" />
           <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30 bg-[#30C7CC]" />
         </div>
 
         <motion.div 
-          className="text-center mb-16 relative z-10"
+          className="text-center mb-16 relative z-10 flex flex-col items-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4 capitalize pb-4"
-            style={{ backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)", backgroundSize: "200% auto" }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            Hiring Process
-          </motion.h2>
+          <h3>Hiring Process</h3>
           <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto mt-2 pb-6">
             A simple and transparent journey where we review applications, interview candidates, and select the best fit to join our team.
           </p>
@@ -440,7 +412,7 @@ export default function Careers() {
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00AAFF] shadow-[0_0_12px_2px_rgba(0,170,255,0.8)] animate-pulse" />
                 <span className="text-white/60 text-sm font-bold tracking-widest uppercase">{step.step}</span>
               </div>
-              <h3 className="text-2xl font-bold text-[#00AAFF] mb-4">{step.title}</h3>
+              <h4 className="mb-4">{step.title}</h4>
               <div className="space-y-4">
                 {step.desc.map((p, pIndex) => (
                   <motion.p key={pIndex} className="text-gray-400 text-sm leading-relaxed" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>{p}</motion.p>
@@ -458,20 +430,13 @@ export default function Careers() {
         </div>
 
         <motion.div 
-          className="text-center mb-16 relative z-10"
+          className="text-center mb-16 relative z-10 flex flex-col items-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <motion.h2
-            className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text drop-shadow-lg mb-4 capitalize"
-            style={{ backgroundImage: "linear-gradient(to right, #00AAFF, #ffffff, #00AAFF)", backgroundSize: "200% auto" }}
-            animate={{ backgroundPosition: ["200% 50%", "0% 50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
-          >
-            Open Positions
-          </motion.h2>
+          <h3>Open Positions</h3>
         </motion.div>
 
         <div className="flex flex-col relative z-10">
@@ -481,13 +446,13 @@ export default function Careers() {
                 <span className="text-white font-medium text-lg">{job.dept}</span>
               </div>
               <div className="w-full md:w-1/3 flex flex-col">
-                <h3 className="text-2xl font-bold text-white">{job.title}</h3>
+                <h3 className="!text-2xl font-bold text-white !pb-0 !bg-none !animate-none">{job.title}</h3>
                 <span className="text-neutral-400 mt-2">{job.details}</span>
               </div>
               <div className="w-full md:w-1/3 flex justify-start md:justify-end">
-                <button className="relative flex items-center justify-center w-[140px] h-[48px] rounded-full border border-white/20 text-white hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-300 overflow-hidden group/btn">
-                  <span className="font-semibold absolute transition-transform duration-300 group-hover/btn:-translate-x-3">Apply</span>
-                  <svg className="w-5 h-5 absolute right-5 opacity-0 translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <button className="global-btn !py-2 !px-6 w-[120px]">
+                  <span>Apply</span>
+                  <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
               </div>
             </motion.div>
@@ -501,9 +466,9 @@ export default function Careers() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <button className="group flex items-center gap-2 px-8 py-4 rounded-full bg-[#00AAFF] text-white font-bold hover:bg-white hover:text-[#00AAFF] transition-all duration-300 shadow-[0_0_20px_rgba(0,170,255,0.4)]">
-            See All Jobs
-            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <button className="global-btn">
+            <span>See All Jobs</span>
+            <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </motion.div>
       </section>
