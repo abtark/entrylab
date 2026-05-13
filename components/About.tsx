@@ -1,490 +1,422 @@
 'use client'
 
-import { useRef, useEffect, ReactNode } from 'react'
-import { motion, useInView, animate } from 'framer-motion'
-import Link from 'next/link'
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-interface AnimatedNumberProps {
-  value: number;
-  suffix?: string;
-  decimals?: number;
+const headings = [
+  "Precision search, Real impact",
+  "Every Search Has a Value",
+  "Search That Drives Growth",
+  "Every Search Has Power",
+  "Search Beyond Limits",
+  "Every Search Adds Value",
+  "Smart Search, Real Value",
+  "Every Query Creates Value",
+  "Search Smarter, Grow Faster",
+  "Every Click Starts Value",
+  "Search That Moves Forward"
+]
+
+const circuitPaths = [
+  "M 960 760 L 800 600 L 400 600 L 200 400 L 0 400",
+  "M 960 760 L 800 760 L 400 760 L 0 760",
+  "M 960 760 L 800 880 L 500 880 L 300 980 L 0 980",
+  "M 960 760 L 1120 600 L 1520 600 L 1720 400 L 1920 400",
+  "M 960 760 L 1120 760 L 1520 760 L 1920 760",
+  "M 960 760 L 1120 880 L 1420 880 L 1620 980 L 1920 980",
+  "M 960 760 L 850 650 L 700 650 L 400 300 L 0 300",
+  "M 960 760 L 1070 650 L 1220 650 L 1520 300 L 1920 300",
+  "M 960 760 L 880 880 L 750 880 L 500 1080",
+  "M 960 760 L 1040 880 L 1170 880 L 1420 1080",
+  "M 960 760 L 800 500 L 450 500 L 200 200 L 0 200",
+  "M 960 760 L 1120 500 L 1470 500 L 1720 200 L 1920 200"
+]
+
+const pathDelays = [0, 2, 4, 0, 2, 4, 6, 6, 8, 8, 10, 10]
+
+const nodes = [
+  { cx: 800, cy: 600 }, { cx: 400, cy: 600 }, { cx: 200, cy: 400 },
+  { cx: 800, cy: 760 }, { cx: 400, cy: 760 },
+  { cx: 800, cy: 880 }, { cx: 500, cy: 880 }, { cx: 300, cy: 980 },
+  { cx: 1120, cy: 600 }, { cx: 1520, cy: 600 }, { cx: 1720, cy: 400 },
+  { cx: 1120, cy: 760 }, { cx: 1520, cy: 760 },
+  { cx: 1120, cy: 880 }, { cx: 1420, cy: 880 }, { cx: 1620, cy: 980 },
+  { cx: 850, cy: 650 }, { cx: 700, cy: 650 }, { cx: 400, cy: 300 },
+  { cx: 1070, cy: 650 }, { cx: 1220, cy: 650 }, { cx: 1520, cy: 300 },
+  { cx: 880, cy: 880 }, { cx: 750, cy: 880 },
+  { cx: 1040, cy: 880 }, { cx: 1170, cy: 880 },
+  { cx: 800, cy: 500 }, { cx: 450, cy: 500 }, { cx: 200, cy: 200 },
+  { cx: 1120, cy: 500 }, { cx: 1470, cy: 500 }, { cx: 1720, cy: 200 }
+]
+
+const floatingIcons = [
+  { 
+    id: 'sheet', cx: 200, cy: 400, pathIndex: 0, f: 0.82, floatDelay: 0,
+    path: <><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></> 
+  },
+  { 
+    id: 'search', cx: 400, cy: 760, pathIndex: 1, f: 0.58, floatDelay: 1.5,
+    path: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></> 
+  },
+  { 
+    id: 'data', cx: 1720, cy: 400, pathIndex: 3, f: 0.82, floatDelay: 0.8,
+    path: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></> 
+  },
+  { 
+    id: 'chrome', cx: 1520, cy: 760, pathIndex: 4, f: 0.58, floatDelay: 2.3,
+    path: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></> 
+  },
+  { 
+    id: 'linkedin', cx: 775, cy: 880, pathIndex: 8, f: 0.42, floatDelay: 3,
+    path: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></> 
+  },
+  { 
+    id: 'email', cx: 1145, cy: 880, pathIndex: 9, f: 0.42, floatDelay: 3.8,
+    path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
+  },
+  { 
+    id: 'cloud', cx: 450, cy: 500, pathIndex: 10, f: 0.49, floatDelay: 2.7,
+    path: <><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4.2 12 4.5 4.5 0 0 0 5.5 21h12Z"/></> 
+  },
+  { 
+    id: 'idea', cx: 1470, cy: 500, pathIndex: 11, f: 0.55, floatDelay: 3.2,
+    path: <><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></> 
+  }
+]
+
+const getGlowTimes = (f: number) => {
+  const peak = f - 0.075; 
+  return [
+    0,
+    Math.max(0, peak - 0.05),
+    Math.max(0, peak),
+    Math.min(1, peak + 0.15),
+    1
+  ];
 }
 
-const AnimatedNumber = ({ value, suffix = "", decimals = 0 }: AnimatedNumberProps) => {
-  const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: "-50px" })
+const CircuitBackground = React.memo(() => {
+  return (
+    <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full z-10 pointer-events-none">
+      {circuitPaths.map((path, i) => (
+        <g key={`circuit-base-${i}`}>
+          <path
+            d={path}
+            stroke="rgba(0,170,255,0.15)"
+            strokeWidth="1.5"
+            fill="none"
+            strokeLinejoin="round"
+          />
+          <motion.path
+            d={path}
+            stroke="rgba(0,170,255,0.5)"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
+            animate={{ pathOffset: [0, 1], opacity: [0, 1, 1, 0] }}
+            transition={{ 
+              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
+              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.9, 1] }
+            }}
+          />
+          <motion.path
+            d={path}
+            stroke="#00AAFF"
+            strokeWidth="1"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0.15, pathOffset: 0, opacity: 0 }}
+            animate={{ pathOffset: [0, 1], opacity: [0, 1, 1, 0] }}
+            transition={{ 
+              pathOffset: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i] },
+              opacity: { duration: 12, repeat: Infinity, ease: "linear", delay: pathDelays[i], times: [0, 0.1, 0.9, 1] }
+            }}
+          />
+        </g>
+      ))}
+
+      {nodes.map((node, i) => (
+        <g key={`node-${i}`}>
+          <rect
+            x={node.cx - 5}
+            y={node.cy - 5}
+            width="10"
+            height="10"
+            rx="2"
+            fill="#02050A"
+            stroke="rgba(0,170,255,0.3)"
+            strokeWidth="1.5"
+          />
+          <motion.rect
+            x={node.cx - 2.5}
+            y={node.cy - 2.5}
+            width="5"
+            height="5"
+            rx="1"
+            fill="#00AAFF"
+            animate={{ opacity: [0.1, 1, 0.1] }}
+            transition={{ 
+              duration: 4, 
+              repeat: Infinity, 
+              delay: (i % 5) * 0.8, 
+              ease: "easeInOut" 
+            }}
+          />
+        </g>
+      ))}
+
+      {floatingIcons.map((icon) => (
+        <g
+          key={icon.id}
+          className="drop-shadow-[0_0_15px_rgba(0,170,255,0.2)]"
+        >
+          <motion.rect
+            x={icon.cx - 32}
+            y={icon.cy - 32}
+            width="64"
+            height="64"
+            rx="18"
+            fill="none"
+            stroke="#00AAFF"
+            strokeWidth="6"
+            style={{ filter: "blur(10px)" }}
+            animate={{ opacity: [0, 0, 1, 0, 0] }}
+            transition={{ 
+              duration: 12, 
+              times: getGlowTimes(icon.f), 
+              repeat: Infinity, 
+              delay: pathDelays[icon.pathIndex],
+              ease: "linear"
+            }}
+          />
+          
+          <motion.rect
+            x={icon.cx - 32}
+            y={icon.cy - 32}
+            width="64"
+            height="64"
+            rx="18"
+            fill="#02050A"
+            fillOpacity="1"
+            stroke="#00AAFF"
+            animate={{ 
+              strokeOpacity: [0.3, 0.3, 1, 0.3, 0.3],
+              strokeWidth: [1.5, 1.5, 3, 1.5, 1.5]
+            }}
+            transition={{ 
+              duration: 12, 
+              times: getGlowTimes(icon.f), 
+              repeat: Infinity, 
+              delay: pathDelays[icon.pathIndex],
+              ease: "linear"
+            }}
+          />
+          
+          <svg
+            x={icon.cx - 16}
+            y={icon.cy - 16}
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#00AAFF"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="opacity-90"
+          >
+            {icon.path}
+          </svg>
+        </g>
+      ))}
+    </svg>
+  )
+})
+
+CircuitBackground.displayName = 'CircuitBackground'
+
+export default function Hero() {
+  const [displayedText, setDisplayedText] = useState("")
+  const [headingIndex, setHeadingIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
-    if (inView && ref.current) {
-      animate(0, value, {
-        duration: 2.5,
-        ease: "easeOut",
-        onUpdate: (latest) => {
-          if (ref.current) {
-            ref.current.textContent = Number(latest).toFixed(decimals) + suffix
-          }
-        }
-      })
+    const loadTimer = setTimeout(() => {
+      setIsInitialLoad(false)
+    }, 1500)
+    return () => clearTimeout(loadTimer)
+  }, [])
+
+  useEffect(() => {
+    if (isInitialLoad) return
+
+    let timeout: NodeJS.Timeout
+    const currentText = headings[headingIndex]
+
+    if (isDeleting) {
+      if (displayedText.length === 0) {
+        setIsDeleting(false)
+        setHeadingIndex((prev) => (prev + 1) % headings.length)
+      } else {
+        timeout = setTimeout(() => {
+          setDisplayedText(currentText.substring(0, displayedText.length - 1))
+        }, 30)
+      }
+    } else {
+      if (displayedText.length === currentText.length) {
+        timeout = setTimeout(() => setIsDeleting(true), 6000)
+      } else {
+        timeout = setTimeout(() => {
+          setDisplayedText(currentText.substring(0, displayedText.length + 1))
+        }, 40)
+      }
     }
-  }, [inView, value, suffix, decimals])
 
-  return <span ref={ref} className="text-3xl font-bold text-white mb-1 tracking-tight">0{suffix}</span>
-}
-
-interface ScrollRevealProProps {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}
-
-const ScrollRevealPro = ({ 
-  children, 
-  className = "", 
-  delay = 0 
-}: ScrollRevealProProps) => {
-  return (
-    <motion.span
-      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-      transition={{ 
-        duration: 0.8, 
-        ease: [0.22, 1, 0.36, 1],
-        delay: delay 
-      }}
-      className={`inline-block ${className}`}
-    >
-      {children}
-    </motion.span>
-  )
-}
-
-interface TimelineItem {
-  year: string;
-  title: string;
-  description: string;
-}
-
-const timelineData: TimelineItem[] = [
-  {
-    year: "2019",
-    title: "EntryLab Founded",
-    description: "Started with a small team of 3 passionate data professionals."
-  },
-  {
-    year: "2020",
-    title: "First 100 Projects",
-    description: "Reached our first milestone of 100 completed projects."
-  },
-  {
-    year: "2021",
-    title: "Team Expansion",
-    description: "Grew to 20+ team members and expanded service offerings."
-  },
-  {
-    year: "2022",
-    title: "International Clients",
-    description: "Started serving clients from USA, UK, and Australia."
-  },
-  {
-    year: "2023",
-    title: "New Office",
-    description: "Moved to a modern, spacious office to accommodate our growing team."
-  },
-  {
-    year: "2024",
-    title: "12000+ Projects",
-    description: "Crossed the 12000+ project milestone with 99.9% accuracy."
-  },
-  {
-    year: "2025",
-    title: "Own Work Space",
-    description: "New Journey - New workspace with highly decorated interior."
-  }
-]
-
-interface CultureItem {
-  title: string;
-  description: string;
-  icon: ReactNode;
-  iconExtras?: ReactNode;
-  color: string;
-}
-
-const cultureData: CultureItem[] = [
-  {
-    title: "Collaborative Environment",
-    description: "We grow together through teamwork, where every idea inspires success.",
-    icon: <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />,
-    iconExtras: <circle cx="9" cy="7" r="4" />,
-    color: "#00AAFF"
-  },
-  {
-    title: "Growth & Learning",
-    description: "Continuous learning and training keep our team ahead of the curve.",
-    icon: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />,
-    color: "#8B5CF6"
-  },
-  {
-    title: "Work-Life Balance",
-    description: "Flexible work and fun outings help us maintain a healthy work-life balance.",
-    icon: <circle cx="12" cy="12" r="10" />,
-    iconExtras: <polyline points="12 6 12 12 16 14" />,
-    color: "#10B981"
-  },
-  {
-    title: "Celebrate Together",
-    description: "We celebrate every milestone and festival together like one family.",
-    icon: <><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13" /><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" /></>,
-    color: "#F59E0B"
-  },
-  {
-    title: "Innovation First",
-    description: "Creativity and innovation drive us to improve and solve challenges better.",
-    icon: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
-    color: "#EF4444"
-  },
-  {
-    title: "Open Communication",
-    description: "Honest communication and transparency build trust across our workplace.",
-    icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
-    color: "#3B82F6"
-  },
-  {
-    title: "Trip & Tour",
-    description: "Beyond work, we create meaningful memories and stronger connections together.",
-    icon: <><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l5.5 4L5 15.5 2.8 15 2 16l3 3 1 .8L7.5 22l.5-1.8-.5-2.2 3.5-3.5 4 5.5c.3.5.9.6 1.3.4l1.2-1.7c.3-.3.1-.7-.2-.9z"/></>,
-    color: "#EC4899"
-  },
-  {
-    title: "Fun & Creativity",
-    description: "We embrace creativity, think differently, and enjoy every step of the journey.",
-    icon: <circle cx="12" cy="12" r="10" />,
-    iconExtras: <><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></>,
-    color: "#14B8A6"
-  },
-  {
-    title: "Recognition & Rewards",
-    description: "Every achievement, big or small, deserves recognition and celebration.",
-    icon: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />,
-    color: "#EAB308"
-  }
-]
-
-export default function About() {
-  const timelineVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  }
+    return () => clearTimeout(timeout)
+  }, [displayedText, isDeleting, headingIndex, isInitialLoad])
 
   return (
-    <section id="about" className="relative py-32 bg-[#111111] overflow-hidden flex flex-col justify-center items-center z-0">
+    <section id="home" className="relative w-full min-h-screen bg-[#02050A] overflow-hidden flex flex-col items-center justify-start pt-[12vh] md:pt-[15vh] z-0">
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes gradient-r2l {
-          0% { background-position: 200% 50%; }
-          100% { background-position: 0% 50%; }
+        @keyframes custom-gradient {
+          0% { background-position: 200% center; }
+          100% { background-position: 0% center; }
         }
-        .animate-gradient-r2l {
-          animation: gradient-r2l 4s linear infinite;
+        .animate-custom-gradient {
+          animation: custom-gradient 8s linear infinite;
         }
       `}} />
 
-      <div className="absolute inset-0 max-w-7xl mx-auto w-full h-full pointer-events-none z-0">
-        <motion.div 
-          animate={{ y: [0, -30, 0], x: [0, 15, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[10%] left-[5%] w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-[#00AAFF] to-blue-500 blur-[80px] opacity-60 will-change-transform transform-gpu"
-        />
-        <motion.div 
-          animate={{ y: [0, 40, 0], rotate: [0, 10, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] right-[5%] w-24 h-24 md:w-40 md:h-40 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 blur-[80px] opacity-60 will-change-transform transform-gpu"
-        />
-        <motion.div 
-          animate={{ y: [0, -20, 0], x: [0, -20, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-[10%] right-[15%] w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-tl from-cyan-400 to-teal-400 blur-[80px] opacity-60 will-change-transform transform-gpu"
-        />
-        <motion.div 
-          animate={{ y: [0, 30, 0], rotate: [0, -15, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="absolute bottom-[20%] left-[10%] w-20 h-20 md:w-32 md:h-32 rounded-xl bg-gradient-to-br from-indigo-500 to-[#00AAFF] blur-[80px] opacity-60 will-change-transform transform-gpu"
-        />
-      </div>
+      <div className="absolute top-0 right-0 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-[radial-gradient(circle_at_top_right,rgba(0,170,255,0.5),transparent_65%)] pointer-events-none z-0 mix-blend-screen -translate-y-1/4 translate-x-1/4" />
+      
+      <div className="absolute bottom-0 left-0 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] bg-[radial-gradient(circle_at_bottom_left,rgba(0,170,255,0.5),transparent_65%)] pointer-events-none z-0 mix-blend-screen translate-y-1/4 -translate-x-1/4" />
+      
+      <div className="absolute -inset-1 bg-[linear-gradient(rgba(0,170,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,170,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none z-0" />
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mb-20 flex flex-col items-center">
-        <div className="flex flex-col items-center mb-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center tracking-tight uppercase">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              ABOUT ENTRYLAB
-            </span>
-          </h2>
-          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
-        </div>
+      <CircuitBackground />
 
-        <p className="text-white/80 text-center max-w-2xl text-lg mb-14 mt-4">
-          <ScrollRevealPro>
-            We&apos;re a dedicated team of data professionals committed to delivering accuracy, speed, and value in every project we handle.
-          </ScrollRevealPro>
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#00AAFF] rounded-2xl p-8 flex flex-col items-start shadow-sm">
-            <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#00AAFF] text-left">
-                <ScrollRevealPro>Our Mission</ScrollRevealPro>
-              </h3>
-              <div className="p-4 rounded-xl bg-[#00AAFF] transition-transform duration-300 group-hover:scale-110 will-change-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <circle cx="12" cy="12" r="6" />
-                  <circle cx="12" cy="12" r="2" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-white/70 leading-relaxed text-base text-left w-full">
-              <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
-            </p>
-          </div>
-
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#EC4899] rounded-2xl p-8 flex flex-col items-start shadow-sm">
-            <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#EC4899] text-left">
-                <ScrollRevealPro>Our Vision</ScrollRevealPro>
-              </h3>
-              <div className="p-4 rounded-xl bg-[#EC4899] transition-transform duration-300 group-hover:scale-110 will-change-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-white/70 leading-relaxed text-base text-left w-full">
-              <ScrollRevealPro>To become the most trusted data services partner globally, known for excellence in quality, innovation, and client satisfaction.</ScrollRevealPro>
-            </p>
-          </div>
-
-          <div className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[0.5px] border-[#F97316] rounded-2xl p-8 flex flex-col items-start shadow-sm">
-            <div className="flex items-center justify-between w-full mb-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#F97316] text-left">
-                <ScrollRevealPro>Our Values</ScrollRevealPro>
-              </h3>
-              <div className="p-4 rounded-xl bg-[#F97316] transition-transform duration-300 group-hover:scale-110 will-change-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-white/70 leading-relaxed text-base text-left w-full">
-              <ScrollRevealPro>Accuracy, integrity, teamwork, and continuous improvement. We treat every project with the same dedication and attention to detail.</ScrollRevealPro>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-16">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-4xl bg-gradient-to-bl from-blue-500/10 via-[#00AAFF]/5 to-transparent blur-[120px] pointer-events-none -z-10 rounded-full" />
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          
-          <div className="flex flex-col items-start text-left">
-            <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-              <ScrollRevealPro>Our Story</ScrollRevealPro>
-            </span>
-            
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 pb-1">
-              <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent">
-                From a Small Team to a Trusted Agency
-              </ScrollRevealPro>
-            </h3>
-            
-            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base text-justify">
-              <ScrollRevealPro>
-                EntryLab was founded in 2019 with a simple mission: to provide businesses with reliable, accurate, and affordable data services. What started as a team of 3 passionate individuals in a small room has grown into a thriving agency with 50+ skilled professionals.
-              </ScrollRevealPro>
-            </p>
-            
-            <p className="text-white/80 leading-relaxed mb-5 max-w-lg text-sm md:text-base text-justify">
-              <ScrollRevealPro>
-                Over the years, we&apos;ve had the privilege of working with hundreds of clients from around the world, handling everything from simple data entry tasks to complex web research and data mining projects.
-              </ScrollRevealPro>
-            </p>
-            
-            <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base text-justify">
-              <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <Link href="/industryinsights" className="text-[#00AAFF] group inline-flex items-center gap-1 transition-all duration-300"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></Link>
-              </ScrollRevealPro>
-            </p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 w-full">
-              <div className="flex flex-col items-start">
-                <div className="mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                </div>
-                <AnimatedNumber value={25} suffix="+" />
-                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealPro>Team-mates</ScrollRevealPro>
-                </span>
-              </div>
-
-              <div className="flex flex-col items-start">
-                <div className="mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-                  </svg>
-                </div>
-                <AnimatedNumber value={99.9} suffix="%" decimals={1} />
-                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealPro>Accuracy</ScrollRevealPro>
-                </span>
-              </div>
-
-              <div className="flex flex-col items-start">
-                <div className="mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
-                  </svg>
-                </div>
-                <AnimatedNumber value={15} suffix="k+" />
-                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealPro>Projects</ScrollRevealPro>
-                </span>
-              </div>
-
-              <div className="flex flex-col items-start">
-                <div className="mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                  </svg>
-                </div>
-                <AnimatedNumber value={7} suffix="+" />
-                <span className="text-white/60 text-sm whitespace-pre-line leading-snug">
-                  <ScrollRevealPro>Years</ScrollRevealPro>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-6 lg:gap-8 w-full mt-8 lg:mt-0">
-            <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/5">
-              <img 
-                src="https://iili.io/Br9rhHN.jpg" 
-                alt="EntryLab Team Top" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 ease-out"
+      <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 60, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full"
+        >
+          <div className="relative w-full min-h-[120px] md:min-h-[160px] flex items-center justify-center">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight w-full leading-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-custom-gradient">
+                {isInitialLoad ? headings[0] : displayedText}
+              </span>
+              <span 
+                className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[#00AAFF] ml-1 md:ml-2 animate-pulse align-middle" 
               />
-            </div>
-            
-            <div className="relative w-full aspect-video group">
-              <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border border-white/5 relative z-10">
-                <img 
-                  src="https://iili.io/BgW7HSn.jpg" 
-                  alt="EntryLab Team Bottom" 
-                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                />
-              </div>
-              
-              <div className="absolute -bottom-6 -right-4 md:-right-6 bg-gradient-to-br from-[#00AAFF] to-blue-600 text-white p-4 md:p-6 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out group-hover:scale-110 flex flex-col items-center justify-center z-20 border border-white/20">
-                <span className="text-xs md:text-sm font-medium tracking-wide uppercase mb-1">Since</span>
-                <span className="text-xl md:text-3xl font-bold leading-none">2019</span>
-              </div>
-            </div>
+            </h1>
           </div>
+        </motion.div>
 
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="text-white/70 text-base md:text-xl max-w-3xl mt-4 font-medium tracking-wide"
+        >
+          We transform data into meaningful insights that help you make smarter decisions, uncover opportunities, and drive sustainable growth for your business with confidence and clarity.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
+          className="mt-10 mb-8"
+        >
+          <a
+            href="#about"
+            className="group relative flex items-center justify-center bg-[#00AAFF]/10 backdrop-blur-xl border border-[#00AAFF]/30 px-6 py-2.5 rounded-3xl overflow-hidden hover:bg-[#00AAFF] hover:border-[#00AAFF] transition-all duration-500 shadow-[0_0_20px_rgba(0,170,255,0.1)] hover:shadow-[0_0_40px_rgba(0,170,255,0.5)]"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            <span className="relative z-10 text-white text-sm md:text-base font-bold tracking-wider transition-transform duration-500 group-hover:-translate-x-3">Learn More</span>
+            <svg className="absolute right-4 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-white w-4 h-4 z-10" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-40">
-        <div className="flex flex-col items-center mb-16">
-          <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            <ScrollRevealPro>Our Journey</ScrollRevealPro>
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              Key Milestone
-            </ScrollRevealPro>
-          </h2>
-        </div>
+      <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
+        <motion.div 
+          layout
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={`relative flex items-center justify-center cursor-pointer h-28 md:h-36 ${
+            isExpanded ? 'w-[280px] md:w-[360px]' : 'w-28 md:w-36'
+          }`}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div 
+            layout 
+            className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" 
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          />
 
-        <div className="relative max-w-4xl mx-auto pb-10">
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#00AAFF]/40 via-blue-500/40 to-transparent transform md:-translate-x-1/2 z-0" />
-
-          {timelineData.map((item, index) => {
-            const isLeft = index % 2 === 0;
-            return (
-              <motion.div 
-                key={index}
-                variants={timelineVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className={`relative z-10 flex items-center justify-between w-full mb-12 ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'} flex-row`}
-              >
-                <div className="hidden md:block w-5/12" />
-                
-                <div className="absolute left-[20px] md:left-1/2 w-4 h-4 rounded-full bg-[#00AAFF] border-4 border-[#111] transform -translate-x-1/2 shadow-[0_0_15px_#00AAFF] z-20" />
-                
-                <div className="w-full pl-12 md:pl-0 md:w-5/12">
-                  <div className="bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-lg transition-all duration-300 hover:border-[#00AAFF]/50 hover:shadow-[0_5px_20px_rgba(0,170,255,0.1)]">
-                    <span className="inline-block text-[#00AAFF] font-black text-xl mb-2">
-                      <ScrollRevealPro>{item.year}</ScrollRevealPro>
-                    </span>
-                    <h4 className="text-xl font-bold text-white mb-2">
-                      <ScrollRevealPro>{item.title}</ScrollRevealPro>
-                    </h4>
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      <ScrollRevealPro>{item.description}</ScrollRevealPro>
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
+          <motion.div 
+            layout
+            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border flex items-center justify-center overflow-hidden z-10"
+            animate={{
+              boxShadow: [
+                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)",
+                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
+                "inset 0 0 20px rgba(0,170,255,0.3), 0 0 15px rgba(0,170,255,0.3)",
+                "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)"
+              ],
+              borderColor: [
+                "rgba(0,170,255,1)",
+                "rgba(0,170,255,0.3)",
+                "rgba(0,170,255,0.3)",
+                "rgba(0,170,255,1)"
+              ]
+            }}
+            transition={{
+              boxShadow: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
+              borderColor: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
+              layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80 pointer-events-none" />
+            
+            <AnimatePresence mode="wait">
+              {!isExpanded ? (
+                <motion.img 
+                  key="small-logo"
+                  src="https://iili.io/BZZjMzu.png" 
+                  alt="EntryLab Logo" 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute w-20 md:w-28 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+                />
+              ) : (
+                <motion.img 
+                  key="full-logo"
+                  src="https://iili.io/FC3KC6g.png" 
+                  alt="EntryLab Main Logo" 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute w-[200px] md:w-[260px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+                />
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       </div>
-
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-20">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
-        
-        <div className="flex flex-col items-center mb-16">
-          <span className="text-[#00AAFF] text-sm font-bold uppercase tracking-widest mb-3">
-            <ScrollRevealPro>Life at EntryLab</ScrollRevealPro>
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center tracking-tight pb-2">
-            <ScrollRevealPro className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient-r2l bg-clip-text text-transparent drop-shadow-sm">
-              Our Culture
-            </ScrollRevealPro>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full">
-          {cultureData.map((item, index) => (
-            <div 
-              key={index} 
-              className="group bg-[#1a1a1a]/80 backdrop-blur-md border-[1px] rounded-2xl p-6 flex flex-col items-start relative z-10"
-              style={{ borderColor: item.color }}
-            >
-              <div 
-                className="p-3 rounded-lg mb-5 transition-transform duration-300 ease-out group-hover:scale-110 will-change-transform"
-                style={{ backgroundColor: `${item.color}15` }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  {item.icon}
-                  {item.iconExtras}
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">
-                <ScrollRevealPro>{item.title}</ScrollRevealPro>
-              </h3>
-              <p className="text-white/60 leading-relaxed text-sm">
-                <ScrollRevealPro>{item.description}</ScrollRevealPro>
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
+      
+      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-40 pointer-events-none" />
     </section>
   )
 }
