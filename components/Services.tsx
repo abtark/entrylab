@@ -296,7 +296,7 @@ export default function Services() {
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
 
   return (
-    <section id="services" className="relative py-24 md:py-32 bg-[#111111] overflow-hidden">
+    <section id="services" className="relative pt-12 pb-24 md:pt-16 md:pb-32 bg-[#111111] overflow-hidden">
       <div className="relative z-20 container mx-auto px-6 max-w-7xl">
         
         <motion.div
@@ -306,15 +306,9 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-[#00AAFF] font-bold tracking-wider uppercase text-sm md:text-base mb-2 block">
-            WHAT WE OFFER
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-              Our Services
-            </span>
-          </h2>
-          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mb-6"></div>
+          <h5>WHAT WE OFFER</h5>
+          <h2>OUR SERVICES</h2>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4 mb-6"></div>
           <p className="text-white max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
             Comprehensive research and data processing services, customized to meet specific business needs. Focused on delivering precise insights and maximizing efficiency for better decision-making.
           </p>
@@ -340,15 +334,9 @@ export default function Services() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <span className="text-[#00AAFF] font-bold tracking-wider uppercase text-sm md:text-base mb-2 block">
-              HOW WE WORK
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-                Our Process
-              </span>
-            </h2>
-            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full"></div>
+            <h5>HOW WE WORK</h5>
+            <h2>OUR PROCESS</h2>
+            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -385,7 +373,7 @@ export default function Services() {
                       hidden: { opacity: 0, x: -20 }, 
                       visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } } 
                     }}
-                    className="text-xl font-bold text-white"
+                    className="!text-xl font-bold text-white !pb-0 !bg-none !text-white !animate-none"
                   >
                     {step.title}
                   </motion.h3>
@@ -410,19 +398,16 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mt-32 max-w-3xl mx-auto"
+          className="text-center mt-32 max-w-3xl mx-auto flex flex-col items-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-[#00AAFF] via-white to-[#00AAFF] bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">
-              Need a Custom Solution?
-            </span>
-          </h2>
+          <h3>Need a Custom Solution?</h3>
           <p className="text-white/90 text-lg md:text-xl mb-10">
             We tailor our services to match your exact requirements. Let's discuss your project today.
           </p>
           <Link href="#contact" passHref>
-            <button className="bg-[#00AAFF] hover:bg-[#0088CC] text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,170,255,0.4)] hover:shadow-[0_0_30px_rgba(0,170,255,0.6)]">
-              Get a Free Quote <i className="fa-solid fa-arrow-right ml-2"></i>
+            <button className="global-btn">
+              <span>Get a Free Quote</span> 
+              <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </Link>
         </motion.div>
