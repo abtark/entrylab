@@ -62,6 +62,58 @@ const paragraphs = [
   }
 ]
 
+const mapPattern = [
+  "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "00000000000000011111111000000000000000000000000001111111100000000000000000000000",
+  "00000000000001111111111111000000000000000000001111111111111110000000000000000000",
+  "00000000000111111111111111100000000000000000111111111111111111100000000000000000",
+  "00000000001111111111111111110000000000000001111111111111111111110000000000000000",
+  "00000000011111111111111111111000000000000011111111111111111111111100000000000000",
+  "00000000111111111111111111111000000000000111111111111111111111111110000000000000",
+  "00000000111111111111111111111000000000001111111111111111111111111111000000000000",
+  "00000000111111111111111111110000000000000111111111111111111111111111100000000000",
+  "00000000011111111111111111100000000000000011111111111111111111111111100000000000",
+  "00000000001111111111111111000000000000000001111111111111111111111111000000000000",
+  "00000000000111111111111110000000000000000001111111111111111111111111000000000000",
+  "00000000000011111111111100000000000000000000111111111111111111111110000000000000",
+  "00000000000001111111111000000000000000000000111111111111111111111100000000000000",
+  "00000000000000111111110000000000000000000000011111111111111111111000000000000000",
+  "00000000000000011111100000000000000000000000011111111111111111110000000000000000",
+  "00000000000000001111000000000000000000000000011111111111111111100000000000000000",
+  "00000000000000000110000000000000000000000000011111111111111111000000000000000000",
+  "00000000000000000110000000000000000000000000011111111111111110000000000000000000",
+  "00000000000000001110000000000000000000000000111111111111111100000000000000000000",
+  "00000000000000001111000000000000000000000000011111111111111000000000000000000000",
+  "00000000000000000111000000000000000000000000001111111111110000000000000000000000",
+  "00000000000000000111100000000000000000000000000111111111110000000000001111000000",
+  "00000000000000000011100000000000000000000000000011111111100000000000011111100000",
+  "00000000000000000001100000000000000000000000000001111111000000000000001111100000",
+  "00000000000000000001100000000000000000000000000000111110000000000000000111100000",
+  "00000000000000000000100000000000000000000000000000001100000000000000000111000000",
+  "00000000000000000000000000000000000000000000000000000000000000000000000011000000",
+  "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "00000000000000000000000000000000000000000000000000000000000000000000000000000000"
+];
+
+const markers = [
+  { id: 'us', country: 'USA', flag: '🇺🇸', top: '35%', left: '20%' },
+  { id: 'ca', country: 'Canada', flag: '🇨🇦', top: '25%', left: '22%' },
+  { id: 'uk', country: 'UK', flag: '🇬🇧', top: '28%', left: '47%' },
+  { id: 'fr', country: 'France', flag: '🇫🇷', top: '33%', left: '48%' },
+  { id: 'se', country: 'Sweden', flag: '🇸🇪', top: '20%', left: '51%' },
+  { id: 'no', country: 'Norway', flag: '🇳🇴', top: '18%', left: '49%' },
+  { id: 'fi', country: 'Finland', flag: '🇫🇮', top: '18%', left: '53%' },
+  { id: 'tr', country: 'Turkey', flag: '🇹🇷', top: '38%', left: '56%' },
+  { id: 'ae', country: 'UAE', flag: '🇦🇪', top: '45%', left: '61%' },
+  { id: 'in', country: 'India', flag: '🇮🇳', top: '48%', left: '68%' },
+  { id: 'bd', country: 'Bangladesh', flag: '🇧🇩', top: '47%', left: '71%' },
+  { id: 'ng', country: 'Nigeria', flag: '🇳🇬', top: '55%', left: '49%' },
+  { id: 'za', country: 'South Africa', flag: '🇿🇦', top: '75%', left: '52%' },
+  { id: 'sg', country: 'Singapore', flag: '🇸🇬', top: '60%', left: '76%' },
+  { id: 'au', country: 'Australia', flag: '🇦🇺', top: '75%', left: '85%' },
+];
+
 const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string }) => {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-50px" })
@@ -313,9 +365,82 @@ const InsightsContainer = () => {
   )
 }
 
+const GlobalWorldMap = () => {
+  return (
+    <div className="relative w-full py-24 md:py-32 overflow-hidden flex flex-col items-center mb-24">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
+        <h4 className="text-xs font-semibold tracking-[0.2em] text-[#00AAFF] uppercase drop-shadow-[0_0_8px_rgba(0,170,255,0.5)] mb-6">
+          Around The Globe
+        </h4>
+
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-white via-[#BFE8FF] to-[#00AAFF] animate-[gradient_8s_ease_infinite] bg-[length:200%_auto] mb-2 leading-tight">
+          Powering Innovation for Businesses
+        </h2>
+
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#00AAFF] drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] text-center mb-20 md:mb-28">
+          Across the globe
+        </h2>
+
+        <div className="relative w-full max-w-5xl aspect-video md:aspect-[2/1] mx-auto">
+          <svg 
+            viewBox="0 0 80 31" 
+            className="w-full h-full opacity-90" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {mapPattern.map((row, i) =>
+              row.split('').map((dot, j) => {
+                if (dot === '1') {
+                  const delay = (i * j) % 4;
+                  const isHighlighted = (i + j) % 7 === 0;
+                  return (
+                    <circle
+                      key={`${i}-${j}`}
+                      cx={j}
+                      cy={i}
+                      r={0.4}
+                      fill={isHighlighted ? 'rgba(203,213,225,0.42)' : 'rgba(148,163,184,0.22)'}
+                      className="animate-[pulse_3s_ease-in-out_infinite]"
+                      style={{ animationDelay: `${delay}s` }}
+                    />
+                  );
+                }
+                return null;
+              })
+            )}
+          </svg>
+
+          {markers.map((marker) => (
+            <div
+              key={marker.id}
+              className="absolute group flex items-center gap-1.5 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-full bg-black/40 border border-white/10 backdrop-blur-2xl shadow-[0_0_15px_rgba(0,170,255,0.1)] hover:shadow-[0_0_25px_rgba(0,170,255,0.3)] hover:-translate-y-1 hover:scale-105 transition-all duration-500 ease-out cursor-pointer will-change-transform z-20"
+              style={{ top: marker.top, left: marker.left }}
+            >
+              <span className="text-xs md:text-sm">{marker.flag}</span>
+              <span className="hidden md:block text-[10px] md:text-xs font-medium text-white tracking-wide">
+                {marker.country}
+              </span>
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00AAFF] animate-pulse shadow-[0_0_5px_#00AAFF]"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}} />
+    </div>
+  );
+}
+
 export default function Insights() {
   return (
-    <section id="insights" className="relative py-32 overflow-hidden">
+    <section id="insights" className="relative py-32 overflow-hidden bg-[#111111]">
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes custom-scroll {
           0% { transform: translateX(0); }
@@ -384,6 +509,8 @@ export default function Insights() {
             <MagneticStatCard key={stat.label} stat={stat} index={i} />
           ))}
         </div>
+        
+        <GlobalWorldMap />
 
         <div 
           className="relative transform-gpu w-full overflow-hidden py-10 group-marquee" 
