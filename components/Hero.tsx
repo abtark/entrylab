@@ -75,8 +75,8 @@ const floatingIcons = [
     path: <><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></> 
   },
   { 
-    id: 'cloud', cx: 450, cy: 500, pathIndex: 10, f: 0.49, floatDelay: 2.7,
-    path: <><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5a4.5 4.5 0 0 0-4-4.47A7 7 0 0 0 4.2 12 4.5 4.5 0 0 0 5.5 21h12Z"/></> 
+    id: 'internet', cx: 450, cy: 500, pathIndex: 10, f: 0.49, floatDelay: 2.7,
+    path: <><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></> 
   },
   { 
     id: 'idea', cx: 1470, cy: 500, pathIndex: 11, f: 0.55, floatDelay: 3.2,
@@ -366,16 +366,23 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[70.3%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
-        <div 
+        <motion.div 
+          layout
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`relative cursor-pointer h-28 md:h-36 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`relative cursor-pointer h-28 md:h-36 flex items-center justify-center overflow-visible ${
             isExpanded ? 'w-[280px] md:w-[360px]' : 'w-28 md:w-36'
           }`}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" />
+          <motion.div 
+            layout 
+            className="absolute inset-0 rounded-3xl bg-[#00AAFF] opacity-20 blur-[25px] mix-blend-screen pointer-events-none" 
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          />
 
           <motion.div 
-            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border overflow-hidden z-10"
+            layout
+            className="absolute inset-0 rounded-3xl bg-[#02050A] backdrop-blur-md border overflow-hidden z-10 flex items-center justify-center"
             animate={{
               boxShadow: [
                 "inset 0 0 50px rgba(0,170,255,0.8), 0 0 40px rgba(0,170,255,0.8)",
@@ -392,7 +399,8 @@ export default function Hero() {
             }}
             transition={{
               boxShadow: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
-              borderColor: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] }
+              borderColor: { duration: 12, repeat: Infinity, ease: "easeInOut", times: [0, 0.08, 0.92, 1] },
+              layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#00AAFF]/20 to-transparent opacity-80 pointer-events-none" />
@@ -400,22 +408,22 @@ export default function Hero() {
             <motion.img 
               src="https://iili.io/BZZjMzu.png" 
               initial={false}
-              animate={{ left: isExpanded ? "28%" : "50%", x: "-50%", y: "-50%" }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0 : 0.2 }}
-              className="absolute top-1/2 w-14 md:w-18 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
+              animate={{ opacity: isExpanded ? 0 : 1, filter: isExpanded ? 'blur(8px)' : 'blur(0px)' }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="absolute w-20 md:w-24 object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] pointer-events-none" 
               alt="EntryLab Logo"
             />
 
             <motion.img 
-              src="https://iili.io/BmFa1cJ.png" 
+              src="https://iili.io/FC3KC6g.png" 
               initial={false}
-              animate={{ left: isExpanded ? "68%" : "50%", x: "-50%", y: "-50%", opacity: isExpanded ? 1 : 0 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: isExpanded ? 0.3 : 0 }}
-              className="absolute top-1/2 w-[110px] md:w-[150px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)]" 
-              alt="EntryLab Text Logo"
+              animate={{ opacity: isExpanded ? 1 : 0, filter: isExpanded ? 'blur(0px)' : 'blur(8px)' }}
+              transition={{ duration: 0.4, ease: "easeInOut", delay: isExpanded ? 0.2 : 0 }}
+              className="absolute w-[240px] md:w-[310px] object-contain z-20 drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] pointer-events-none" 
+              alt="EntryLab Main Logo"
             />
           </motion.div>
-        </div>
+        </motion.div>
       </div>
       
       <div className="absolute bottom-0 w-full h-40 bg-gradient-to-t from-[#02050A] via-[#02050A]/80 to-transparent z-40 pointer-events-none" />
