@@ -329,13 +329,19 @@ export default function Hero() {
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
           className="mt-10 mb-8"
         >
-          <a href="#about" className="global-btn w-fit mx-auto">
-            <span>Learn More</span>
-            <svg fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+          <button 
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            className="global-btn group w-[160px] mx-auto !px-0 cursor-pointer"
+          >
+            <span className="!translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Learn More</span>
+            <svg 
+              className="!absolute right-4 opacity-0 -translate-y-3 !translate-x-0 group-hover:opacity-100 group-hover:!translate-y-0 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
+              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+            >
               <path d="M12 5v14" />
               <path d="M19 12l-7 7-7-7" />
             </svg>
-          </a>
+          </button>
         </motion.div>
       </div>
 
