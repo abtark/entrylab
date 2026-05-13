@@ -5,9 +5,10 @@ import { motion } from 'framer-motion'
 export default function Gallery() {
   return (
     <section id="gallery" className="py-24 bg-background">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-16">Our Workspace</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="container mx-auto px-6 text-center flex flex-col items-center">
+        <h2>ENTRYLAB GALLERY</h2>
+        <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4 mb-16"></div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
           {[1, 2, 3, 4, 5, 6].map((item, i) => (
             <motion.div
               key={item}
