@@ -431,30 +431,30 @@ export default function Services() {
           </button>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-white/80 text-sm md:text-base">
-            <span>Find us on these platforms:</span>
-            <div className="flex items-center gap-0">
+            <span>Connect with us on:</span>
+            <div className="flex items-center gap-2">
               <span 
                 onClick={() => window.open('https://www.linkedin.com/company/entrylab', '_blank')} 
-                className="group relative text-[#00AAFF] cursor-pointer flex items-center pl-5 pr-1"
+                className="group text-[#00AAFF] cursor-pointer flex items-center gap-2"
               >
-                <span className="transition-all duration-300 group-hover:-translate-x-4 group-hover:underline">LinkedIn</span>
-                <i className="fa-brands fa-linkedin absolute right-1 opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"></i>
+                <span className="group-hover:underline transition-all duration-300">LinkedIn</span>
+                <i className="fa-brands fa-linkedin text-lg"></i>
               </span>
               <span className="text-[#00AAFF] text-xl leading-none">&bull;</span>
               <span 
                 onClick={() => window.open('https://www.facebook.com/EntryLab', '_blank')} 
-                className="group relative text-[#00AAFF] cursor-pointer flex items-center pl-5 pr-1"
+                className="group text-[#00AAFF] cursor-pointer flex items-center gap-2"
               >
-                <span className="transition-all duration-300 group-hover:-translate-x-4 group-hover:underline">Facebook</span>
-                <i className="fa-brands fa-facebook absolute right-1 opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"></i>
+                <span className="group-hover:underline transition-all duration-300">Facebook</span>
+                <i className="fa-brands fa-facebook text-lg"></i>
               </span>
               <span className="text-[#00AAFF] text-xl leading-none">&bull;</span>
               <span 
                 onClick={() => window.open('https://rocketreach.co/entrylab-profile_b704b6e0c514e80c', '_blank')} 
-                className="group relative text-[#00AAFF] cursor-pointer flex items-center pl-5 pr-1"
+                className="group text-[#00AAFF] cursor-pointer flex items-center gap-2"
               >
-                <span className="transition-all duration-300 group-hover:-translate-x-4 group-hover:underline">RocketReach</span>
-                <i className="fa-solid fa-rocket absolute right-1 opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"></i>
+                <span className="group-hover:underline transition-all duration-300">RocketReach</span>
+                <i className="fa-solid fa-rocket text-lg"></i>
               </span>
             </div>
           </div>
