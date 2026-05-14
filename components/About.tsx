@@ -73,7 +73,7 @@ const timelineData: TimelineItem[] = [
   {
     year: "2020",
     title: "First 100 Projects",
-    description: "Reached our first milestone of 100 completed projects."
+    description: "Achieved our first milestone with 100 completed projects."
   },
   {
     year: "2021",
@@ -88,17 +88,17 @@ const timelineData: TimelineItem[] = [
   {
     year: "2023",
     title: "New Office",
-    description: "Moved to a modern, spacious office to accommodate our growing team."
+    description: "Relocated to a modern, spacious office to support our growing team."
   },
   {
     year: "2024",
     title: "12000+ Projects",
-    description: "Crossed the 12000+ project milestone with 99.9% accuracy."
+    description: "Achieved the milestone of 12k+ projects with 99.9% accuracy."
   },
   {
     year: "2025",
     title: "Own Work Space",
-    description: "New Journey - New workspace with highly decorated interior."
+    description: "New Journey — A new workspace with a beautifully designed interior."
   }
 ]
 
@@ -113,7 +113,7 @@ interface CultureItem {
 const cultureData: CultureItem[] = [
   {
     title: "Collaborative Environment",
-    description: "We grow together through teamwork, where every idea inspires success.",
+    description: "We grow together through collaboration, where every idea contributes to success.",
     icon: <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />,
     iconExtras: <circle cx="9" cy="7" r="4" />,
     color: "#00AAFF"
@@ -133,7 +133,7 @@ const cultureData: CultureItem[] = [
   },
   {
     title: "Celebrate Together",
-    description: "We celebrate every milestone and festival together like one family.",
+    description: "We celebrate every milestone and festival together as one family.",
     icon: <><rect x="3" y="8" width="18" height="4" rx="1" /><path d="M12 8v13" /><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" /><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5" /></>,
     color: "#F59E0B"
   },
@@ -169,6 +169,26 @@ const cultureData: CultureItem[] = [
     color: "#EAB308"
   }
 ]
+
+const GlobalWorldMap = () => {
+  return (
+    <div className="relative w-full py-12 md:py-16 overflow-hidden flex flex-col items-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
+        <ScrollRevealPro><h5>Around The Globe</h5></ScrollRevealPro>
+        <ScrollRevealPro><h3 className="text-center">Powering Innovation for Businesses</h3></ScrollRevealPro>
+        <ScrollRevealPro><h4 className="mb-10 md:mb-16 text-center">Across the Globe.</h4></ScrollRevealPro>
+        <div className="relative w-full flex justify-center mt-8 md:mt-12 mb-8 md:mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
+          <img 
+            src="https://iili.io/BbpOJjV.webp" 
+            alt="Global Map" 
+            className="w-full max-w-6xl h-auto object-contain drop-shadow-[0_0_30px_rgba(0,170,255,0.15)]"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function About() {
   const timelineVariants = {
@@ -228,7 +248,7 @@ export default function About() {
               </div>
             </div>
             <p className="text-white/70 leading-relaxed text-base text-left w-full">
-              <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and informed decision-making.</ScrollRevealPro>
+              <ScrollRevealPro>To empower businesses worldwide with accurate, efficient, and affordable data services that drive growth and support informed decision-making.</ScrollRevealPro>
             </p>
           </div>
 
@@ -290,7 +310,7 @@ export default function About() {
             
             <p className="text-white/80 leading-relaxed mb-12 max-w-lg text-sm md:text-base text-justify">
               <ScrollRevealPro>
-                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments. <span onClick={() => window.location.href='/industryinsights'} className="text-[#00AAFF] group inline-flex items-center gap-1 transition-all duration-300 cursor-pointer"><span className="group-hover:underline">Learn more about our Insights.</span><svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+                But EntryLab is more than just work &mdash; it&apos;s a family. The memories we create together, from office celebrations to team outings, are what make this journey truly special. That&apos;s why we built this space to celebrate those moments.
               </ScrollRevealPro>
             </p>
 
@@ -348,7 +368,7 @@ export default function About() {
           <div className="flex flex-col gap-6 lg:gap-8 w-full mt-8 lg:mt-0">
             <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/5">
               <img 
-                src="https://iili.io/Br9rhHN.jpg" 
+                src="https://iili.io/Bmld4UP.webp" 
                 alt="EntryLab Team Top" 
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 ease-out"
               />
@@ -357,7 +377,7 @@ export default function About() {
             <div className="relative w-full aspect-video group">
               <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border border-white/5 relative z-10">
                 <img 
-                  src="https://iili.io/BgW7HSn.jpg" 
+                  src="https://iili.io/Bmldr0B.webp" 
                   alt="EntryLab Team Bottom" 
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
@@ -416,7 +436,9 @@ export default function About() {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-32 mb-8">
+      <GlobalWorldMap />
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 mt-16 mb-8">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-[#00AAFF]/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
         
         <div className="flex flex-col items-center mb-16">
@@ -453,6 +475,30 @@ export default function About() {
           ))}
         </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="text-center mt-24 max-w-3xl mx-auto flex flex-col items-center relative z-10"
+      >
+        <h3>Want To Learn More About Us?</h3>
+        <button 
+          onClick={() => window.location.href = '/industryinsights'}
+          className="global-btn group mt-8 relative overflow-hidden w-[190px]"
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-0" />
+          <span className="relative z-10 !translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Our Insights</span> 
+          <svg 
+            className="!absolute right-4 opacity-0 translate-y-3 translate-x-3 group-hover:opacity-100 group-hover:!translate-y-0 group-hover:!translate-x-0 transition-all duration-500 text-white w-5 h-5 z-10" 
+            fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14" strokeDasharray="2 4" />
+            <path d="M12 5l7 7-7 7" />
+          </svg>
+        </button>
+      </motion.div>
 
     </section>
   )
