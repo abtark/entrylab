@@ -176,8 +176,8 @@ const GlobalWorldMap = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
         <ScrollRevealPro><h5>Around The Globe</h5></ScrollRevealPro>
-        <ScrollRevealPro><h3 className="text-center">Powering Innovation for Businesses</h3></ScrollRevealPro>
-        <ScrollRevealPro><h4 className="mb-10 md:mb-16 text-center">Across the Globe.</h4></ScrollRevealPro>
+        <ScrollRevealPro><h3 className="text-center">Empowering Global Businesses</h3></ScrollRevealPro>
+        <ScrollRevealPro><h4 className="mb-10 md:mb-16 text-center">Through Research & Development</h4></ScrollRevealPro>
         <div className="relative w-full flex justify-center mt-8 md:mt-12 mb-8 md:mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
           <img 
             src="https://iili.io/BbpOJjV.webp" 
