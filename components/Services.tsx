@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import Link from 'next/link'
 
 const servicesData = [
   { 
@@ -309,7 +308,7 @@ export default function Services() {
           <h5>WHAT WE OFFER</h5>
           <h2>OUR SERVICES</h2>
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4 mb-6"></div>
-          <p className="text-white max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
+          <p className="text-white/90 max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
             Comprehensive research and data processing services, customized to meet specific business needs. Focused on delivering precise insights and maximizing efficiency for better decision-making.
           </p>
         </motion.div>
@@ -345,7 +344,6 @@ export default function Services() {
           >
             <h5>HOW WE WORK</h5>
             <h2>OUR PROCESS</h2>
-            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -417,19 +415,49 @@ export default function Services() {
           <p className="text-white/90 text-base md:text-lg mb-10 max-w-3xl leading-relaxed">
             We tailor our services to match your exact requirements. Let's discuss your project today.
           </p>
-          <Link href="/contact" passHref>
-            <button className="global-btn group relative overflow-hidden w-[180px]">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0088CC] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-0" />
-              <span className="relative z-10 !translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Get a Free Quote</span> 
-              <svg 
-                className="!absolute right-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
-                fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+          <button 
+            onClick={() => window.location.href = '/contact'}
+            className="global-btn group relative overflow-hidden w-[230px]"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0088CC] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-0" />
+            <span className="relative z-10 !translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Get a Free Quote</span> 
+            <svg 
+              className="!absolute right-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:!translate-x-0 transition-all duration-500 w-5 h-5 z-10" 
+              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-white/90 text-sm md:text-base">
+            <span>Can’t reach us? Find us on these platforms:</span>
+            <div className="flex items-center gap-2">
+              <span 
+                onClick={() => window.open('https://www.linkedin.com/company/entrylab', '_blank')} 
+                className="group text-[#00AAFF] cursor-pointer flex items-center gap-1.5"
               >
-                <path d="M5 12h14" />
-                <path d="M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </Link>
+                <span className="group-hover:underline">LinkedIn</span>
+                <i className="fa-brands fa-linkedin opacity-0 -ml-3 group-hover:ml-0 group-hover:opacity-100 transition-all duration-300"></i>
+              </span>
+              <span className="text-[#00AAFF] text-xl leading-none">&bull;</span>
+              <span 
+                onClick={() => window.open('https://www.facebook.com/EntryLab', '_blank')} 
+                className="group text-[#00AAFF] cursor-pointer flex items-center gap-1.5"
+              >
+                <span className="group-hover:underline">Facebook</span>
+                <i className="fa-brands fa-facebook opacity-0 -ml-3 group-hover:ml-0 group-hover:opacity-100 transition-all duration-300"></i>
+              </span>
+              <span className="text-[#00AAFF] text-xl leading-none">&bull;</span>
+              <span 
+                onClick={() => window.open('https://rocketreach.co/entrylab-profile_b704b6e0c514e80c', '_blank')} 
+                className="group text-[#00AAFF] cursor-pointer flex items-center gap-1.5"
+              >
+                <span className="group-hover:underline">RocketReach</span>
+                <i className="fa-solid fa-rocket opacity-0 -ml-3 group-hover:ml-0 group-hover:opacity-100 transition-all duration-300"></i>
+              </span>
+            </div>
+          </div>
         </motion.div>
 
       </div>
