@@ -45,7 +45,7 @@ const stats = [
 
 const paragraphs = [
   {
-    text: 'Founded on the principle that "Where Every Search Has a Value", EntryLab is a modern technology agency dedicated to extracting meaningful insights from complex data architectures.',
+    text: 'Founded on the principle that “Every Search Has Value,” EntryLab is a startup agency focused on extracting meaningful insights from complex data architectures.',
     highlight: false
   },
   {
@@ -258,14 +258,14 @@ const InsightsContainer = () => {
 
         <div className="w-full h-px bg-white/10 mb-6 md:mb-8" />
 
-        <div className="w-full flex flex-col items-center text-center space-y-4 md:space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[180px] md:min-h-[140px]">
+        <div className="w-full flex flex-col items-center mx-auto space-y-4 md:space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[180px] md:min-h-[140px]">
           {paragraphs.map((p, pIndex) => (
             p.highlight ? (
               <h5 key={pIndex} className="pt-2 text-center w-full !text-lg md:!text-xl">
                 <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
               </h5>
             ) : (
-              <p key={pIndex}>
+              <p key={pIndex} className="text-justify w-full">
                 <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
               </p>
             )
@@ -338,15 +338,15 @@ const OurPresence = () => {
             </motion.div>
 
             <ScrollRevealPro>
-              <p className="mt-8 text-gray-400 text-lg leading-[2] max-w-[650px] font-medium text-left">
-                EntryLab is proudly operating from key regions across Bangladesh,
-                delivering innovative digital solutions to clients nationwide and
-                beyond.
+              <p className="mt-8 text-gray-400 text-lg leading-[2] max-w-[500px] font-medium text-left">
+                EntryLab is proudly operating from key regions<br />
+                across Bangladesh, delivering innovative digital<br />
+                solutions to clients nationwide and beyond.
               </p>
             </ScrollRevealPro>
 
             <div className="flex flex-col sm:flex-row gap-6 mt-14">
-              <div className="w-full sm:w-[190px] h-[190px] rounded-[28px] border border-white/10 bg-[#050505] p-7 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex flex-col items-center justify-center text-center">
+              <div className="w-full sm:w-[190px] rounded-[28px] border border-white/10 bg-[#050505] p-7 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex flex-col items-center justify-center text-center">
                 <div className="text-[#00AAFF] text-3xl transition-transform duration-300 group-hover:scale-110 flex justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
@@ -354,9 +354,10 @@ const OurPresence = () => {
                   <SmoothCounter endValue={3} suffix="" />
                 </div>
                 <span className="block text-gray-300 mt-3 text-lg font-medium text-center">Locations</span>
+                <p className="text-gray-500 text-sm mt-1 text-center">Across Bangladesh</p>
               </div>
 
-              <div className="w-full sm:w-[190px] h-[190px] rounded-[28px] border border-white/10 bg-[#050505] p-7 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex flex-col items-center justify-center text-center">
+              <div className="w-full sm:w-[190px] rounded-[28px] border border-white/10 bg-[#050505] p-7 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex flex-col items-center justify-center text-center">
                 <div className="text-[#00AAFF] text-3xl transition-transform duration-300 group-hover:scale-110 flex justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </div>
@@ -364,9 +365,10 @@ const OurPresence = () => {
                   <SmoothCounter endValue={50} suffix="+" />
                 </div>
                 <span className="block text-gray-300 mt-3 text-lg font-medium text-center">Experts</span>
+                <p className="text-gray-500 text-sm mt-1 text-center">Working Nationwide</p>
               </div>
 
-              <div className="w-full sm:w-[190px] h-[190px] rounded-[28px] border border-white/10 bg-[#050505] p-7 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex flex-col items-center justify-center text-center">
+              <div className="w-full sm:w-[190px] rounded-[28px] border border-white/10 bg-[#050505] p-7 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex flex-col items-center justify-center text-center">
                 <div className="text-[#00AAFF] text-3xl transition-transform duration-300 group-hover:scale-110 flex justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
@@ -374,33 +376,21 @@ const OurPresence = () => {
                   <SmoothCounter endValue={100} suffix="+" />
                 </div>
                 <span className="block text-gray-300 mt-3 text-lg font-medium text-center">Clients</span>
+                <p className="text-gray-500 text-sm mt-1 text-center">Served Globally</p>
               </div>
             </div>
           </div>
 
           <div className="w-full xl:w-[55%] relative flex justify-center items-center mt-12 xl:mt-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[600px] bg-[#00AAFF]/30 blur-[150px] rounded-full pointer-events-none z-0" />
-
+            
             <img
               src="https://iili.io/BpAwX9a.webp"
               alt="Bangladesh Map"
               className="relative z-10 w-full max-w-[760px] drop-shadow-[0_0_40px_rgba(0,170,255,0.35)]"
             />
 
-            <div className="absolute top-[28%] right-[18%] z-20 bg-white text-black px-4 py-1.5 md:px-5 md:py-2 rounded-full font-bold text-sm md:text-lg flex items-center gap-2 md:gap-3 shadow-[0_0_20px_rgba(0,170,255,0.3)]">
-              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#00AAFF] shadow-[0_0_18px_#00AAFF]" />
-              Dhaka
-            </div>
-
-            <div className="absolute top-[55%] left-[26%] z-20 bg-white text-black px-4 py-1.5 md:px-5 md:py-2 rounded-full font-bold text-sm md:text-lg flex items-center gap-2 md:gap-3 shadow-[0_0_20px_rgba(0,170,255,0.3)]">
-              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#00AAFF] shadow-[0_0_18px_#00AAFF]" />
-              Barisal
-            </div>
-
-            <div className="absolute top-[58%] right-[2%] z-20 bg-white text-black px-4 py-1.5 md:px-5 md:py-2 rounded-full font-bold text-sm md:text-lg flex items-center gap-2 md:gap-3 shadow-[0_0_20px_rgba(0,170,255,0.3)]">
-              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#00AAFF] shadow-[0_0_18px_#00AAFF]" />
-              Chittagong
-            </div>
+            <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[70%] h-[30px] bg-[#00AAFF] blur-[40px] rounded-[100%] z-0 pointer-events-none" />
           </div>
         </div>
 
@@ -408,11 +398,11 @@ const OurPresence = () => {
           
           <div className="bg-[#050505] border border-white/10 rounded-[30px] p-8 md:p-10 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex justify-between items-center relative overflow-hidden">
              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-               <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18" /><path d="M3 7v14" /><path d="M3 7l15 3" /><path d="M8 8v13" /><path d="M13 9v12" /></svg>
+               <i className="fa-solid fa-building text-[80px] text-[#00AAFF]"></i>
              </div>
              <div className="flex items-start gap-4">
-               <div className="text-[#00AAFF] mt-1 shrink-0">
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18" /><path d="M3 7v14" /><path d="M3 7l15 3" /><path d="M8 8v13" /><path d="M13 9v12" /></svg>
+               <div className="text-[#00AAFF] text-3xl mt-1 shrink-0">
+                 <i className="fa-solid fa-building"></i>
                </div>
                <div>
                   <h3 className="text-3xl md:text-4xl font-bold !bg-none !animate-none !text-white !pb-0 text-left">Chittagong</h3>
@@ -431,11 +421,11 @@ const OurPresence = () => {
 
           <div className="bg-[#050505] border border-white/10 rounded-[30px] p-8 md:p-10 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex justify-between items-center relative overflow-hidden">
              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>
+                <i className="fa-solid fa-industry text-[80px] text-[#00AAFF]"></i>
              </div>
              <div className="flex items-start gap-4">
-               <div className="text-[#00AAFF] mt-1 shrink-0">
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>
+               <div className="text-[#00AAFF] text-3xl mt-1 shrink-0">
+                 <i className="fa-solid fa-industry"></i>
                </div>
                <div>
                   <h3 className="text-3xl md:text-4xl font-bold !bg-none !animate-none !text-white !pb-0 text-left">Dhaka</h3>
@@ -454,11 +444,11 @@ const OurPresence = () => {
 
           <div className="bg-[#050505] border border-white/10 rounded-[30px] p-8 md:p-10 hover:border-[#00AAFF] duration-300 hover:-translate-y-2 group flex justify-between items-center relative overflow-hidden">
              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-               <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 22v-6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v6"/><path d="M2 14c4-4 16-4 20 0"/><path d="M12 14v8"/></svg>
+               <i className="fa-solid fa-bridge text-[80px] text-[#00AAFF]"></i>
              </div>
              <div className="flex items-start gap-4">
-               <div className="text-[#00AAFF] mt-1 shrink-0">
-                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 22v-6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v6"/><path d="M2 14c4-4 16-4 20 0"/><path d="M12 14v8"/></svg>
+               <div className="text-[#00AAFF] text-3xl mt-1 shrink-0">
+                 <i className="fa-solid fa-bridge"></i>
                </div>
                <div>
                   <h3 className="text-3xl md:text-4xl font-bold !bg-none !animate-none !text-white !pb-0 text-left">Barisal</h3>
@@ -480,13 +470,19 @@ const OurPresence = () => {
         <div className="mt-24 md:mt-32 flex flex-row items-center justify-center w-full gap-4 md:gap-6 relative z-10">
           <div className="hidden md:block h-[2px] flex-grow bg-gradient-to-l from-[#00AAFF] to-transparent max-w-[250px]" />
           
-          <div className="flex flex-row items-center gap-3 px-4 text-sm md:text-base lg:text-lg font-medium text-gray-300 whitespace-nowrap">
-            <div className="w-6 h-6 shrink-0 rounded-full border border-[#00AAFF] flex items-center justify-center shadow-[0_0_10px_rgba(0,170,255,0.4)]">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00AAFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          <div className="flex items-center gap-4 md:gap-6">
+            <div className="w-6 h-6 shrink-0 rounded-full border border-[#00AAFF] flex items-center justify-center shadow-[0_0_10px_rgba(0,170,255,0.4)] text-[#00AAFF]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
             </div>
-            <span>
-              Connecting innovation from <span className="text-[#00AAFF]">Dhaka</span><span className="text-[#00AAFF]">,</span> <span className="text-[#00AAFF]">Barisal</span><span className="text-[#00AAFF]">,</span> <span className="text-[#00AAFF]">Chittagong</span> to build smart solutions for a better tomorrow
-            </span>
+
+            <div className="text-center text-sm md:text-base lg:text-lg font-medium text-gray-300">
+              Connecting innovation from <span className="text-[#00AAFF]">Dhaka</span><span className="text-[#00AAFF]">,</span> <span className="text-[#00AAFF]">Barisal</span><span className="text-[#00AAFF]">,</span> <span className="text-[#00AAFF]">Chittagong</span><br/>
+              to build smart solutions for a better tomorrow
+            </div>
+
+            <div className="w-6 h-6 shrink-0 rounded-full border border-[#00AAFF] flex items-center justify-center shadow-[0_0_10px_rgba(0,170,255,0.4)] text-[#00AAFF]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            </div>
           </div>
 
           <div className="hidden md:block h-[2px] flex-grow bg-gradient-to-r from-[#00AAFF] to-transparent max-w-[250px]" />
@@ -536,7 +532,7 @@ export default function Insights() {
             <h3 className="mb-6 !text-left !pb-0">
               Unlock the power of search data
             </h3>
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium">
+            <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium text-justify">
               Every query uncovers hidden patterns and intent signals. EntryLab deeply analyzes search algorithms and data complexities to deliver powerful insights and a lasting competitive advantage.
             </p>
           </motion.div>
