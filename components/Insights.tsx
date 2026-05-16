@@ -1,127 +1,191 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
-const companies = [
-  { name: 'Apple', icon: 'fa-brands fa-apple' },
-  { name: 'Microsoft', icon: 'fa-brands fa-windows' },
-  { name: 'Google', icon: 'fa-brands fa-google' },
-  { name: 'Amazon', icon: 'fa-brands fa-amazon' },
-  { name: 'RedHat', icon: 'fa-brands fa-redhat' },
-  { name: 'Meta', icon: 'fa-brands fa-meta' },
-  { name: 'LinkedIn', icon: 'fa-brands fa-linkedin' },
-  { name: 'Airbnb', icon: 'fa-brands fa-airbnb' },
-  { name: 'Shopify', icon: 'fa-brands fa-shopify' },
-  { name: 'Visa', icon: 'fa-brands fa-cc-visa' },
-  { name: 'DHL', icon: 'fa-brands fa-dhl' },
-  { name: 'PayPal', icon: 'fa-brands fa-paypal' },
-  { name: 'Dropbox', icon: 'fa-brands fa-dropbox' },
-  { name: 'Atlassian', icon: 'fa-brands fa-atlassian' },
-  { name: 'eBay', icon: 'fa-brands fa-ebay' },
-  { name: 'FedEx', icon: 'fa-brands fa-fedex' },
-  { name: 'Stripe', icon: 'fa-brands fa-stripe' },
-  { name: 'Etsy', icon: 'fa-brands fa-etsy' },
-  { name: 'CloudFlare', icon: 'fa-brands fa-cloudflare' },
-  { name: 'Slack', icon: 'fa-brands fa-slack' },
-  { name: 'Lyft', icon: 'fa-brands fa-lyft' },
-  { name: 'Playstation', icon: 'fa-brands fa-playstation' },
-  { name: 'Houzz', icon: 'fa-brands fa-houzz' },
-  { name: 'Salesforce', icon: 'fa-brands fa-salesforce' },
-  { name: 'Twitch', icon: 'fa-brands fa-twitch' },
-  { name: 'Wix', icon: 'fa-brands fa-wix' },
-  { name: 'Intercom', icon: 'fa-brands fa-intercom' },
-  { name: 'Mailchimp', icon: 'fa-brands fa-mailchimp' },
-  { name: 'RedRiver', icon: 'fa-brands fa-red-river' },
-  { name: 'Angellist', icon: 'fa-brands fa-angellist' }
-]
-
-const stats = [
-  { value: 7, suffix: '+', label: 'Years of Experience', image: 'https://iili.io/Bka13Dg.png' },
-  { value: 15, suffix: 'k+', label: 'Projects Done', image: 'https://iili.io/Bka0QDu.png' },
-  { value: 500, suffix: 'M+', label: 'Qualified Leads', image: 'https://iili.io/Bka0rKl.png' },
-  { value: 98, suffix: '%', label: 'Client Satisfaction', image: 'https://iili.io/Bka0c91.png' }
-]
-
-const paragraphs = [
-  {
-    text: 'Founded on the principle that "Where Every Search Has a Value", EntryLab is a modern technology agency dedicated to extracting meaningful insights from complex data architectures.',
-    highlight: false
+const servicesData = [
+  { 
+    title: "Business Growth Solutions", 
+    description: "Fuel growth with targeted outreach and smart initiatives.", 
+    icon: "fa-chart-line", 
+    color: "#00AAFF",
+    bullets: [
+      "Targeted outreach for growth",
+      "Boost engagement strategically",
+      "Leverage actionable data",
+      "Expand market reach",
+      "Drive measurable results"
+    ]
   },
-  {
-    text: 'It is a Chattogram-based R & D firm specializing in precision-driven data intelligence. We architect clarity from complexity—transforming fragmented information into strategic, decision-ready insights.',
-    highlight: false
+  { 
+    title: "Information Management", 
+    description: "Organize and manage business data with precision.", 
+    icon: "fa-database", 
+    color: "#FF3366",
+    bullets: [
+      "Organize data efficiently",
+      "Ensure accuracy",
+      "Streamline workflows",
+      "Support smart decisions",
+      "Simplify data handling"
+    ]
   },
-  {
-    text: 'Leveraging advanced research frameworks and a detail-obsessed approach, we deliver intelligence that is not just accurate, but actionable and high-impact.',
-    highlight: false
+  { 
+    title: "Market Intelligence", 
+    description: "Analyze market trends for smarter decisions.", 
+    icon: "fa-lightbulb", 
+    color: "#00FFCC",
+    bullets: [
+      "Track market trends",
+      "Analyze competitors",
+      "Spot new opportunities",
+      "Make informed decisions",
+      "Stay ahead of the market"
+    ]
   },
-  {
-    text: 'EntryLab—Where Every Search Has a Value',
-    highlight: true
+  { 
+    title: "Prospect Identification", 
+    description: "Identify high-potential opportunities to boost sales.", 
+    icon: "fa-bullseye", 
+    color: "#FF9900",
+    bullets: [
+      "Identify high-potential leads",
+      "Target the right prospects",
+      "Increase conversions",
+      "Strengthen sales pipeline",
+      "Engage prospects effectively"
+    ]
+  },
+  { 
+    title: "Digital Insights Collection", 
+    description: "Extract online data to stay ahead in the market.", 
+    icon: "fa-cloud-arrow-down", 
+    color: "#B829FF",
+    bullets: [
+      "Gather online data",
+      "Monitor competitors",
+      "Analyze key insights",
+      "Discover trends",
+      "Stay competitive"
+    ]
+  },
+  { 
+    title: "Customer Retention", 
+    description: "Improve engagement and streamline sales conversion.", 
+    icon: "fa-handshake", 
+    color: "#00E676",
+    bullets: [
+      "Engage customers effectively",
+      "Build lasting relationships",
+      "Streamline sales processes",
+      "Boost repeat business",
+      "Enhance satisfaction"
+    ]
+  },
+  { 
+    title: "Revenue Acceleration", 
+    description: "Boost sales with data-driven funnel optimization.", 
+    icon: "fa-arrow-trend-up", 
+    color: "#FFD700",
+    bullets: [
+      "Optimize sales funnels",
+      "Use data-driven strategies",
+      "Improve conversion rates",
+      "Increase sales performance",
+      "Maximize revenue growth"
+    ]
+  },
+  { 
+    title: "Competitive Analysis", 
+    description: "Evaluate trends, competitors, and growth opportunities.", 
+    icon: "fa-chess-knight", 
+    color: "#FF5733",
+    bullets: [
+      "Evaluate market trends",
+      "Assess competitor positioning",
+      "Identify strategic gaps",
+      "Support growth strategies",
+      "Gain actionable insights"
+    ]
+  },
+  { 
+    title: "Lead Nurturing Systems", 
+    description: "Convert prospects into clients with targeted processes.", 
+    icon: "fa-seedling", 
+    color: "#00CED1",
+    bullets: [
+      "Structure lead processes",
+      "Deliver targeted communication",
+      "Convert prospects to clients",
+      "Build long-term loyalty",
+      "Increase retention rates"
+    ]
   }
 ]
 
-const SmoothCounter = ({ endValue, suffix }: { endValue: number; suffix: string }) => {
-  const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: "-50px" })
+const processData = [
+  {
+    title: "Understand",
+    description: "We analyze requirements and data specifications thoroughly.",
+    icon: "fa-brain",
+    color: "#00AAFF"
+  },
+  {
+    title: "Plan",
+    description: "Create a detailed project plan with timelines and quality benchmarks.",
+    icon: "fa-clipboard-list",
+    color: "#00E676"
+  },
+  {
+    title: "Execute",
+    description: "Our skilled team processes data with precision and care.",
+    icon: "fa-cogs",
+    color: "#00AAFF"
+  },
+  {
+    title: "Deliver",
+    description: "Quality-checked output delivered on time with full support.",
+    icon: "fa-paper-plane",
+    color: "#00E676"
+  }
+]
+
+const TiltFlipCard = ({ 
+  service, 
+  index, 
+  isFlipped, 
+  onClick 
+}: { 
+  service: typeof servicesData[0], 
+  index: number,
+  isFlipped: boolean,
+  onClick: () => void 
+}) => {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 })
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 })
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"])
+  const tiltRotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"])
 
   useEffect(() => {
-    if (!inView) return
-
-    let startTime: number | null = null
-    const duration = 2500
-    
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
-
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime
-      const progress = Math.min((currentTime - startTime) / duration, 1)
-      const easedProgress = easeOutCubic(progress)
-      const currentVal = Math.floor(easedProgress * endValue)
-
-      if (ref.current) {
-        ref.current.textContent = currentVal + suffix
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(animate)
-      } else if (ref.current) {
-        ref.current.textContent = endValue + suffix
-      }
+    if (isFlipped) {
+      x.set(0)
+      y.set(0)
     }
-
-    requestAnimationFrame(animate)
-  }, [inView, endValue, suffix])
-
-  return (
-    <span ref={ref} className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-      0{suffix}
-    </span>
-  )
-}
-
-const MagneticStatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  
-  const springConfig = { damping: 20, stiffness: 150, mass: 0.5 }
-  const springX = useSpring(x, springConfig)
-  const springY = useSpring(y, springConfig)
+  }, [isFlipped, x, y])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    
-    const maxMove = 8
-    const moveX = ((e.clientX - centerX) / (rect.width / 2)) * maxMove
-    const moveY = ((e.clientY - centerY) / (rect.height / 2)) * maxMove
-    
-    x.set(moveX)
-    y.set(moveY)
+    if (isFlipped) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const mouseX = e.clientX - rect.left
+    const mouseY = e.clientY - rect.top
+    const xPct = mouseX / width - 0.5
+    const yPct = mouseY / height - 0.5
+    x.set(xPct)
+    y.set(yPct)
   }
 
   const handleMouseLeave = () => {
@@ -131,303 +195,274 @@ const MagneticStatCard = ({ stat, index }: { stat: typeof stats[0]; index: numbe
 
   return (
     <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.03 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className="group flex flex-row items-center gap-6 p-6 bg-white rounded-2xl border border-gray-200 cursor-pointer will-change-transform transform-gpu transition-shadow transition-colors duration-300 hover:shadow-[0_0_30px_rgba(0,170,255,0.35)] hover:border-transparent"
-    >
-      <div className="w-16 h-16 md:w-20 md:h-20 shrink-0">
-        <img 
-          src={stat.image} 
-          alt={stat.label} 
-          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" 
-        />
-      </div>
-      <div className="flex flex-col">
-        <SmoothCounter endValue={stat.value} suffix={stat.suffix} />
-        <span className="text-gray-500 text-sm md:text-base font-semibold uppercase tracking-wider mt-1">
-          {stat.label}
-        </span>
-      </div>
-    </motion.div>
-  )
-}
-
-const MagneticItem = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-
-  const springConfig = { damping: 20, stiffness: 150, mass: 0.1 }
-  const springX = useSpring(x, springConfig)
-  const springY = useSpring(y, springConfig)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const { left, top, width, height } = ref.current.getBoundingClientRect()
-    const centerX = left + width / 2
-    const centerY = top + height / 2
-    x.set(((e.clientX - centerX) / (width / 2)) * 6)
-    y.set(((e.clientY - centerY) / (height / 2)) * 6)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className={`will-change-transform ${className}`}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-const ScrollRevealPro = ({ 
-  children, 
-  className = "", 
-  delay = 0 
-}: { 
-  children: React.ReactNode, 
-  className?: string,
-  delay?: number
-}) => {
-  return (
-    <motion.span
-      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-      transition={{ 
-        duration: 0.8, 
-        ease: [0.22, 1, 0.36, 1],
-        delay: delay 
+      onClick={onClick}
+      style={{ 
+        rotateX, 
+        rotateY: tiltRotateY, 
+        perspective: 1200 
       }}
-      className={`inline-block ${className}`}
+      className={`group relative h-[250px] w-full cursor-pointer z-10 transition-all duration-300 ${isFlipped ? 'z-50 scale-105' : 'hover:z-20 hover:scale-[1.03]'}`}
     >
-      {children}
-    </motion.span>
-  )
-}
+      <motion.div
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+        style={{ transformStyle: "preserve-3d" }}
+        className="relative w-full h-full rounded-2xl shadow-xl"
+      >
+        <div
+          className="absolute inset-0 w-full h-full p-6 rounded-2xl overflow-hidden bg-[#181818] border flex flex-col justify-center items-center text-center transition-colors duration-300 group-hover:border-transparent"
+          style={{ 
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            borderColor: `${service.color}60`,
+            '--theme-color': service.color
+          } as React.CSSProperties}
+        >
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-[var(--theme-color)] pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 bg-black/30 backdrop-blur-sm pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 shadow-[0_0_30px_var(--theme-color)] pointer-events-none" />
+          <div className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-[100%] transition-transform duration-[1.5s] ease-in-out z-10 skew-x-[-30deg] pointer-events-none" />
 
-const InsightsContainer = () => {
-  const iconContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { delayChildren: 0.5, staggerChildren: 0.15 },
-    },
-  }
-
-  const iconVariants = {
-    hidden: { opacity: 0, scale: 0.6 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { type: 'spring', bounce: 0.5, duration: 0.6 },
-    },
-  }
-
-  return (
-    <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-10 md:py-12 mb-20 md:mb-24">
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#00AAFF]/10 via-purple-500/5 to-pink-500/10 blur-[100px] pointer-events-none -z-10 rounded-full" />
-      
-      <div className="bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:shadow-[0_0_25px_rgba(255,255,255,0.1)]">
-        
-        <div className="w-full mb-6 flex justify-center">
-          <MagneticItem className="w-full max-w-md relative overflow-hidden rounded-2xl drop-shadow-2xl z-10 bg-black/20">
-            <img 
-              src="https://iili.io/B8oQEyg.png" 
-              alt="Insights Context" 
-              className="w-full h-auto object-contain rounded-2xl relative z-0"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00AAFF]/20 via-white/10 to-[#00AAFF]/20 bg-[length:200%_auto] animate-[gradient-r2l_4s_linear_infinite] mix-blend-overlay pointer-events-none z-10 rounded-2xl" />
-          </MagneticItem>
-        </div>
-
-        <div className="w-full h-px bg-white/10 mb-6 md:mb-8" />
-
-        <div className="w-full flex flex-col items-center text-center space-y-4 md:space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[180px] md:min-h-[140px]">
-          {paragraphs.map((p, pIndex) => (
-            p.highlight ? (
-              <h5 key={pIndex} className="pt-2 text-center w-full !text-lg md:!text-xl">
-                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
-              </h5>
-            ) : (
-              <p key={pIndex}>
-                <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
+          <div className="relative z-20 w-full h-full flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-4">
+              <i className={`fa-solid ${service.icon} text-5xl mb-3 transition-all duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]`}></i>
+              <h3 className="!text-xl font-bold transition-colors duration-500 text-[var(--theme-color)] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] !bg-none !pb-0 !animate-none">
+                {service.title}
+              </h3>
+            </div>
+            <div className="absolute bottom-5 left-0 w-full px-3 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] delay-75">
+              <p className="text-white/95 leading-tight font-medium text-sm">
+                {service.description}
               </p>
-            )
-          ))}
+            </div>
+          </div>
         </div>
 
-        <div className="w-full h-px bg-white/10 my-6 md:my-8" />
-
-        <div className="h-[40px] flex items-center justify-center">
-          <motion.div 
-            variants={iconContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex items-center justify-center gap-8"
-          >
-            <motion.button 
-              variants={iconVariants}
-              onClick={() => window.open("https://www.facebook.com/EntryLab", "_blank")}
-              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform cursor-pointer appearance-none bg-transparent border-none p-0 outline-none"
+        <div
+          className="absolute inset-0 w-full h-full rounded-2xl p-5 flex flex-col justify-start overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+          style={{ 
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+            backgroundColor: service.color
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/40 z-0 rounded-2xl pointer-events-none"></div>
+          
+          <div className="relative z-10 w-full h-full flex flex-col">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, delay: isFlipped ? 0.3 : 0 }}
+              className="flex items-center gap-3 mb-3 pb-3 border-b border-white/30"
             >
-              <i className="fa-brands fa-facebook"></i>
-            </motion.button>
+              <i className={`fa-solid ${service.icon} text-[1.3rem] text-white drop-shadow-md`}></i>
+              <h3 className="!text-[1.05rem] font-bold text-white text-left leading-tight drop-shadow-md !bg-none !pb-0 !animate-none">
+                {service.title}
+              </h3>
+            </motion.div>
             
-            <motion.button 
-              variants={iconVariants}
-              onClick={() => window.open("https://www.linkedin.com/company/entrylab", "_blank")}
-              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform cursor-pointer appearance-none bg-transparent border-none p-0 outline-none"
-            >
-              <i className="fa-brands fa-linkedin"></i>
-            </motion.button>
-            
-            <motion.button 
-              variants={iconVariants}
-              onClick={() => window.open("https://rocketreach.co/entrylab-profile_b704b6e0c514e80c", "_blank")}
-              className="text-white text-3xl transition-all duration-300 transform hover:scale-110 hover:text-[#00AAFF] hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)] will-change-transform cursor-pointer appearance-none bg-transparent border-none p-0 outline-none"
-            >
-              <i className="fa-solid fa-rocket"></i>
-            </motion.button>
-          </motion.div>
+            <div className="flex flex-col gap-2.5 flex-grow justify-center">
+              {service.bullets.map((bullet, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isFlipped ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                  transition={{ duration: 0.4, delay: isFlipped ? 0.4 + (i * 0.08) : 0 }}
+                  className="flex items-start gap-2.5"
+                >
+                  <i className="fa-solid fa-check text-white mt-[3px] text-[0.7rem] shrink-0 drop-shadow-sm"></i>
+                  <span className="text-white text-[0.8rem] text-left leading-tight font-medium drop-shadow-sm">
+                    {bullet}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
-
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
-const GlobalWorldMap = () => {
+export default function Services() {
+  const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
+
   return (
-    <div className="relative w-full py-12 md:py-16 overflow-hidden flex flex-col items-center">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#00AAFF]/10 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col items-center px-4 w-full max-w-7xl mx-auto">
-        <h5>Around The Globe</h5>
-        <h3 className="text-center">Powering Innovation for Businesses</h3>
-        <h4 className="mb-10 md:mb-16 text-center">Across the Globe.</h4>
-
-        <div className="relative w-full flex justify-center mt-8 md:mt-12 mb-8 md:mb-12 scale-[1.15] md:scale-[1.35] lg:scale-[1.5]">
-          <img 
-            src="https://iili.io/BbpOJjV.webp" 
-            alt="Global Map" 
-            className="w-full max-w-6xl h-auto object-contain drop-shadow-[0_0_30px_rgba(0,170,255,0.15)]"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Insights() {
-  return (
-    <section id="insights" className="relative py-32 overflow-hidden bg-[#111111]">
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes custom-scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-custom-scroll {
-          animation: custom-scroll 180s linear infinite;
-        }
-        .group-marquee:hover .animate-custom-scroll {
-          animation-play-state: paused;
-        }
-      `}} />
-
-      <div className="container mx-auto px-6 max-w-7xl">
+    <section id="services" className="relative pt-12 pb-12 bg-[#111111] overflow-hidden">
+      <div className="relative z-20 container mx-auto px-6 max-w-7xl">
         
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-16"
         >
-          <h2>INDUSTRY INSIGHTS</h2>
-          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
+          <h5>WHAT WE OFFER</h5>
+          <h2>OUR SERVICES</h2>
+          <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4 mb-6"></div>
+          <p className="text-[#f5f5f5] max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
+            Comprehensive research and data processing services, customized to meet specific business needs. Focused on delivering precise insights and maximizing efficiency for better decision-making.
+          </p>
         </motion.div>
-
-        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 mb-16">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="w-full md:w-1/2 flex flex-col justify-center text-left"
-          >
-            <h3 className="mb-6 !text-left !pb-0">
-              Unlock the power of search data
-            </h3>
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium">
-              Every query uncovers hidden patterns and intent signals. EntryLab deeply analyzes search algorithms and data complexities to deliver powerful insights and a lasting competitive advantage.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="w-full md:w-1/2"
-          >
-            <img 
-              src="https://iili.io/BeDH2IV.png" 
-              alt="Search Data Insights" 
-              className="w-full h-auto object-contain drop-shadow-2xl will-change-transform"
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {servicesData.map((service, i) => (
+            <TiltFlipCard 
+              key={service.title} 
+              service={service} 
+              index={i} 
+              isFlipped={flippedIndex === i}
+              onClick={() => {
+                if (flippedIndex !== null && flippedIndex !== i) {
+                   setFlippedIndex(null);
+                   setTimeout(() => {
+                       setFlippedIndex(i);
+                   }, 300);
+                } else {
+                   setFlippedIndex(flippedIndex === i ? null : i);
+                }
+              }}
             />
-          </motion.div>
-        </div>
-
-        <InsightsContainer />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mb-32 relative z-10">
-          {stats.map((stat, i) => (
-            <MagneticStatCard key={stat.label} stat={stat} index={i} />
           ))}
         </div>
-      </div>
-        
-      <GlobalWorldMap />
 
-      <div className="container mx-auto px-6 max-w-7xl pt-10">
-        <div 
-          className="relative transform-gpu w-full overflow-hidden py-10 group-marquee" 
-          style={{ 
-            maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)', 
-            WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' 
-          }}
-        >
-          <div className="flex w-max animate-custom-scroll will-change-transform">
-            {[...companies, ...companies].map((company, index) => (
-              <div 
-                key={index} 
-                className="flex flex-col items-center justify-center w-[120px] md:w-[180px] shrink-0 transition-opacity duration-300 hover:opacity-100 opacity-80 cursor-pointer"
+        <div className="mt-32">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h5>HOW WE WORK</h5>
+            <h2>OUR PROCESS</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {processData.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { 
+                    opacity: 1, 
+                    transition: { staggerChildren: 0.2, delayChildren: i * 0.1 } 
+                  }
+                }}
+                className="group p-6 md:p-8 rounded-2xl border flex flex-col items-start bg-[#181818] transition-all duration-300 hover:shadow-[0_0_15px_var(--hover-glow)] hover:-translate-y-1"
+                style={{ 
+                  borderColor: `${step.color}30`,
+                  '--hover-glow': `${step.color}40`
+                } as React.CSSProperties}
               >
-                <i className={`${company.icon} text-4xl md:text-5xl text-white mb-4`}></i>
-                <span className="text-white text-sm md:text-base font-medium">
-                  {company.name}
-                </span>
-              </div>
+                <div className="flex items-center gap-4 mb-4">
+                  <motion.div 
+                    variants={{ 
+                      hidden: { opacity: 0, scale: 0.5 }, 
+                      visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 15 } } 
+                    }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-colors duration-300"
+                    style={{ backgroundColor: `${step.color}20` }}
+                  >
+                    <i className={`fa-solid ${step.icon} text-xl transition-transform duration-300 group-hover:scale-125`} style={{ color: step.color }}></i>
+                  </motion.div>
+                  
+                  <motion.h3 
+                    variants={{ 
+                      hidden: { opacity: 0, x: -20 }, 
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } } 
+                    }}
+                    className="!text-xl font-bold !pb-0 !bg-none !animate-none transition-colors duration-300"
+                    style={{ color: step.color }}
+                  >
+                    {step.title}
+                  </motion.h3>
+                </div>
+                
+                <motion.p 
+                  variants={{ 
+                    hidden: { opacity: 0, y: 20 }, 
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } 
+                  }}
+                  className="text-white/80 leading-relaxed text-sm text-left"
+                >
+                  {step.description}
+                </motion.p>
+              </motion.div>
             ))}
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mt-32 max-w-3xl mx-auto flex flex-col items-center"
+        >
+          <h3>Need a Custom Solution?</h3>
+          <p className="text-[#f5f5f5] text-base md:text-lg mb-10 max-w-3xl leading-relaxed">
+            We tailor our services to match your exact requirements. Let's discuss your project today.
+          </p>
+          <button 
+            onClick={() => window.location.href = '/contact'}
+            className="global-btn group relative overflow-hidden min-w-[210px] w-max px-8"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-[#00AAFF] to-[#0088CC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-0" />
+            <span className="relative z-10 !translate-x-0 group-hover:!-translate-x-3 transition-transform duration-500">Get a Free Quote</span> 
+            <svg 
+              className="!absolute right-4 opacity-0 translate-y-3 translate-x-3 group-hover:opacity-100 group-hover:!translate-y-0 group-hover:!translate-x-0 transition-all duration-500 text-white w-5 h-5 z-10" 
+              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14" strokeDasharray="2 4" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-[#f5f5f5] text-sm md:text-base">
+            <span className="mr-2">Connect with us on:</span>
+            <div className="flex items-center gap-0">
+              <div 
+                onClick={() => window.open('https://www.linkedin.com/company/entrylab', '_blank')} 
+                className="group relative flex items-center justify-start h-6 w-[80px] cursor-pointer text-[#00AAFF]"
+              >
+                <span className="absolute left-[8px] transition-all duration-300 group-hover:-translate-x-2 group-hover:underline whitespace-nowrap">LinkedIn</span>
+                <i className="fa-brands fa-linkedin text-lg absolute right-0 opacity-0 translate-x-3 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"></i>
+              </div>
+
+              <span className="text-[#00AAFF] text-xl leading-none">&bull;</span>
+              
+              <div 
+                onClick={() => window.open('https://www.facebook.com/EntryLab', '_blank')} 
+                className="group relative flex items-center justify-start h-6 w-[90px] cursor-pointer text-[#00AAFF]"
+              >
+                <span className="absolute left-[8px] transition-all duration-300 group-hover:-translate-x-2 group-hover:underline whitespace-nowrap">Facebook</span>
+                <i className="fa-brands fa-facebook text-lg absolute right-0 opacity-0 translate-x-3 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"></i>
+              </div>
+
+              <span className="text-[#00AAFF] text-xl leading-none">&bull;</span>
+              
+              <div 
+                onClick={() => window.open('https://rocketreach.co/entrylab-profile_b704b6e0c514e80c', '_blank')} 
+                className="group relative flex items-center justify-start h-6 w-[115px] cursor-pointer text-[#00AAFF]"
+              >
+                <span className="absolute left-[8px] transition-all duration-300 group-hover:-translate-x-2 group-hover:underline whitespace-nowrap">RocketReach</span>
+                <i className="fa-solid fa-rocket text-lg absolute right-0 opacity-0 translate-x-3 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"></i>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
       </div>
     </section>
