@@ -258,14 +258,14 @@ const InsightsContainer = () => {
 
         <div className="w-full h-px bg-white/10 mb-6 md:mb-8" />
 
-        <div className="w-full flex flex-col items-center mx-auto space-y-4 md:space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[180px] md:min-h-[140px]">
+        <div className="w-full flex flex-col items-center text-center space-y-4 md:space-y-5 text-white/90 text-lg md:text-xl font-medium leading-relaxed max-w-4xl min-h-[180px] md:min-h-[140px]">
           {paragraphs.map((p, pIndex) => (
             p.highlight ? (
               <h5 key={pIndex} className="pt-2 text-center w-full !text-lg md:!text-xl">
                 <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
               </h5>
             ) : (
-              <p key={pIndex} className="text-justify w-full">
+              <p key={pIndex}>
                 <ScrollRevealPro delay={pIndex * 0.1}>{p.text}</ScrollRevealPro>
               </p>
             )
@@ -532,7 +532,7 @@ export default function Insights() {
             <h3 className="mb-6 !text-left !pb-0">
               Unlock the power of search data
             </h3>
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium text-justify">
+            <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium">
               Every query uncovers hidden patterns and intent signals. EntryLab deeply analyzes search algorithms and data complexities to deliver powerful insights and a lasting competitive advantage.
             </p>
           </motion.div>
