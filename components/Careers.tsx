@@ -47,14 +47,14 @@ const fadeUp = {
 };
 
 const coreValues = [
-  { title: "Teamwork", image: "https://iili.io/Bi9lhmJ.png", bgColor: "bg-[#F3E8FF]", textColor: "text-[#9333EA]" },
-  { title: "Excellence", image: "https://iili.io/Bi91SNs.png", bgColor: "bg-[#FCE7F3]", textColor: "text-[#DB2777]" },
-  { title: "Curiosity", image: "https://iili.io/Bi9GBY7.png", bgColor: "bg-[#E0F2FE]", textColor: "text-[#0284C7]" },
-  { title: "Passion", image: "https://iili.io/Bi9GbMx.png", bgColor: "bg-[#FEE2E2]", textColor: "text-[#DC2626]" },
-  { title: "Accountability", image: "https://iili.io/BPj2VPS.png", bgColor: "bg-[#FEF9C3]", textColor: "text-[#CA8A04]" },
-  { title: "Responsibility", image: "https://iili.io/BPhgOUF.png", bgColor: "bg-[#DBEAFE]", textColor: "text-[#2563EB]" },
-  { title: "Sustainability", image: "https://iili.io/BPhgrVp.png", bgColor: "bg-[#DCFCE7]", textColor: "text-[#16A34A]" },
-  { title: "Transparency", image: "https://iili.io/BPhgmx4.png", bgColor: "bg-[#FFEDD5]", textColor: "text-[#EA580C]" },
+  { title: "Teamwork", image: "https://iili.io/BpeuxWX.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Excellence", image: "https://iili.io/Bpeuu0G.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Curiosity", image: "https://iili.io/Bpeuzsn.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Passion", image: "https://iili.io/BpeuTfs.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Accountability", image: "https://iili.io/BpeuabS.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Responsibility", image: "https://iili.io/BpeuYe2.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Sustainability", image: "https://iili.io/Bpeu75l.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Transparency", image: "https://iili.io/Bpeu5J4.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
 ];
 
 const marqueeImages = [
@@ -149,9 +149,9 @@ export default function Careers() {
   return (
     <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24 relative z-0">
       
-      <section className="relative pt-40 pb-16 px-6 flex flex-col items-center justify-center">
+      <section className="relative pt-40 pb-16 w-full flex flex-col items-center justify-center overflow-hidden">
         <motion.div
-          className="relative mb-6 text-center flex flex-col items-center"
+          className="relative mb-6 text-center flex flex-col items-center px-6"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -162,13 +162,41 @@ export default function Careers() {
         </motion.div>
 
         <motion.div
-          className="text-center max-w-3xl mx-auto space-y-2 text-lg md:text-xl text-neutral-300 font-medium mt-12"
+          className="text-center max-w-4xl mx-auto px-6 space-y-2 text-lg md:text-xl text-neutral-300 font-medium mt-8 mb-16"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <p>Innovators Wanted; Join the EntryLabs Revolution.</p>
+          <p>Our philosophy is simple: hire great people and empower them with the resources and support to perform at their best and achieve excellence.</p>
+        </motion.div>
+
+        <div className="relative w-full overflow-hidden flex flex-col justify-center py-10">
+          <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
+
+          <motion.div
+            className="flex gap-8 w-max items-center"
+            style={{ willChange: "transform" }}
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, ease: "linear", duration: 120 }}
+          >
+            {doubledMarquee.map((src, index) => (
+              <div key={`marquee-img-${index}`} className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${index % 2 === 0 ? "-translate-y-12" : "translate-y-12"}`}>
+                <img src={src} alt="EntryLab Workspace" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="text-center max-w-4xl mx-auto px-6 space-y-2 text-xl md:text-2xl text-neutral-100 font-bold mt-16"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <p className="text-[#00AAFF]">Join EntryLabs: Redefining the Future of R&D Excellence</p>
         </motion.div>
       </section>
 
@@ -190,7 +218,7 @@ export default function Careers() {
           {coreValues.map((value, index) => (
             <MagneticItem key={`core-value-${value.title}-${index}`}>
               <motion.div
-                className={`group flex flex-row items-center justify-start gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-500 shadow-md hover:shadow-xl ${value.bgColor}`}
+                className={`group flex flex-row items-center justify-start gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-500 shadow-md hover:shadow-xl hover:shadow-[#00AAFF]/20 ${value.bgColor}`}
                 whileHover="hover"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -198,11 +226,11 @@ export default function Careers() {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >
                 <motion.div
-                  className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl overflow-hidden bg-white/60 flex items-center justify-center shadow-inner"
+                  className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl overflow-hidden bg-transparent flex items-center justify-center"
                   variants={{ hover: { scale: 1.1 } }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <img src={value.image} alt={value.title} loading="lazy" decoding="async" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-sm" />
+                  <img src={value.image} alt={value.title} loading="lazy" decoding="async" className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-sm" />
                 </motion.div>
                 <h3 className={`!text-lg md:!text-xl font-bold tracking-tight !bg-none !animate-none !pb-0 ${value.textColor}`}>
                   {value.title}
@@ -211,36 +239,6 @@ export default function Careers() {
             </MagneticItem>
           ))}
         </div>
-
-        <motion.div
-          className="text-center mt-16 max-w-3xl mx-auto"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          <p className="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed">
-            Our philosophy is simple; hire great people and give them the resources and support to do their best work.
-          </p>
-        </motion.div>
-      </section>
-
-      <section className="py-24 relative w-full overflow-hidden flex flex-col justify-center">
-        <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
-
-        <motion.div
-          className="flex gap-8 w-max items-center"
-          style={{ willChange: "transform" }}
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 120 }}
-        >
-          {doubledMarquee.map((src, index) => (
-            <div key={`marquee-img-${index}`} className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${index % 2 === 0 ? "-translate-y-16" : "translate-y-16"}`}>
-              <img src={src} alt="EntryLab Workspace" loading="lazy" decoding="async" className="w-full h-full object-cover" />
-            </div>
-          ))}
-        </motion.div>
       </section>
 
       <section className="pt-24 pb-12 px-6 max-w-7xl mx-auto overflow-hidden relative z-10">
