@@ -20,8 +20,8 @@ const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const mouseX = e.clientX - rect.left - rect.width / 2;
     const mouseY = e.clientY - rect.top - rect.height / 2;
-    x.set(mouseX * 0.02);
-    y.set(mouseY * 0.02);
+    x.set(mouseX * 0.05);
+    y.set(mouseY * 0.05);
   };
 
   const handleMouseLeave = () => {
@@ -34,7 +34,7 @@ const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
       className={className}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY, willChange: "transform" }}
+      style={{ x: springX, y: springY }}
     >
       {children}
     </motion.div>
@@ -42,8 +42,8 @@ const MagneticItem = ({ children, className = "" }: MagneticItemProps) => {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
 const coreValues = [
@@ -150,6 +150,18 @@ export default function Careers() {
     <main id="careers" className="min-h-screen bg-neutral-950 text-white overflow-hidden font-sans selection:bg-[#00AAFF] selection:text-white pb-24 relative z-0">
       
       <section className="relative pt-40 pb-16 w-full flex flex-col items-center justify-center overflow-hidden">
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes scroll {
+            100% { transform: translateX(-50%); }
+          }
+          .marquee-scroll {
+            animation: scroll 20s linear infinite;
+          }
+          .marquee-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}} />
+
         <motion.div
           className="relative mb-6 text-center flex flex-col items-center px-6"
           variants={fadeUp}
@@ -175,18 +187,13 @@ export default function Careers() {
           <div className="absolute top-0 bottom-0 left-0 w-32 md:w-80 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
           <div className="absolute top-0 bottom-0 right-0 w-32 md:w-80 bg-gradient-to-l from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
 
-          <motion.div
-            className="flex gap-8 w-max items-center"
-            style={{ willChange: "transform" }}
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 120 }}
-          >
+          <div className="flex gap-8 w-max items-center marquee-scroll">
             {doubledMarquee.map((src, index) => (
-              <div key={`marquee-img-${index}`} className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] ${index % 2 === 0 ? "-translate-y-12" : "translate-y-12"}`}>
+              <div key={`marquee-img-${index}`} className={`relative shrink-0 w-[300px] md:w-[450px] aspect-[3/2] rounded-2xl overflow-hidden shadow-xl ${index % 2 === 0 ? "-translate-y-8" : "translate-y-8"}`}>
                 <img src={src} alt="EntryLab Workspace" loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         <motion.div
@@ -218,20 +225,15 @@ export default function Careers() {
           {coreValues.map((value, index) => (
             <MagneticItem key={`core-value-${value.title}-${index}`}>
               <motion.div
-                className={`group flex flex-row items-center justify-start gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-500 shadow-md hover:shadow-xl hover:shadow-[#00AAFF]/20 ${value.bgColor}`}
-                whileHover="hover"
+                className={`group flex flex-row items-center justify-start gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-[#00AAFF]/20 ${value.bgColor}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <motion.div
-                  className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl overflow-hidden bg-transparent flex items-center justify-center"
-                  variants={{ hover: { scale: 1.1 } }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
+                <div className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-2xl overflow-hidden bg-transparent flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                   <img src={value.image} alt={value.title} loading="lazy" decoding="async" className="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-sm" />
-                </motion.div>
+                </div>
                 <h3 className={`!text-lg md:!text-xl font-bold tracking-tight !bg-none !animate-none !pb-0 ${value.textColor}`}>
                   {value.title}
                 </h3>
@@ -291,7 +293,6 @@ export default function Careers() {
               <motion.div
                 key={`adv-${i}`}
                 initial={false}
-                style={{ willChange: "transform, opacity, filter" }}
                 animate={{
                   x: position === 0 ? "0%" : position === 1 ? "110%" : position === -1 ? "-110%" : "0%",
                   scale: position === 0 ? 1 : position === 2 ? 0.8 : 0.85,
@@ -299,7 +300,7 @@ export default function Careers() {
                   filter: position === 0 ? "blur(0px)" : "blur(6px)",
                   zIndex: position === 0 ? 10 : 5,
                 }}
-                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border ${isVisible ? "border-[#00CCCC]" : "border-transparent"} ${isFocused ? "bg-[#F0F9FF] shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)] border-2" : "bg-white shadow-lg"}`}
               >
                 <img src={imgSrc} alt={adv.title} loading="lazy" decoding="async" className="w-32 h-32 mb-6 object-contain mix-blend-multiply" />
@@ -312,12 +313,6 @@ export default function Careers() {
       </section>
 
       <section className="pt-8 pb-24 px-6 max-w-5xl mx-auto relative">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[10%] left-[5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full blur-[100px] opacity-30 bg-[#FD7FAC]" />
-          <div className="absolute top-[40%] right-[5%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30 bg-[#977FFB]" />
-          <div className="absolute bottom-[10%] left-[20%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30 bg-[#57E0FA]" />
-        </div>
-
         <motion.div 
           className="text-center mb-16 relative z-10 flex flex-col items-center"
           variants={fadeUp}
@@ -354,26 +349,26 @@ export default function Careers() {
                 </button>
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: "easeInOut" }} className="overflow-hidden">
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
                       <div className="flex flex-col md:flex-row gap-8 items-center px-6 md:px-8 pb-8 pt-0">
                         <div className="flex-1">
-                          <motion.p className="mb-6 leading-relaxed font-medium" style={{ color: item.themeColor }} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}>
+                          <p className="mb-6 leading-relaxed font-medium" style={{ color: item.themeColor }}>
                             {item.desc}
-                          </motion.p>
-                          <motion.ul className="space-y-3" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } } }}>
+                          </p>
+                          <ul className="space-y-3">
                             {item.bullets.map((bullet, bi) => (
-                              <motion.li key={bi} className="flex items-start gap-3" variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}>
+                              <li key={bi} className="flex items-start gap-3">
                                 <svg className="shrink-0 w-6 h-6" style={{ color: item.themeColor }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                                 </svg>
                                 <span className="text-sm md:text-base font-medium" style={{ color: item.themeColor }}>{bullet}</span>
-                              </motion.li>
+                              </li>
                             ))}
-                          </motion.ul>
+                          </ul>
                         </div>
-                        <motion.div className="w-full md:w-1/3 shrink-0 flex justify-center" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, delay: 0.2 }}>
+                        <div className="w-full md:w-1/3 shrink-0 flex justify-center">
                           <img src={item.image} alt={item.title} loading="lazy" decoding="async" className="w-full max-w-[200px] h-auto object-contain drop-shadow-2xl" />
-                        </motion.div>
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -385,11 +380,6 @@ export default function Careers() {
       </section>
 
       <section className="py-12 px-6 max-w-7xl mx-auto relative z-10">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[20%] left-[15%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-30 bg-[#00AAFF]" />
-          <div className="absolute bottom-[20%] right-[15%] w-[400px] md:w-[500px] h-[400px] md:h-[500px] rounded-full blur-[120px] opacity-30 bg-[#30C7CC]" />
-        </div>
-
         <motion.div 
           className="text-center mb-16 relative z-10 flex flex-col items-center"
           variants={fadeUp}
@@ -405,7 +395,7 @@ export default function Careers() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
           {hiringSteps.map((step, i) => (
-            <motion.div key={`hiring-step-${i}`} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} transition={{ delay: i * 0.2 }} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 flex flex-col items-start hover:bg-white/10 transition-colors duration-300">
+            <motion.div key={`hiring-step-${i}`} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} transition={{ delay: i * 0.1 }} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 flex flex-col items-start hover:bg-white/10 transition-colors duration-300">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00AAFF] shadow-[0_0_12px_2px_rgba(0,170,255,0.8)] animate-pulse" />
                 <span className="text-white/60 text-sm font-bold tracking-widest uppercase">{step.step}</span>
@@ -413,7 +403,7 @@ export default function Careers() {
               <h4 className="mb-4">{step.title}</h4>
               <div className="space-y-4">
                 {step.desc.map((p, pIndex) => (
-                  <motion.p key={pIndex} className="text-gray-400 text-sm leading-relaxed" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>{p}</motion.p>
+                  <p key={pIndex} className="text-gray-400 text-sm leading-relaxed">{p}</p>
                 ))}
               </div>
             </motion.div>
@@ -422,11 +412,6 @@ export default function Careers() {
       </section>
 
       <section className="py-12 px-6 max-w-7xl mx-auto relative z-10">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[30%] left-[20%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full blur-[100px] opacity-20 bg-[#9333EA]" />
-          <div className="absolute bottom-[20%] right-[20%] w-[350px] md:w-[450px] h-[350px] md:h-[450px] rounded-full blur-[110px] opacity-20 bg-[#0284C7]" />
-        </div>
-
         <motion.div 
           className="text-center mb-16 relative z-10 flex flex-col items-center"
           variants={fadeUp}
