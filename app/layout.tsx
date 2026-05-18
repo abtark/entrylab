@@ -3,6 +3,7 @@ import { Ubuntu } from 'next/font/google'
 import './globals.css'
 import SmoothScroll from '@/components/SmoothScroll'
 import BackToTop from '@/components/BackToTop'
+import LaunchCountdown from '@/components/LaunchCountdown'
 
 const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
@@ -26,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${ubuntu.variable} font-ubuntu bg-background text-white antialiased`}>
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
-        <BackToTop />
+        <LaunchCountdown>
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
+          <BackToTop />
+        </LaunchCountdown>
       </body>
     </html>
   )
