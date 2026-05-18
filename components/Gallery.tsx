@@ -23,15 +23,33 @@ const images = [
 export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState(1)
-  const [autoplayTimer, setAutoplayTimer] = useState(0)
+  const [autoplayTimer, setAutoplayTimer] = useState(Date.now())
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setDirection(1)
-      setActiveIndex((prev) => (prev + 1) % images.length)
-      setAutoplayTimer(Date.now())
-    }, 7000)
-    return () => clearInterval(timer)
+    let timer: NodeJS.Timeout
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        clearInterval(timer)
+      } else {
+        setAutoplayTimer(Date.now())
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+
+    if (!document.hidden) {
+      timer = setInterval(() => {
+        setDirection(1)
+        setActiveIndex((prev) => (prev + 1) % images.length)
+        setAutoplayTimer(Date.now())
+      }, 7000)
+    }
+
+    return () => {
+      clearInterval(timer)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
   }, [autoplayTimer])
 
   const handleNext = () => {
@@ -44,6 +62,14 @@ export default function Gallery() {
     setDirection(-1)
     setActiveIndex((prev) => (prev - 1 + images.length) % images.length)
     setAutoplayTimer(Date.now())
+  }
+
+  const getDiff = (i: number) => {
+    const len = images.length
+    let diff = i - activeIndex
+    while (diff < -1) diff += len
+    while (diff > len - 2) diff -= len
+    return diff
   }
 
   return (
@@ -61,7 +87,7 @@ export default function Gallery() {
           <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4 shadow-[0_0_15px_rgba(0,170,255,0.6)]"></div>
         </motion.div>
 
-        <div className="relative w-full h-[60vh] min-h-[500px] max-h-[750px] rounded-[2rem] overflow-hidden shadow-[0_0_40px_rgba(0,170,255,0.15)] border border-white/10 bg-black">
+        <div className="relative w-full h-[75vh] min-h-[600px] max-h-[850px] rounded-[2rem] overflow-hidden shadow-[0_0_40px_rgba(0,170,255,0.15)] border border-white/10 bg-black">
           
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
@@ -104,8 +130,8 @@ export default function Gallery() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/80 via-[#111111]/10 to-[#111111]/90 z-10 pointer-events-none mix-blend-overlay"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30 z-10 pointer-events-none"></div>
 
-          <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 md:p-8 pointer-events-none">
-            <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-8 md:gap-0 w-full pointer-events-auto pb-4">
+          <div className="absolute inset-0 z-20 flex flex-col justify-end p-4 md:p-6 pb-4 md:pb-6 pointer-events-none">
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-0 w-full pointer-events-auto">
               
               <div className="flex gap-4 order-2 md:order-1">
                 <button 
@@ -132,78 +158,59 @@ export default function Gallery() {
                 </button>
               </div>
 
-              <div className="flex gap-3 md:gap-4 order-1 md:order-2 overflow-hidden items-end relative perspective-[1200px]">
-                <AnimatePresence mode="popLayout" custom={direction}>
-                  {[0, 1, 2].map((offset) => {
-                    const idx = (activeIndex + offset + images.length) % images.length
-                    
-                    return (
-                      <motion.div
-                        key={idx}
-                        layout
-                        custom={direction}
-                        variants={{
-                          initial: (dir: number) => ({
-                            opacity: 0,
-                            x: dir === 1 ? 80 : -80,
-                            scale: 0.8,
-                            filter: "blur(8px)"
-                          }),
-                          animate: {
-                            opacity: 1,
-                            x: 0,
-                            scale: 1,
-                            filter: "blur(0px)"
-                          },
-                          exit: (dir: number) => ({
-                            opacity: 0,
-                            x: dir === 1 ? -80 : 80,
-                            scale: 0.8,
-                            filter: "blur(8px)",
-                            position: "absolute"
-                          })
-                        }}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ 
-                          type: "spring", 
-                          stiffness: 110, 
-                          damping: 22, 
-                          mass: 0.9 
-                        }}
-                        className="relative w-[70px] sm:w-[90px] md:w-[110px] aspect-[3/4] rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/20 bg-black/50 cursor-pointer transform-gpu will-change-transform group shrink-0"
-                        onClick={handleNext}
-                      >
-                        <Image 
-                          src={images[idx]} 
-                          alt={`Gallery Preview ${idx + 1}`} 
-                          fill 
-                          sizes="(max-width: 768px) 70px, 110px"
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,170,255,0.2)] z-10 pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-60"></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 z-10 pointer-events-none"></div>
-                        <div className="absolute inset-0 bg-[#00AAFF]/10 mix-blend-overlay z-10 pointer-events-none"></div>
-                        
-                        {offset === 0 && (
-                          <>
-                            <div className="absolute top-2 right-2 w-2 h-2 bg-[#00AAFF] rounded-full shadow-[0_0_10px_rgba(0,170,255,0.8)] z-20"></div>
-                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20 z-30">
-                              <motion.div
-                                key={autoplayTimer}
-                                initial={{ width: "0%" }}
-                                animate={{ width: "100%" }}
-                                transition={{ duration: 7, ease: "linear" }}
-                                className="h-full bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,0.8)] origin-left"
-                              />
-                            </div>
-                          </>
-                        )}
-                      </motion.div>
-                    )
-                  })}
-                </AnimatePresence>
+              <div className="relative order-1 md:order-2 w-[234px] sm:w-[294px] md:w-[354px] h-[94px] sm:h-[120px] md:h-[147px] perspective-[1200px]">
+                {images.map((img, i) => {
+                  const diff = getDiff(i)
+                  const isActive = diff >= 0 && diff <= 2
+
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={false}
+                      animate={{
+                        x: `calc(${diff * 100}% + ${diff * 12}px)`,
+                        opacity: isActive ? 1 : 0,
+                        scale: isActive ? 1 : 0.8,
+                        zIndex: 30 - diff,
+                        pointerEvents: isActive ? 'auto' : 'none',
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 110,
+                        damping: 22,
+                        mass: 0.9
+                      }}
+                      className="absolute top-0 left-0 w-[70px] sm:w-[90px] md:w-[110px] aspect-[3/4] rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/20 bg-black/50 cursor-pointer transform-gpu will-change-transform group"
+                      onClick={isActive ? handleNext : undefined}
+                    >
+                      <Image 
+                        src={img} 
+                        alt={`Gallery Preview ${i + 1}`} 
+                        fill 
+                        sizes="(max-width: 768px) 70px, 110px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,170,255,0.2)] z-10 pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-60"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 z-10 pointer-events-none"></div>
+                      <div className="absolute inset-0 bg-[#00AAFF]/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                      
+                      {diff === 0 && (
+                        <>
+                          <div className="absolute top-2 right-2 w-2 h-2 bg-[#00AAFF] rounded-full shadow-[0_0_10px_rgba(0,170,255,0.8)] z-20"></div>
+                          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/20 z-30">
+                            <motion.div
+                              key={autoplayTimer}
+                              initial={{ width: "0%" }}
+                              animate={{ width: "100%" }}
+                              transition={{ duration: 7, ease: "linear" }}
+                              className="h-full bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,0.8)] origin-left"
+                            />
+                          </div>
+                        </>
+                      )}
+                    </motion.div>
+                  )
+                })}
               </div>
 
             </div>
