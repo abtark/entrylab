@@ -24,13 +24,13 @@ const MahjongGridLoader = () => {
       variants={containerVariants}
       initial="initial"
       animate="animate"
-      className="grid grid-cols-3 gap-2 mt-12"
+      className="grid grid-cols-3 gap-1.5 sm:gap-2 mt-8 md:mt-12"
     >
       {[...Array(9)].map((_, i) => (
         <motion.div
           key={i}
           variants={itemVariants}
-          className="w-4 h-4 md:w-6 md:h-6 bg-[#00AAFF] rounded-sm shadow-[0_0_10px_rgba(0,170,255,0.5)]"
+          className="w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6 bg-[#00AAFF] rounded-sm shadow-[0_0_10px_rgba(0,170,255,0.5)]"
         />
       ))}
     </motion.div>
@@ -80,9 +80,9 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
   const formatTime = (time: number) => time.toString().padStart(2, "0");
 
   return (
-    <div className="min-h-screen bg-[#050A15] flex flex-col items-center justify-center font-ubuntu text-white overflow-hidden relative selection:bg-[#00AAFF]/30">
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00AAFF]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-[#050A15] flex flex-col items-center justify-center font-ubuntu text-white overflow-hidden relative selection:bg-[#00AAFF]/30 p-4">
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-[#00AAFF]/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-blue-600/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none" />
 
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -95,52 +95,52 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
         }
       `}} />
 
-      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto w-full">
-        <div className="mb-16 animate-heartbeat flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center text-center w-full max-w-5xl mx-auto">
+        <div className="mb-10 md:mb-16 animate-heartbeat flex flex-col items-center">
           <Image 
             src="https://iili.io/FC3KC6g.png" 
             alt="EntryLab Logo" 
             width={320} 
             height={96} 
-            className="drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] object-contain" 
+            className="w-48 sm:w-64 md:w-80 h-auto drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] object-contain" 
             priority
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center mb-8 w-full">
-          <div className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-widest mb-8 md:mb-10 w-full text-center">
+        <div className="flex flex-col items-center justify-center mb-6 md:mb-8 w-full">
+          <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-widest mb-6 md:mb-10 w-full text-center">
             Remaining <span className="text-[#00AAFF]">{timeLeft.days}</span> Days
           </div>
           
-          <div className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-widest text-[#00AAFF] flex flex-row items-start justify-center gap-2 md:gap-6 drop-shadow-[0_0_15px_rgba(0,170,255,0.3)]">
+          <div className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-widest text-[#00AAFF] flex flex-row items-start justify-center gap-1.5 sm:gap-4 md:gap-6 drop-shadow-[0_0_15px_rgba(0,170,255,0.3)]">
             <div className="flex flex-col items-center">
               <span>{formatTime(timeLeft.hours)}</span>
-              <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal mt-2">hour</span>
+              <span className="text-[10px] sm:text-xs md:text-lg text-white/50 tracking-normal uppercase font-normal mt-1 md:mt-2">hour</span>
             </div>
             
-            <span className="animate-heartbeat -translate-y-1 md:-translate-y-2 mx-1 md:mx-2 mt-2 md:mt-4 text-3xl md:text-5xl lg:text-6xl">:</span>
+            <span className="animate-heartbeat -translate-y-0.5 sm:-translate-y-1 md:-translate-y-2 mx-0.5 sm:mx-1 md:mx-2 mt-1 md:mt-4 text-2xl sm:text-3xl md:text-5xl lg:text-6xl">:</span>
             
             <div className="flex flex-col items-center">
               <span>{formatTime(timeLeft.minutes)}</span>
-              <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal mt-2">minute</span>
+              <span className="text-[10px] sm:text-xs md:text-lg text-white/50 tracking-normal uppercase font-normal mt-1 md:mt-2">minute</span>
             </div>
             
-            <span className="animate-heartbeat -translate-y-1 md:-translate-y-2 mx-1 md:mx-2 mt-2 md:mt-4 text-3xl md:text-5xl lg:text-6xl">:</span>
+            <span className="animate-heartbeat -translate-y-0.5 sm:-translate-y-1 md:-translate-y-2 mx-0.5 sm:mx-1 md:mx-2 mt-1 md:mt-4 text-2xl sm:text-3xl md:text-5xl lg:text-6xl">:</span>
             
             <div className="flex flex-col items-center">
               <span>{formatTime(timeLeft.seconds)}</span>
-              <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal mt-2">seconds</span>
+              <span className="text-[10px] sm:text-xs md:text-lg text-white/50 tracking-normal uppercase font-normal mt-1 md:mt-2">seconds</span>
             </div>
           </div>
         </div>
 
-        <div className="text-gray-400 text-lg md:text-xl font-medium mt-8 flex flex-col items-center gap-2">
+        <div className="text-gray-400 text-sm sm:text-base md:text-xl font-medium mt-6 md:mt-8 flex flex-col items-center gap-1.5 sm:gap-2">
           <p>Thanks for visiting,</p>
-          <p className="flex items-center">
+          <p className="flex items-center text-center flex-wrap justify-center">
             <span className="text-[#00AAFF]">entryLab.net</span>&nbsp;website will live on 25 May 2026.
-            <span className="relative flex h-3 w-3 ml-2.5">
+            <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3 ml-2 sm:ml-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00AAFF] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,1)]"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,1)]"></span>
             </span>
           </p>
         </div>
