@@ -26,8 +26,7 @@ const reviews = [
   { name: "Ella Martin", role: "CXO", review: "The overall quality of data analysis and research was strong. While the deliverables were accurate and useful, slightly more frequent progress updates would further enhance the experience.", rating: 4, avatar: "https://iili.io/B49sx5P.png" }
 ];
 
-const marqueeRow1 = [...reviews.slice(0, 10), ...reviews.slice(0, 10)];
-const marqueeRow2 = [...reviews.slice(10, 20), ...reviews.slice(10, 20)];
+const marqueeRow = [...reviews, ...reviews];
 
 const textRevealContainer = {
   hidden: {},
@@ -96,20 +95,20 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="relative w-full overflow-hidden bg-neutral-900 py-24 text-white">
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes scroll-left {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
+        @keyframes slide-gradient {
+          0% { background-position: 200% center; }
+          100% { background-position: 0% center; }
+        }
+        .animate-brand-gradient {
+          background-size: 200% auto;
+          animation: slide-gradient 5s linear infinite;
         }
         @keyframes scroll-right {
           0% { transform: translate3d(-50%, 0, 0); }
           100% { transform: translate3d(0, 0, 0); }
         }
-        .animate-scroll-left {
-          animation: scroll-left 120s linear infinite;
-          will-change: transform;
-        }
         .animate-scroll-right {
-          animation: scroll-right 120s linear infinite;
+          animation: scroll-right 180s linear infinite;
           will-change: transform;
         }
       `}} />
@@ -122,41 +121,43 @@ export default function Testimonials() {
           <motion.div variants={textRevealContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="flex flex-col items-center gap-4">
             <motion.div variants={textRevealItem}>
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-gray-200 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-2xl">
-                <span>⭐</span> Achieved 4.9 rating for successfully completing projects.
+                <span>⭐</span> Achieved a 4.9 rating for successfully completing projects
               </div>
             </motion.div>
 
-            <h2>TESTIMONIALS</h2>
-            <div className="w-24 h-1 bg-[#00AAFF] mx-auto rounded-full mt-4"></div>
+            <motion.h2 variants={textRevealItem} className="animate-brand-gradient mt-4 bg-gradient-to-l from-[#00AAFF] via-white to-[#00AAFF] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent md:text-5xl">
+              Testimonials
+            </motion.h2>
+            
+            <motion.div variants={textRevealItem} className="mt-2 h-[3px] w-20 rounded-full bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,0.5)]" />
 
             <motion.p variants={textRevealItem} className="mt-6 max-w-2xl text-base text-gray-400">
-              Results that speaks volume, our mission is to drive progress and enhance by delivering superior services that exceed expectations.
+              Results that speak volumes, our mission is to drive progress and enhance performance by delivering superior services that consistently exceed expectations.
             </motion.p>
           </motion.div>
         </div>
 
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:gap-20">
-          <div className="flex flex-col justify-center">
-            <h3 className="mt-8 text-left">
-              Words of praise from others <br className="hidden md:block" />
-              <span className="text-gray-400">about our presence</span>
-            </h3>
-            <p className="mt-6 max-w-md text-sm leading-relaxed text-gray-400 md:text-base">
+          <motion.div variants={textRevealContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="flex flex-col justify-center overflow-hidden">
+            <motion.h3 variants={textRevealItem} className="whitespace-nowrap text-[3.8vw] sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+              Words Of Praise From Professionals <span className="text-gray-400">about our presence</span>
+            </motion.h3>
+            <motion.p variants={textRevealItem} className="mt-6 max-w-md text-sm leading-relaxed text-gray-400 md:text-base">
               See how professionals use our solutions to optimize and complete their customer journeys with confidence.
-            </p>
+            </motion.p>
 
-            <div className="mt-10 flex gap-4">
+            <motion.div variants={textRevealItem} className="mt-10 flex gap-4">
               <button onClick={() => paginate(-1)} aria-label="Previous testimonial" className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all hover:bg-white/10 hover:text-[#00AAFF]">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
               </button>
               <button onClick={() => paginate(1)} aria-label="Next testimonial" className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all hover:bg-white/10 hover:text-[#00AAFF]">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
               </button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="relative">
-            <div className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] sm:p-8">
+          <motion.div variants={textRevealContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} className="relative">
+            <motion.div variants={textRevealItem} className="flex min-h-[350px] flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] sm:p-8">
               <div className="mb-6 flex items-start justify-between">
                 <svg className="h-10 w-10 text-[#00AAFF]/30" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -201,23 +202,18 @@ export default function Testimonials() {
                   <img src={reviews[nextIdx].avatar} alt="" className="h-8 w-8 scale-90 rounded-full object-cover opacity-30" />
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="relative mx-auto mt-36 mb-12 flex w-full max-w-6xl flex-col gap-10 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
-        <div className="group flex">
-          <div className="animate-scroll-left flex min-w-max gap-6 pt-[25px] group-hover:[animation-play-state:paused]">
-            {marqueeRow1.map((r, i) => <MarqueeCard key={`row1-${i}`} review={r} />)}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={textRevealContainer} className="relative mx-auto mt-36 mb-12 flex w-full max-w-6xl flex-col gap-10 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+        <motion.div variants={textRevealItem} className="group flex">
+          <div className="animate-scroll-right flex min-w-max gap-6 pb-[25px] pt-[25px] group-hover:[animation-play-state:paused]">
+            {marqueeRow.map((r, i) => <MarqueeCard key={`row-${i}`} review={r} />)}
           </div>
-        </div>
-        <div className="group flex">
-          <div className="animate-scroll-right flex min-w-max gap-6 pb-[25px] group-hover:[animation-play-state:paused]">
-            {marqueeRow2.map((r, i) => <MarqueeCard key={`row2-${i}`} review={r} />)}
-          </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
