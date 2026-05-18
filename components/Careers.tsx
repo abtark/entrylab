@@ -47,74 +47,83 @@ const fadeUp = {
 };
 
 const coreValues = [
-  { title: "Teamwork", image: "https://iili.io/BpeuxWX.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Excellence", image: "https://iili.io/Bpeuu0G.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Curiosity", image: "https://iili.io/Bpeuzsn.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Passion", image: "https://iili.io/BpeuTfs.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Accountability", image: "https://iili.io/BpeuabS.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Responsibility", image: "https://iili.io/BpeuYe2.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Sustainability", image: "https://iili.io/Bpeu75l.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
-  { title: "Transparency", image: "https://iili.io/Bpeu5J4.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Teamwork", image: "https://imglink.cc/cdn/t2GVeL5cqa.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Excellence", image: "https://imglink.cc/cdn/DIa1NMl9nr.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Curiosity", image: "https://imglink.cc/cdn/Hl-wVjKJro.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Passion", image: "https://imglink.cc/cdn/UB6Mel7BiN.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Accountability", image: "https://imglink.cc/cdn/EHVovoX5Eq.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Responsibility", image: "https://imglink.cc/cdn/YZRDJ6lEKa.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Sustainability", image: "https://imglink.cc/cdn/fGeN64knUa.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
+  { title: "Transparency", image: "https://imglink.cc/cdn/tj4vp7hGhn.webp", bgColor: "bg-[#00AAFF]/10 border border-[#00AAFF]", textColor: "text-[#00AAFF]" },
 ];
 
 const marqueeImages = [
-  "https://iili.io/BPINPee.jpg", "https://iili.io/BPINLzb.jpg", "https://iili.io/BPINDqQ.jpg",
-  "https://iili.io/BPIO971.jpg", "https://iili.io/BPIO3hJ.jpg", "https://iili.io/BPIOn2I.jpg",
-  "https://iili.io/BPIOAQf.jpg", "https://iili.io/BPIOlY7.jpg", "https://iili.io/BPIO1pe.jpg",
-  "https://iili.io/BPIOXCx.jpg", "https://iili.io/BPIOkyF.jpg", "https://iili.io/BPIO4GR.jpg",
+  "https://imglink.cc/cdn/dtwwwXfhHK.webp",
+  "https://imglink.cc/cdn/bd7SwuYUQ_.webp",
+  "https://imglink.cc/cdn/29mZz7iHyt.webp",
+  "https://imglink.cc/cdn/5iEfazbILE.webp",
+  "https://imglink.cc/cdn/aJ0NbsDGiD.webp",
+  "https://imglink.cc/cdn/9gedfa6hGv.webp",
+  "https://imglink.cc/cdn/kyIRbf8z7n.webp",
+  "https://imglink.cc/cdn/QWttKHTiBp.webp",
+  "https://imglink.cc/cdn/PDbMNDxuWS.webp",
+  "https://imglink.cc/cdn/T0Yxz4DrUd.webp",
+  "https://imglink.cc/cdn/xjNDaC2evQ.webp",
+  "https://imglink.cc/cdn/gSAN8ZGSKh.webp",
+  "https://imglink.cc/cdn/KzN_FRhCak.webp"
 ];
 
 const doubledMarquee = [...marqueeImages, ...marqueeImages];
 
 const advantages = [
-  { title: "Culture & Environment", desc: "A collaborative, inclusive workplace with open communication and transparent leadership that empowers every voice.", icon: "https://iili.io/BP8qJOQ.gif" },
-  { title: "Growth & Development", desc: "Grow with continuous learning, mentorship, and clear career paths designed to help you reach your full potential.", icon: "https://iili.io/BP85bje.gif" },
-  { title: "Impact & Purpose", desc: "Work on meaningful projects that create real-world impact and deliver lasting value to customers and communities.", icon: "https://iili.io/BP80bwB.gif" },
-  { title: "Flexibility & Balance", desc: "Enjoy flexible work options and a balanced environment that supports productivity, well-being, and personal priorities.", icon: "https://iili.io/BP8vUN9.gif" },
-  { title: "Innovation & Excellence", desc: "Be part of a forward-thinking team where creativity thrives and excellence drives everything we build and deliver.", icon: "https://iili.io/BP8rY2j.gif" },
-  { title: "Recognition & Rewards", desc: "We value your work with fair rewards, recognition, and a culture that celebrates contributions and shared success.", icon: "https://iili.io/BP8QwiB.gif" },
+  { title: "Culture & Environment", desc: "A collaborative, inclusive workplace with open communication and transparent leadership that empowers every voice.", icon: "https://imglink.cc/cdn/jzm0KFV8ib.webp" },
+  { title: "Growth & Development", desc: "Grow with continuous learning, mentorship, and clear career paths designed to help you reach your full potential.", icon: "https://imglink.cc/cdn/ISXPpSKD4x.webp" },
+  { title: "Impact & Purpose", desc: "Work on meaningful projects that create real-world impact and deliver lasting value to customers and communities.", icon: "https://imglink.cc/cdn/k5FjG6OBdC.webp" },
+  { title: "Flexibility & Balance", desc: "Enjoy flexible work options and a balanced environment that supports productivity, well-being, and personal priorities.", icon: "https://imglink.cc/cdn/hD-9IQd5EL.webp" },
+  { title: "Innovation & Excellence", desc: "Be part of a forward-thinking team where creativity thrives and excellence drives everything we build and deliver.", icon: "https://imglink.cc/cdn/vBai-qrp6x.webp" },
+  { title: "Recognition & Rewards", desc: "We value your work with fair rewards, recognition, and a culture that celebrates contributions and shared success.", icon: "https://imglink.cc/cdn/PPI8RAkufy.webp" },
 ];
 
 const workplaceItems = [
   {
     title: "A Healthy, Focused Culture",
     desc: "Work in a calm, respectful environment where collaboration thrives, quality comes first, and long-term growth is genuinely valued.",
-    image: "https://iili.io/BiCsYDG.png",
+    image: "https://imglink.cc/cdn/NaJz-aROhT.webp",
     themeColor: "#FD7FAC",
     bullets: ["Clear priorities that help you focus on meaningful, high-impact work", "Open communication and mutual respect across all teams", "Leadership that supports growth, feedback, and accountability", "A sustainable pace that values consistency over burnout"],
   },
   {
     title: "Comfort in Your Daily Routine",
     desc: "Enjoy complimentary meals, coffee, and snacks—so you can stay energized and focused throughout your day.",
-    image: "https://iili.io/BiCs7Ns.png",
+    image: "https://imglink.cc/cdn/i0CfLKeZzT.webp",
     themeColor: "#EB3E3C",
     bullets: ["Fresh, nutritious meals available throughout the workday", "Unlimited coffee, tea, and healthy snacks", "Clean, thoughtfully designed workspaces for better productivity", "Breakout areas to relax, recharge, or collaborate informally"],
   },
   {
     title: "Wellness That Matters",
     desc: "Stay active and balanced with access to sports facilities that support both physical and mental well-being.",
-    image: "https://iili.io/BiCsTlI.png",
+    image: "https://imglink.cc/cdn/lKnOOU2jM0.webp",
     themeColor: "#FBAD5C",
     bullets: ["Fully equipped treadmill for daily fitness routines", "Indoor and outdoor sports facilities for recreation", "Wellness-focused initiatives and regular health activities", "A culture that encourages balance between work and personal life"],
   },
   {
     title: "Stress-Free Commute",
     desc: "Take advantage of our convenient parking options and transport support, making your daily commute simpler and more reliable.",
-    image: "https://iili.io/BiCsxPp.png",
+    image: "https://imglink.cc/cdn/2n5yndjfby.webp",
     themeColor: "#977FFB",
     bullets: ["Transport allowance provided to help cover daily travel expenses", "Safe and accessible parking for all team-mates", "Coordinated schedules to reduce commute uncertainty", "Supportive policies that ease everyday transport challenges"],
   },
   {
     title: "Meaningful Rewards & Benefits",
     desc: "We recognize your commitment with festival bonuses, leave encashment, and loyalty rewards that grow with you.",
-    image: "https://iili.io/BiCsIKN.png",
+    image: "https://imglink.cc/cdn/KUApIVxHCf.webp",
     themeColor: "#B26FE7",
     bullets: ["Competitive festival bonuses to celebrate special occasions", "Leave encashment options for added flexibility", "Loyalty rewards that recognize long-term contributions", "Structured benefits designed for financial stability"],
   },
   {
     title: "A Respectful Workplace for Everyone",
     desc: "We maintain a considerate environment with dedicated prayer spaces, allowing you to work comfortably while honoring your personal beliefs.",
-    image: "https://iili.io/BiCsoVR.png",
+    image: "https://imglink.cc/cdn/qWBDQCp9zo.webp",
     themeColor: "#57E0FA",
     bullets: ["Dedicated prayer spaces for personal reflection and practice", "A culture that respects individual values and beliefs", "Policies that ensure fairness and dignity at work", "An environment where everyone feels comfortable and supported"],
   },
@@ -127,9 +136,9 @@ const hiringSteps = [
 ];
 
 const openPositions = [
-  { dept: "Information Management", title: "Junior Executive", details: "Onsite / Full Time / Entry Level" },
-  { dept: "Information Management", title: "Research Executive", details: "Onsite / Full Time / Junior Level" },
-  { dept: "Information Management", title: "HR Manager", details: "Onsite / Full Time / Senior Level" }
+  { dept: "Operations Management", title: "Junior Executive", details: "Onsite | Full Time | Entry Level" },
+  { dept: "Information Management", title: "Research Executive", details: "Onsite | Full Time | Junior Level" },
+  { dept: "Legal & Compliance", title: "HR Executive", details: "Onsite | Full Time | Senior Level" }
 ];
 
 export default function Careers() {
@@ -155,7 +164,8 @@ export default function Careers() {
             100% { transform: translateX(-50%); }
           }
           .marquee-scroll {
-            animation: scroll 20s linear infinite;
+            animation: scroll 60s linear infinite;
+            will-change: transform;
           }
           .marquee-scroll:hover {
             animation-play-state: paused;
@@ -256,7 +266,7 @@ export default function Careers() {
               <h5>Our Advantages</h5>
               <h3 className="!text-left !pb-0">Why Work With Us?</h3>
               <p className="text-neutral-300 mt-4 max-w-2xl text-base md:text-lg">
-                Expertise, creativity, and reliability drive meaningful results. A commitment to understanding client needs ensures tailored solutions and a smooth, professional experience from start to finish.
+                Driven by expertise, creativity, and reliability, we deliver meaningful results. We focus on understanding client needs to provide tailored solutions and a seamless, professional experience from start to finish.
               </p>
             </div>
 
@@ -286,8 +296,6 @@ export default function Careers() {
             else if (diff === advantages.length - 1) position = -1;
 
             const isFocused = position === 0;
-            const isVisible = position !== 2;
-            const imgSrc = isFocused ? adv.icon : adv.icon.replace('.gif', '.md.gif');
 
             return (
               <motion.div
@@ -301,11 +309,11 @@ export default function Careers() {
                   zIndex: position === 0 ? 10 : 5,
                 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-colors duration-500 border ${isVisible ? "border-[#00CCCC]" : "border-transparent"} ${isFocused ? "bg-[#F0F9FF] shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)] border-2" : "bg-white shadow-lg"}`}
+                className={`absolute w-[320px] md:w-[420px] h-[400px] p-8 rounded-[2rem] flex flex-col items-center justify-center text-center transition-all duration-500 border border-[#00AAFF] bg-transparent ${isFocused ? "shadow-[0_10px_40px_-10px_rgba(0,170,255,0.3)]" : ""}`}
               >
-                <img src={imgSrc} alt={adv.title} loading="lazy" decoding="async" className="w-32 h-32 mb-6 object-contain mix-blend-multiply" />
-                <h3 className="!text-2xl font-bold text-[#30C7CC] mb-4 !bg-none !animate-none !pb-0">{adv.title}</h3>
-                <p className="text-[#171717] leading-relaxed text-sm md:text-base font-medium">{adv.desc}</p>
+                <img src={adv.icon} alt={adv.title} loading="lazy" decoding="async" className="w-32 h-32 mb-6 object-contain" />
+                <h3 className="!text-2xl font-bold text-[#00AAFF] mb-4 !bg-none !animate-none !pb-0">{adv.title}</h3>
+                <p className="text-neutral-300 leading-relaxed text-sm md:text-base font-medium">{adv.desc}</p>
               </motion.div>
             );
           })}
