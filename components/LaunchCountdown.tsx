@@ -95,20 +95,21 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
         }
       `}} />
 
-      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto w-full">
         <div className="mb-16 animate-heartbeat flex flex-col items-center">
           <Image 
             src="https://iili.io/FC3KC6g.png" 
             alt="EntryLab Logo" 
-            width={200} 
-            height={60} 
+            width={320} 
+            height={96} 
             className="drop-shadow-[0_0_15px_rgba(0,170,255,0.4)] object-contain" 
+            priority
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center mb-8">
-          <div className="text-5xl md:text-7xl font-bold tracking-wider mb-8">
-            <span className="text-[#00AAFF]">{timeLeft.days}</span> Days
+        <div className="flex flex-col items-center justify-center mb-8 w-full">
+          <div className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-widest mb-8 md:mb-10 w-full text-center">
+            Remaining <span className="text-[#00AAFF]">{timeLeft.days}</span> Days
           </div>
           
           <div className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-widest text-[#00AAFF] flex flex-row items-start justify-center gap-2 md:gap-6 drop-shadow-[0_0_15px_rgba(0,170,255,0.3)]">
@@ -133,9 +134,10 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
           </div>
         </div>
 
-        <p className="text-gray-400 text-lg md:text-xl font-medium mt-6">
-          Thanks for visiting, <span className="text-[#00AAFF]">entrylab.net</span> will live at 25 May 2026
-        </p>
+        <div className="text-gray-400 text-lg md:text-xl font-medium mt-8 flex flex-col items-center gap-2">
+          <p>Thanks for visiting,</p>
+          <p><span className="text-[#00AAFF]">entryLab.net</span> will go live on 25 May 2026. 🚨</p>
+        </div>
 
         <MahjongGridLoader />
       </div>
