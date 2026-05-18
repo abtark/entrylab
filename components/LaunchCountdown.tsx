@@ -108,7 +108,7 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
         </div>
 
         <div className="flex flex-col items-center justify-center mb-8 w-full">
-          <div className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-widest mb-8 md:mb-10 w-full text-center">
+          <div className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-widest mb-8 md:mb-10 w-full text-center">
             Remaining <span className="text-[#00AAFF]">{timeLeft.days}</span> Days
           </div>
           
@@ -136,7 +136,13 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
 
         <div className="text-gray-400 text-lg md:text-xl font-medium mt-8 flex flex-col items-center gap-2">
           <p>Thanks for visiting,</p>
-          <p><span className="text-[#00AAFF]">entryLab.net</span> will go live on 25 May 2026. 🚨</p>
+          <p className="flex items-center">
+            <span className="text-[#00AAFF]">entryLab.net</span>&nbsp;website will live on 25 May 2026.
+            <span className="relative flex h-3 w-3 ml-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00AAFF] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,1)]"></span>
+            </span>
+          </p>
         </div>
 
         <MahjongGridLoader />
