@@ -185,8 +185,20 @@ export default function Gallery() {
                         <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,170,255,0.2)] z-10 pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-60"></div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 z-10 pointer-events-none"></div>
                         <div className="absolute inset-0 bg-[#00AAFF]/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                        
                         {offset === 0 && (
-                          <div className="absolute top-2 right-2 w-2 h-2 bg-[#00AAFF] rounded-full shadow-[0_0_10px_rgba(0,170,255,0.8)] z-20"></div>
+                          <>
+                            <div className="absolute top-2 right-2 w-2 h-2 bg-[#00AAFF] rounded-full shadow-[0_0_10px_rgba(0,170,255,0.8)] z-20"></div>
+                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20 z-30">
+                              <motion.div
+                                key={autoplayTimer}
+                                initial={{ width: "0%" }}
+                                animate={{ width: "100%" }}
+                                transition={{ duration: 7, ease: "linear" }}
+                                className="h-full bg-[#00AAFF] shadow-[0_0_10px_rgba(0,170,255,0.8)] origin-left"
+                              />
+                            </div>
+                          </>
                         )}
                       </motion.div>
                     )
@@ -195,16 +207,6 @@ export default function Gallery() {
               </div>
 
             </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/10 z-30">
-            <motion.div
-              key={autoplayTimer}
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 7, ease: "linear" }}
-              className="h-full bg-[#00AAFF] shadow-[0_0_15px_rgba(0,170,255,0.8)] origin-left"
-            />
           </div>
 
         </div>
