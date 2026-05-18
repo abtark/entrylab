@@ -98,13 +98,6 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
       <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-4xl mx-auto">
         <div className="mb-16 animate-heartbeat flex flex-col items-center">
           <Image 
-            src="https://iili.io/FC3fr7f.png" 
-            alt="EntryLab Icon" 
-            width={80} 
-            height={80} 
-            className="drop-shadow-[0_0_20px_rgba(0,170,255,0.6)] object-contain mb-4" 
-          />
-          <Image 
             src="https://iili.io/FC3KC6g.png" 
             alt="EntryLab Logo" 
             width={200} 
@@ -113,22 +106,30 @@ export default function LaunchCountdown({ children }: { children: React.ReactNod
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-4 mb-8">
-          <div className="text-xl md:text-3xl font-medium tracking-wider">
-            <span className="text-[#00AAFF] font-bold">{timeLeft.days}</span> days remaining 
-            <span className="text-gray-400 mx-2">&amp;</span>
+        <div className="flex flex-col items-center justify-center mb-8">
+          <div className="text-5xl md:text-7xl font-bold tracking-wider mb-8">
+            <span className="text-[#00AAFF]">{timeLeft.days}</span> Days
           </div>
           
-          <div className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-widest text-[#00AAFF] flex items-center justify-center gap-1 md:gap-2 drop-shadow-[0_0_15px_rgba(0,170,255,0.3)]">
-            <span>{formatTime(timeLeft.hours)}</span>
-            <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal ml-1">hour</span>
-            <span className="animate-heartbeat -translate-y-1 md:-translate-y-2 mx-1 md:mx-2">:</span>
-            <span>{formatTime(timeLeft.minutes)}</span>
-            <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal ml-1">minute</span>
-            <span className="animate-heartbeat -translate-y-1 md:-translate-y-2 mx-1 md:mx-2">:</span>
-            <span>{formatTime(timeLeft.seconds)}</span>
-            <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal ml-1 mr-3">seconds</span>
-            <span className="text-xl md:text-3xl text-white font-medium tracking-wider normal-case">remaining</span>
+          <div className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-widest text-[#00AAFF] flex flex-row items-start justify-center gap-2 md:gap-6 drop-shadow-[0_0_15px_rgba(0,170,255,0.3)]">
+            <div className="flex flex-col items-center">
+              <span>{formatTime(timeLeft.hours)}</span>
+              <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal mt-2">hour</span>
+            </div>
+            
+            <span className="animate-heartbeat -translate-y-1 md:-translate-y-2 mx-1 md:mx-2 mt-2 md:mt-4 text-3xl md:text-5xl lg:text-6xl">:</span>
+            
+            <div className="flex flex-col items-center">
+              <span>{formatTime(timeLeft.minutes)}</span>
+              <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal mt-2">minute</span>
+            </div>
+            
+            <span className="animate-heartbeat -translate-y-1 md:-translate-y-2 mx-1 md:mx-2 mt-2 md:mt-4 text-3xl md:text-5xl lg:text-6xl">:</span>
+            
+            <div className="flex flex-col items-center">
+              <span>{formatTime(timeLeft.seconds)}</span>
+              <span className="text-sm md:text-lg text-white/50 tracking-normal uppercase font-normal mt-2">seconds</span>
+            </div>
           </div>
         </div>
 
